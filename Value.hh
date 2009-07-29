@@ -4,16 +4,19 @@
 #include <typeinfo>
 #include <string>
 #include <cstring>
+#include <glib.h>
 
 namespace Jaf {
 
 /**
 @class Value
 @brief Store and retrieve any data type with no casting required.
+Memory management works if the Value is not storing a pointer.
+Memory management can also be manual if init(false) is called.
 */
 class Value {
-	void *_data;
-	std::string _type_name;
+	void *_data; //pointer to data
+	std::string _type_name; //typeid type name FIXME - might only need a pointer comparison because typeid ().name () returns a {const char*}
 	bool _call_free; //free the _data? (Yes/No)
 	bool (Value::*free_func) (); //pointer to the correct free<T> () function
 	bool (Value::*copy_func) (Value &dest); //pointer to the correct copy<T> () function
@@ -42,6 +45,7 @@ public:
 	template<typename T>
 	bool init (bool del_data = true) {
 		if (_data) {
+			g_warning ("class Value - Unable to initialize a Value that is already initialized.");
 			return false;
 		}
 
@@ -77,14 +81,36 @@ public:
 	template<typename T>
 	bool get_value (T &v) {
 		if (!_data) {
+			g_warning ("class Value - Unable to initialize a Value that is already initialized.");
 			return false;
 		}
 		if (0 != std::strcmp (_type_name.c_str (), typeid(T).name ())) {
+			g_warning ("class Value - Trying to use an incompatible type.");
 			return false;
 		}
 
 		T *tmp = (T*)_data;
 		v = *tmp;
+		return true;
+	}
+
+	/**
+	@brief Get the data from Value as a pointer.
+	@param v Variable in which to put the data pointer.
+	@return true if successful, false if unsuccessful.
+	*/
+	template<typename T>
+	bool get_value_pointer (T* &v) {
+		if (!_data) {
+			g_warning ("class Value - Unable to initialize a Value that is already initialized.");
+			return false;
+		}
+		if (0 != std::strcmp (_type_name.c_str (), typeid(T).name ())) {
+			g_warning ("class Value - Trying to use an incompatible type.");
+			return false;
+		}
+
+		v = (T*)_data;
 		return true;
 	}
 
@@ -96,9 +122,11 @@ public:
 	template<typename T>
 	bool set_value (const T &v) const {
 		if (!_data) {
+			g_warning ("class Value - Unable to initialize a Value that is already initialized.");
 			return false;
 		}
 		if (0 != std::strcmp (_type_name.c_str (), typeid(T).name ())) {
+			g_warning ("class Value - Trying to use an incompatible type.");
 			return false;
 		}
 
@@ -130,9 +158,11 @@ private:
 	template<typename T>
 	bool free_template () {
 		if (!_data) {
+			g_warning ("class Value - Unable to initialize a Value that is already initialized.");
 			return false;
 		}
 		if (0 != std::strcmp (_type_name.c_str (), typeid(T).name ())) {
+			g_warning ("class Value - Trying to use an incompatible type.");
 			return false;
 		}
 
@@ -149,9 +179,11 @@ private:
 	template<typename T>
 	bool copy_template (Value &dest) {
 		if (!_data || !dest._data) {
+			g_warning ("class Value - Unable to initialize a Value that is already initialized.");
 			return false;
 		}
 		if (0 != std::strcmp (_type_name.c_str (), dest._type_name.c_str ())) {
+			g_warning ("class Value - Trying to use an incompatible type.");
 			return false;
 		}
 

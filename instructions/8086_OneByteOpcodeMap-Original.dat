@@ -1,0 +1,12 @@
+#--FORMAT=opcode%mnemonic%number of operands%{op1, op2, op3}
+00%add%2%{"Eb", "Gb", 0}
+01%add%2%{"Ev", "Gv", 0}
+02%add%2%{"Gb", "Eb", 0}
+03%add%2%{"Gv", "Ev", 0}
+04%add%2%{"AL", "Ib", 0}
+05%add%2%{"rAX", "Iz", 0}
+06
+07
+08
+09
+

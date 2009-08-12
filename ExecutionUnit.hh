@@ -1,30 +1,51 @@
-#ifndef CPU_8086_HH
-#define CPU_8086_HH
+#ifndef EXECUTION_UNIT_HH
+#define EXECUTION_UNIT_HH
 
-#include "Cpu.hh"
+#include "BusInterfaceUnit.hh"
 
-class Cpu8086 : public Cpu {
-	unsigned short _reg_ax;
-	unsigned short _reg_bx;
-	unsigned short _reg_cx;
-	unsigned short _reg_dx;
+class ExecutionUnit {
+	unsigned short m_reg_ax;
+	unsigned short m_reg_bx;
+	unsigned short m_reg_cx;
+	unsigned short m_reg_dx;
 
-	unsigned short _reg_di;
-	unsigned short _reg_si;
+	unsigned short m_reg_di;
+	unsigned short m_reg_si;
 
-	unsigned short _reg_bp;
-	unsigned short _reg_sp;
+	unsigned short m_reg_bp;
+	unsigned short m_reg_sp;
 
-	unsigned short _sreg_cs;
-	unsigned short _sreg_ds;
-	unsigned short _sreg_es;
-	unsigned short _sreg_ss;
+	unsigned short m_reg_flags;
 
-	unsigned short _reg_flags;
-
-	unsigned short _reg_ip;
+	BusInterfaceUnit *m_biu;
 
 public:
+	ExecutionUnit () {
+		m_reg_ax = 0;
+		m_reg_bx = 0;
+		m_reg_cx = 0;
+		m_reg_dx = 0;
+
+		m_reg_di = 0;
+		m_reg_si = 0;
+
+		m_reg_bp = 0;
+		m_reg_sp = 0;
+
+		m_reg_flags = 0;
+
+		m_biu = 0;
+	}
+
+	ExecutionUnit (const ExecutionUnit &src) {
+	}
+
+	~ExecutionUnit () {
+	}
+
+	/** */
+	void connect_to (BusInterfaceUnit &biu);
+
 	/** */
 	unsigned short get_reg_ax () const;
 
@@ -122,41 +143,65 @@ public:
 	void set_reg_sp (unsigned short val);
 
 	/** */
-	unsigned short get_sreg_cs () const;
-
-	/** */
-	void set_sreg_cs (unsigned short val);
-
-	/** */
-	unsigned short get_sreg_ds () const;
-
-	/** */
-	void set_sreg_ds (unsigned short val);
-
-	/** */
-	unsigned short get_sreg_es () const;
-
-	/** */
-	void set_sreg_es (unsigned short val);
-
-	/** */
-	unsigned short get_sreg_ss () const;
-
-	/** */
-	void set_sreg_ss (unsigned short val);
-
-	/** */
 	unsigned short get_reg_flags () const;
 
 	/** */
 	void set_reg_flags (unsigned short val);
 
 	/** */
-	unsigned short get_reg_ip () const;
+	bool get_reg_flags_af () const;
 
 	/** */
-	void set_reg_ip (unsigned short val);
+	void set_reg_flags_af (bool val);
+
+	/** */
+	bool get_reg_flags_cf () const;
+
+	/** */
+	void set_reg_flags_cf (bool val);
+
+	/** */
+	bool get_reg_flags_df () const;
+
+	/** */
+	void set_reg_flags_df (bool val);
+
+	/** */
+	bool get_reg_flags_if () const;
+
+	/** */
+	void set_reg_flags_if (bool val);
+
+	/** */
+	bool get_reg_flags_of () const;
+
+	/** */
+	void set_reg_flags_of (bool val);
+
+	/** */
+	bool get_reg_flags_pf () const;
+
+	/** */
+	void set_reg_flags_pf (bool val);
+
+	/** */
+	bool get_reg_flags_sf () const;
+
+	/** */
+	void set_reg_flags_sf (bool val);
+
+	/** */
+	bool get_reg_flags_tf () const;
+
+	/** */
+	void set_reg_flags_tf (bool val);
+
+	/** */
+	bool get_reg_flags_zf () const;
+
+	/** */
+	void set_reg_flags_zf (bool val);
 };
 
-#endif //CPU_8086_HH
+#endif //EXECUTION_UNIT_HH
 

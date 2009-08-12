@@ -2,49 +2,30 @@
 #define INSTRUCTION_DECODER_8086_HH
 
 #include "InstructionDecoder.hh"
-#include "Operand.hh"
 #include <vector>
-#include <string>
-#include <iostream>
 
 class InstructionDecoder8086 : public InstructionDecoder {
-	static unsigned char memory[];
-	unsigned char *ip;
+	/**
+	*/
+	std::vector<unsigned char> m_inst_code;
 
 public:
-	InstructionDecoder8086 () {
-		ip = memory;
+	/**
+	*/
+	virtual void get_instruction () {
 	}
 
 	/**
 	*/
-	virtual std::string disassemble () {
-		/*
-		switch (*ip) {
-			case 0x83:
-				return inst_83_add_rAX_Iz ();
-			default:
-				return "Error: no such instruction";
-		}
-		*/
+	virtual void next_instruction () {
 	}
 
+protected:
 	/**
 	*/
-	virtual std::vector<Operand>& decode_operands () {
-		switch (*ip) {
-			case 0x83:
-				return inst_83_add_rAX_Iz ();
-			default:
-				return "Error: no such instruction";
-		}
-	}
-
-private:
-
-	std::vector<Operand>* inst_83_add_rAX_Iz () {
-		
+	virtual void decode_instruction () {
 	}
 };
 
 #endif //INSTRUCTION_DECODER_8086_HH
+

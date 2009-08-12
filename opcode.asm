@@ -1,1 +1,1 @@
-add ax, 10h
+mov [ds:1000h], byte 10h

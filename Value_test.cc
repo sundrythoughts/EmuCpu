@@ -5,21 +5,23 @@
 using namespace std;
 using namespace Jaf;
 
+static bool ps;
+
 static void print_passed (int i) {
 	cout << "Test " << i << ": Passed" << endl;
 }
 
 static void print_failed (int i) {
 	cout << "Test " << i << ": Failed" << endl;
+	ps = false;
 }
 
 
 int main (int argc, char **argv) {
-
 	int TEST_NUMBER = 1;
 
 	{//Test 1
-		bool ps = true;
+		ps = true;
 		Value v;
 		if (!v.init<string> ()) {
 			print_failed (TEST_NUMBER);
@@ -50,7 +52,7 @@ int main (int argc, char **argv) {
 	{//Test 2
 		++TEST_NUMBER;
 
-		bool ps = true;
+		ps = true;
 
 		Value v;
 		if (!v.init<string> ()) {
@@ -106,7 +108,7 @@ int main (int argc, char **argv) {
 	{//Test 3
 		++TEST_NUMBER;
 
-		bool ps = true;
+		ps = true;
 
 		Value v1, v2;
 		int i1, i2;
@@ -152,7 +154,7 @@ int main (int argc, char **argv) {
 	{//Test 4
 		++TEST_NUMBER;
 
-		bool ps = true;
+		ps = true;
 
 		Value v;
 		if (!v.init<int> ()) {
@@ -178,7 +180,7 @@ int main (int argc, char **argv) {
 	{//Test 5
 		++TEST_NUMBER;
 
-		bool ps = true;
+		ps = true;
 
 		Value v;
 		int *i1 = new int ();
@@ -216,7 +218,7 @@ int main (int argc, char **argv) {
 	{//Test 6
 		++TEST_NUMBER;
 
-		bool ps = true;
+		ps = true;
 
 		Value v;
 
@@ -278,7 +280,7 @@ int main (int argc, char **argv) {
 	{//Test 8
 		++TEST_NUMBER;
 
-		bool ps = true;
+		ps = true;
 
 		Value v;
 

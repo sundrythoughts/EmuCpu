@@ -1,0 +1,7 @@
+#ifndef INSTRUCTION_CODE_QUEUE_HH
+#define INSTRUCTION_CODE_QUEUE_HH
+
+class InstructionCodeQueue {
+};
+
+#endif //INSTRUCTION_CODE_QUEUE_HH

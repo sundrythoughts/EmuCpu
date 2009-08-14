@@ -6,390 +6,217 @@
 
 template<typename T>
 class Number : public sigc::trackable {
-	T *m_num;
+	T m_num;
 	sigc::signal<void, const T&> m_signal_value_changed;
 
 public:
+	Number () {
+		//std::cout << "Number ()" << std::endl;
+	}
+
+	Number (const Number<T> &src) : sigc::trackable () {
+		//std::cout << "Number (const Number<T> &src)" << std::endl;
+		m_num = src.m_num;
+	}
+
+#if 0
 	Number (T &r) {
-		
-		m_num = &r;
+		std::cout << "Number (T &r)" << std::endl;
+		m_num = r;
+	}
+#endif
+
+	Number (const T &r) {
+		//std::cout << "Number (const T &r)" << std::endl;
+		m_num = r;
+	}
+
+	~Number () {
+		//std::cout << "~Number ()" << std::endl;
+	}
+
+	operator const T& () const {
+		//std::cout << "operator const T& () const" << std::endl;
+		return m_num;
 	}
 
 	const T& get_value () const {
-		return *m_num;
+		return m_num;
 	}
 
 	sigc::signal<void, const T&>& signal_value_changed () {
 		return m_signal_value_changed;
 	}
 
-	/*
-	operator T () const {
-		return T (*m_num);
-	}
-	*/
-
-	const T operator+ () {
-		return T (*m_num);
-	}
-
-	const T operator- () {
-		return T (-(*m_num));
-	}
-
-	const T operator~ () {
-		return T (~(*m_num));
-	}
-
-	const T operator! () {
-		return T (!(*m_num));
-	}
-
 	const Number<T>& operator++ () {
-		++(*m_num);
-		m_signal_value_changed.emit (*m_num);
+		//std::cout << "const Number<T>& operator++ ()" << std::endl;
+		++m_num;
+		m_signal_value_changed.emit (m_num);
 		return *this;
 	}
 
 	const T operator++ (int) {
-		T prev = (*m_num)++;
-		m_signal_value_changed.emit (*m_num);
+		//std::cout << "const T operator++ (int)" << std::endl;
+		T prev = m_num++;
+		m_signal_value_changed.emit (m_num);
 		return prev;
 	}
 
 	const Number<T>& operator-- () {
-		--(*m_num);
-		m_signal_value_changed.emit (*m_num);
+		//std::cout << "const Number<T>& operator-- ()" << std::endl;
+		--m_num;
+		m_signal_value_changed.emit (m_num);
 		return *this;
 	}
 
 	const T operator-- (int) {
-		T prev = (*m_num)--;
-		m_signal_value_changed.emit (*m_num);
+		//std::cout << "const T operator-- (int)" << std::endl;
+		T prev = m_num--;
+		m_signal_value_changed.emit (m_num);
 		return prev;
 	}
 
-	Number<T>& operator= (Number<T> &rhs) {
-		if (this != &rhs) {
-			*m_num = *(rhs.m_num);
-			m_signal_value_changed.emit (*m_num);
-		}
-		return *this;
-	}
+	Number<T>& operator= (const Number<T> &rhs) {
+		//std::cout << "Number<T>& operator= (const Number<T> &rhs)" << std::endl;
 
-	template<typename Tp>
-	Number<T>& operator= (Number<Tp> &rhs) {
-		*m_num = rhs.get_value ();
-		m_signal_value_changed.emit (*m_num);
+		m_num = rhs.m_num;
+
+		m_signal_value_changed.emit (m_num);
+
 		return *this;
 	}
 
 	Number<T>& operator= (const T &rhs) {
-		*m_num = rhs;
-		m_signal_value_changed.emit (*m_num);
+		//std::cout << "Number<T>& operator= (const T &rhs)" << std::endl;
+
+		m_num = rhs;
+
+		m_signal_value_changed.emit (m_num);
+
 		return *this;
 	}
 
 	Number<T>& operator+= (const Number<T>& right) {
-		*m_num += *(right.m_num);
-		m_signal_value_changed.emit (*m_num);
-		return *this;
-	}
-
-	template<typename Tp>
-	Number<T>& operator+= (const Number<Tp>& right) {
-		*m_num += right.get_value ();
-		m_signal_value_changed.emit (*m_num);
+		m_num += right.m_num;
+		m_signal_value_changed.emit (m_num);
 		return *this;
 	}
 
 	Number<T>& operator+= (const T& right) {
-		*m_num += right;
-		m_signal_value_changed.emit (*m_num);
+		m_num += right;
+		m_signal_value_changed.emit (m_num);
 		return *this;
-	}
-
-	friend T& operator+= (T& left, const Number<T>& right) {
-		left += *(right.m_num);
-		return left;
-	}
-
-	template<typename Tp>
-	friend Tp& operator+= (Tp& left, const Number<T>& right) {
-		left += *(right.m_num);
-		return left;
 	}
 
 	Number<T>& operator-= (const Number<T>& right) {
-		*m_num -= *(right.m_num);
-		m_signal_value_changed.emit (*m_num);
-		return *this;
-	}
-
-	template<typename Tp>
-	Number<T>& operator-= (const Number<Tp>& right) {
-		*m_num -= right.get_value ();
-		m_signal_value_changed.emit (*m_num);
+		m_num -= right.m_num;
+		m_signal_value_changed.emit (m_num);
 		return *this;
 	}
 
 	Number<T>& operator-= (const T& right) {
-		*m_num -= right;
-		m_signal_value_changed.emit (*m_num);
+		m_num -= right;
+		m_signal_value_changed.emit (m_num);
 		return *this;
-	}
-
-	friend T& operator-= (T& left, const Number<T>& right) {
-		left -= *(right.m_num);
-		return left;
-	}
-
-	template<typename Tp>
-	friend Tp& operator-= (Tp& left, const Number<T>& right) {
-		left -= *(right.m_num);
-		return left;
 	}
 
 	Number<T>& operator*= (const Number<T>& right) {
-		*m_num *= *(right.m_num);
-		m_signal_value_changed.emit (*m_num);
-		return *this;
-	}
-
-	template<typename Tp>
-	Number<T>& operator*= (const Number<Tp>& right) {
-		*m_num *= right.get_value ();
-		m_signal_value_changed.emit (*m_num);
+		m_num *= right.m_num;
+		m_signal_value_changed.emit (m_num);
 		return *this;
 	}
 
 	Number<T>& operator*= (const T& right) {
-		*m_num *= right;
-		m_signal_value_changed.emit (*m_num);
+		m_num *= right;
+		m_signal_value_changed.emit (m_num);
 		return *this;
-	}
-
-	friend T& operator*= (T& left, const Number<T>& right) {
-		left *= *(right.m_num);
-		return left;
-	}
-
-	template<typename Tp>
-	friend Tp& operator*= (Tp& left, const Number<T>& right) {
-		left *= *(right.m_num);
-		return left;
 	}
 
 	Number<T>& operator/= (const Number<T>& right) {
-		*m_num /= *(right.m_num);
-		m_signal_value_changed.emit (*m_num);
-		return *this;
-	}
-
-	template<typename Tp>
-	Number<T>& operator/= (const Number<Tp>& right) {
-		*m_num /= right.get_value ();
-		m_signal_value_changed.emit (*m_num);
+		m_num /= right.m_num;
+		m_signal_value_changed.emit (m_num);
 		return *this;
 	}
 
 	Number<T>& operator/= (const T& right) {
-		*m_num /= right;
-		m_signal_value_changed.emit (*m_num);
+		m_num /= right;
+		m_signal_value_changed.emit (m_num);
 		return *this;
-	}
-
-	friend T& operator/= (T& left, const Number<T>& right) {
-		left /= *(right.m_num);
-		return left;
-	}
-
-	template<typename Tp>
-	friend Tp& operator/= (Tp& left, const Number<T>& right) {
-		left /= *(right.m_num);
-		return left;
 	}
 
 	Number<T>& operator%= (const Number<T>& right) {
-		*m_num %= *(right.m_num);
-		m_signal_value_changed.emit (*m_num);
-		return *this;
-	}
-
-	template<typename Tp>
-	Number<T>& operator%= (const Number<Tp>& right) {
-		*m_num %= right.get_value ();
-		m_signal_value_changed.emit (*m_num);
+		m_num %= right.m_num;
+		m_signal_value_changed.emit (m_num);
 		return *this;
 	}
 
 	Number<T>& operator%= (const T& right) {
-		*m_num %= right;
-		m_signal_value_changed.emit (*m_num);
+		m_num %= right;
+		m_signal_value_changed.emit (m_num);
 		return *this;
-	}
-
-	friend T& operator%= (T& left, const Number<T>& right) {
-		left %= *(right.m_num);
-		return left;
-	}
-
-	template<typename Tp>
-	friend Tp& operator%= (Tp& left, const Number<T>& right) {
-		left %= *(right.m_num);
-		return left;
 	}
 
 	Number<T>& operator^= (const Number<T>& right) {
-		*m_num ^= *(right.m_num);
-		m_signal_value_changed.emit (*m_num);
-		return *this;
-	}
-
-	template<typename Tp>
-	Number<T>& operator^= (const Number<Tp>& right) {
-		*m_num ^= right.get_value ();
-		m_signal_value_changed.emit (*m_num);
+		m_num ^= right.m_num;
+		m_signal_value_changed.emit (m_num);
 		return *this;
 	}
 
 	Number<T>& operator^= (const T& right) {
-		*m_num ^= right;
-		m_signal_value_changed.emit (*m_num);
+		m_num ^= right;
+		m_signal_value_changed.emit (m_num);
 		return *this;
-	}
-
-	friend T& operator^= (T& left, const Number<T>& right) {
-		left ^= *(right.m_num);
-		return left;
-	}
-
-	template<typename Tp>
-	friend Tp& operator^= (Tp& left, const Number<T>& right) {
-		left ^= *(right.m_num);
-		return left;
 	}
 
 	Number<T>& operator&= (const Number<T>& right) {
-		*m_num &= *(right.m_num);
-		m_signal_value_changed.emit (*m_num);
-		return *this;
-	}
-
-	template<typename Tp>
-	Number<T>& operator&= (const Number<Tp>& right) {
-		*m_num &= right.get_value ();
-		m_signal_value_changed.emit (*m_num);
+		m_num &= right.m_num;
+		m_signal_value_changed.emit (m_num);
 		return *this;
 	}
 
 	Number<T>& operator&= (const T& right) {
-		*m_num &= right;
-		m_signal_value_changed.emit (*m_num);
+		m_num &= right;
+		m_signal_value_changed.emit (m_num);
 		return *this;
-	}
-
-	friend T& operator&= (T& left, const Number<T>& right) {
-		left &= *(right.m_num);
-		return left;
-	}
-
-	template<typename Tp>
-	friend Tp& operator&= (Tp& left, const Number<T>& right) {
-		left &= *(right.m_num);
-		return left;
 	}
 
 	Number<T>& operator|= (const Number<T>& right) {
-		*m_num |= *(right.m_num);
-		m_signal_value_changed.emit (*m_num);
-		return *this;
-	}
-
-	template<typename Tp>
-	Number<T>& operator|= (const Number<Tp>& right) {
-		*m_num |= right.get_value ();
-		m_signal_value_changed.emit (*m_num);
+		m_num |= right.m_num;
+		m_signal_value_changed.emit (m_num);
 		return *this;
 	}
 
 	Number<T>& operator|= (const T& right) {
-		*m_num |= right;
-		m_signal_value_changed.emit (*m_num);
+		m_num |= right;
+		m_signal_value_changed.emit (m_num);
 		return *this;
-	}
-
-	friend T& operator|= (T& left, const Number<T>& right) {
-		left |= *(right.m_num);
-		return left;
-	}
-
-	template<typename Tp>
-	friend Tp& operator|= (Tp& left, const Number<T>& right) {
-		left |= *(right.m_num);
-		return left;
 	}
 
 	Number<T>& operator>>= (const Number<T>& right) {
-		*m_num >>= *(right.m_num);
-		m_signal_value_changed.emit (*m_num);
-		return *this;
-	}
-
-	template<typename Tp>
-	Number<T>& operator>>= (const Number<Tp>& right) {
-		*m_num >>= right.get_value ();
-		m_signal_value_changed.emit (*m_num);
+		m_num >>= right.m_num;
+		m_signal_value_changed.emit (m_num);
 		return *this;
 	}
 
 	Number<T>& operator>>= (const T& right) {
-		*m_num >>= right;
-		m_signal_value_changed.emit (*m_num);
+		m_num >>= right;
+		m_signal_value_changed.emit (m_num);
 		return *this;
-	}
-
-	friend T& operator>>= (T& left, const Number<T>& right) {
-		left >>= *(right.m_num);
-		return left;
-	}
-
-	template<typename Tp>
-	friend Tp& operator>>= (Tp& left, const Number<T>& right) {
-		left >>= *(right.m_num);
-		return left;
 	}
 
 	Number<T>& operator<<= (const Number<T>& right) {
-		*m_num <<= *(right.m_num);
-		m_signal_value_changed.emit (*m_num);
-		return *this;
-	}
-
-	template<typename Tp>
-	Number<T>& operator<<= (const Number<Tp>& right) {
-		*m_num <<= right.get_value ();
-		m_signal_value_changed.emit (*m_num);
+		m_num <<= right.m_num;
+		m_signal_value_changed.emit (m_num);
 		return *this;
 	}
 
 	Number<T>& operator<<= (const T& right) {
-		*m_num <<= right;
-		m_signal_value_changed.emit (*m_num);
+		m_num <<= right;
+		m_signal_value_changed.emit (m_num);
 		return *this;
 	}
 
-	friend T& operator<<= (T& left, const Number<T>& right) {
-		left <<= *(right.m_num);
-		return left;
-	}
-
-	template<typename Tp>
-	friend Tp& operator<<= (Tp& left, const Number<T>& right) {
-		left <<= *(right.m_num);
-		return left;
-	}
-
+#if 0
 	friend T operator+ (const Number<T>& left, const Number<T>& right) {
 		return T (*(left.m_num) + *(right.m_num));
 	}
@@ -695,6 +522,7 @@ public:
 	friend bool operator|| (const T& left, const Number<T>& right) {
 		return left || *(right.m_num);
 	}
+#endif
 };
 
 #endif //NUMBER_HH

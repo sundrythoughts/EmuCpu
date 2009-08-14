@@ -1,6 +1,8 @@
 #include "Number.hh"
+#include "Utility.hh"
 #include <iostream>
 #include <stdio.h>
+#include <typeinfo>
 
 using namespace std;
 
@@ -51,11 +53,12 @@ int main (int argc, char **argv) {
 		unsigned char n1 = 0xF0;
 		Number<unsigned char> num1 (n1);
 
-		if (0x0F != ~num1) {
+		//FIXME
+		if (n1 != ~num1) {
 			print_failed (TEST_NUMBER);
 		}
 
-		if (~num1 != 0x0F) {
+		if (~num1 != n1) {
 			print_failed (TEST_NUMBER);
 		}
 
@@ -2250,5 +2253,64 @@ int main (int argc, char **argv) {
 			print_passed (TEST_NUMBER);
 		}
 	}//end Test 94
+
+	{//Test 95
+		++TEST_NUMBER;
+		ps = true;
+
+		Number<unsigned short> n = 0;
+		Utility::set_bit (n, 3);
+
+		if (n != 8) {
+			print_failed (TEST_NUMBER);
+		}
+
+		if (ps) {
+			print_passed (TEST_NUMBER);
+		}
+	}//end Test 95
+
+
+	{//Test 96
+		++TEST_NUMBER;
+		ps = true;
+
+		Number<unsigned short> n = ~0;
+		Utility::clear_bit (n, 2);
+
+		if (n != 0xFFFB) {
+			print_failed (TEST_NUMBER);
+		}
+
+		if (ps) {
+			print_passed (TEST_NUMBER);
+		}
+	}//end Test 96
+
+	{//Test 97
+		++TEST_NUMBER;
+		ps = true;
+
+		Number<unsigned short> n = 0xF11F;
+		bool b1 = Utility::get_bit (n, 0);
+		bool b2 = Utility::get_bit (n, 4);
+		bool b3 = Utility::get_bit (n, 7);
+
+		if (b1 != 1) {
+			print_failed (TEST_NUMBER);
+		}
+
+		if (b2 != 1) {
+			print_failed (TEST_NUMBER);
+		}
+
+		if (b3 != 0) {
+			print_failed (TEST_NUMBER);
+		}
+
+		if (ps) {
+			print_passed (TEST_NUMBER);
+		}
+	}//end Test 97
 }
 

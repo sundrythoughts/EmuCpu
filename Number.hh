@@ -23,21 +23,11 @@ public:
 		return m_signal_value_changed;
 	}
 
-	/* Operator Usage
-
-	All unary operators          <---->   member
-	= ( ) [ ] –> –>*             <---->   must be member
-	+= –= /= *= ^=               <---->   member
-	&= |= %= >>= <<=
-	All other binary operators   <---->   non-member
-
-	end Operator Usage */
-
-/*
+	/*
 	operator T () const {
 		return T (*m_num);
 	}
-*/
+	*/
 
 	const T operator+ () {
 		return T (*m_num);
@@ -124,6 +114,12 @@ public:
 		return left;
 	}
 
+	template<typename Tp>
+	friend Tp& operator+= (Tp& left, const Number<T>& right) {
+		left += *(right.m_num);
+		return left;
+	}
+
 	Number<T>& operator-= (const Number<T>& right) {
 		*m_num -= *(right.m_num);
 		m_signal_value_changed.emit (*m_num);
@@ -141,6 +137,17 @@ public:
 		*m_num -= right;
 		m_signal_value_changed.emit (*m_num);
 		return *this;
+	}
+
+	friend T& operator-= (T& left, const Number<T>& right) {
+		left -= *(right.m_num);
+		return left;
+	}
+
+	template<typename Tp>
+	friend Tp& operator-= (Tp& left, const Number<T>& right) {
+		left -= *(right.m_num);
+		return left;
 	}
 
 	Number<T>& operator*= (const Number<T>& right) {
@@ -162,6 +169,17 @@ public:
 		return *this;
 	}
 
+	friend T& operator*= (T& left, const Number<T>& right) {
+		left *= *(right.m_num);
+		return left;
+	}
+
+	template<typename Tp>
+	friend Tp& operator*= (Tp& left, const Number<T>& right) {
+		left *= *(right.m_num);
+		return left;
+	}
+
 	Number<T>& operator/= (const Number<T>& right) {
 		*m_num /= *(right.m_num);
 		m_signal_value_changed.emit (*m_num);
@@ -179,6 +197,17 @@ public:
 		*m_num /= right;
 		m_signal_value_changed.emit (*m_num);
 		return *this;
+	}
+
+	friend T& operator/= (T& left, const Number<T>& right) {
+		left /= *(right.m_num);
+		return left;
+	}
+
+	template<typename Tp>
+	friend Tp& operator/= (Tp& left, const Number<T>& right) {
+		left /= *(right.m_num);
+		return left;
 	}
 
 	Number<T>& operator%= (const Number<T>& right) {
@@ -200,6 +229,17 @@ public:
 		return *this;
 	}
 
+	friend T& operator%= (T& left, const Number<T>& right) {
+		left %= *(right.m_num);
+		return left;
+	}
+
+	template<typename Tp>
+	friend Tp& operator%= (Tp& left, const Number<T>& right) {
+		left %= *(right.m_num);
+		return left;
+	}
+
 	Number<T>& operator^= (const Number<T>& right) {
 		*m_num ^= *(right.m_num);
 		m_signal_value_changed.emit (*m_num);
@@ -217,6 +257,17 @@ public:
 		*m_num ^= right;
 		m_signal_value_changed.emit (*m_num);
 		return *this;
+	}
+
+	friend T& operator^= (T& left, const Number<T>& right) {
+		left ^= *(right.m_num);
+		return left;
+	}
+
+	template<typename Tp>
+	friend Tp& operator^= (Tp& left, const Number<T>& right) {
+		left ^= *(right.m_num);
+		return left;
 	}
 
 	Number<T>& operator&= (const Number<T>& right) {
@@ -238,6 +289,17 @@ public:
 		return *this;
 	}
 
+	friend T& operator&= (T& left, const Number<T>& right) {
+		left &= *(right.m_num);
+		return left;
+	}
+
+	template<typename Tp>
+	friend Tp& operator&= (Tp& left, const Number<T>& right) {
+		left &= *(right.m_num);
+		return left;
+	}
+
 	Number<T>& operator|= (const Number<T>& right) {
 		*m_num |= *(right.m_num);
 		m_signal_value_changed.emit (*m_num);
@@ -255,6 +317,17 @@ public:
 		*m_num |= right;
 		m_signal_value_changed.emit (*m_num);
 		return *this;
+	}
+
+	friend T& operator|= (T& left, const Number<T>& right) {
+		left |= *(right.m_num);
+		return left;
+	}
+
+	template<typename Tp>
+	friend Tp& operator|= (Tp& left, const Number<T>& right) {
+		left |= *(right.m_num);
+		return left;
 	}
 
 	Number<T>& operator>>= (const Number<T>& right) {
@@ -276,6 +349,17 @@ public:
 		return *this;
 	}
 
+	friend T& operator>>= (T& left, const Number<T>& right) {
+		left >>= *(right.m_num);
+		return left;
+	}
+
+	template<typename Tp>
+	friend Tp& operator>>= (Tp& left, const Number<T>& right) {
+		left >>= *(right.m_num);
+		return left;
+	}
+
 	Number<T>& operator<<= (const Number<T>& right) {
 		*m_num <<= *(right.m_num);
 		m_signal_value_changed.emit (*m_num);
@@ -295,6 +379,17 @@ public:
 		return *this;
 	}
 
+	friend T& operator<<= (T& left, const Number<T>& right) {
+		left <<= *(right.m_num);
+		return left;
+	}
+
+	template<typename Tp>
+	friend Tp& operator<<= (Tp& left, const Number<T>& right) {
+		left <<= *(right.m_num);
+		return left;
+	}
+
 	friend T operator+ (const Number<T>& left, const Number<T>& right) {
 		return T (*(left.m_num) + *(right.m_num));
 	}
@@ -306,6 +401,10 @@ public:
 
 	friend T operator+ (const Number<T>& left, const T& right) {
 		return T (*(left.m_num) + right);
+	}
+
+	friend T operator+ (const T& left, const Number<T>& right) {
+		return T (left + *(right.m_num));
 	}
 
 	friend T operator- (const Number<T>& left, const Number<T>& right) {
@@ -321,6 +420,10 @@ public:
 		return T (*(left.m_num) - right);
 	}
 
+	friend T operator- (const T& left, const Number<T>& right) {
+		return T (left - *(right.m_num));
+	}
+
 	friend T operator* (const Number<T>& left, const Number<T>& right) {
 		return T (*(left.m_num) * *(right.m_num));
 	}
@@ -332,6 +435,10 @@ public:
 
 	friend T operator* (const Number<T>& left, const T& right) {
 		return T (*(left.m_num) * right);
+	}
+
+	friend T operator* (const T& left, const Number<T>& right) {
+		return T (left * *(right.m_num));
 	}
 
 	friend T operator/ (const Number<T>& left, const Number<T>& right) {
@@ -347,6 +454,10 @@ public:
 		return T (*(left.m_num) / right);
 	}
 
+	friend T operator/ (const T& left, const Number<T>& right) {
+		return T (left / *(right.m_num));
+	}
+
 	friend T operator% (const Number<T>& left, const Number<T>& right) {
 		return T (*(left.m_num) % *(right.m_num));
 	}
@@ -358,6 +469,10 @@ public:
 
 	friend T operator% (const Number<T>& left, const T& right) {
 		return T (*(left.m_num) % right);
+	}
+
+	friend T operator% (const T& left, const Number<T>& right) {
+		return T (left % *(right.m_num));
 	}
 
 	friend T operator^ (const Number<T>& left, const Number<T>& right) {
@@ -373,6 +488,10 @@ public:
 		return T (*(left.m_num) ^ right);
 	}
 
+	friend T operator^ (const T& left, const Number<T>& right) {
+		return T (left ^ *(right.m_num));
+	}
+
 	friend T operator& (const Number<T>& left, const Number<T>& right) {
 		return T (*(left.m_num) & *(right.m_num));
 	}
@@ -384,6 +503,10 @@ public:
 
 	friend T operator& (const Number<T>& left, const T& right) {
 		return T (*(left.m_num) & right);
+	}
+
+	friend T operator& (const T& left, const Number<T>& right) {
+		return T (left & *(right.m_num));
 	}
 
 	friend T operator| (const Number<T>& left, const Number<T>& right) {
@@ -399,6 +522,10 @@ public:
 		return T (*(left.m_num) | right);
 	}
 
+	friend T operator| (const T& left, const Number<T>& right) {
+		return T (left | *(right.m_num));
+	}
+
 	friend T operator<< (const Number<T>& left, const Number<T>& right) {
 		return T (*(left.m_num) << *(right.m_num));
 	}
@@ -410,6 +537,10 @@ public:
 
 	friend T operator<< (const Number<T>& left, const T& right) {
 		return T (*(left.m_num) << right);
+	}
+
+	friend T operator<< (const T& left, const Number<T>& right) {
+		return T (left << *(right.m_num));
 	}
 
 	friend T operator>> (const Number<T>& left, const Number<T>& right) {
@@ -425,7 +556,10 @@ public:
 		return T (*(left.m_num) >> right);
 	}
 
-	// Conditional operators return true/false:
+	friend T operator>> (const T& left, const Number<T>& right) {
+		return T (left >> *(right.m_num));
+	}
+
 	friend bool operator== (const Number<T>& left, const Number<T>& right) {
 		return *(left.m_num) == *(right.m_num);
 	}
@@ -452,13 +586,6 @@ public:
 		return *(left.m_num) != right.get_value ();
 	}
 
-#if 0
-	template<typename Tp>
-	friend bool operator!= (const Number<Tp>& left, const Number<T>& right) {
-		return left.get_value () != *(right.m_num);
-	}
-#endif
-
 	friend bool operator!= (const Number<T>& left, const T& right) {
 		return *(left.m_num) != right;
 	}
@@ -480,6 +607,10 @@ public:
 		return *(left.m_num) < right;
 	}
 
+	friend bool operator< (const T& left, const Number<T>& right) {
+		return left < *(right.m_num);
+	}
+
 	friend bool operator> (const Number<T>& left, const Number<T>& right) {
 		return *(left.m_num) > *(right.m_num);
 	}
@@ -491,6 +622,10 @@ public:
 
 	friend bool operator> (const Number<T>& left, const T& right) {
 		return *(left.m_num) > right;
+	}
+
+	friend bool operator> (const T& left, const Number<T>& right) {
+		return left > *(right.m_num);
 	}
 
 	friend bool operator<= (const Number<T>& left, const Number<T>& right) {
@@ -506,6 +641,10 @@ public:
 		return *(left.m_num) <= right;
 	}
 
+	friend bool operator<= (const T& left, const Number<T>& right) {
+		return left <= *(right.m_num);
+	}
+
 	friend bool operator>= (const Number<T>& left, const Number<T>& right) {
 		return *(left.m_num) >= *(right.m_num);
 	}
@@ -517,6 +656,10 @@ public:
 
 	friend bool operator>= (const Number<T>& left, const T& right) {
 		return *(left.m_num) >= right;
+	}
+
+	friend bool operator>= (const T& left, const Number<T>& right) {
+		return left >= *(right.m_num);
 	}
 
 	friend bool operator&& (const Number<T>& left, const Number<T>& right) {
@@ -532,6 +675,10 @@ public:
 		return *(left.m_num) && right;
 	}
 
+	friend bool operator&& (const T& left, const Number<T>& right) {
+		return left && *(right.m_num);
+	}
+
 	friend bool operator|| (const Number<T>& left, const Number<T>& right) {
 		return *(left.m_num) || *(right.m_num);
 	}
@@ -543,6 +690,10 @@ public:
 
 	friend bool operator|| (const Number<T>& left, const T& right) {
 		return *(left.m_num) || right;
+	}
+
+	friend bool operator|| (const T& left, const Number<T>& right) {
+		return left || *(right.m_num);
 	}
 };
 

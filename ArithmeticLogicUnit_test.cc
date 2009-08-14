@@ -1,4 +1,7 @@
 #include "ArithmeticLogicUnit.hh"
+#include "ExecutionUnit.hh"
+#include "BusInterfaceUnit.hh"
+#include "Memory.hh"
 #include <iostream>
 
 using namespace std;
@@ -15,7 +18,13 @@ static void print_failed (int i) {
 }
 
 int main (int argc, char **argv) {
+	Memory mem (1048576);
+	BusInterfaceUnit biu;
+	biu.connect_to (mem);
+	ExecutionUnit eu;
+	eu.connect_to (biu);
 	ArithmeticLogicUnit alu;
+	alu.connect_to (eu);
 	int TEST_NUMBER = 0;
 
 	{//Test 1

@@ -8,8 +8,13 @@ ExecutionUnit::connect_to (BusInterfaceUnit &biu) {
 	//FIXME - connect to signals
 }
 
-unsigned short
-ExecutionUnit::get_reg_ax () const {
+BusInterfaceUnit&
+ExecutionUnit::get_bus_interface_unit () {
+	return *m_biu;
+}
+
+unsigned short&
+ExecutionUnit::get_reg_ax () {
 	return m_reg_ax;
 }
 
@@ -18,8 +23,8 @@ ExecutionUnit::set_reg_ax (unsigned short val) {
 	m_reg_ax = val;
 }
 
-unsigned char
-ExecutionUnit::get_reg_ah () const {
+unsigned char&
+ExecutionUnit::get_reg_ah () {
 	unsigned char *al_ah = (unsigned char*)&m_reg_ax;
 	return al_ah[1];
 }
@@ -30,8 +35,8 @@ ExecutionUnit::set_reg_ah (unsigned char val) {
 	al_ah[1] = val;
 }
 
-unsigned char
-ExecutionUnit::get_reg_al () const {
+unsigned char&
+ExecutionUnit::get_reg_al () {
 	unsigned char *al_ah = (unsigned char*)&m_reg_ax;
 	return al_ah[0];
 }
@@ -42,8 +47,8 @@ ExecutionUnit::set_reg_al (unsigned char val) {
 	al_ah[0] = val;
 }
 
-unsigned short
-ExecutionUnit::get_reg_bx () const {
+unsigned short&
+ExecutionUnit::get_reg_bx () {
 	return m_reg_bx;
 }
 
@@ -52,8 +57,8 @@ ExecutionUnit::set_reg_bx (unsigned short val) {
 	m_reg_bx = val;
 }
 
-unsigned char
-ExecutionUnit::get_reg_bh () const {
+unsigned char&
+ExecutionUnit::get_reg_bh () {
 	unsigned char *bl_bh = (unsigned char*)&m_reg_bx;
 	return bl_bh[1];
 }
@@ -64,8 +69,8 @@ ExecutionUnit::set_reg_bh (unsigned char val) {
 	bl_bh[1] = val;
 }
 
-unsigned char
-ExecutionUnit::get_reg_bl () const {
+unsigned char&
+ExecutionUnit::get_reg_bl () {
 	unsigned char *bl_bh = (unsigned char*)&m_reg_bx;
 	return bl_bh[0];
 }
@@ -76,8 +81,8 @@ ExecutionUnit::set_reg_bl (unsigned char val) {
 	bl_bh[0] = val;
 }
 
-unsigned short
-ExecutionUnit::get_reg_cx () const {
+unsigned short&
+ExecutionUnit::get_reg_cx () {
 	return m_reg_cx;
 }
 
@@ -86,8 +91,8 @@ ExecutionUnit::set_reg_cx (unsigned short val) {
 	m_reg_cx = val;
 }
 
-unsigned char
-ExecutionUnit::get_reg_ch () const {
+unsigned char&
+ExecutionUnit::get_reg_ch () {
 	unsigned char *cl_ch = (unsigned char*)&m_reg_cx;
 	return cl_ch[1];
 }
@@ -98,8 +103,8 @@ ExecutionUnit::set_reg_ch (unsigned char val) {
 	cl_ch[1] = val;
 }
 
-unsigned char
-ExecutionUnit::get_reg_cl () const {
+unsigned char&
+ExecutionUnit::get_reg_cl () {
 	unsigned char *cl_ch = (unsigned char*)&m_reg_cx;
 	return cl_ch[0];
 }
@@ -110,8 +115,8 @@ ExecutionUnit::set_reg_cl (unsigned char val) {
 	cl_ch[0] = val;
 }
 
-unsigned short
-ExecutionUnit::get_reg_dx () const {
+unsigned short&
+ExecutionUnit::get_reg_dx () {
 	return m_reg_dx;
 }
 
@@ -120,8 +125,8 @@ ExecutionUnit::set_reg_dx (unsigned short val) {
 	m_reg_dx = val;
 }
 
-unsigned char
-ExecutionUnit::get_reg_dh () const {
+unsigned char&
+ExecutionUnit::get_reg_dh () {
 	unsigned char *dl_dh = (unsigned char*)&m_reg_dx;
 	return dl_dh[1];
 }
@@ -132,8 +137,8 @@ ExecutionUnit::set_reg_dh (unsigned char val) {
 	dl_dh[1] = val;
 }
 
-unsigned char
-ExecutionUnit::get_reg_dl () const {
+unsigned char&
+ExecutionUnit::get_reg_dl () {
 	unsigned char *dl_dh = (unsigned char*)&m_reg_dx;
 	return dl_dh[0];
 }
@@ -144,8 +149,8 @@ ExecutionUnit::set_reg_dl (unsigned char val) {
 	dl_dh[0] = val;
 }
 
-unsigned short
-ExecutionUnit::get_reg_di () const {
+unsigned short&
+ExecutionUnit::get_reg_di () {
 	return m_reg_di;
 }
 
@@ -154,8 +159,8 @@ ExecutionUnit::set_reg_di (unsigned short val) {
 	m_reg_di = val;
 }
 
-unsigned short
-ExecutionUnit::get_reg_si () const {
+unsigned short&
+ExecutionUnit::get_reg_si () {
 	return m_reg_si;
 }
 
@@ -164,8 +169,8 @@ ExecutionUnit::set_reg_si (unsigned short val) {
 	m_reg_si = val;
 }
 
-unsigned short
-ExecutionUnit::get_reg_bp () const {
+unsigned short&
+ExecutionUnit::get_reg_bp () {
 	return m_reg_bp;
 }
 
@@ -174,8 +179,8 @@ ExecutionUnit::set_reg_bp (unsigned short val) {
 	m_reg_bp = val;
 }
 
-unsigned short
-ExecutionUnit::get_reg_sp () const {
+unsigned short&
+ExecutionUnit::get_reg_sp () {
 	return m_reg_sp;
 }
 
@@ -184,8 +189,8 @@ ExecutionUnit::set_reg_sp (unsigned short val) {
 	m_reg_sp = val;
 }
 
-unsigned short
-ExecutionUnit::get_reg_flags () const {
+unsigned short&
+ExecutionUnit::get_reg_flags () {
 	return m_reg_flags;
 }
 

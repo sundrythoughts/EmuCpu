@@ -23,7 +23,7 @@ public:
 	@return true if successful, false if unsuccessful.
 	*/
 	template<typename T>
-	bool read (unsigned int addr, T &dest) const;
+	bool read (unsigned int addr, T* &dest) const;
 
 	/**
 	@brief Write T bytes of data into addr from src.
@@ -40,13 +40,12 @@ public:
 
 template<typename T>
 bool
-Memory::read (unsigned int addr, T &dest) const {
+Memory::read (unsigned int addr, T* &dest) const {
 	if (!(addr + sizeof(T) - 1 < m_memory.size ())) {
 		return false;
 	}
 
-	const T *tmp = (T*)&m_memory[addr];
-	dest = *tmp;
+	dest = (T*)&m_memory[addr];	
 
 	return true;
 }

@@ -37,8 +37,7 @@ public:
 		m_biu = 0;
 	}
 
-	ExecutionUnit (const ExecutionUnit &src) {
-	}
+	ExecutionUnit (const ExecutionUnit &src);
 
 	~ExecutionUnit () {
 	}
@@ -46,104 +45,106 @@ public:
 	/** */
 	void connect_to (BusInterfaceUnit &biu);
 
+	BusInterfaceUnit& get_bus_interface_unit ();
+
 	/** */
-	unsigned short get_reg_ax () const;
+	unsigned short& get_reg_ax ();
 
 	/** */
 	void set_reg_ax (unsigned short val);
 
 	/** */
-	unsigned char get_reg_ah () const;
+	unsigned char& get_reg_ah ();
 
 	/** */
 	void set_reg_ah (unsigned char val);
 
 	/** */
-	unsigned char get_reg_al () const;
+	unsigned char& get_reg_al ();
 
 	/** */
 	void set_reg_al (unsigned char val);
 
 	/** */
-	unsigned short get_reg_bx () const;
+	unsigned short& get_reg_bx ();
 
 	/** */
 	void set_reg_bx (unsigned short val);
 
 	/** */
-	unsigned char get_reg_bh () const;
+	unsigned char& get_reg_bh ();
 
 	/** */
 	void set_reg_bh (unsigned char val);
 
 	/** */
-	unsigned char get_reg_bl () const;
+	unsigned char& get_reg_bl ();
 
 	/** */
 	void set_reg_bl (unsigned char val);
 
 	/** */
-	unsigned short get_reg_cx () const;
+	unsigned short& get_reg_cx ();
 
 	/** */
 	void set_reg_cx (unsigned short val);
 
 	/** */
-	unsigned char get_reg_ch () const;
+	unsigned char& get_reg_ch ();
 
 	/** */
 	void set_reg_ch (unsigned char val);
 
 	/** */
-	unsigned char get_reg_cl () const;
+	unsigned char& get_reg_cl ();
 
 	/** */
 	void set_reg_cl (unsigned char val);
 
 	/** */
-	unsigned short get_reg_dx () const;
+	unsigned short& get_reg_dx ();
 
 	/** */
 	void set_reg_dx (unsigned short val);
 
 	/** */
-	unsigned char get_reg_dh () const;
+	unsigned char& get_reg_dh ();
 
 	/** */
 	void set_reg_dh (unsigned char val);
 
 	/** */
-	unsigned char get_reg_dl () const;
+	unsigned char& get_reg_dl ();
 
 	/** */
 	void set_reg_dl (unsigned char val);
 
 	/** */
-	unsigned short get_reg_di () const;
+	unsigned short& get_reg_di ();
 
 	/** */
 	void set_reg_di (unsigned short val);
 
 	/** */
-	unsigned short get_reg_si () const;
+	unsigned short& get_reg_si ();
 
 	/** */
 	void set_reg_si (unsigned short val);
 
 	/** */
-	unsigned short get_reg_bp () const;
+	unsigned short& get_reg_bp ();
 
 	/** */
 	void set_reg_bp (unsigned short val);
 
 	/** */
-	unsigned short get_reg_sp () const;
+	unsigned short& get_reg_sp ();
 
 	/** */
 	void set_reg_sp (unsigned short val);
 
 	/** */
-	unsigned short get_reg_flags () const;
+	unsigned short& get_reg_flags ();
 
 	/** */
 	void set_reg_flags (unsigned short val);

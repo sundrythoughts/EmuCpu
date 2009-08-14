@@ -19,8 +19,7 @@ public:
 	}
 
 	/** */
-	BusInterfaceUnit (const BusInterfaceUnit &src) {
-	}
+	BusInterfaceUnit (const BusInterfaceUnit &src);
 
 	/** */
 	~BusInterfaceUnit () {
@@ -40,7 +39,7 @@ public:
 	@return true if successful, false if unsuccessful.
 	*/
 	template<typename T>
-	bool read (unsigned short seg, unsigned short offset, T &dest) const;
+	bool read (unsigned short seg, unsigned short offset, T* &dest) const;
 
 	/**
 	@brief Write T bytes of data into addr from src.
@@ -53,31 +52,31 @@ public:
 	bool write (unsigned short seg, unsigned short offset, const T &src);
 
 	/** */
-	unsigned short get_sreg_cs () const;
+	unsigned short& get_sreg_cs ();
 
 	/** */
 	void set_sreg_cs (unsigned short val);
 
 	/** */
-	unsigned short get_sreg_ds () const;
+	unsigned short& get_sreg_ds ();
 
 	/** */
 	void set_sreg_ds (unsigned short val);
 
 	/** */
-	unsigned short get_sreg_es () const;
+	unsigned short& get_sreg_es ();
 
 	/** */
 	void set_sreg_es (unsigned short val);
 
 	/** */
-	unsigned short get_sreg_ss () const;
+	unsigned short& get_sreg_ss ();
 
 	/** */
 	void set_sreg_ss (unsigned short val);
 
 	/** */
-	unsigned short get_reg_ip () const;
+	unsigned short& get_reg_ip ();
 
 	/** */
 	void set_reg_ip (unsigned short val);
@@ -85,7 +84,7 @@ public:
 
 template<typename T>
 bool
-BusInterfaceUnit::read (unsigned short seg, unsigned short offset, T &dest) const {
+BusInterfaceUnit::read (unsigned short seg, unsigned short offset, T* &dest) const {
 	unsigned int phys_addr = seg << 4;
 	phys_addr += offset;
 

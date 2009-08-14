@@ -119,6 +119,11 @@ public:
 		return *this;
 	}
 
+	friend T& operator+= (T& left, const Number<T>& right) {
+		left += *(right.m_num);
+		return left;
+	}
+
 	Number<T>& operator-= (const Number<T>& right) {
 		*m_num -= *(right.m_num);
 		m_signal_value_changed.emit (*m_num);

@@ -23,16 +23,16 @@ static void value_changed (const T& val) {
 int main (int argc, char **argv) {
 	int TEST_NUMBER = 0;
 
-#if 0
+//#if 0
 	{
 		unsigned int n1 = 10;
 		unsigned int n2 = 3;
-		Number<unsigned int> num2;
+		Number<unsigned int> num2 (n2);
 
-		n1 *= num2;
+		n1 += num2;
 		cout << n1 << endl;
 	}
-#endif
+//#endif
 
 	{//Test 1
 		++TEST_NUMBER;

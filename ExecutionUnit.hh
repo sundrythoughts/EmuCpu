@@ -4,148 +4,168 @@
 #include "BusInterfaceUnit.hh"
 #include "Number.hh"
 
+/**
+*/
 class ExecutionUnit {
-	unsigned short m_reg_ax;
-	unsigned short m_reg_bx;
-	unsigned short m_reg_cx;
-	unsigned short m_reg_dx;
+	unsigned short m_ax;
+	unsigned short m_bx;
+	unsigned short m_cx;
+	unsigned short m_dx;
+	unsigned char *m_a;
+	unsigned char *m_b;
+	unsigned char *m_c;
+	unsigned char *m_d;
+	unsigned short m_di;
+	unsigned short m_si;
+	unsigned short m_bp;
+	unsigned short m_sp;
+	unsigned short m_flags;
 
-	unsigned short m_reg_di;
-	unsigned short m_reg_si;
-
-	unsigned short m_reg_bp;
-	unsigned short m_reg_sp;
-
-	unsigned short m_reg_flags;
+	Number<unsigned short> m_reg_ax;
+	Number<unsigned short> m_reg_bx;
+	Number<unsigned short> m_reg_cx;
+	Number<unsigned short> m_reg_dx;
+	Number<unsigned char> m_reg_al;
+	Number<unsigned char> m_reg_bl;
+	Number<unsigned char> m_reg_cl;
+	Number<unsigned char> m_reg_dl;
+	Number<unsigned char> m_reg_ah;
+	Number<unsigned char> m_reg_bh;
+	Number<unsigned char> m_reg_ch;
+	Number<unsigned char> m_reg_dh;
+	Number<unsigned short> m_reg_di;
+	Number<unsigned short> m_reg_si;
+	Number<unsigned short> m_reg_bp;
+	Number<unsigned short> m_reg_sp;
+	Number<unsigned short> m_reg_flags;
 
 	BusInterfaceUnit *m_biu;
 
 public:
-	ExecutionUnit () {
-		m_reg_ax = 0;
-		m_reg_bx = 0;
-		m_reg_cx = 0;
-		m_reg_dx = 0;
-
-		m_reg_di = 0;
-		m_reg_si = 0;
-
-		m_reg_bp = 0;
-		m_reg_sp = 0;
-
-		m_reg_flags = 0;
-
-		m_biu = 0;
+	/** */
+	ExecutionUnit () : m_ax (0), m_bx (0), m_cx (0), m_dx (0),
+	                   m_a ((unsigned char*)&m_ax), m_b ((unsigned char*)&m_bx),
+	                   m_c ((unsigned char*)&m_cx), m_d ((unsigned char*)&m_dx),
+	                   m_di (0), m_si (0), m_bp (0), m_sp (0), m_flags (0),
+	                   m_reg_ax (m_ax), m_reg_bx (m_bx), m_reg_cx (m_cx), m_reg_dx (m_dx),
+	                   m_reg_al (m_a[0]), m_reg_bl (m_b[0]), m_reg_cl (m_c[0]), m_reg_dl (m_d[0]),
+	                   m_reg_ah (m_a[1]), m_reg_bh (m_b[1]), m_reg_ch (m_c[1]), m_reg_dh (m_d[1]),
+	                   m_reg_di (m_di), m_reg_si (m_si), m_reg_bp (m_bp), m_reg_sp (m_sp), m_reg_flags (m_flags),
+	                   m_biu (0)
+	{
 	}
 
+	/** */
 	ExecutionUnit (const ExecutionUnit &src);
 
+	/** */
 	~ExecutionUnit () {
 	}
 
 	/** */
 	void connect_to (BusInterfaceUnit &biu);
 
+	/** */
 	BusInterfaceUnit& get_bus_interface_unit ();
 
 	/** */
-	unsigned short& get_reg_ax ();
+	Number<unsigned short>& get_reg_ax ();
 
 	/** */
 	void set_reg_ax (unsigned short val);
 
 	/** */
-	unsigned char& get_reg_ah ();
+	Number<unsigned char>& get_reg_ah ();
 
 	/** */
 	void set_reg_ah (unsigned char val);
 
 	/** */
-	unsigned char& get_reg_al ();
+	Number<unsigned char>& get_reg_al ();
 
 	/** */
 	void set_reg_al (unsigned char val);
 
 	/** */
-	unsigned short& get_reg_bx ();
+	Number<unsigned short>& get_reg_bx ();
 
 	/** */
 	void set_reg_bx (unsigned short val);
 
 	/** */
-	unsigned char& get_reg_bh ();
+	Number<unsigned char>& get_reg_bh ();
 
 	/** */
 	void set_reg_bh (unsigned char val);
 
 	/** */
-	unsigned char& get_reg_bl ();
+	Number<unsigned char>& get_reg_bl ();
 
 	/** */
 	void set_reg_bl (unsigned char val);
 
 	/** */
-	unsigned short& get_reg_cx ();
+	Number<unsigned short>& get_reg_cx ();
 
 	/** */
 	void set_reg_cx (unsigned short val);
 
 	/** */
-	unsigned char& get_reg_ch ();
+	Number<unsigned char>& get_reg_ch ();
 
 	/** */
 	void set_reg_ch (unsigned char val);
 
 	/** */
-	unsigned char& get_reg_cl ();
+	Number<unsigned char>& get_reg_cl ();
 
 	/** */
 	void set_reg_cl (unsigned char val);
 
 	/** */
-	unsigned short& get_reg_dx ();
+	Number<unsigned short>& get_reg_dx ();
 
 	/** */
 	void set_reg_dx (unsigned short val);
 
 	/** */
-	unsigned char& get_reg_dh ();
+	Number<unsigned char>& get_reg_dh ();
 
 	/** */
 	void set_reg_dh (unsigned char val);
 
 	/** */
-	unsigned char& get_reg_dl ();
+	Number<unsigned char>& get_reg_dl ();
 
 	/** */
 	void set_reg_dl (unsigned char val);
 
 	/** */
-	unsigned short& get_reg_di ();
+	Number<unsigned short>& get_reg_di ();
 
 	/** */
 	void set_reg_di (unsigned short val);
 
 	/** */
-	unsigned short& get_reg_si ();
+	Number<unsigned short>& get_reg_si ();
 
 	/** */
 	void set_reg_si (unsigned short val);
 
 	/** */
-	unsigned short& get_reg_bp ();
+	Number<unsigned short>& get_reg_bp ();
 
 	/** */
 	void set_reg_bp (unsigned short val);
 
 	/** */
-	unsigned short& get_reg_sp ();
+	Number<unsigned short>& get_reg_sp ();
 
 	/** */
 	void set_reg_sp (unsigned short val);
 
 	/** */
-	unsigned short& get_reg_flags ();
+	Number<unsigned short>& get_reg_flags ();
 
 	/** */
 	void set_reg_flags (unsigned short val);

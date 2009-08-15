@@ -4,6 +4,8 @@
 #include "ExecutionUnit.hh"
 #include "Utility.hh"
 
+/**
+*/
 class ArithmeticLogicUnit {
 	ExecutionUnit *m_eunit;
 

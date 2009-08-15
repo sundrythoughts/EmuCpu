@@ -1,5 +1,5 @@
 #include "BusInterfaceUnit.hh"
-#include <iostream>
+#include "Number.hh"
 
 using namespace std;
 
@@ -100,12 +100,12 @@ int main (int argc, char **argv) {
 		unsigned short seg = 0;
 		unsigned short offset = 0;
 		int src = 250;
-		int *dest;
+		int dest;
 		biu.write (seg, offset, src);
 		if (!biu.read (seg, offset, dest)) {
 			print_failed (TEST_NUMBER);
 		}
-		if (src != *dest) {
+		if (src != dest) {
 			print_failed (TEST_NUMBER);
 		}
 
@@ -121,12 +121,12 @@ int main (int argc, char **argv) {
 		unsigned short seg = 0xF000;
 		unsigned short offset = 0xFFFF;
 		char src = 'J';
-		char *dest;
+		char dest;
 		biu.write (seg, offset, src);
 		if (!biu.read (seg, offset, dest)) {
 			print_failed (TEST_NUMBER);
 		}
-		if (src != *dest) {
+		if (src != dest) {
 			print_failed (TEST_NUMBER);
 		}
 
@@ -142,7 +142,7 @@ int main (int argc, char **argv) {
 		unsigned short seg = 0xF000;
 		unsigned short offset = 0xFFFF;
 		int src = 10;
-		int *dest;
+		int dest;
 		biu.write (seg, offset, src);
 		if (biu.read (seg, offset, dest)) {
 			print_failed (TEST_NUMBER);
@@ -154,6 +154,28 @@ int main (int argc, char **argv) {
 	}//end Test 8
 
 	{//Test 9
+		++TEST_NUMBER;
+		ps = true;
+		unsigned short seg = 0;
+		unsigned short offset = 0;
+		Number<int> src = 113;
+		Number<int> dest;
+		biu.write (seg, offset, src);
+
+		if (!biu.read (seg, offset, dest)) {
+			print_failed (TEST_NUMBER);
+		}
+		if (src != dest) {
+			print_failed (TEST_NUMBER);
+		}
+
+		if (ps) {
+			print_passed (TEST_NUMBER);
+		}
+	}//end Test 9
+
+
+	{//Test 10
 		++TEST_NUMBER;
 		ps = true;
 
@@ -179,6 +201,6 @@ int main (int argc, char **argv) {
 		if (ps) {
 			print_passed (TEST_NUMBER);
 		}
-	}//end Test 9
+	}//end Test 10
 }
 

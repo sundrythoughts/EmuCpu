@@ -13,7 +13,7 @@ ExecutionUnit::get_bus_interface_unit () {
 	return *m_biu;
 }
 
-unsigned short&
+Number<unsigned short>&
 ExecutionUnit::get_reg_ax () {
 	return m_reg_ax;
 }
@@ -23,31 +23,27 @@ ExecutionUnit::set_reg_ax (unsigned short val) {
 	m_reg_ax = val;
 }
 
-unsigned char&
+Number<unsigned char>&
 ExecutionUnit::get_reg_ah () {
-	unsigned char *al_ah = (unsigned char*)&m_reg_ax;
-	return al_ah[1];
+	return m_reg_ah;
 }
 
 void
 ExecutionUnit::set_reg_ah (unsigned char val) {
-	char *al_ah = (char*)&m_reg_ax;
-	al_ah[1] = val;
+	m_reg_ah = val;
 }
 
-unsigned char&
+Number<unsigned char>&
 ExecutionUnit::get_reg_al () {
-	unsigned char *al_ah = (unsigned char*)&m_reg_ax;
-	return al_ah[0];
+	return m_reg_al;
 }
 
 void
 ExecutionUnit::set_reg_al (unsigned char val) {
-	unsigned char *al_ah = (unsigned char*)&m_reg_ax;
-	al_ah[0] = val;
+	m_reg_al = val;
 }
 
-unsigned short&
+Number<unsigned short>&
 ExecutionUnit::get_reg_bx () {
 	return m_reg_bx;
 }
@@ -57,31 +53,27 @@ ExecutionUnit::set_reg_bx (unsigned short val) {
 	m_reg_bx = val;
 }
 
-unsigned char&
+Number<unsigned char>&
 ExecutionUnit::get_reg_bh () {
-	unsigned char *bl_bh = (unsigned char*)&m_reg_bx;
-	return bl_bh[1];
+	return m_reg_bh;
 }
 
 void
 ExecutionUnit::set_reg_bh (unsigned char val) {
-	unsigned char *bl_bh = (unsigned char*)&m_reg_bx;
-	bl_bh[1] = val;
+	m_reg_bh = val;
 }
 
-unsigned char&
+Number<unsigned char>&
 ExecutionUnit::get_reg_bl () {
-	unsigned char *bl_bh = (unsigned char*)&m_reg_bx;
-	return bl_bh[0];
+	return m_reg_bl;
 }
 
 void
 ExecutionUnit::set_reg_bl (unsigned char val) {
-	unsigned char *bl_bh = (unsigned char*)&m_reg_bx;
-	bl_bh[0] = val;
+	m_reg_bl = val;
 }
 
-unsigned short&
+Number<unsigned short>&
 ExecutionUnit::get_reg_cx () {
 	return m_reg_cx;
 }
@@ -91,31 +83,27 @@ ExecutionUnit::set_reg_cx (unsigned short val) {
 	m_reg_cx = val;
 }
 
-unsigned char&
+Number<unsigned char>&
 ExecutionUnit::get_reg_ch () {
-	unsigned char *cl_ch = (unsigned char*)&m_reg_cx;
-	return cl_ch[1];
+	return m_reg_ch;
 }
 
 void
 ExecutionUnit::set_reg_ch (unsigned char val) {
-	unsigned char *cl_ch = (unsigned char*)&m_reg_cx;
-	cl_ch[1] = val;
+	m_reg_ch = val;
 }
 
-unsigned char&
+Number<unsigned char>&
 ExecutionUnit::get_reg_cl () {
-	unsigned char *cl_ch = (unsigned char*)&m_reg_cx;
-	return cl_ch[0];
+	return m_reg_cl;
 }
 
 void
 ExecutionUnit::set_reg_cl (unsigned char val) {
-	unsigned char *cl_ch = (unsigned char*)&m_reg_cx;
-	cl_ch[0] = val;
+	m_reg_cl = val;
 }
 
-unsigned short&
+Number<unsigned short>&
 ExecutionUnit::get_reg_dx () {
 	return m_reg_dx;
 }
@@ -125,31 +113,27 @@ ExecutionUnit::set_reg_dx (unsigned short val) {
 	m_reg_dx = val;
 }
 
-unsigned char&
+Number<unsigned char>&
 ExecutionUnit::get_reg_dh () {
-	unsigned char *dl_dh = (unsigned char*)&m_reg_dx;
-	return dl_dh[1];
+	return m_reg_dh;
 }
 
 void
 ExecutionUnit::set_reg_dh (unsigned char val) {
-	unsigned char *dl_dh = (unsigned char*)&m_reg_dx;
-	dl_dh[1] = val;
+	m_reg_dh = val;
 }
 
-unsigned char&
+Number<unsigned char>&
 ExecutionUnit::get_reg_dl () {
-	unsigned char *dl_dh = (unsigned char*)&m_reg_dx;
-	return dl_dh[0];
+	return m_reg_dl;
 }
 
 void
 ExecutionUnit::set_reg_dl (unsigned char val) {
-	unsigned char *dl_dh = (unsigned char*)&m_reg_dx;
-	dl_dh[0] = val;
+	m_reg_dl = val;
 }
 
-unsigned short&
+Number<unsigned short>&
 ExecutionUnit::get_reg_di () {
 	return m_reg_di;
 }
@@ -159,7 +143,7 @@ ExecutionUnit::set_reg_di (unsigned short val) {
 	m_reg_di = val;
 }
 
-unsigned short&
+Number<unsigned short>&
 ExecutionUnit::get_reg_si () {
 	return m_reg_si;
 }
@@ -169,7 +153,7 @@ ExecutionUnit::set_reg_si (unsigned short val) {
 	m_reg_si = val;
 }
 
-unsigned short&
+Number<unsigned short>&
 ExecutionUnit::get_reg_bp () {
 	return m_reg_bp;
 }
@@ -179,7 +163,7 @@ ExecutionUnit::set_reg_bp (unsigned short val) {
 	m_reg_bp = val;
 }
 
-unsigned short&
+Number<unsigned short>&
 ExecutionUnit::get_reg_sp () {
 	return m_reg_sp;
 }
@@ -189,7 +173,7 @@ ExecutionUnit::set_reg_sp (unsigned short val) {
 	m_reg_sp = val;
 }
 
-unsigned short&
+Number<unsigned short>&
 ExecutionUnit::get_reg_flags () {
 	return m_reg_flags;
 }

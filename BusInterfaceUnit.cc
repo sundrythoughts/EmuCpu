@@ -14,7 +14,7 @@ BusInterfaceUnit::connect_to (Memory &mem) {
 	//FIXME - connect to signals
 }
 
-unsigned short&
+Number<unsigned short>&
 BusInterfaceUnit::get_sreg_cs () {
 	return m_sreg_cs;
 }
@@ -24,7 +24,7 @@ BusInterfaceUnit::set_sreg_cs (unsigned short val) {
 	m_sreg_cs = val;
 }
 
-unsigned short&
+Number<unsigned short>&
 BusInterfaceUnit::get_sreg_ds () {
 	return m_sreg_ds;
 }
@@ -34,7 +34,7 @@ BusInterfaceUnit::set_sreg_ds (unsigned short val) {
 	m_sreg_ds = val;
 }
 
-unsigned short&
+Number<unsigned short>&
 BusInterfaceUnit::get_sreg_es () {
 	return m_sreg_es;
 }
@@ -44,7 +44,7 @@ BusInterfaceUnit::set_sreg_es (unsigned short val) {
 	m_sreg_es = val;
 }
 
-unsigned short&
+Number<unsigned short>&
 BusInterfaceUnit::get_sreg_ss () {
 	return m_sreg_ss;
 }
@@ -54,7 +54,7 @@ BusInterfaceUnit::set_sreg_ss (unsigned short val) {
 	m_sreg_ss = val;
 }
 
-unsigned short&
+Number<unsigned short>&
 BusInterfaceUnit::get_reg_ip () {
 	return m_reg_ip;
 }

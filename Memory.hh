@@ -1,8 +1,11 @@
 #ifndef MEMORY_HH
 #define MEMORY_HH
 
+#include "Number.hh"
 #include <vector>
 
+/**
+*/
 class Memory {
 	std::vector<unsigned char> m_memory;
 
@@ -23,7 +26,11 @@ public:
 	@return true if successful, false if unsuccessful.
 	*/
 	template<typename T>
-	bool read (unsigned int addr, T* &dest) const;
+	bool read (unsigned int addr, T &dest) const;
+
+	/** */
+	template<typename T>
+	bool read (unsigned int addr, Number<T> &dest) const;
 
 	/**
 	@brief Write T bytes of data into addr from src.
@@ -35,17 +42,33 @@ public:
 	bool write (unsigned int addr, const T &src);
 
 	/** */
+	template<typename T>
+	bool write (unsigned int addr, const Number<T> &src);
+
+	/** */
 	void print_memory_dump (unsigned int start, unsigned int end);
 };
 
 template<typename T>
 bool
-Memory::read (unsigned int addr, T* &dest) const {
+Memory::read (unsigned int addr, T &dest) const {
 	if (!(addr + sizeof(T) - 1 < m_memory.size ())) {
 		return false;
 	}
 
-	dest = (T*)&m_memory[addr];	
+	dest = *((T*)&m_memory[addr]);	
+
+	return true;
+}
+
+template<typename T>
+bool
+Memory::read (unsigned int addr, Number<T> &dest) const {
+	if (!(addr + sizeof(T) - 1 < m_memory.size ())) {
+		return false;
+	}
+
+	dest = *((T*)&m_memory[addr]);	
 
 	return true;
 }
@@ -53,6 +76,19 @@ Memory::read (unsigned int addr, T* &dest) const {
 template<typename T>
 bool
 Memory::write (unsigned int addr, const T &src) {
+	if (!(addr + sizeof(T) - 1 < m_memory.size ())) {
+		return false;
+	}
+
+	T *tmp = (T*)&m_memory[addr];
+	*tmp = src;
+
+	return true;
+}
+
+template<typename T>
+bool
+Memory::write (unsigned int addr, const Number<T> &src) {
 	if (!(addr + sizeof(T) - 1 < m_memory.size ())) {
 		return false;
 	}

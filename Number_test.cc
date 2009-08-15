@@ -1,8 +1,6 @@
 #include "Number.hh"
 #include "Utility.hh"
 #include <iostream>
-#include <stdio.h>
-#include <typeinfo>
 
 using namespace std;
 

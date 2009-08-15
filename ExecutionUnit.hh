@@ -2,6 +2,7 @@
 #define EXECUTION_UNIT_HH
 
 #include "BusInterfaceUnit.hh"
+#include "Number.hh"
 
 class ExecutionUnit {
 	unsigned short m_reg_ax;

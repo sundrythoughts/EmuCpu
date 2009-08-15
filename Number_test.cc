@@ -25,6 +25,7 @@ static void value_changed (const T& val) {
 int main (int argc, char **argv) {
 	int TEST_NUMBER = 0;
 
+//#if 0
 	{//Test 1
 		++TEST_NUMBER;
 		ps = true;
@@ -2312,5 +2313,6 @@ int main (int argc, char **argv) {
 			print_passed (TEST_NUMBER);
 		}
 	}//end Test 97
+//#endif
 }
 

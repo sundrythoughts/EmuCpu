@@ -8,8 +8,8 @@ ArithmeticLogicUnit::connect_to (ExecutionUnit &eu) {
 //FIXME - fix flags
 void
 ArithmeticLogicUnit::op_aaa () {
-	unsigned char &al = m_eunit->get_reg_al ();
-	unsigned char &ah = m_eunit->get_reg_ah ();
+	Number<unsigned char> &al = m_eunit->get_reg_al ();
+	Number<unsigned char> &ah = m_eunit->get_reg_ah ();
 	bool af = m_eunit->get_reg_flags_af ();
 
 	if ((al & 0x0F) > 9 || af) {
@@ -28,8 +28,8 @@ ArithmeticLogicUnit::op_aaa () {
 //FIXME - fix flags
 void
 ArithmeticLogicUnit::op_aad () {
-	unsigned char &al = m_eunit->get_reg_al ();
-	unsigned char &ah = m_eunit->get_reg_ah ();
+	Number<unsigned char> &al = m_eunit->get_reg_al ();
+	Number<unsigned char> &ah = m_eunit->get_reg_ah ();
 
 	al = ah * 0x0A + al;
 	ah = 0;
@@ -38,8 +38,8 @@ ArithmeticLogicUnit::op_aad () {
 //FIXME - fix flags
 void
 ArithmeticLogicUnit::op_aam () {
-	unsigned char &al = m_eunit->get_reg_al ();
-	unsigned char &ah = m_eunit->get_reg_ah ();
+	Number<unsigned char> &al = m_eunit->get_reg_al ();
+	Number<unsigned char> &ah = m_eunit->get_reg_ah ();
 
 	ah = al / 0x0A;
 	al %= 0x0A;
@@ -48,8 +48,8 @@ ArithmeticLogicUnit::op_aam () {
 //FIXME - fix flags
 void
 ArithmeticLogicUnit::op_aas () {
-	unsigned char &al = m_eunit->get_reg_al ();
-	unsigned char &ah = m_eunit->get_reg_ah ();
+	Number<unsigned char> &al = m_eunit->get_reg_al ();
+	Number<unsigned char> &ah = m_eunit->get_reg_ah ();
 	bool af = m_eunit->get_reg_flags_af ();
 
 	if ((al & 0x0F) > 9 || af) {
@@ -68,8 +68,8 @@ ArithmeticLogicUnit::op_aas () {
 //FIXME - fix flags
 void
 ArithmeticLogicUnit::op_cbw () {
-	unsigned char &al = m_eunit->get_reg_al ();
-	unsigned char &ah = m_eunit->get_reg_ah ();
+	Number<unsigned char> &al = m_eunit->get_reg_al ();
+	Number<unsigned char> &ah = m_eunit->get_reg_ah ();
 
 	if (al < 0x80) {
 		ah = 0;
@@ -93,8 +93,8 @@ ArithmeticLogicUnit::op_cmc () {
 
 void
 ArithmeticLogicUnit::op_cwd () {
-	unsigned short &ax = m_eunit->get_reg_ax ();
-	unsigned short &dx = m_eunit->get_reg_dx ();
+	Number<unsigned short> &ax = m_eunit->get_reg_ax ();
+	Number<unsigned short> &dx = m_eunit->get_reg_dx ();
 
 	if (ax < 0x8000) {
 		dx = 0;
@@ -107,10 +107,34 @@ ArithmeticLogicUnit::op_cwd () {
 //FIXME - fix flags
 void
 ArithmeticLogicUnit::op_daa () {
+	Number<unsigned char> &al = m_eunit->get_reg_al ();
+	bool af = m_eunit->get_reg_flags_af ();
+	bool cf = m_eunit->get_reg_flags_cf ();
+
+	if ((al & 0x0F) > 9 || af) {
+		al += 6;
+		m_eunit->set_reg_flags_af (true);
+	}
+	if (al > 0x9F || cf) {
+		al += 0x60;
+		m_eunit->set_reg_flags_cf (true);
+	}
 }
 
 //FIXME - fix flags
 void
 ArithmeticLogicUnit::op_das () {
+	Number<unsigned char> &al = m_eunit->get_reg_al ();
+	bool af = m_eunit->get_reg_flags_af ();
+	bool cf = m_eunit->get_reg_flags_cf ();
+
+	if ((al & 0x0F) > 9 || af) {
+		al -= 6;
+		m_eunit->set_reg_flags_af (true);
+	}
+	if (al > 0x9F || cf) {
+		al -= 0x60;
+		m_eunit->set_reg_flags_cf (true);
+	}
 }
 

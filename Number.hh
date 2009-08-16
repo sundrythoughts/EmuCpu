@@ -18,27 +18,36 @@ public:
 		//std::cout << "Number ()" << std::endl;
 		m_num = new T ();
 		m_deletable = true;
+
+		m_signal_value_changed.emit (*m_num);
 	}
 
 	/** */
 	Number (const Number<T> &src) : sigc::trackable () {
 		//std::cout << "Number (const Number<T> &src)" << std::endl;
-		if (src.m_deletable) {
+		//if (src.m_deletable) {
 			m_num = new T ();
 			*m_num = *(src.m_num);
 			m_deletable = true;
+		/*
 		}
 		else {
 			m_num = src.m_num;
 			m_deletable = false;
 		}
+		*/
+
+		m_signal_value_changed.emit (*m_num);
 	}
 
 	/** */
 	Number (T &r) {
 		//std::cout << "Number (T &r)" << std::endl;
+		//std::cout << "Number (" << r << ")" << std::endl;
 		m_num = &r;
 		m_deletable = false;
+
+		m_signal_value_changed.emit (*m_num);
 	}
 
 	/** */
@@ -47,6 +56,8 @@ public:
 		m_num = new T ();
 		*m_num = r;
 		m_deletable = true;
+
+		m_signal_value_changed.emit (*m_num);
 	}
 
 	/** */
@@ -55,6 +66,26 @@ public:
 		if (m_deletable) {
 			delete m_num;
 		}
+	}
+
+	/** */
+	void reinitialize (T &r) {
+		if (m_deletable) {
+			delete m_num;
+			m_deletable = false;
+		}
+
+		m_num = &r;
+	}
+
+	/** */
+	void reinitialize (const T &r) {
+		if (!m_deletable) {
+			m_num = new T ();
+			m_deletable = true;
+		}
+
+		*m_num = r;
 	}
 
 	/** */

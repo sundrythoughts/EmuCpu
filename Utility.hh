@@ -10,6 +10,9 @@ public:
 	static bool get_bit (const T &val, unsigned int n);
 
 	template<typename T>
+	static void set_bit (T &val, unsigned int n, bool b);
+
+	template<typename T>
 	static void set_bit (T &val, unsigned int n);
 
 	template<typename T>
@@ -23,6 +26,17 @@ Utility::get_bit (const T &val, unsigned int n) {
 	mask <<= n;
 	T ret = val & mask;
 	return ret == mask;
+}
+
+template<typename T>
+void
+Utility::set_bit (T &val, unsigned int n, bool b) {
+	if (b) {
+		Utility::set_bit (val, n);
+	}
+	else {
+		Utility::clear_bit (val, n);
+	}
 }
 
 template<typename T>

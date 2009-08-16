@@ -1,5 +1,6 @@
 #include "ExecutionUnit.hh"
 #include <iostream>
+#include <cstdio>
 
 using namespace std;
 
@@ -14,8 +15,17 @@ static void print_failed (int i) {
 	ps = false;
 }
 
+template<typename T>
+static void value_changed (const T& val) {
+	cout << "value_changed: " << val << endl;
+}
+
 int main (int argc, char **argv) {
 	ExecutionUnit cpu;
+
+	//return 0;
+	//cpu.get_reg_ax ().signal_value_changed ().connect (sigc::ptr_fun (&value_changed<unsigned short>));
+
 	int TEST_NUMBER = 0;
 
 	{//Test 1

@@ -3,6 +3,8 @@
 
 #include "BusInterfaceUnit.hh"
 #include "Number.hh"
+#include <iostream>
+#include <cstdio>
 
 /**
 */

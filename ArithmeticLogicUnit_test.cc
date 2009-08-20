@@ -32,11 +32,11 @@ int main (int argc, char **argv) {
 		++TEST_NUMBER;
 		ps = true;
 
-		eu.set_reg_ax (0x8000);
-		eu.set_reg_bx (0x0001);
-		printf ("%x : %x\n", (unsigned int)eu.get_reg_ax (), (unsigned int)eu.get_reg_bx ());
-		alu.op_xchg (eu.get_reg_ax (), eu.get_reg_bx ());
-		printf ("%x : %x\n", (unsigned int)eu.get_reg_ax (), (unsigned int)eu.get_reg_bx ());
+		eu.set_reg_dx (-1);
+		eu.set_reg_ax (15);
+		unsigned short src = 3;
+		alu.op_idiv (src);
+		printf ("%d r%d\n", (short)eu.get_reg_ax (), (short)eu.get_reg_dx ());
 
 		if (ps) {
 			print_passed (TEST_NUMBER);

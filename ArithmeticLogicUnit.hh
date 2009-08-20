@@ -27,18 +27,6 @@ public:
 	void connect_to (ExecutionUnit &eu);
 
 	/** */
-	void op_aaa ();
-
-	/** */
-	void op_aad ();
-
-	/** */
-	void op_aam ();
-
-	/** */
-	void op_aas ();
-
-	/** */
 	template<typename TDest, typename TSrc>
 	void op_adc (TDest &dest, TSrc &src);
 
@@ -49,9 +37,6 @@ public:
 	/** */
 	template<typename TDest, typename TSrc>
 	void op_and (TDest &dest, TSrc &src);
-
-	/** */
-	void op_cbw ();
 
 	/** */
 	void op_cmc ();
@@ -67,45 +52,36 @@ public:
 #endif
 
 	/** */
-	void op_cwd ();
-
-	/** */
-	void op_daa ();
-
-	/** */
-	void op_das ();
-
-	/** */
 	template<typename TDest>
 	void op_dec (TDest &dest);
 
-#if 0
 	/** */
-	template<typename TSrc>
-	void op_div (TSrc &src);
-
-	void
-	op_div (Number<unsigned char> &src);
-
-	void
-	op_div (Number<unsigned short> &src);
-#endif
+	void op_div (const unsigned char &src);
 
 	/** */
-	template<typename TSrc>
-	void op_idiv (TSrc &src);
+	void op_div (const unsigned short &src);
 
 	/** */
-	template<typename TSrc>
-	void op_imul (TSrc &src);
+	void op_idiv (const unsigned char &src);
+
+	/** */
+	void op_idiv (const unsigned short &src);
+
+	/** */
+	void op_imul (const unsigned char &src);
+
+	/** */
+	void op_imul (const unsigned short &src);
 
 	/** */
 	template<typename TDest>
 	void op_inc (TDest &dest);
 
 	/** */
-	template<typename TSrc>
-	void op_mul (TSrc &src);
+	void op_mul (const unsigned char &src);
+
+	/** */
+	void op_mul (const unsigned short &src);
 
 	/** */
 	template<typename TDest>
@@ -167,12 +143,6 @@ public:
 	template<typename TDest, typename TSrc>
 	void op_sbb (TDest &dest, TSrc &src);
 
-#if 0
-	/** FIXME */
-	template<typename TDest>
-	void op_or (TDest &dest);
-#endif
-
 	/** */
 	template<typename TDest, typename TCount>
 	void op_shl (TDest &dest, const TCount &cnt);
@@ -200,12 +170,6 @@ public:
 	/** */
 	template<typename TDest, typename TSrc>
 	void op_xchg (TDest &dest, TSrc &src);
-
-#if 0
-	/** */
-	template<typename TDest, typename TSrc>
-	void op_xchg (Number<TDest> &dest, TSrc &src);
-#endif
 
 	/** */
 	template<typename TDest, typename TSrc>
@@ -244,6 +208,7 @@ ArithmeticLogicUnit::op_and (TDest &dest, TSrc &src) {
 template<typename TDest, typename TSrc>
 void
 ArithmeticLogicUnit::op_cmp (TDest &dest, TSrc &src) {
+	TDest result = dest - src;
 }
 
 #if 0
@@ -261,72 +226,11 @@ ArithmeticLogicUnit::op_dec (TDest &dest) {
 	--dest;
 }
 
-#if 0
-//FIXME - make overloaded instead of templated - fix flags
-template<typename TSrc>
-void
-ArithmeticLogicUnit::op_div (TSrc &src) {
-}
-
-void
-ArithmeticLogicUnit::op_div (Number<unsigned char> &src) {
-	Number<unsigned short> &ax = m_eunit->get_reg_ax ();
-	Number<unsigned char> &al = m_eunit->get_reg_al ();
-	Number<unsigned char> &ah = m_eunit->get_reg_ah ();
-
-	Number<unsigned char> tmp = src;
-	if (tmp / ax > 0xFF) {
-		//FIXME - interrupt 0
-	}
-	else {
-		al = tmp / ax;
-		ah = tmp % ax;
-	}
-}
-
-void
-ArithmeticLogicUnit::op_div (Number<unsigned short> &src) {
-	Number<unsigned short> &ax = m_eunit->get_reg_ax ();
-	Number<unsigned short> &dx = m_eunit->get_reg_ax ();
-	unsigned int dx_ax = dx;
-	dx_ax <<= 16;
-	dx_ax += ax;
-
-	Number<unsigned short> tmp = src;
-
-	if (tmp / dx_ax > 0xFFFF) {
-		//FIXME - interrupt 0
-	}
-	else {
-		ax = tmp / dx_ax;
-		dx = tmp % dx_ax;
-	}
-}
-#endif
-
-//FIXME - make overloaded instead of templated - fix flags
-template<typename TSrc>
-void
-ArithmeticLogicUnit::op_idiv (TSrc &src) {
-}
-
-//FIXME - make overloaded instead of templated - fix flags
-template<typename TSrc>
-void
-ArithmeticLogicUnit::op_imul (TSrc &src) {
-}
-
 //FIXME - fix flags
 template<typename TDest>
 void
 ArithmeticLogicUnit::op_inc (TDest &dest) {
 	++dest;
-}
-
-//FIXME - make overloaded instead of templated - fix flags
-template<typename TSrc>
-void
-ArithmeticLogicUnit::op_mul (TSrc &src) {
 }
 
 //FIXME - fix flags
@@ -548,14 +452,6 @@ ArithmeticLogicUnit::op_sbb (TDest &dest, TSrc &src) {
 	}
 }
 
-#if 0
-//FIXME - fix flags
-template<typename TDest>
-void
-ArithmeticLogicUnit::op_or (TDest &dest) {
-}
-#endif
-
 //FIXME - fix flags
 template<typename TDest, typename TCount>
 void
@@ -615,6 +511,9 @@ ArithmeticLogicUnit::op_sub (TDest &dest, TSrc &src) {
 template<typename TDest, typename TSrc>
 void
 ArithmeticLogicUnit::op_test (TDest &dest, TSrc &src) {
+	TDest result = dest & src;
+	m_eunit->set_reg_flags_cf (false);
+	m_eunit->set_reg_flags_of (false);
 }
 
 //FIXME - fix flags
@@ -625,18 +524,6 @@ ArithmeticLogicUnit::op_xchg (TDest &dest, TSrc &src) {
 	dest = src;
 	src = tmp;
 }
-
-#if 0
-//FIXME - fix flags
-template<typename TDest, typename TSrc>
-void
-ArithmeticLogicUnit::op_xchg (Number<TDest> &dest, TSrc &src) {
-	Number<TDest> tmp;
-	tmp = dest;
-	dest = src;
-	src = tmp;
-}
-#endif
 
 //FIXME - fix flags
 template<typename TDest, typename TSrc>

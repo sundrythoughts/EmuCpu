@@ -64,3 +64,18 @@ BusInterfaceUnit::set_reg_ip (unsigned short val) {
 	m_reg_ip = val;
 }
 
+void
+BusInterfaceUnit::set_seg_override (unsigned short val) {
+	m_seg_override = val;
+}
+
+MemoryAddress*
+BusInterfaceUnit::get_memory_address (unsigned short seg, unsigned short offset) {
+	if (m_seg_override != (unsigned short)-1) {
+		seg = m_seg_override;
+		m_seg_override = (unsigned short)-1;
+	}
+
+	return new MemoryAddress (m_memory, seg, offset);
+}
+

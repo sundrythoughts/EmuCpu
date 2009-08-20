@@ -1,4 +1,5 @@
 #include "ArithmeticLogicUnit.hh"
+#include <iostream>
 
 void
 ArithmeticLogicUnit::connect_to (ExecutionUnit &eu) {
@@ -6,79 +7,6 @@ ArithmeticLogicUnit::connect_to (ExecutionUnit &eu) {
 }
 
 //FIXME - fix flags
-void
-ArithmeticLogicUnit::op_aaa () {
-	Number<unsigned char> &al = m_eunit->get_reg_al ();
-	Number<unsigned char> &ah = m_eunit->get_reg_ah ();
-	bool af = m_eunit->get_reg_flags_af ();
-
-	if ((al & 0x0F) > 9 || af) {
-		al += 6;
-		ah += 1;
-		m_eunit->set_reg_flags_af (true);
-		m_eunit->set_reg_flags_cf (true);
-	}
-	else {
-		m_eunit->set_reg_flags_af (false);
-		m_eunit->set_reg_flags_cf (false);
-	}
-	al &= 0x0F;
-}
-
-//FIXME - fix flags
-void
-ArithmeticLogicUnit::op_aad () {
-	Number<unsigned char> &al = m_eunit->get_reg_al ();
-	Number<unsigned char> &ah = m_eunit->get_reg_ah ();
-
-	al = ah * 0x0A + al;
-	ah = 0;
-}
-
-//FIXME - fix flags
-void
-ArithmeticLogicUnit::op_aam () {
-	Number<unsigned char> &al = m_eunit->get_reg_al ();
-	Number<unsigned char> &ah = m_eunit->get_reg_ah ();
-
-	ah = al / 0x0A;
-	al %= 0x0A;
-}
-
-//FIXME - fix flags
-void
-ArithmeticLogicUnit::op_aas () {
-	Number<unsigned char> &al = m_eunit->get_reg_al ();
-	Number<unsigned char> &ah = m_eunit->get_reg_ah ();
-	bool af = m_eunit->get_reg_flags_af ();
-
-	if ((al & 0x0F) > 9 || af) {
-		al -= 6;
-		ah -= 1;
-		m_eunit->set_reg_flags_af (true);
-		m_eunit->set_reg_flags_cf (true);
-	}
-	else {
-		m_eunit->set_reg_flags_af (false);
-		m_eunit->set_reg_flags_cf (false);
-	}
-	al &= 0x0F;
-}
-
-//FIXME - fix flags
-void
-ArithmeticLogicUnit::op_cbw () {
-	Number<unsigned char> &al = m_eunit->get_reg_al ();
-	Number<unsigned char> &ah = m_eunit->get_reg_ah ();
-
-	if (al < 0x80) {
-		ah = 0;
-	}
-	else {
-		ah = 0xFF;
-	}
-}
-
 void
 ArithmeticLogicUnit::op_cmc () {
 	bool cf = m_eunit->get_reg_flags_cf ();
@@ -91,50 +19,116 @@ ArithmeticLogicUnit::op_cmc () {
 	}
 }
 
+//FIXME - fix flags
 void
-ArithmeticLogicUnit::op_cwd () {
-	Number<unsigned short> &ax = m_eunit->get_reg_ax ();
-	Number<unsigned short> &dx = m_eunit->get_reg_dx ();
+ArithmeticLogicUnit::op_div (const unsigned char &src) {
+	Number<unsigned short> ax = m_eunit->get_reg_ax ();
+	Number<unsigned char> &al = m_eunit->get_reg_al ();
+	Number<unsigned char> &ah = m_eunit->get_reg_ah ();
 
-	if (ax < 0x8000) {
-		dx = 0;
+	if (src == 0) {
+		//FIXME - interrupt 0
+	}
+
+	Number<unsigned char> tmp = ax / src;
+	if (tmp > 0xFF) {
+		//FIXME - interrupt 0
 	}
 	else {
-		dx = 0xFFFF;
+		al = tmp;
+		ah = ax % src;
 	}
 }
 
 //FIXME - fix flags
 void
-ArithmeticLogicUnit::op_daa () {
-	Number<unsigned char> &al = m_eunit->get_reg_al ();
-	bool af = m_eunit->get_reg_flags_af ();
-	bool cf = m_eunit->get_reg_flags_cf ();
+ArithmeticLogicUnit::op_div (const unsigned short &src) {
+	Number<unsigned short> &ax = m_eunit->get_reg_ax ();
+	Number<unsigned short> &dx = m_eunit->get_reg_dx ();
+	unsigned int dx_ax = dx;
+	dx_ax <<= 16;
+	dx_ax += ax;
 
-	if ((al & 0x0F) > 9 || af) {
-		al += 6;
-		m_eunit->set_reg_flags_af (true);
+	if (src == 0) {
+		//FIXME - interrupt 0
 	}
-	if (al > 0x9F || cf) {
-		al += 0x60;
-		m_eunit->set_reg_flags_cf (true);
+
+	Number<unsigned short> tmp = dx_ax / src;
+	if (tmp > 0xFFFF) {
+		//FIXME - interrupt 0
+	}
+	else {
+		ax = tmp;
+		dx = dx_ax % src;
 	}
 }
 
 //FIXME - fix flags
 void
-ArithmeticLogicUnit::op_das () {
+ArithmeticLogicUnit::op_idiv (const unsigned char &src) {
+	Number<unsigned short> ax = m_eunit->get_reg_ax ();
 	Number<unsigned char> &al = m_eunit->get_reg_al ();
-	bool af = m_eunit->get_reg_flags_af ();
-	bool cf = m_eunit->get_reg_flags_cf ();
+	Number<unsigned char> &ah = m_eunit->get_reg_ah ();
 
-	if ((al & 0x0F) > 9 || af) {
-		al -= 6;
-		m_eunit->set_reg_flags_af (true);
+	if (src == 0) {
+		//FIXME - interrupt 0
 	}
-	if (al > 0x9F || cf) {
-		al -= 0x60;
-		m_eunit->set_reg_flags_cf (true);
+
+	char tmp = (short)ax / (char)src;
+	//if ((tmp > 0x7F) || (tmp < 0x80)) {
+	//	//FIXME - interrupt 0
+	//}
+	//else {
+		al = tmp;
+		ah = (short)ax % (char)src;
+	//}
+}
+
+//FIXME - fix flags
+void
+ArithmeticLogicUnit::op_idiv (const unsigned short &src) {
+	Number<unsigned short> &ax = m_eunit->get_reg_ax ();
+	Number<unsigned short> &dx = m_eunit->get_reg_dx ();
+	unsigned int dx_ax = dx;
+	dx_ax <<= 16;
+	dx_ax += ax;
+
+	if (src == 0) {
+		//FIXME - interrupt 0
 	}
+
+	short tmp = (int)dx_ax / (short)src;
+	//if ((tmp > 0x7FFF) || (tmp < 0x8000)) {
+	//	//FIXME - interrupt 0
+	//}
+	//else {
+		ax = tmp;
+		dx = (int)dx_ax % (short)tmp;
+	//}
+}
+
+//FIXME - fix flags
+void
+ArithmeticLogicUnit::op_imul (const unsigned char &src) {
+	Number<unsigned short> &ax = m_eunit->get_reg_ax ();
+	Number<unsigned char> &al = m_eunit->get_reg_al ();
+	Number<unsigned char> &ah = m_eunit->get_reg_ah ();
+
+	ax = src * al;
+}
+
+//FIXME - fix flags
+void
+ArithmeticLogicUnit::op_imul (const unsigned short &src) {
+}
+
+//FIXME - fix flags
+void
+ArithmeticLogicUnit::op_mul (const unsigned char &src) {
+}
+
+//FIXME - fix flags
+void
+ArithmeticLogicUnit::op_mul (const unsigned short &src) {
 }
 

@@ -919,5 +919,15 @@ int main (int argc, char **argv) {
 			print_passed (TEST_NUMBER);
 		}
 	}//end Test 49
+
+
+	{//Test 50
+		++TEST_NUMBER;
+		ps = true;
+
+		if (ps) {
+			print_passed (TEST_NUMBER);
+		}
+	}//end Test 50
 }
 

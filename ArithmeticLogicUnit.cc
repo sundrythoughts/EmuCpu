@@ -7,8 +7,75 @@ ArithmeticLogicUnit::connect_to (ExecutionUnit &eu) {
 }
 
 void
+ArithmeticLogicUnit::update_flag_cf_8 (unsigned char result8, unsigned short result16) {
+	m_eunit->set_reg_flags_cf (result8 == result16);
+}
+
+void
+ArithmeticLogicUnit::update_flag_cf_16 (unsigned short result16, unsigned int result32) {
+	m_eunit->set_reg_flags_cf (result16 == result32);
+}
+
+void
+ArithmeticLogicUnit::update_flag_of_8 (bool msb_before, bool msb_after) {
+	m_eunit->set_reg_flags_of (msb_before != msb_after);
+}
+
+void
+ArithmeticLogicUnit::update_flag_of_16 (bool msb_before, bool msb_after) {
+	m_eunit->set_reg_flags_of (msb_before != msb_after);
+}
+
+void
+ArithmeticLogicUnit::update_flag_pf_8 (unsigned char val) {
+	unsigned int count = 0;
+	val &= 0xFF;
+	while (val) {
+		if (val & 1) {
+			++count;
+		}
+	}
+
+	m_eunit->set_reg_flags_pf (!(count & 1));
+}
+
+void
+ArithmeticLogicUnit::update_flag_pf_16 (unsigned short val) {
+	unsigned int count = 0;
+	val &= 0xFF;
+	while (val) {
+		if (val & 1) {
+			++count;
+		}
+	}
+
+	m_eunit->set_reg_flags_pf (!(count & 1));
+}
+
+void
+ArithmeticLogicUnit::update_flag_sf_8 (unsigned char val) {
+	m_eunit->set_reg_flags_sf (Utility::get_bit (val, sizeof(val) - 1));
+}
+
+void
+ArithmeticLogicUnit::update_flag_sf_16 (unsigned short val) {
+	m_eunit->set_reg_flags_sf (Utility::get_bit (val, sizeof(val) - 1));
+}
+
+void
+ArithmeticLogicUnit::update_flag_zf_8 (unsigned char val) {
+	m_eunit->set_reg_flags_zf (!val);
+}
+
+void
+ArithmeticLogicUnit::update_flag_zf_16 (unsigned short val) {
+	m_eunit->set_reg_flags_zf (!val);
+}
+
+void
 ArithmeticLogicUnit::op_adc_8 (unsigned char dest, unsigned char src, unsigned char &ret) {
 	bool cf = m_eunit->get_reg_flags_cf ();
+	bool msb_before = Utility::get_bit (dest, sizeof(dest) - 1);
 
 	unsigned short result = dest + src;
 	if (cf) {
@@ -18,11 +85,17 @@ ArithmeticLogicUnit::op_adc_8 (unsigned char dest, unsigned char src, unsigned c
 	ret = (unsigned char)result;
 
 	//FIXME - fix flags
+	update_flag_cf_8 (ret, result);
+	update_flag_of_8 (msb_before, Utility::get_bit (ret, sizeof(ret) - 1));
+	update_flag_pf_8 (ret);
+	update_flag_sf_8 (ret);
+	update_flag_zf_8 (ret);
 }
 
 void
 ArithmeticLogicUnit::op_adc_16 (unsigned short dest, unsigned short src, unsigned short &ret) {
 	bool cf = m_eunit->get_reg_flags_cf ();
+	bool msb_before = Utility::get_bit (dest, sizeof(dest) - 1);
 
 	unsigned int result = dest + src;
 	if (cf) {
@@ -32,28 +105,46 @@ ArithmeticLogicUnit::op_adc_16 (unsigned short dest, unsigned short src, unsigne
 	ret = (unsigned short)result;
 
 	//FIXME - fix flags
+	update_flag_cf_16 (ret, result);
+	update_flag_of_16 (msb_before, Utility::get_bit (ret, sizeof(ret) - 1));
+	update_flag_pf_16 (ret);
+	update_flag_sf_16 (ret);
+	update_flag_zf_16 (ret);
 }
 
 void
 ArithmeticLogicUnit::op_add_8 (unsigned char dest, unsigned char src, unsigned char &ret) {
+	bool msb_before = Utility::get_bit (dest, sizeof(dest) - 1);
 	unsigned short result = dest + src;
 
 	ret = (unsigned char)result;
 
 	//FIXME - fix flags
+	update_flag_cf_8 (ret, result);
+	update_flag_of_8 (msb_before, Utility::get_bit (ret, sizeof(ret) - 1));
+	update_flag_pf_8 (ret);
+	update_flag_sf_8 (ret);
+	update_flag_zf_8 (ret);
 }
 
 void
 ArithmeticLogicUnit::op_add_16 (unsigned short dest, unsigned short src, unsigned short &ret) {
+	bool msb_before = Utility::get_bit (dest, sizeof(dest) - 1);
 	unsigned int result = dest + src;
 
 	ret = (unsigned short)result;
 
 	//FIXME - fix flags
+	update_flag_cf_16 (ret, result);
+	update_flag_of_16 (msb_before, Utility::get_bit (ret, sizeof(ret) - 1));
+	update_flag_pf_16 (ret);
+	update_flag_sf_16 (ret);
+	update_flag_zf_16 (ret);
 }
 
 void
 ArithmeticLogicUnit::op_and_8 (unsigned char dest, unsigned char src, unsigned char &ret) {
+	bool msb_before = Utility::get_bit (dest, sizeof(dest) - 1);
 	unsigned short result = dest & src;
 	m_eunit->set_reg_flags_cf (false);
 	m_eunit->set_reg_flags_of (false);
@@ -61,10 +152,16 @@ ArithmeticLogicUnit::op_and_8 (unsigned char dest, unsigned char src, unsigned c
 	ret = (unsigned char)result;
 
 	//FIXME - fix flags
+	update_flag_cf_8 (ret, result);
+	update_flag_of_8 (msb_before, Utility::get_bit (ret, sizeof(ret) - 1));
+	update_flag_pf_8 (ret);
+	update_flag_sf_8 (ret);
+	update_flag_zf_8 (ret);
 }
 
 void
 ArithmeticLogicUnit::op_and_16 (unsigned short dest, unsigned short src, unsigned short &ret) {
+	bool msb_before = Utility::get_bit (dest, sizeof(dest) - 1);
 	unsigned int result = dest & src;
 	m_eunit->set_reg_flags_cf (false);
 	m_eunit->set_reg_flags_of (false);
@@ -72,6 +169,11 @@ ArithmeticLogicUnit::op_and_16 (unsigned short dest, unsigned short src, unsigne
 	ret = (unsigned short)result;
 
 	//FIXME - fix flags
+	update_flag_cf_16 (ret, result);
+	update_flag_of_16 (msb_before, Utility::get_bit (ret, sizeof(ret) - 1));
+	update_flag_pf_16 (ret);
+	update_flag_sf_16 (ret);
+	update_flag_zf_16 (ret);
 }
 
 void
@@ -83,16 +185,30 @@ ArithmeticLogicUnit::op_cmc () {
 
 void
 ArithmeticLogicUnit::op_cmp_8 (unsigned char dest, unsigned char src) {
+	bool msb_before = Utility::get_bit (dest, sizeof(dest) - 1);
 	unsigned short result = dest - src;
+	unsigned char ret = (unsigned short)result;
 
 	//FIXME - fix flags
+	update_flag_cf_8 (ret, result);
+	update_flag_of_8 (msb_before, Utility::get_bit (ret, sizeof(ret) - 1));
+	update_flag_pf_8 (ret);
+	update_flag_sf_8 (ret);
+	update_flag_zf_8 (ret);
 }
 
 void
 ArithmeticLogicUnit::op_cmp_16 (unsigned short dest, unsigned short src) {
+	bool msb_before = Utility::get_bit (dest, sizeof(dest) - 1);
 	unsigned int result = dest - src;
+	unsigned short ret = (unsigned short)result;
 
 	//FIXME - fix flags
+	update_flag_cf_16 (ret, result);
+	update_flag_of_16 (msb_before, Utility::get_bit (ret, sizeof(ret) - 1));
+	update_flag_pf_16 (ret);
+	update_flag_sf_16 (ret);
+	update_flag_zf_16 (ret);
 }
 
 #if 0
@@ -102,19 +218,31 @@ void cmps (TDest &dest, TSrc &src, TDest &result);
 #endif
 
 void
-ArithmeticLogicUnit::op_dec_8 (unsigned char src, unsigned char &ret) {
-	unsigned short result = --src;
+ArithmeticLogicUnit::op_dec_8 (unsigned char dest, unsigned char &ret) {
+	bool msb_before = Utility::get_bit (dest, sizeof(dest) - 1);
+	unsigned short result = --dest;
 	ret = (unsigned char)result;
 
 	//FIXME - fix flags
+	update_flag_cf_8 (ret, result);
+	update_flag_of_8 (msb_before, Utility::get_bit (ret, sizeof(ret) - 1));
+	update_flag_pf_8 (ret);
+	update_flag_sf_8 (ret);
+	update_flag_zf_8 (ret);
 }
 
 void
-ArithmeticLogicUnit::op_dec_16 (unsigned short src, unsigned short &ret) {
-	unsigned int result = --src;
+ArithmeticLogicUnit::op_dec_16 (unsigned short dest, unsigned short &ret) {
+	bool msb_before = Utility::get_bit (dest, sizeof(dest) - 1);
+	unsigned int result = --dest;
 	ret = (unsigned short)result;
 
 	//FIXME - fix flags
+	update_flag_cf_16 (ret, result);
+	update_flag_of_16 (msb_before, Utility::get_bit (ret, sizeof(ret) - 1));
+	update_flag_pf_16 (ret);
+	update_flag_sf_16 (ret);
+	update_flag_zf_16 (ret);
 }
 
 void
@@ -243,19 +371,31 @@ ArithmeticLogicUnit::op_imul_16 (unsigned short src) {
 }
 
 void
-ArithmeticLogicUnit::op_inc_8 (unsigned char src, unsigned char &ret) {
-	unsigned short result = ++src;
+ArithmeticLogicUnit::op_inc_8 (unsigned char dest, unsigned char &ret) {
+	bool msb_before = Utility::get_bit (dest, sizeof(dest) - 1);
+	unsigned short result = ++dest;
 	ret = (unsigned char)result;
 
 	//FIXME - fix flags
+	update_flag_cf_8 (ret, result);
+	update_flag_of_8 (msb_before, Utility::get_bit (ret, sizeof(ret) - 1));
+	update_flag_pf_8 (ret);
+	update_flag_sf_8 (ret);
+	update_flag_zf_8 (ret);
 }
 
 void
-ArithmeticLogicUnit::op_inc_16 (unsigned short src, unsigned short &ret) {
-	unsigned int result = ++src;
+ArithmeticLogicUnit::op_inc_16 (unsigned short dest, unsigned short &ret) {
+	bool msb_before = Utility::get_bit (dest, sizeof(dest) - 1);
+	unsigned int result = ++dest;
 	ret = (unsigned short)result;
 
 	//FIXME - fix flags
+	update_flag_cf_16 (ret, result);
+	update_flag_of_16 (msb_before, Utility::get_bit (ret, sizeof(ret) - 1));
+	update_flag_pf_16 (ret);
+	update_flag_sf_16 (ret);
+	update_flag_zf_16 (ret);
 }
 
 void
@@ -304,8 +444,6 @@ ArithmeticLogicUnit::op_neg_8 (unsigned char dest, unsigned char &ret) {
 	op_add_8 (dest, 1, r);
 
 	ret = (unsigned char)r;
-
-	//FIXME - fix flags
 }
 
 void
@@ -315,12 +453,11 @@ ArithmeticLogicUnit::op_neg_16 (unsigned short dest, unsigned short &ret) {
 	op_add_16 (dest, 1, r);
 
 	ret = (unsigned short)r;
-
-	//FIXME - fix flags
 }
 
 void
 ArithmeticLogicUnit::op_or_8 (unsigned char dest, unsigned char src, unsigned char &ret) {
+	bool msb_before = Utility::get_bit (dest, sizeof(dest) - 1);
 	unsigned short result = dest | src;
 	m_eunit->set_reg_flags_cf (false);
 	m_eunit->set_reg_flags_of (false);
@@ -328,10 +465,16 @@ ArithmeticLogicUnit::op_or_8 (unsigned char dest, unsigned char src, unsigned ch
 	ret = (unsigned char)result;
 
 	//FIXME - fix flags
+	update_flag_cf_8 (ret, result);
+	update_flag_of_8 (msb_before, Utility::get_bit (ret, sizeof(ret) - 1));
+	update_flag_pf_8 (ret);
+	update_flag_sf_8 (ret);
+	update_flag_zf_8 (ret);
 }
 
 void
 ArithmeticLogicUnit::op_or_16 (unsigned short dest, unsigned short src, unsigned short &ret) {
+	bool msb_before = Utility::get_bit (dest, sizeof(dest) - 1);
 	unsigned int result = dest | src;
 	m_eunit->set_reg_flags_cf (false);
 	m_eunit->set_reg_flags_of (false);
@@ -339,6 +482,11 @@ ArithmeticLogicUnit::op_or_16 (unsigned short dest, unsigned short src, unsigned
 	ret = (unsigned short)result;
 
 	//FIXME - fix flags
+	update_flag_cf_16 (ret, result);
+	update_flag_of_16 (msb_before, Utility::get_bit (ret, sizeof(ret) - 1));
+	update_flag_pf_16 (ret);
+	update_flag_sf_16 (ret);
+	update_flag_zf_16 (ret);
 }
 
 void
@@ -485,6 +633,9 @@ ArithmeticLogicUnit::op_sal_8 (unsigned char dest, unsigned int cnt, unsigned ch
 	ret = (unsigned char)dest;
 
 	//FIXME - fix flags
+	update_flag_pf_8 (ret);
+	update_flag_sf_8 (ret);
+	update_flag_zf_8 (ret);
 }
 
 void
@@ -499,6 +650,9 @@ ArithmeticLogicUnit::op_sal_16 (unsigned short dest, unsigned int cnt, unsigned 
 	ret = (unsigned short)dest;
 
 	//FIXME - fix flags
+	update_flag_pf_16 (ret);
+	update_flag_sf_16 (ret);
+	update_flag_zf_16 (ret);
 }
 
 void
@@ -515,6 +669,9 @@ ArithmeticLogicUnit::op_sar_8 (unsigned char dest, unsigned int cnt, unsigned ch
 	ret = (unsigned char)dest;
 
 	//FIXME - fix flags
+	update_flag_pf_8 (ret);
+	update_flag_sf_8 (ret);
+	update_flag_zf_8 (ret);
 }
 
 void
@@ -531,10 +688,14 @@ ArithmeticLogicUnit::op_sar_16 (unsigned short dest, unsigned int cnt, unsigned 
 	ret = (unsigned short)dest;
 
 	//FIXME - fix flags
+	update_flag_pf_16 (ret);
+	update_flag_sf_16 (ret);
+	update_flag_zf_16 (ret);
 }
 
 void
 ArithmeticLogicUnit::op_sbb_8 (unsigned char dest, unsigned char src, unsigned char &ret) {
+	bool msb_before = Utility::get_bit (dest, sizeof(dest) - 1);
 	bool cf = m_eunit->get_reg_flags_cf ();
 
 	unsigned short result = dest - src - cf;
@@ -542,10 +703,16 @@ ArithmeticLogicUnit::op_sbb_8 (unsigned char dest, unsigned char src, unsigned c
 	ret = (unsigned char)result;
 
 	//FIXME - fix flags
+	update_flag_cf_8 (ret, result);
+	update_flag_of_8 (msb_before, Utility::get_bit (ret, sizeof(ret) - 1));
+	update_flag_pf_8 (ret);
+	update_flag_sf_8 (ret);
+	update_flag_zf_8 (ret);
 }
 
 void
 ArithmeticLogicUnit::op_sbb_16 (unsigned short dest, unsigned short src, unsigned short &ret) {
+	bool msb_before = Utility::get_bit (dest, sizeof(dest) - 1);
 	bool cf = m_eunit->get_reg_flags_cf ();
 
 	unsigned int result = dest - src - cf;
@@ -553,6 +720,11 @@ ArithmeticLogicUnit::op_sbb_16 (unsigned short dest, unsigned short src, unsigne
 	ret = (unsigned short)result;
 
 	//FIXME - fix flags
+	update_flag_cf_16 (ret, result);
+	update_flag_of_16 (msb_before, Utility::get_bit (ret, sizeof(ret) - 1));
+	update_flag_pf_16 (ret);
+	update_flag_sf_16 (ret);
+	update_flag_zf_16 (ret);
 }
 
 void
@@ -567,6 +739,9 @@ ArithmeticLogicUnit::op_shl_8 (unsigned char dest, unsigned int cnt, unsigned ch
 	ret = (unsigned char)dest;
 
 	//FIXME - fix flags
+	update_flag_pf_8 (ret);
+	update_flag_sf_8 (ret);
+	update_flag_zf_8 (ret);
 }
 
 void
@@ -581,6 +756,9 @@ ArithmeticLogicUnit::op_shl_16 (unsigned short dest, unsigned int cnt, unsigned 
 	ret = (unsigned short)dest;
 
 	//FIXME - fix flags
+	update_flag_pf_16 (ret);
+	update_flag_sf_16 (ret);
+	update_flag_zf_16 (ret);
 }
 
 void
@@ -595,6 +773,9 @@ ArithmeticLogicUnit::op_shr_8 (unsigned char dest, unsigned int cnt, unsigned ch
 	ret = (unsigned char)dest;
 
 	//FIXME - fix flags
+	update_flag_pf_8 (ret);
+	update_flag_sf_8 (ret);
+	update_flag_zf_8 (ret);
 }
 
 void
@@ -609,40 +790,70 @@ ArithmeticLogicUnit::op_shr_16 (unsigned short dest, unsigned int cnt, unsigned 
 	ret = (unsigned short)dest;
 
 	//FIXME - fix flags
+	update_flag_pf_16 (ret);
+	update_flag_sf_16 (ret);
+	update_flag_zf_16 (ret);
 }
 
 void
 ArithmeticLogicUnit::op_sub_8 (unsigned char dest, unsigned char src, unsigned char &ret) {
+	bool msb_before = Utility::get_bit (dest, sizeof(dest) - 1);
 	unsigned short result = dest - src;
 	ret = (unsigned char)result;
 
 	//FIXME - fix flags
+	update_flag_cf_8 (ret, result);
+	update_flag_of_8 (msb_before, Utility::get_bit (ret, sizeof(ret) - 1));
+	update_flag_pf_8 (ret);
+	update_flag_sf_8 (ret);
+	update_flag_zf_8 (ret);
 }
 
 void
 ArithmeticLogicUnit::op_sub_16 (unsigned short dest, unsigned char src, unsigned short &ret) {
+	bool msb_before = Utility::get_bit (dest, sizeof(dest) - 1);
 	unsigned int result = dest - src;
 	ret = (unsigned short)result;
 
 	//FIXME - fix flags
+	update_flag_cf_16 (ret, result);
+	update_flag_of_16 (msb_before, Utility::get_bit (ret, sizeof(ret) - 1));
+	update_flag_pf_16 (ret);
+	update_flag_sf_16 (ret);
+	update_flag_zf_16 (ret);
 }
 
 void
 ArithmeticLogicUnit::op_test_8 (unsigned char dest, unsigned char src) {
+	bool msb_before = Utility::get_bit (dest, sizeof(dest) - 1);
 	unsigned short result = dest & src;
+	unsigned char ret = (unsigned char)result;
 
 	//FIXME - fix flags
+	update_flag_cf_8 (ret, result);
+	update_flag_of_8 (msb_before, Utility::get_bit (ret, sizeof(ret) - 1));
+	update_flag_pf_8 (ret);
+	update_flag_sf_8 (ret);
+	update_flag_zf_8 (ret);
 }
 
 void
 ArithmeticLogicUnit::op_test_16 (unsigned short dest, unsigned char src) {
+	bool msb_before = Utility::get_bit (dest, sizeof(dest) - 1);
 	unsigned int result = dest & src;
+	unsigned short ret = (unsigned short)result;
 
 	//FIXME - fix flags
+	update_flag_cf_16 (ret, result);
+	update_flag_of_16 (msb_before, Utility::get_bit (ret, sizeof(ret) - 1));
+	update_flag_pf_16 (ret);
+	update_flag_sf_16 (ret);
+	update_flag_zf_16 (ret);
 }
 
 void
 ArithmeticLogicUnit::op_xor_8 (unsigned char dest, unsigned char src, unsigned char &ret) {
+	bool msb_before = Utility::get_bit (dest, sizeof(dest) - 1);
 	unsigned short result = dest ^ src;
 	m_eunit->set_reg_flags_cf (false);
 	m_eunit->set_reg_flags_of (false);
@@ -650,10 +861,16 @@ ArithmeticLogicUnit::op_xor_8 (unsigned char dest, unsigned char src, unsigned c
 	ret = (unsigned char)result;
 
 	//FIXME - fix flags
+	update_flag_cf_8 (ret, result);
+	update_flag_of_8 (msb_before, Utility::get_bit (ret, sizeof(ret) - 1));
+	update_flag_pf_8 (ret);
+	update_flag_sf_8 (ret);
+	update_flag_zf_8 (ret);
 }
 
 void
 ArithmeticLogicUnit::op_xor_16 (unsigned short dest, unsigned short src, unsigned short &ret) {
+	bool msb_before = Utility::get_bit (dest, sizeof(dest) - 1);
 	unsigned int result = dest ^ src;
 	m_eunit->set_reg_flags_cf (false);
 	m_eunit->set_reg_flags_of (false);
@@ -661,5 +878,10 @@ ArithmeticLogicUnit::op_xor_16 (unsigned short dest, unsigned short src, unsigne
 	ret = (unsigned short)result;
 
 	//FIXME - fix flags
+	update_flag_cf_16 (ret, result);
+	update_flag_of_16 (msb_before, Utility::get_bit (ret, sizeof(ret) - 1));
+	update_flag_pf_16 (ret);
+	update_flag_sf_16 (ret);
+	update_flag_zf_16 (ret);
 }
 

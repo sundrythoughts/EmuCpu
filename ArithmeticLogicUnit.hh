@@ -27,6 +27,42 @@ public:
 	void
 	connect_to (ExecutionUnit &eu);
 
+	/** FIXME */
+	void update_flag_af_8 (unsigned char result8, unsigned short result16);
+
+	/** FIXME */
+	void update_flag_af_16 (unsigned short result16, unsigned int result32);
+
+	/** */
+	void update_flag_cf_8 (unsigned char result8, unsigned short result16);
+
+	/** */
+	void update_flag_cf_16 (unsigned short result16, unsigned int result32);
+
+	/** */
+	void update_flag_of_8 (bool msb_before, bool msb_after);
+
+	/** */
+	void update_flag_of_16 (bool msb_before, bool msb_after);
+
+	/** */
+	void update_flag_pf_8 (unsigned char val);
+
+	/** */
+	void update_flag_pf_16 (unsigned short val);
+
+	/** */
+	void update_flag_sf_8 (unsigned char val);
+
+	/** */
+	void update_flag_sf_16 (unsigned short val);
+
+	/** */
+	void update_flag_zf_8 (unsigned char val);
+
+	/** */
+	void update_flag_zf_16 (unsigned short val);
+
 	/** */
 	void op_adc_8 (unsigned char dest, unsigned char src, unsigned char &ret);
 

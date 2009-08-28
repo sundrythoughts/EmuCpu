@@ -1,256 +1,256 @@
-00%add%2%{"Eb","Gb",0}
-01%add%2%{"Ev","Gv",0}
-02%add%2%{"Gb","Eb",0}
-03%add%2%{"Gv","Ev",0}
-04%add%2%{"AL","Ib",0}
-05%add%2%{"eAX","Iv",0}
-06%push es%0%{0,0,0}
-07%pop es%0%{0,0,0}
-08%or%2%{"Eb","Gb",0}
-09%or%2%{"Ev","Gv",0}
-0a%or%2%{"Gb","Eb",0}
-0b%or%2%{"Gv","Ev",0}
-0c%or%2%{"AL","Ib",0}
-0d%or%2%{"eAX","Iv",0}
-0e%push cs%0%{0,0,0}
-0f%     //FIXME
-10%adc%2%{"Eb","Gb",0}
-11%adc%2%{"Ev","Gv",0}
-12%adc%2%{"Gb","Eb",0}
-13%adc%2%{"Gv","Ev",0}
-14%adc%2%{"AL","Ib",0}
-15%adc%2%{"eAX","Iv",0}
-16%push ss%0%{0,0,0}
-17%pop ss%0%{0,0,0}
-18%sbb%2%{"Eb","Gb",0}
-19%sbb%2%{"Ev","Gv",0}
-1a%sbb%2%{"Gb","Eb",0}
-1b%sbb%2%{"Gv","Ev",0}
-1c%sbb%2%{"AL","Ib",0}
-1d%sbb%2%{"eAX","Iv",0}
-1e%push ds%0%{0,0,0}
-1f%pop ds%0%{0,0,0}
-20%and%2%{"Eb","Gb",0}
-21%and%2%{"Ev","Gv",0}
-22%and%2%{"Gb","Eb",0}
-23%and%2%{"Gv","Ev",0}
-24%and%2%{"AL","Ib",0}
-25%and%2%{"eAX","Iv",0}
-26%     //FIXME
-27%daa%0%{0,0,0}
-28%sub%2%{"Eb","Gb",0}
-29%sub%2%{"Ev","Gv",0}
-2a%sub%2%{"Gb","Eb",0}
-2b%sub%2%{"Gv","Ev",0}
-2c%sub%2%{"AL","Ib",0}
-2d%sub%2%{"eAX","Iv",0}
-2e%     //FIXME
-2f%das%0%{0,0,0}
-30%xor%2%{"Eb","Gb",0}
-31%xor%2%{"Ev","Gv",0}
-32%xor%2%{"Gb","Eb",0}
-33%xor%2%{"Gv","Ev",0}
-34%xor%2%{"AL","Ib",0}
-35%xor%2%{"eAX","Iv",0}
-36%     //FIXME
-37%aaa%0%{0,0,0}
-38%cmp%2%{"Eb","Gb",0}
-39%cmp%2%{"Ev","Gv",0}
-3a%cmp%2%{"Gb","Eb",0}
-3b%cmp%2%{"Gv","Ev",0}
-3c%cmp%2%{"AL","Ib",0}
-3d%cmp%2%{"eAX","Iv",0}
-3e%     //FIXME
-3f%aas%0%{0,0,0}
-40%inc%1%{"eAX",0,0}
-41%inc%1%{"eCX",0,0}
-42%inc%1%{"eDX",0,0}
-43%inc%1%{"eBX",0,0}
-44%inc%1%{"eSP",0,0}
-45%inc%1%{"eBP",0,0}
-46%inc%1%{"eSI",0,0}
-47%inc%1%{"eDI",0,0}
-48%dec%1%{"eAX",0,0}
-49%dec%1%{"eCX",0,0}
-4a%dec%1%{"eDX",0,0}
-4b%dec%1%{"eBX",0,0}
-4c%dec%1%{"eSP",0,0}
-4d%dec%1%{"eBP",0,0}
-4e%dec%1%{"eSI",0,0}
-4f%dec%1%{"eDI",0,0}
-50%push%1%{"eAX",0,0}
-51%push%1%{"eCX",0,0}
-52%push%1%{"eDX",0,0}
-53%push%1%{"eBX",0,0}
-54%push%1%{"eSP",0,0}
-55%push%1%{"eBP",0,0}
-56%push%1%{"eSI",0,0}
-57%push%1%{"eDI",0,0}
-58%pop%1%{"eAX",0,0}
-59%pop%1%{"eCX",0,0}
-5a%pop%1%{"eDX",0,0}
-5b%pop%1%{"eBX",0,0}
-5c%pop%1%{"eSP",0,0}
-5d%pop%1%{"eBP",0,0}
-5e%pop%1%{"eSI",0,0}
-5f%pop%1%{"eDI",0,0}
-60%     //FIXME
-61%     //FIXME
-62%     //FIXME
-63%     //FIXME
-64%     //FIXME
-65%     //FIXME
-66%     //FIXME
-67%     //FIXME
-68%     //FIXME
-69%     //FIXME
-6a%     //FIXME
-6b%     //FIXME
-6c%     //FIXME
-6d%     //FIXME
-6e%     //FIXME
-6f%     //FIXME
-70%jo%1%{"Jb",0,0}
-71%jno%1%{"Jb",0,0}
-72%jb/jnae/jc%1%{"Jb",0,0}
-73%jnb/jae/jnc%1%{"Jb",0,0}
-74%jz/je%1%{"Jb",0,0}
-75%jnz/jne%1%{"Jb",0,0}
-76%jbe/jna%1%{"Jb",0,0}
-77%jnbe/ja%1%{"Jb",0,0}
-78%js%1%{"Jb",0,0}
-79%jns%1%{"Jb",0,0}
-7a%jp/jpe%1%{"Jb",0,0}
-7b%jnp/jpo%1%{"Jb",0,0}
-7c%jl/jnge%1%{"Jb",0,0}
-7d%jnl/jge%1%{"Jb",0,0}
-7e%jle/jng%1%{"Jb",0,0}
-7f%jnle/jg%1%{"Jb",0,0}
-80%     //FIXME
-81%     //FIXME
-82%     //FIXME
-83%     //FIXME
-84%test%2%{"Eb","Gb",0}
-85%test%2%{"Ev","Gv",0}
-86%xchg%2%{"Eb","Gb",0}
-87%xchg%2%{"Ev","Gv",0}
-88%mov%2%{"Eb","Gb",0}
-89%mov%2%{"Ev","Gv",0}
-8a%mov%2%{"Gb","Eb",0}
-8b%mov%2%{"Gv","Ev",0}
-8c%mov%2%{"Ew","Sw",0}
-8d%lea%2%{"Gv","M",0}
-8e%mov%2%{"Sw","Ew",0}
-8f%pop%1%{"Ev",0,0}
-90%nop%0%{0,0,0}
-91%xchg%1%{"eCX",0,0}
-92%xchg%1%{"eDX",0,0}
-93%xchg%1%{"eBX",0,0}
-94%xchg%1%{"eSP",0,0}
-95%xchg%1%{"eBP",0,0}
-96%xchg%1%{"eSI",0,0}
-97%xchg%1%{"eDI",0,0}
-98%cbw%0%{0,0,0}
-99%cwd%0%{0,0,0}
-9a%call%1%{"Ap",0,0}
-9b%wait%0%{0,0,0}
-9c%pushf%1%{"Fv",0,0}
-9d%popf%1%{"Fv",0,0}
-9e%sahf%0%{0,0,0}
-9f%lahf%0%{0,0,0}
-a0%mov%2%{"AL","Ob",0}
-a1%mov%2%{"eAX","Ov",0}
-a2%mov%2%{"Ob","AL",0}
-a3%mov%2%{"Ov","eAX",0}
-a4%movsb%2%{"Xb","Yb",0}
-a5%movsw%2%{"Xv","Yv",0}
-a6%cmpsw%2%{"Xb","Yb",0}
-a7%cmpsw%2%{"Xv","Yv",0}
-a8%test%2%{"AL","Ib",0}
-a9%test%2%{"eAX","Iv",0}
-aa%stosb%2%{"Yb","AL",0}
-ab%stosw%2%{"Yv","eAX",0}
-ac%lodsb%2%{"AL","Xb",0}
-ad%lodsw%2%{"eAX","Xv",0}
-ae%scasb%2%{"AL","Yb",0}
-af%scasw%2%{"eAX","Yv",0}
-b0%mov%2%{"AL","Ib",0}
-b1%mov%2%{"CL","Ib",0}
-b2%mov%2%{"DL","Ib",0}
-b3%mov%2%{"BL","Ib",0}
-b4%mov%2%{"AH","Ib",0}
-b5%mov%2%{"CH","Ib",0}
-b6%mov%2%{"DH","Ib",0}
-b7%mov%2%{"BH","Ib",0}
-b8%mov%2%{"eAX","Iv",0}
-b9%mov%2%{"eCX","Iv",0}
-ba%mov%2%{"eDX","Iv",0}
-bb%mov%2%{"eBX","Iv",0}
-bc%mov%2%{"eSP","Iv",0}
-bd%mov%2%{"eBP","Iv",0}
-be%mov%2%{"eSI","Iv",0}
-bf%mov%2%{"eDI","Iv",0}
-c0%     //FIXME
-c1%     //FIXME
-c2%ret%1%{"Iw",0,0}
-c3%ret%0%{0,0,0}
-c4%les%2%{"Gv","Mp",0}
-c5%lds%2%{"Gv","Mp",0}
-c6%mov%2%{"Eb","Ib",0}
-c7%mov%2%{"Ev","Iv",0}
-c8%     //FIXME
-c9%     //FIXME
-ca%ret%1%{"Iw",0,0}
-cb%ret%0%{0,0,0}
-cc%int 3%0%{0,0,0}
-cd%int%1%{"Ib",0,0}
-ce%into%0%{0,0,0}
-cf%iret%0%{0,0,0}
-d0%     //FIXME
-d1%     //FIXME
-d2%     //FIXME
-d3%     //FIXME
-d4%aam%0%{0,0,0}
-d5%aad%0%{0,0,0}
-d6%     //FIXME
-d7%xlat%0%{0,0,0}
-d8%esc 0%0%{0,0,0}
-d9%esc 1%0%{0,0,0}
-da%esc 2%0%{0,0,0}
-db%esc 3%0%{0,0,0}
-dc%esc 4%0%{0,0,0}
-dd%esc 5%0%{0,0,0}
-de%esc 6%0%{0,0,0}
-df%esc 7%0%{0,0,0}
-e0%loopne/loopnz%1%{"Jb",0,0}
-e1%loope/loopz%1%{"Jb",0,0}
-e2%loop%1%{"Jb",0,0}
-e3%jcxz%1%{"Jb",0,0}
-e4%in%2%{"AL","Ib",0}
-e5%in%2%{"eAX","Ib",0}
-e6%out%2%{"Ib","AL",0}
-e7%out%2%{"Ib","eAX",0}
-e8%call%1%{"Jv",0,0}
-e9%jmp%1%{"Jv",0,0}
-ea%jmp%1%{"Ap",0,0}
-eb%jmp%1%{"Jb",0,0}
-ec%in%2%{"AL","DX",0}
-ed%in%2%{"eAX","DX",0}
-ee%out%2%{"DX","AL",0}
-ef%out%2%{"DX","eAX",0}
-f0%lock%0%{0,0,0}
-f1%     //FIXME
-f2%repne%0%{0,0,0}
-f3%rep/repe%0%{0,0,0}
-f4%hlt%0%{0,0,0}
-f5%cmc%0%{0,0,0}
-f6%     //FIXME
-f7%     //FIXME
-f8%clc%0%{0,0,0}
-f9%stc%0%{0,0,0}
-fa%cli%0%{0,0,0}
-fb%sti%0%{0,0,0}
-fc%cld%0%{0,0,0}
-fd%std%0%{0,0,0}
-fe%     //FIXME
-ff%     //FIXME
+00%add%2%{"Eb","Gb",0}%GROUP_NONE
+01%add%2%{"Ev","Gv",0}%GROUP_NONE
+02%add%2%{"Gb","Eb",0}%GROUP_NONE
+03%add%2%{"Gv","Ev",0}%GROUP_NONE
+04%add%2%{"AL","Ib",0}%GROUP_NONE
+05%add%2%{"eAX","Iv",0}%GROUP_NONE
+06%push es%0%{0,0,0}%GROUP_NONE
+07%pop es%0%{0,0,0}%GROUP_NONE
+08%or%2%{"Eb","Gb",0}%GROUP_NONE
+09%or%2%{"Ev","Gv",0}%GROUP_NONE
+0a%or%2%{"Gb","Eb",0}%GROUP_NONE
+0b%or%2%{"Gv","Ev",0}%GROUP_NONE
+0c%or%2%{"AL","Ib",0}%GROUP_NONE
+0d%or%2%{"eAX","Iv",0}%GROUP_NONE
+0e%push cs%0%{0,0,0}%GROUP_NONE
+0f%0%0%{0,0,0}%GROUP_NONE
+10%adc%2%{"Eb","Gb",0}%GROUP_NONE
+11%adc%2%{"Ev","Gv",0}%GROUP_NONE
+12%adc%2%{"Gb","Eb",0}%GROUP_NONE
+13%adc%2%{"Gv","Ev",0}%GROUP_NONE
+14%adc%2%{"AL","Ib",0}%GROUP_NONE
+15%adc%2%{"eAX","Iv",0}%GROUP_NONE
+16%push ss%0%{0,0,0}%GROUP_NONE
+17%pop ss%0%{0,0,0}%GROUP_NONE
+18%sbb%2%{"Eb","Gb",0}%GROUP_NONE
+19%sbb%2%{"Ev","Gv",0}%GROUP_NONE
+1a%sbb%2%{"Gb","Eb",0}%GROUP_NONE
+1b%sbb%2%{"Gv","Ev",0}%GROUP_NONE
+1c%sbb%2%{"AL","Ib",0}%GROUP_NONE
+1d%sbb%2%{"eAX","Iv",0}%GROUP_NONE
+1e%push ds%0%{0,0,0}%GROUP_NONE
+1f%pop ds%0%{0,0,0}%GROUP_NONE
+20%and%2%{"Eb","Gb",0}%GROUP_NONE
+21%and%2%{"Ev","Gv",0}%GROUP_NONE
+22%and%2%{"Gb","Eb",0}%GROUP_NONE
+23%and%2%{"Gv","Ev",0}%GROUP_NONE
+24%and%2%{"AL","Ib",0}%GROUP_NONE
+25%and%2%{"eAX","Iv",0}%GROUP_NONE
+26%0%0%{0,0,0}%GROUP_NONE
+27%daa%0%{0,0,0}%GROUP_NONE
+28%sub%2%{"Eb","Gb",0}%GROUP_NONE
+29%sub%2%{"Ev","Gv",0}%GROUP_NONE
+2a%sub%2%{"Gb","Eb",0}%GROUP_NONE
+2b%sub%2%{"Gv","Ev",0}%GROUP_NONE
+2c%sub%2%{"AL","Ib",0}%GROUP_NONE
+2d%sub%2%{"eAX","Iv",0}%GROUP_NONE
+2e%0%0%{0,0,0}%GROUP_NONE
+2f%das%0%{0,0,0}%GROUP_NONE
+30%xor%2%{"Eb","Gb",0}%GROUP_NONE
+31%xor%2%{"Ev","Gv",0}%GROUP_NONE
+32%xor%2%{"Gb","Eb",0}%GROUP_NONE
+33%xor%2%{"Gv","Ev",0}%GROUP_NONE
+34%xor%2%{"AL","Ib",0}%GROUP_NONE
+35%xor%2%{"eAX","Iv",0}%GROUP_NONE
+36%0%0%{0,0,0}%GROUP_NONE
+37%aaa%0%{0,0,0}%GROUP_NONE
+38%cmp%2%{"Eb","Gb",0}%GROUP_NONE
+39%cmp%2%{"Ev","Gv",0}%GROUP_NONE
+3a%cmp%2%{"Gb","Eb",0}%GROUP_NONE
+3b%cmp%2%{"Gv","Ev",0}%GROUP_NONE
+3c%cmp%2%{"AL","Ib",0}%GROUP_NONE
+3d%cmp%2%{"eAX","Iv",0}%GROUP_NONE
+3e%0%0%{0,0,0}%GROUP_NONE
+3f%aas%0%{0,0,0}%GROUP_NONE
+40%inc%1%{"eAX",0,0}%GROUP_NONE
+41%inc%1%{"eCX",0,0}%GROUP_NONE
+42%inc%1%{"eDX",0,0}%GROUP_NONE
+43%inc%1%{"eBX",0,0}%GROUP_NONE
+44%inc%1%{"eSP",0,0}%GROUP_NONE
+45%inc%1%{"eBP",0,0}%GROUP_NONE
+46%inc%1%{"eSI",0,0}%GROUP_NONE
+47%inc%1%{"eDI",0,0}%GROUP_NONE
+48%dec%1%{"eAX",0,0}%GROUP_NONE
+49%dec%1%{"eCX",0,0}%GROUP_NONE
+4a%dec%1%{"eDX",0,0}%GROUP_NONE
+4b%dec%1%{"eBX",0,0}%GROUP_NONE
+4c%dec%1%{"eSP",0,0}%GROUP_NONE
+4d%dec%1%{"eBP",0,0}%GROUP_NONE
+4e%dec%1%{"eSI",0,0}%GROUP_NONE
+4f%dec%1%{"eDI",0,0}%GROUP_NONE
+50%push%1%{"eAX",0,0}%GROUP_NONE
+51%push%1%{"eCX",0,0}%GROUP_NONE
+52%push%1%{"eDX",0,0}%GROUP_NONE
+53%push%1%{"eBX",0,0}%GROUP_NONE
+54%push%1%{"eSP",0,0}%GROUP_NONE
+55%push%1%{"eBP",0,0}%GROUP_NONE
+56%push%1%{"eSI",0,0}%GROUP_NONE
+57%push%1%{"eDI",0,0}%GROUP_NONE
+58%pop%1%{"eAX",0,0}%GROUP_NONE
+59%pop%1%{"eCX",0,0}%GROUP_NONE
+5a%pop%1%{"eDX",0,0}%GROUP_NONE
+5b%pop%1%{"eBX",0,0}%GROUP_NONE
+5c%pop%1%{"eSP",0,0}%GROUP_NONE
+5d%pop%1%{"eBP",0,0}%GROUP_NONE
+5e%pop%1%{"eSI",0,0}%GROUP_NONE
+5f%pop%1%{"eDI",0,0}%GROUP_NONE
+60%0%0%{0,0,0}%GROUP_NONE
+61%0%0%{0,0,0}%GROUP_NONE
+62%0%0%{0,0,0}%GROUP_NONE
+63%0%0%{0,0,0}%GROUP_NONE
+64%0%0%{0,0,0}%GROUP_NONE
+65%0%0%{0,0,0}%GROUP_NONE
+66%0%0%{0,0,0}%GROUP_NONE
+67%0%0%{0,0,0}%GROUP_NONE
+68%0%0%{0,0,0}%GROUP_NONE
+69%0%0%{0,0,0}%GROUP_NONE
+6a%0%0%{0,0,0}%GROUP_NONE
+6b%0%0%{0,0,0}%GROUP_NONE
+6c%0%0%{0,0,0}%GROUP_NONE
+6d%0%0%{0,0,0}%GROUP_NONE
+6e%0%0%{0,0,0}%GROUP_NONE
+6f%0%0%{0,0,0}%GROUP_NONE
+70%jo%1%{"Jb",0,0}%GROUP_NONE
+71%jno%1%{"Jb",0,0}%GROUP_NONE
+72%jb/jnae/jc%1%{"Jb",0,0}%GROUP_NONE
+73%jnb/jae/jnc%1%{"Jb",0,0}%GROUP_NONE
+74%jz/je%1%{"Jb",0,0}%GROUP_NONE
+75%jnz/jne%1%{"Jb",0,0}%GROUP_NONE
+76%jbe/jna%1%{"Jb",0,0}%GROUP_NONE
+77%jnbe/ja%1%{"Jb",0,0}%GROUP_NONE
+78%js%1%{"Jb",0,0}%GROUP_NONE
+79%jns%1%{"Jb",0,0}%GROUP_NONE
+7a%jp/jpe%1%{"Jb",0,0}%GROUP_NONE
+7b%jnp/jpo%1%{"Jb",0,0}%GROUP_NONE
+7c%jl/jnge%1%{"Jb",0,0}%GROUP_NONE
+7d%jnl/jge%1%{"Jb",0,0}%GROUP_NONE
+7e%jle/jng%1%{"Jb",0,0}%GROUP_NONE
+7f%jnle/jg%1%{"Jb",0,0}%GROUP_NONE
+80%0%2%{"Eb","Ib",0}%GROUP_1
+81%0%2%{"Ev","Iv",0}%GROUP_1
+82%0%2%{"Ev","Ib",0}%GROUP_1
+83%0%2%{"Eb","Ib",0}%GROUP_1
+84%test%2%{"Eb","Gb",0}%GROUP_NONE
+85%test%2%{"Ev","Gv",0}%GROUP_NONE
+86%xchg%2%{"Eb","Gb",0}%GROUP_NONE
+87%xchg%2%{"Ev","Gv",0}%GROUP_NONE
+88%mov%2%{"Eb","Gb",0}%GROUP_NONE
+89%mov%2%{"Ev","Gv",0}%GROUP_NONE
+8a%mov%2%{"Gb","Eb",0}%GROUP_NONE
+8b%mov%2%{"Gv","Ev",0}%GROUP_NONE
+8c%mov%2%{"Ew","Sw",0}%GROUP_NONE
+8d%lea%2%{"Gv","M",0}%GROUP_NONE
+8e%mov%2%{"Sw","Ew",0}%GROUP_NONE
+8f%pop%1%{"Ev",0,0}%GROUP_NONE
+90%nop%0%{0,0,0}%GROUP_NONE
+91%xchg%1%{"eCX",0,0}%GROUP_NONE
+92%xchg%1%{"eDX",0,0}%GROUP_NONE
+93%xchg%1%{"eBX",0,0}%GROUP_NONE
+94%xchg%1%{"eSP",0,0}%GROUP_NONE
+95%xchg%1%{"eBP",0,0}%GROUP_NONE
+96%xchg%1%{"eSI",0,0}%GROUP_NONE
+97%xchg%1%{"eDI",0,0}%GROUP_NONE
+98%cbw%0%{0,0,0}%GROUP_NONE
+99%cwd%0%{0,0,0}%GROUP_NONE
+9a%call%1%{"Ap",0,0}%GROUP_NONE
+9b%wait%0%{0,0,0}%GROUP_NONE
+9c%pushf%1%{"Fv",0,0}%GROUP_NONE
+9d%popf%1%{"Fv",0,0}%GROUP_NONE
+9e%sahf%0%{0,0,0}%GROUP_NONE
+9f%lahf%0%{0,0,0}%GROUP_NONE
+a0%mov%2%{"AL","Ob",0}%GROUP_NONE
+a1%mov%2%{"eAX","Ov",0}%GROUP_NONE
+a2%mov%2%{"Ob","AL",0}%GROUP_NONE
+a3%mov%2%{"Ov","eAX",0}%GROUP_NONE
+a4%movsb%2%{"Xb","Yb",0}%GROUP_NONE
+a5%movsw%2%{"Xv","Yv",0}%GROUP_NONE
+a6%cmpsw%2%{"Xb","Yb",0}%GROUP_NONE
+a7%cmpsw%2%{"Xv","Yv",0}%GROUP_NONE
+a8%test%2%{"AL","Ib",0}%GROUP_NONE
+a9%test%2%{"eAX","Iv",0}%GROUP_NONE
+aa%stosb%2%{"Yb","AL",0}%GROUP_NONE
+ab%stosw%2%{"Yv","eAX",0}%GROUP_NONE
+ac%lodsb%2%{"AL","Xb",0}%GROUP_NONE
+ad%lodsw%2%{"eAX","Xv",0}%GROUP_NONE
+ae%scasb%2%{"AL","Yb",0}%GROUP_NONE
+af%scasw%2%{"eAX","Yv",0}%GROUP_NONE
+b0%mov%2%{"AL","Ib",0}%GROUP_NONE
+b1%mov%2%{"CL","Ib",0}%GROUP_NONE
+b2%mov%2%{"DL","Ib",0}%GROUP_NONE
+b3%mov%2%{"BL","Ib",0}%GROUP_NONE
+b4%mov%2%{"AH","Ib",0}%GROUP_NONE
+b5%mov%2%{"CH","Ib",0}%GROUP_NONE
+b6%mov%2%{"DH","Ib",0}%GROUP_NONE
+b7%mov%2%{"BH","Ib",0}%GROUP_NONE
+b8%mov%2%{"eAX","Iv",0}%GROUP_NONE
+b9%mov%2%{"eCX","Iv",0}%GROUP_NONE
+ba%mov%2%{"eDX","Iv",0}%GROUP_NONE
+bb%mov%2%{"eBX","Iv",0}%GROUP_NONE
+bc%mov%2%{"eSP","Iv",0}%GROUP_NONE
+bd%mov%2%{"eBP","Iv",0}%GROUP_NONE
+be%mov%2%{"eSI","Iv",0}%GROUP_NONE
+bf%mov%2%{"eDI","Iv",0}%GROUP_NONE
+c0%0%0%{0,0,0}%GROUP_NONE
+c1%0%0%{0,0,0}%GROUP_NONE
+c2%ret%1%{"Iw",0,0}%GROUP_NONE
+c3%ret%0%{0,0,0}%GROUP_NONE
+c4%les%2%{"Gv","Mp",0}%GROUP_NONE
+c5%lds%2%{"Gv","Mp",0}%GROUP_NONE
+c6%mov%2%{"Eb","Ib",0}%GROUP_NONE
+c7%mov%2%{"Ev","Iv",0}%GROUP_NONE
+c8%0%0%{0,0,0}%GROUP_NONE
+c9%0%0%{0,0,0}%GROUP_NONE
+ca%ret%1%{"Iw",0,0}%GROUP_NONE
+cb%ret%0%{0,0,0}%GROUP_NONE
+cc%int 3%0%{0,0,0}%GROUP_NONE
+cd%int%1%{"Ib",0,0}%GROUP_NONE
+ce%into%0%{0,0,0}%GROUP_NONE
+cf%iret%0%{0,0,0}%GROUP_NONE
+d0%0%2%{"Eb",0,0}%GROUP_2
+d1%0%2%{"Ev",0,0}%GROUP_2
+d2%0%2%{"Eb","CL",0}%GROUP_2
+d3%0%2%{"Ev","CL",0}%GROUP_2
+d4%aam%0%{0,0,0}%GROUP_NONE
+d5%aad%0%{0,0,0}%GROUP_NONE
+d6%0%0%{0,0,0}%GROUP_NONE
+d7%xlat%0%{0,0,0}%GROUP_NONE
+d8%esc 0%0%{0,0,0}%GROUP_NONE
+d9%esc 1%0%{0,0,0}%GROUP_NONE
+da%esc 2%0%{0,0,0}%GROUP_NONE
+db%esc 3%0%{0,0,0}%GROUP_NONE
+dc%esc 4%0%{0,0,0}%GROUP_NONE
+dd%esc 5%0%{0,0,0}%GROUP_NONE
+de%esc 6%0%{0,0,0}%GROUP_NONE
+df%esc 7%0%{0,0,0}%GROUP_NONE
+e0%loopne/loopnz%1%{"Jb",0,0}%GROUP_NONE
+e1%loope/loopz%1%{"Jb",0,0}%GROUP_NONE
+e2%loop%1%{"Jb",0,0}%GROUP_NONE
+e3%jcxz%1%{"Jb",0,0}%GROUP_NONE
+e4%in%2%{"AL","Ib",0}%GROUP_NONE
+e5%in%2%{"eAX","Ib",0}%GROUP_NONE
+e6%out%2%{"Ib","AL",0}%GROUP_NONE
+e7%out%2%{"Ib","eAX",0}%GROUP_NONE
+e8%call%1%{"Jv",0,0}%GROUP_NONE
+e9%jmp%1%{"Jv",0,0}%GROUP_NONE
+ea%jmp%1%{"Ap",0,0}%GROUP_NONE
+eb%jmp%1%{"Jb",0,0}%GROUP_NONE
+ec%in%2%{"AL","DX",0}%GROUP_NONE
+ed%in%2%{"eAX","DX",0}%GROUP_NONE
+ee%out%2%{"DX","AL",0}%GROUP_NONE
+ef%out%2%{"DX","eAX",0}%GROUP_NONE
+f0%lock%0%{0,0,0}%GROUP_NONE
+f1%0%0%{0,0,0}%GROUP_NONE
+f2%repne%0%{0,0,0}%GROUP_NONE
+f3%rep/repe%0%{0,0,0}%GROUP_NONE
+f4%hlt%0%{0,0,0}%GROUP_NONE
+f5%cmc%0%{0,0,0}%GROUP_NONE
+f6%0%1%{"Eb",0,0}%GROUP_3
+f7%0%1%{"Ev",0,0}%GROUP_3
+f8%clc%0%{0,0,0}%GROUP_NONE
+f9%stc%0%{0,0,0}%GROUP_NONE
+fa%cli%0%{0,0,0}%GROUP_NONE
+fb%sti%0%{0,0,0}%GROUP_NONE
+fc%cld%0%{0,0,0}%GROUP_NONE
+fd%std%0%{0,0,0}%GROUP_NONE
+fe%0%1%{"Eb",0,0}%GROUP_4
+ff%0%1%{"Ev",0,0}%GROUP_5

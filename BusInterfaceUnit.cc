@@ -1,12 +1,10 @@
 #include "BusInterfaceUnit.hh"
 
-/** */
 void
 BusInterfaceUnit::initialize () {
 	//FIXME
 }
 
-/** */
 void
 BusInterfaceUnit::connect_to (Memory &mem) {
 	m_memory = &mem;

@@ -11,6 +11,7 @@ public:
 	const char *mnemonic;
 	int operand_count;
 	const char *operand_codes[3];
+	unsigned int group;
 	void (*execute_func) (Machine &mach, std::vector<Value> *ops);
 
 	void execute (std::vector<Value> *ops) {

@@ -4,11 +4,14 @@
 #include "Memory.hh"
 #include "Number.hh"
 
+/**
+*/
 class MemoryAddress {
 	Memory *m_memory;
 	unsigned int m_phys_addr;
 
 public:
+	/** */
 	MemoryAddress (Memory *mem, unsigned short seg, unsigned short offset) : m_memory (mem) {
 		m_phys_addr = seg << 4;
 		m_phys_addr += offset;

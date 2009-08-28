@@ -32,11 +32,10 @@ int main (int argc, char **argv) {
 		++TEST_NUMBER;
 		ps = true;
 
-		eu.set_reg_dx (-1);
-		eu.set_reg_ax (15);
-		unsigned short src = 3;
-		alu.op_idiv (src);
-		printf ("%d r%d\n", (short)eu.get_reg_ax (), (short)eu.get_reg_dx ());
+		eu.set_reg_al (7);
+		unsigned char src = 7;
+		alu.op_mul (src);
+		printf ("%d\n", (short)eu.get_reg_ax ());
 
 		if (ps) {
 			print_passed (TEST_NUMBER);

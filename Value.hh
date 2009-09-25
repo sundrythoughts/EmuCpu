@@ -4,9 +4,7 @@
 #include <typeinfo>
 #include <string>
 #include <cstring>
-#include <glib.h>
-
-namespace Jaf {
+#include <iostream>
 
 /**
 @class Value
@@ -45,7 +43,7 @@ public:
 	template<typename T>
 	bool init (bool del_data = true) {
 		if (_data) {
-			g_warning ("class Value - Unable to initialize a Value that is already initialized.");
+			std::cerr << "class Value - Unable to initialize a Value that is already initialized." << std::endl;
 			return false;
 		}
 
@@ -81,11 +79,11 @@ public:
 	template<typename T>
 	bool get_value (T &v) {
 		if (!_data) {
-			g_warning ("class Value - Unable to initialize a Value that is already initialized.");
+			std::cerr << "class Value - Unable to initialize a Value that is already initialized." << std::endl;
 			return false;
 		}
 		if (0 != std::strcmp (_type_name.c_str (), typeid(T).name ())) {
-			g_warning ("class Value - Trying to use an incompatible type.");
+			std::cerr << "class Value - Trying to use an incompatible type." << std::endl;
 			return false;
 		}
 
@@ -102,11 +100,11 @@ public:
 	template<typename T>
 	bool get_value_pointer (T* &v) {
 		if (!_data) {
-			g_warning ("class Value - Unable to initialize a Value that is already initialized.");
+			std::cerr << "class Value - Unable to initialize a Value that is already initialized." << std::endl;
 			return false;
 		}
 		if (0 != std::strcmp (_type_name.c_str (), typeid(T).name ())) {
-			g_warning ("class Value - Trying to use an incompatible type.");
+			std::cerr << "class Value - Trying to use an incompatible type." << std::endl;
 			return false;
 		}
 
@@ -122,11 +120,11 @@ public:
 	template<typename T>
 	bool set_value (const T &v) const {
 		if (!_data) {
-			g_warning ("class Value - Unable to initialize a Value that is already initialized.");
+			std::cerr << "class Value - Unable to initialize a Value that is already initialized." << std::endl;
 			return false;
 		}
 		if (0 != std::strcmp (_type_name.c_str (), typeid(T).name ())) {
-			g_warning ("class Value - Trying to use an incompatible type.");
+			std::cerr << "class Value - Trying to use an incompatible type." << std::endl;
 			return false;
 		}
 
@@ -158,11 +156,11 @@ private:
 	template<typename T>
 	bool free_template () {
 		if (!_data) {
-			g_warning ("class Value - Unable to initialize a Value that is already initialized.");
+			std::cerr << "class Value - Unable to initialize a Value that is already initialized." << std::endl;
 			return false;
 		}
 		if (0 != std::strcmp (_type_name.c_str (), typeid(T).name ())) {
-			g_warning ("class Value - Trying to use an incompatible type.");
+			std::cerr << "class Value - Trying to use an incompatible type." << std::endl;
 			return false;
 		}
 
@@ -179,11 +177,11 @@ private:
 	template<typename T>
 	bool copy_template (Value &dest) {
 		if (!_data || !dest._data) {
-			g_warning ("class Value - Unable to initialize a Value that is already initialized.");
+			std::cerr << "class Value - Unable to initialize a Value that is already initialized." << std::endl;
 			return false;
 		}
 		if (0 != std::strcmp (_type_name.c_str (), dest._type_name.c_str ())) {
-			g_warning ("class Value - Trying to use an incompatible type.");
+			std::cerr << "class Value - Trying to use an incompatible type." << std::endl;
 			return false;
 		}
 
@@ -202,8 +200,6 @@ private:
 	//private copy constructor
 	Value (Value &v);
 };
-
-}//end namespace Jaf
 
 #endif //VALUE_HH
 

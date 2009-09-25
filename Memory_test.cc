@@ -24,12 +24,12 @@ int main (int argc, char **argv) {
 		ps = true;
 		unsigned int addr = 0;
 		int src = 250;
-		int *dest;
+		int dest;
 		mem.write (addr, src);
 		if (!mem.read (addr, dest)) {
 			print_failed (TEST_NUMBER);
 		}
-		if (src != *dest) {
+		if (src != dest) {
 			print_failed (TEST_NUMBER);
 		}
 
@@ -44,12 +44,12 @@ int main (int argc, char **argv) {
 		ps = true;
 		unsigned int addr = 1048575;
 		char src = 'J';
-		char *dest;
+		char dest;
 		mem.write (addr, src);
 		if (!mem.read (addr, dest)) {
 			print_failed (TEST_NUMBER);
 		}
-		if (src != *dest) {
+		if (src != dest) {
 			print_failed (TEST_NUMBER);
 		}
 
@@ -64,7 +64,7 @@ int main (int argc, char **argv) {
 		ps = true;
 		unsigned int addr = 1048575;
 		int src = 10;
-		int *dest;
+		int dest;
 		mem.write (addr, src);
 		if (mem.read (addr, dest)) {
 			print_failed (TEST_NUMBER);

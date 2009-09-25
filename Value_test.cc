@@ -3,7 +3,6 @@
 #include <string>
 
 using namespace std;
-using namespace Jaf;
 
 static bool ps;
 

@@ -1,4 +1,7 @@
 #include "MemoryAddress.hh"
+#include <iostream>
+
+using namespace std;
 
 static bool ps;
 
@@ -13,3 +16,4 @@ static void print_failed (int i) {
 
 int main (int argc, char **argv) {
 }
+

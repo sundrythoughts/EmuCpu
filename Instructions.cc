@@ -1,50 +1,386 @@
 #include "Instructions.hh"
 
-namespace Jaf {
-
-void
-Instructions::inst_00_add_Eb_Gb (Machine &mach, std::vector<Value> *ops) {
-}
-
-void
-Instructions::inst_01_add_Ev_Gv (std::vector<Value> *ops) {
-}
-
-void
-Instructions::inst_02_add_Gb_Eb (std::vector<Value> *ops) {
-}
-
-void
-Instructions::inst_03_add_Gv_Ev (std::vector<Value> *ops) {
-}
-
-void
-Instructions::inst_04_add_AL_Ib (Machine &mach, std::vector<Value> *ops) {
-/*
-	Cpu cpu = mach.get_cpu ();
-	unsigned char b;
-	if (!(*ops)[1].get_value (b)) {
-		throw new BigProblemException ();
-	}
-	cpu.set_reg_al (cpu.get_reg_al () + b);
-*/
-}
-
-void
-Instructions::inst_05_add_rAX_Iz (std::vector<Value> *ops) {
-}
-
-const Instruction Instructions::one_byte_opcode_instruction_map[255] = {
-	{ "add", 2, {"Eb", "Gb", 0}, &Instructions::inst_00_add_Eb_Gb},
-	{ "add", 2, {"Ev", "Gv", 0}, &Instructions::inst_01_add_Ev_Gv},
-	{ "add", 2, {"Gb", "Eb", 0}, &Instructions::inst_02_add_Gb_Eb },
-	{ "add", 2, {"Gv", "Ev", 0}, &Instructions::inst_03_add_Gv_Ev },
-	{ "add", 2, {"AL", "Ib", 0}, &Instructions::inst_04_add_AL_Ib },
-	{ "add", 2, {"rAX", "Iz", 0}, &Instructions::inst_05_add_rAX_Iz }
+const Instruction Instructions::one_byte_opcode_instruction_map[256] = {
+	{"add", true, 2, {"Eb","Gb",0}, GROUP_NONE},
+	{"add", true, 2, {"Ev","Gv",0}, GROUP_NONE},
+	{"add", true, 2, {"Gb","Eb",0}, GROUP_NONE},
+	{"add", true, 2, {"Gv","Ev",0}, GROUP_NONE},
+	{"add", false, 2, {"AL","Ib",0}, GROUP_NONE},
+	{"add", false, 2, {"AX","Iv",0}, GROUP_NONE},
+	{"push es", false, 0, {0,0,0}, GROUP_NONE},
+	{"pop es", false, 0, {0,0,0}, GROUP_NONE},
+	{"or", true, 2, {"Eb","Gb",0}, GROUP_NONE},
+	{"or", true, 2, {"Ev","Gv",0}, GROUP_NONE},
+	{"or", true, 2, {"Gb","Eb",0}, GROUP_NONE},
+	{"or", true, 2, {"Gv","Ev",0}, GROUP_NONE},
+	{"or", false, 2, {"AL","Ib",0}, GROUP_NONE},
+	{"or", false, 2, {"AX","Iv",0}, GROUP_NONE},
+	{"push cs", false, 0, {0,0,0}, GROUP_NONE},
+	{0, false, 0, {0,0,0}, GROUP_NONE},
+	{"adc", true, 2, {"Eb","Gb",0}, GROUP_NONE},
+	{"adc", true, 2, {"Ev","Gv",0}, GROUP_NONE},
+	{"adc", true, 2, {"Gb","Eb",0}, GROUP_NONE},
+	{"adc", true, 2, {"Gv","Ev",0}, GROUP_NONE},
+	{"adc", false, 2, {"AL","Ib",0}, GROUP_NONE},
+	{"adc", false, 2, {"AX","Iv",0}, GROUP_NONE},
+	{"push ss", false, 0, {0,0,0}, GROUP_NONE},
+	{"pop ss", false, 0, {0,0,0}, GROUP_NONE},
+	{"sbb", true, 2, {"Eb","Gb",0}, GROUP_NONE},
+	{"sbb", true, 2, {"Ev","Gv",0}, GROUP_NONE},
+	{"sbb", true, 2, {"Gb","Eb",0}, GROUP_NONE},
+	{"sbb", true, 2, {"Gv","Ev",0}, GROUP_NONE},
+	{"sbb", false, 2, {"AL","Ib",0}, GROUP_NONE},
+	{"sbb", false, 2, {"AX","Iv",0}, GROUP_NONE},
+	{"push ds", false, 0, {0,0,0}, GROUP_NONE},
+	{"pop ds", false, 0, {0,0,0}, GROUP_NONE},
+	{"and", true, 2, {"Eb","Gb",0}, GROUP_NONE},
+	{"and", true, 2, {"Ev","Gv",0}, GROUP_NONE},
+	{"and", true, 2, {"Gb","Eb",0}, GROUP_NONE},
+	{"and", true, 2, {"Gv","Ev",0}, GROUP_NONE},
+	{"and", false, 2, {"AL","Ib",0}, GROUP_NONE},
+	{"and", false, 2, {"AX","Iv",0}, GROUP_NONE},
+	{0, false, 0, {0,0,0}, GROUP_NONE},
+	{"daa", false, 0, {0,0,0}, GROUP_NONE},
+	{"sub", true, 2, {"Eb","Gb",0}, GROUP_NONE},
+	{"sub", true, 2, {"Ev","Gv",0}, GROUP_NONE},
+	{"sub", true, 2, {"Gb","Eb",0}, GROUP_NONE},
+	{"sub", true, 2, {"Gv","Ev",0}, GROUP_NONE},
+	{"sub", false, 2, {"AL","Ib",0}, GROUP_NONE},
+	{"sub", false, 2, {"AX","Iv",0}, GROUP_NONE},
+	{0, false, 0, {0,0,0}, GROUP_NONE},
+	{"das", false, 0, {0,0,0}, GROUP_NONE},
+	{"xor", true, 2, {"Eb","Gb",0}, GROUP_NONE},
+	{"xor", true, 2, {"Ev","Gv",0}, GROUP_NONE},
+	{"xor", true, 2, {"Gb","Eb",0}, GROUP_NONE},
+	{"xor", true, 2, {"Gv","Ev",0}, GROUP_NONE},
+	{"xor", false, 2, {"AL","Ib",0}, GROUP_NONE},
+	{"xor", false, 2, {"AX","Iv",0}, GROUP_NONE},
+	{0, false, 0, {0,0,0}, GROUP_NONE},
+	{"aaa", false, 0, {0,0,0}, GROUP_NONE},
+	{"cmp", true, 2, {"Eb","Gb",0}, GROUP_NONE},
+	{"cmp", true, 2, {"Ev","Gv",0}, GROUP_NONE},
+	{"cmp", true, 2, {"Gb","Eb",0}, GROUP_NONE},
+	{"cmp", true, 2, {"Gv","Ev",0}, GROUP_NONE},
+	{"cmp", false, 2, {"AL","Ib",0}, GROUP_NONE},
+	{"cmp", false, 2, {"AX","Iv",0}, GROUP_NONE},
+	{0, false, 0, {0,0,0}, GROUP_NONE},
+	{"aas", false, 0, {0,0,0}, GROUP_NONE},
+	{"inc", false, 1, {"AX",0,0}, GROUP_NONE},
+	{"inc", false, 1, {"CX",0,0}, GROUP_NONE},
+	{"inc", false, 1, {"DX",0,0}, GROUP_NONE},
+	{"inc", false, 1, {"BX",0,0}, GROUP_NONE},
+	{"inc", false, 1, {"SP",0,0}, GROUP_NONE},
+	{"inc", false, 1, {"BP",0,0}, GROUP_NONE},
+	{"inc", false, 1, {"SI",0,0}, GROUP_NONE},
+	{"inc", false, 1, {"DI",0,0}, GROUP_NONE},
+	{"dec", false, 1, {"AX",0,0}, GROUP_NONE},
+	{"dec", false, 1, {"CX",0,0}, GROUP_NONE},
+	{"dec", false, 1, {"DX",0,0}, GROUP_NONE},
+	{"dec", false, 1, {"BX",0,0}, GROUP_NONE},
+	{"dec", false, 1, {"SP",0,0}, GROUP_NONE},
+	{"dec", false, 1, {"BP",0,0}, GROUP_NONE},
+	{"dec", false, 1, {"SI",0,0}, GROUP_NONE},
+	{"dec", false, 1, {"DI",0,0}, GROUP_NONE},
+	{"push", false, 1, {"AX",0,0}, GROUP_NONE},
+	{"push", false, 1, {"CX",0,0}, GROUP_NONE},
+	{"push", false, 1, {"DX",0,0}, GROUP_NONE},
+	{"push", false, 1, {"BX",0,0}, GROUP_NONE},
+	{"push", false, 1, {"SP",0,0}, GROUP_NONE},
+	{"push", false, 1, {"BP",0,0}, GROUP_NONE},
+	{"push", false, 1, {"SI",0,0}, GROUP_NONE},
+	{"push", false, 1, {"DI",0,0}, GROUP_NONE},
+	{"pop", false, 1, {"AX",0,0}, GROUP_NONE},
+	{"pop", false, 1, {"CX",0,0}, GROUP_NONE},
+	{"pop", false, 1, {"DX",0,0}, GROUP_NONE},
+	{"pop", false, 1, {"BX",0,0}, GROUP_NONE},
+	{"pop", false, 1, {"SP",0,0}, GROUP_NONE},
+	{"pop", false, 1, {"BP",0,0}, GROUP_NONE},
+	{"pop", false, 1, {"SI",0,0}, GROUP_NONE},
+	{"pop", false, 1, {"DI",0,0}, GROUP_NONE},
+	{0, false, 0, {0,0,0}, GROUP_NONE},
+	{0, false, 0, {0,0,0}, GROUP_NONE},
+	{0, false, 0, {0,0,0}, GROUP_NONE},
+	{0, false, 0, {0,0,0}, GROUP_NONE},
+	{0, false, 0, {0,0,0}, GROUP_NONE},
+	{0, false, 0, {0,0,0}, GROUP_NONE},
+	{0, false, 0, {0,0,0}, GROUP_NONE},
+	{0, false, 0, {0,0,0}, GROUP_NONE},
+	{0, false, 0, {0,0,0}, GROUP_NONE},
+	{0, false, 0, {0,0,0}, GROUP_NONE},
+	{0, false, 0, {0,0,0}, GROUP_NONE},
+	{0, false, 0, {0,0,0}, GROUP_NONE},
+	{0, false, 0, {0,0,0}, GROUP_NONE},
+	{0, false, 0, {0,0,0}, GROUP_NONE},
+	{0, false, 0, {0,0,0}, GROUP_NONE},
+	{0, false, 0, {0,0,0}, GROUP_NONE},
+	{"jo", false, 1, {"Jb",0,0}, GROUP_NONE},
+	{"jno", false, 1, {"Jb",0,0}, GROUP_NONE},
+	{"jb/jnae/jc", false, 1, {"Jb",0,0}, GROUP_NONE},
+	{"jnb/jae/jnc", false, 1, {"Jb",0,0}, GROUP_NONE},
+	{"jz/je", false, 1, {"Jb",0,0}, GROUP_NONE},
+	{"jnz/jne", false, 1, {"Jb",0,0}, GROUP_NONE},
+	{"jbe/jna", false, 1, {"Jb",0,0}, GROUP_NONE},
+	{"jnbe/ja", false, 1, {"Jb",0,0}, GROUP_NONE},
+	{"js", false, 1, {"Jb",0,0}, GROUP_NONE},
+	{"jns", false, 1, {"Jb",0,0}, GROUP_NONE},
+	{"jp/jpe", false, 1, {"Jb",0,0}, GROUP_NONE},
+	{"jnp/jpo", false, 1, {"Jb",0,0}, GROUP_NONE},
+	{"jl/jnge", false, 1, {"Jb",0,0}, GROUP_NONE},
+	{"jnl/jge", false, 1, {"Jb",0,0}, GROUP_NONE},
+	{"jle/jng", false, 1, {"Jb",0,0}, GROUP_NONE},
+	{"jnle/jg", false, 1, {"Jb",0,0}, GROUP_NONE},
+	{0, false, 2, {"Eb","Ib",0}, GROUP_1},
+	{0, false, 2, {"Ev","Iv",0}, GROUP_1},
+	{0, false, 2, {"Ev","Ib",0}, GROUP_1},
+	{0, false, 2, {"Eb","Ib",0}, GROUP_1},
+	{"test", true, 2, {"Eb","Gb",0}, GROUP_NONE},
+	{"test", true, 2, {"Ev","Gv",0}, GROUP_NONE},
+	{"xchg", true, 2, {"Eb","Gb",0}, GROUP_NONE},
+	{"xchg", true, 2, {"Ev","Gv",0}, GROUP_NONE},
+	{"mov", true, 2, {"Eb","Gb",0}, GROUP_NONE},
+	{"mov", true, 2, {"Ev","Gv",0}, GROUP_NONE},
+	{"mov", true, 2, {"Gb","Eb",0}, GROUP_NONE},
+	{"mov", true, 2, {"Gv","Ev",0}, GROUP_NONE},
+	{"mov", true, 2, {"Ew","Sw",0}, GROUP_NONE},
+	{"lea", true, 2, {"Gv","M",0}, GROUP_NONE},
+	{"mov", true, 2, {"Sw","Ew",0}, GROUP_NONE},
+	{"pop", true, 1, {"Ev",0,0}, GROUP_NONE},
+	{"nop", false, 0, {0,0,0}, GROUP_NONE},
+	{"xchg", false, 1, {"CX",0,0}, GROUP_NONE},
+	{"xchg", false, 1, {"DX",0,0}, GROUP_NONE},
+	{"xchg", false, 1, {"BX",0,0}, GROUP_NONE},
+	{"xchg", false, 1, {"SP",0,0}, GROUP_NONE},
+	{"xchg", false, 1, {"BP",0,0}, GROUP_NONE},
+	{"xchg", false, 1, {"SI",0,0}, GROUP_NONE},
+	{"xchg", false, 1, {"DI",0,0}, GROUP_NONE},
+	{"cbw", false, 0, {0,0,0}, GROUP_NONE},
+	{"cwd", false, 0, {0,0,0}, GROUP_NONE},
+	{"call", false, 1, {"Ap",0,0}, GROUP_NONE},
+	{"wait", false, 0, {0,0,0}, GROUP_NONE},
+	{"pushf", false, 0, {0,0,0}, GROUP_NONE},
+	{"popf", false, 0, {0,0,0}, GROUP_NONE},
+	{"sahf", false, 0, {0,0,0}, GROUP_NONE},
+	{"lahf", false, 0, {0,0,0}, GROUP_NONE},
+	{"mov", false, 2, {"AL","Ob",0}, GROUP_NONE},
+	{"mov", false, 2, {"AX","Ov",0}, GROUP_NONE},
+	{"mov", false, 2, {"Ob","AL",0}, GROUP_NONE},
+	{"mov", false, 2, {"Ov","AX",0}, GROUP_NONE},
+	{"movsb", false, 2, {"Xb","Yb",0}, GROUP_NONE},
+	{"movsw", false, 2, {"Xv","Yv",0}, GROUP_NONE},
+	{"cmpsw", false, 2, {"Xb","Yb",0}, GROUP_NONE},
+	{"cmpsw", false, 2, {"Xv","Yv",0}, GROUP_NONE},
+	{"test", false, 2, {"AL","Ib",0}, GROUP_NONE},
+	{"test", false, 2, {"AX","Iv",0}, GROUP_NONE},
+	{"stosb", false, 2, {"Yb","AL",0}, GROUP_NONE},
+	{"stosw", false, 2, {"Yv","AX",0}, GROUP_NONE},
+	{"lodsb", false, 2, {"AL","Xb",0}, GROUP_NONE},
+	{"lodsw", false, 2, {"AX","Xv",0}, GROUP_NONE},
+	{"scasb", false, 2, {"AL","Yb",0}, GROUP_NONE},
+	{"scasw", false, 2, {"AX","Yv",0}, GROUP_NONE},
+	{"mov", false, 2, {"AL","Ib",0}, GROUP_NONE},
+	{"mov", false, 2, {"CL","Ib",0}, GROUP_NONE},
+	{"mov", false, 2, {"DL","Ib",0}, GROUP_NONE},
+	{"mov", false, 2, {"BL","Ib",0}, GROUP_NONE},
+	{"mov", false, 2, {"AH","Ib",0}, GROUP_NONE},
+	{"mov", false, 2, {"CH","Ib",0}, GROUP_NONE},
+	{"mov", false, 2, {"DH","Ib",0}, GROUP_NONE},
+	{"mov", false, 2, {"BH","Ib",0}, GROUP_NONE},
+	{"mov", false, 2, {"AX","Iv",0}, GROUP_NONE},
+	{"mov", false, 2, {"CX","Iv",0}, GROUP_NONE},
+	{"mov", false, 2, {"DX","Iv",0}, GROUP_NONE},
+	{"mov", false, 2, {"BX","Iv",0}, GROUP_NONE},
+	{"mov", false, 2, {"SP","Iv",0}, GROUP_NONE},
+	{"mov", false, 2, {"BP","Iv",0}, GROUP_NONE},
+	{"mov", false, 2, {"SI","Iv",0}, GROUP_NONE},
+	{"mov", false, 2, {"DI","Iv",0}, GROUP_NONE},
+	{0, false, 0, {0,0,0}, GROUP_NONE},
+	{0, false, 0, {0,0,0}, GROUP_NONE},
+	{"ret", false, 1, {"Iw",0,0}, GROUP_NONE},
+	{"ret", false, 0, {0,0,0}, GROUP_NONE},
+	{"les", true, 2, {"Gv","Mp",0}, GROUP_NONE},
+	{"lds", true, 2, {"Gv","Mp",0}, GROUP_NONE},
+	{"mov", true, 2, {"Eb","Ib",0}, GROUP_NONE},
+	{"mov", true, 2, {"Ev","Iv",0}, GROUP_NONE},
+	{0, false, 0, {0,0,0}, GROUP_NONE},
+	{0, false, 0, {0,0,0}, GROUP_NONE},
+	{"ret", false, 1, {"Iw",0,0}, GROUP_NONE},
+	{"ret", false, 0, {0,0,0}, GROUP_NONE},
+	{"int 3", false, 0, {0,0,0}, GROUP_NONE},
+	{"int", false, 1, {"Ib",0,0}, GROUP_NONE},
+	{"into", false, 0, {0,0,0}, GROUP_NONE},
+	{"iret", false, 0, {0,0,0}, GROUP_NONE},
+	{0, true, 2, {"Eb",0,0}, GROUP_2},
+	{0, true, 2, {"Ev",0,0}, GROUP_2},
+	{0, true, 2, {"Eb","CL",0}, GROUP_2},
+	{0, true, 2, {"Ev","CL",0}, GROUP_2},
+	{"aam", false, 0, {0,0,0}, GROUP_NONE},
+	{"aad", false, 0, {0,0,0}, GROUP_NONE},
+	{0, false, 0, {0,0,0}, GROUP_NONE},
+	{"xlat", false, 0, {0,0,0}, GROUP_NONE},
+	{"esc 0", false, 0, {0,0,0}, GROUP_NONE},
+	{"esc 1", false, 0, {0,0,0}, GROUP_NONE},
+	{"esc 2", false, 0, {0,0,0}, GROUP_NONE},
+	{"esc 3", false, 0, {0,0,0}, GROUP_NONE},
+	{"esc 4", false, 0, {0,0,0}, GROUP_NONE},
+	{"esc 5", false, 0, {0,0,0}, GROUP_NONE},
+	{"esc 6", false, 0, {0,0,0}, GROUP_NONE},
+	{"esc 7", false, 0, {0,0,0}, GROUP_NONE},
+	{"loopne/loopnz", false, 1, {"Jb",0,0}, GROUP_NONE},
+	{"loope/loopz", false, 1, {"Jb",0,0}, GROUP_NONE},
+	{"loop", false, 1, {"Jb",0,0}, GROUP_NONE},
+	{"jcxz", false, 1, {"Jb",0,0}, GROUP_NONE},
+	{"in", false, 2, {"AL","Ib",0}, GROUP_NONE},
+	{"in", false, 2, {"AX","Ib",0}, GROUP_NONE},
+	{"out", false, 2, {"Ib","AL",0}, GROUP_NONE},
+	{"out", false, 2, {"Ib","AX",0}, GROUP_NONE},
+	{"call", false, 1, {"Jv",0,0}, GROUP_NONE},
+	{"jmp", false, 1, {"Jv",0,0}, GROUP_NONE},
+	{"jmp", false, 1, {"Ap",0,0}, GROUP_NONE},
+	{"jmp", false, 1, {"Jb",0,0}, GROUP_NONE},
+	{"in", false, 2, {"AL","DX",0}, GROUP_NONE},
+	{"in", false, 2, {"AX","DX",0}, GROUP_NONE},
+	{"out", false, 2, {"DX","AL",0}, GROUP_NONE},
+	{"out", false, 2, {"DX","AX",0}, GROUP_NONE},
+	{"lock", false, 0, {0,0,0}, GROUP_NONE},
+	{0, false, 0, {0,0,0}, GROUP_NONE},
+	{"repne", false, 0, {0,0,0}, GROUP_NONE},
+	{"rep/repe", false, 0, {0,0,0}, GROUP_NONE},
+	{"hlt", false, 0, {0,0,0}, GROUP_NONE},
+	{"cmc", false, 0, {0,0,0}, GROUP_NONE},
+	{0, false, 1, {"Eb",0,0}, GROUP_3},
+	{0, false, 1, {"Ev",0,0}, GROUP_3},
+	{"clc", false, 0, {0,0,0}, GROUP_NONE},
+	{"stc", false, 0, {0,0,0}, GROUP_NONE},
+	{"cli", false, 0, {0,0,0}, GROUP_NONE},
+	{"sti", false, 0, {0,0,0}, GROUP_NONE},
+	{"cld", false, 0, {0,0,0}, GROUP_NONE},
+	{"std", false, 0, {0,0,0}, GROUP_NONE},
+	{0, false, 1, {"Eb",0,0}, GROUP_4},
+	{0, false, 1, {"Ev",0,0}, GROUP_5}
 };
 
-}//end namespace Jaf
+const Instruction Instructions::one_byte_opcode_instruction_extension_map[11][8] = {
+	{//GROUP 0
+		{},
+		{},
+		{},
+		{},
+		{},
+		{},
+		{},
+		{}
+	},//END GROUP 0
 
+	{//GROUP 1
+		{"add",},
+		{"or",},
+		{"adc",},
+		{"sbb",},
+		{"and",},
+		{"sub",},
+		{"xor",},
+		{"cmp",}
+	},//END GROUP 1
+
+	{//GROUP 2
+		{"rol",},
+		{"ror",},
+		{"rcl",},
+		{"rcr",},
+		{"shl/sal",},
+		{"shr",},
+		{},
+		{"sar",}
+	},//END GROUP 2
+
+	{//GROUP 3
+		{"test",},
+		{},
+		{"not",},
+		{"neg",},
+		{"mul",},
+		{"imul",},
+		{"div",},
+		{"idiv",}
+	},//END GROUP 3
+
+	{//GROUP 4
+		{"inc",},
+		{"dec",},
+		{},
+		{},
+		{},
+		{},
+		{},
+		{}
+	},//END GROUP 4
+
+	{//GROUP 5
+		{"inc",},
+		{"dec",},
+		{"call",},
+		{"call",},
+		{"jmp",},
+		{"jmp",},
+		{"push",},
+		{}
+	},//END GROUP 5
+
+	{//GROUP 6
+		{},
+		{},
+		{},
+		{},
+		{},
+		{},
+		{},
+		{}
+	},//END GROUP 6
+
+	{//GROUP 7
+		{},
+		{},
+		{},
+		{},
+		{},
+		{},
+		{},
+		{}
+	},//END GROUP 7
+
+	{//GROUP 8
+		{},
+		{},
+		{},
+		{},
+		{},
+		{},
+		{},
+		{}
+	},//END GROUP 8
+
+	{//GROUP 9
+		{},
+		{},
+		{},
+		{},
+		{},
+		{},
+		{},
+		{}
+	},//END GROUP 9
+
+	{//GROUP 10
+		{},
+		{},
+		{},
+		{},
+		{},
+		{},
+		{},
+		{}
+	}//END GROUP 10
+};
 
 //***OPERATION PSEUDOCODE****
 //get opcode from memory

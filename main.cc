@@ -1,11 +1,14 @@
-#include <stdio.h>
-#include <iostream>
-
-#include "InstructionDecoder8086.hh"
+#include <QApplication>
+#include "Sim86Window.hh"
 
 using namespace std;
 
 int main (int argc, char **argv) {
-	InstructionDecoder8086 id;
-	cout << id.disassemble () << endl;
+	QApplication app (argc, argv);
+
+	Sim86Window sim;
+	sim.show ();
+
+	return app.exec ();
 }
+

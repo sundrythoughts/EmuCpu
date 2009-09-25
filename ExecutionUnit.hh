@@ -3,58 +3,46 @@
 
 #include "BusInterfaceUnit.hh"
 #include "Number.hh"
+#include "Defines.hh"
 #include <iostream>
 #include <cstdio>
 
 /**
 */
 class ExecutionUnit {
-	unsigned short m_ax;
-	unsigned short m_bx;
-	unsigned short m_cx;
-	unsigned short m_dx;
-	unsigned char *m_a;
-	unsigned char *m_b;
-	unsigned char *m_c;
-	unsigned char *m_d;
-	unsigned short m_di;
-	unsigned short m_si;
-	unsigned short m_bp;
-	unsigned short m_sp;
-	unsigned short m_flags;
-
-	Number<unsigned short> m_reg_ax;
-	Number<unsigned short> m_reg_bx;
-	Number<unsigned short> m_reg_cx;
-	Number<unsigned short> m_reg_dx;
-	Number<unsigned char> m_reg_al;
-	Number<unsigned char> m_reg_bl;
-	Number<unsigned char> m_reg_cl;
-	Number<unsigned char> m_reg_dl;
-	Number<unsigned char> m_reg_ah;
-	Number<unsigned char> m_reg_bh;
-	Number<unsigned char> m_reg_ch;
-	Number<unsigned char> m_reg_dh;
-	Number<unsigned short> m_reg_di;
-	Number<unsigned short> m_reg_si;
-	Number<unsigned short> m_reg_bp;
-	Number<unsigned short> m_reg_sp;
-	Number<unsigned short> m_reg_flags;
+	unsigned short m_regs[REG_COUNT_16];
+	Number<unsigned char> m_regs8[REG_COUNT_8];
+	Number<unsigned short> m_regs16[REG_COUNT_16];
 
 	BusInterfaceUnit *m_biu;
 
 public:
 	/** */
-	ExecutionUnit () : m_ax (0), m_bx (0), m_cx (0), m_dx (0),
-	                   m_a ((unsigned char*)&m_ax), m_b ((unsigned char*)&m_bx),
-	                   m_c ((unsigned char*)&m_cx), m_d ((unsigned char*)&m_dx),
-	                   m_di (0), m_si (0), m_bp (0), m_sp (0), m_flags (0),
-	                   m_reg_ax (m_ax), m_reg_bx (m_bx), m_reg_cx (m_cx), m_reg_dx (m_dx),
-	                   m_reg_al (m_a[0]), m_reg_bl (m_b[0]), m_reg_cl (m_c[0]), m_reg_dl (m_d[0]),
-	                   m_reg_ah (m_a[1]), m_reg_bh (m_b[1]), m_reg_ch (m_c[1]), m_reg_dh (m_d[1]),
-	                   m_reg_di (m_di), m_reg_si (m_si), m_reg_bp (m_bp), m_reg_sp (m_sp), m_reg_flags (m_flags),
-	                   m_biu (0)
+	ExecutionUnit () : m_biu (0)
 	{
+		unsigned char *m_a = (unsigned char*)&m_regs[REG_AX];
+		unsigned char *m_b = (unsigned char*)&m_regs[REG_BX];
+		unsigned char *m_c = (unsigned char*)&m_regs[REG_CX];
+		unsigned char *m_d = (unsigned char*)&m_regs[REG_DX];
+
+		m_regs8[REG_AL].reinitialize (m_a[0]);
+		m_regs8[REG_AH].reinitialize (m_a[1]);
+		m_regs8[REG_BL].reinitialize (m_b[0]);
+		m_regs8[REG_BH].reinitialize (m_b[1]);
+		m_regs8[REG_CL].reinitialize (m_c[0]);
+		m_regs8[REG_CH].reinitialize (m_c[1]);
+		m_regs8[REG_DL].reinitialize (m_d[0]);
+		m_regs8[REG_DH].reinitialize (m_d[1]);
+
+		m_regs16[REG_AX].reinitialize (m_regs[REG_AX]);
+		m_regs16[REG_BX].reinitialize (m_regs[REG_BX]);
+		m_regs16[REG_CX].reinitialize (m_regs[REG_CX]);
+		m_regs16[REG_DX].reinitialize (m_regs[REG_DX]);
+		m_regs16[REG_DI].reinitialize (m_regs[REG_DI]);
+		m_regs16[REG_SI].reinitialize (m_regs[REG_SI]);
+		m_regs16[REG_BP].reinitialize (m_regs[REG_BP]);
+		m_regs16[REG_SP].reinitialize (m_regs[REG_SP]);
+		m_regs16[REG_FLAGS].reinitialize (m_regs[REG_FLAGS]);
 	}
 
 	/** */

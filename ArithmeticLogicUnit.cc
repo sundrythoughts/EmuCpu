@@ -29,11 +29,12 @@ ArithmeticLogicUnit::update_flag_of_16 (bool msb_before, bool msb_after) {
 void
 ArithmeticLogicUnit::update_flag_pf_8 (unsigned char val) {
 	unsigned int count = 0;
-	val &= 0xFF;
+	//val &= 0xFF;
 	while (val) {
 		if (val & 1) {
 			++count;
 		}
+		val >>= 1;
 	}
 
 	m_eunit->set_reg_flags_pf (!(count & 1));
@@ -42,11 +43,12 @@ ArithmeticLogicUnit::update_flag_pf_8 (unsigned char val) {
 void
 ArithmeticLogicUnit::update_flag_pf_16 (unsigned short val) {
 	unsigned int count = 0;
-	val &= 0xFF;
+	//val &= 0xFF;
 	while (val) {
 		if (val & 1) {
 			++count;
 		}
+		val >>= 1;
 	}
 
 	m_eunit->set_reg_flags_pf (!(count & 1));
@@ -88,6 +90,7 @@ ArithmeticLogicUnit::op_adc_8 (unsigned char dest, unsigned char src, unsigned c
 	update_flag_cf_8 (ret, result);
 	update_flag_of_8 (msb_before, Utility::get_bit (ret, sizeof(ret) - 1));
 	update_flag_pf_8 (ret);
+//	std::cout << "here" << std::endl;
 	update_flag_sf_8 (ret);
 	update_flag_zf_8 (ret);
 }

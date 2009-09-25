@@ -34,6 +34,7 @@ int main (int argc, char **argv) {
 
 		eu.set_reg_flags_cf (true);
 		unsigned char ret;
+	//	cout << "here" << endl;
 		alu.op_adc_8 (3, 5, ret);
 
 		if (ret != 9) {
@@ -420,7 +421,7 @@ int main (int argc, char **argv) {
 		eu.set_reg_ax (5);
 		alu.op_mul_16 (3);
 
-		unsigned int dx_ax;
+		unsigned int dx_ax = 0;
 		unsigned short *dx_ax_ptr = (unsigned short*)&dx_ax;
 
 		unsigned short ax = eu.get_reg_ax ();
@@ -429,6 +430,7 @@ int main (int argc, char **argv) {
 		dx_ax_ptr[0] = ax;
 		dx_ax_ptr[1] = dx;
 
+		//cout << dx << ":" << ax << " = " << dx_ax << endl;
 		if (dx_ax != 15) {
 			print_failed (TEST_NUMBER);
 		}

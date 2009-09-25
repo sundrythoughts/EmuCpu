@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Sim86Window</class>
+ <widget class="QMainWindow" name="Sim86Window">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>750</width>
+    <height>642</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <property name="unifiedTitleAndToolBarOnMac">
+   <bool>true</bool>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QTabWidget" name="m_tab_widget">
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
+      <widget class="QWidget" name="m_tab_disassembly">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
+       <attribute name="title">
+        <string>Disassembly</string>
+       </attribute>
+      </widget>
+      <widget class="QWidget" name="m_tab_memory">
+       <attribute name="title">
+        <string>Memory</string>
+       </attribute>
+      </widget>
+      <widget class="QWidget" name="m_tab_terminal">
+       <attribute name="title">
+        <string>Terminal</string>
+       </attribute>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>750</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <addaction name="m_act_file_new"/>
+    <addaction name="m_act_file_open"/>
+    <addaction name="separator"/>
+    <addaction name="m_act_file_quit"/>
+   </widget>
+   <widget class="QMenu" name="menuSettings">
+    <property name="title">
+     <string>View</string>
+    </property>
+    <addaction name="m_act_view_regs"/>
+    <addaction name="m_act_view_sregs"/>
+    <addaction name="m_act_view_flags"/>
+    <addaction name="m_act_view_stack"/>
+    <addaction name="m_act_view_memory"/>
+    <addaction name="m_act_view_disassembly"/>
+   </widget>
+   <widget class="QMenu" name="menuDebug">
+    <property name="title">
+     <string>Debug</string>
+    </property>
+    <addaction name="m_act_debug_nmi"/>
+    <addaction name="m_act_debug_intr"/>
+    <addaction name="m_act_debug_reset"/>
+   </widget>
+   <widget class="QMenu" name="menuRun">
+    <property name="title">
+     <string>Run</string>
+    </property>
+    <addaction name="m_act_run_start"/>
+    <addaction name="m_act_run_halt"/>
+    <addaction name="m_act_run_single_step"/>
+   </widget>
+   <widget class="QMenu" name="menuTesting">
+    <property name="title">
+     <string>Testing</string>
+    </property>
+    <addaction name="actionEnable_Database"/>
+   </widget>
+   <addaction name="menuFile"/>
+   <addaction name="menuRun"/>
+   <addaction name="menuDebug"/>
+   <addaction name="menuSettings"/>
+   <addaction name="menuTesting"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <widget class="QToolBar" name="toolBar">
+   <property name="windowTitle">
+    <string>toolBar</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="m_act_file_new"/>
+   <addaction name="m_act_file_open"/>
+   <addaction name="separator"/>
+   <addaction name="m_act_debug_nmi"/>
+   <addaction name="m_act_debug_intr"/>
+   <addaction name="m_act_debug_reset"/>
+   <addaction name="separator"/>
+   <addaction name="m_act_run_start"/>
+   <addaction name="m_act_run_halt"/>
+   <addaction name="m_act_run_single_step"/>
+  </widget>
+  <action name="m_act_file_new">
+   <property name="text">
+    <string>New</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+N</string>
+   </property>
+  </action>
+  <action name="m_act_file_open">
+   <property name="text">
+    <string>Open</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+O</string>
+   </property>
+  </action>
+  <action name="m_act_file_quit">
+   <property name="text">
+    <string>Quit</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Q</string>
+   </property>
+  </action>
+  <action name="m_act_view_regs">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>General Registers</string>
+   </property>
+  </action>
+  <action name="m_act_view_sregs">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Segment Registers</string>
+   </property>
+  </action>
+  <action name="m_act_view_flags">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Flags</string>
+   </property>
+  </action>
+  <action name="m_act_view_memory">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Memory</string>
+   </property>
+  </action>
+  <action name="m_act_view_disassembly">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Disassembly</string>
+   </property>
+  </action>
+  <action name="m_act_view_stack">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Stack</string>
+   </property>
+  </action>
+  <action name="m_act_debug_nmi">
+   <property name="text">
+    <string>NMI</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+N</string>
+   </property>
+  </action>
+  <action name="m_act_debug_intr">
+   <property name="text">
+    <string>INTR</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+I</string>
+   </property>
+  </action>
+  <action name="m_act_debug_reset">
+   <property name="text">
+    <string>RESET</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+R</string>
+   </property>
+  </action>
+  <action name="m_act_run_start">
+   <property name="text">
+    <string>Start</string>
+   </property>
+   <property name="shortcut">
+    <string>F5</string>
+   </property>
+  </action>
+  <action name="m_act_run_halt">
+   <property name="text">
+    <string>Halt</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+P</string>
+   </property>
+  </action>
+  <action name="m_act_run_single_step">
+   <property name="text">
+    <string>Single-step</string>
+   </property>
+   <property name="shortcut">
+    <string>F7</string>
+   </property>
+  </action>
+  <action name="actionEnable_Database">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Enable Database</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

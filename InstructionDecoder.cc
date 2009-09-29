@@ -16,12 +16,18 @@ InstructionDecoder::connect_to (BusInterfaceUnit &biu) {
 
 void
 InstructionDecoder::get_instruction () {
+	m_disassembly = "";
 	decode_instruction ();
 }
 
 void
 InstructionDecoder::next_instruction () {
 	//FIXME
+}
+
+const std::string&
+InstructionDecoder::get_disassembly () const {
+	return m_disassembly;
 }
 
 void
@@ -42,6 +48,7 @@ InstructionDecoder::decode_instruction () {
 
 		if (i < op_count - 1 ) {
 			cout << ", ";
+			m_disassembly += ", ";
 		}
 	}
 
@@ -51,41 +58,49 @@ InstructionDecoder::decode_instruction () {
 void
 InstructionDecoder::decode_operand_AH () {
 	cout << "ah";
+	m_disassembly += "ah"; 
 }
 
 void
 InstructionDecoder::decode_operand_AL () {
 	cout << "al";
+	m_disassembly += "al";
 }
 
 void
 InstructionDecoder::decode_operand_BH () {
 	cout << "bh";
+	m_disassembly += "bh";
 }
 
 void
 InstructionDecoder::decode_operand_BL () {
 	cout << "bl";
+	m_disassembly += "bl";
 }
 
 void
 InstructionDecoder::decode_operand_CH () {
 	cout << "ch";
+	m_disassembly += "ch";
 }
 
 void
 InstructionDecoder::decode_operand_CL () {
 	cout << "cl";
+	m_disassembly += "cl";
 }
 
 void
 InstructionDecoder::decode_operand_DH () {
 	cout << "dh";
+	m_disassembly += "dh";
 }
 
 void
 InstructionDecoder::decode_operand_DL () {
 	cout << "dl";
+	m_disassembly += "dl";
 }
 
 void
@@ -96,31 +111,37 @@ InstructionDecoder::decode_operand_Ap () {
 void
 InstructionDecoder::decode_operand_AX () {
 	cout << "ax";
+	m_disassembly += "ax";
 }
 
 void
 InstructionDecoder::decode_operand_BP () {
 	cout << "bp";
+	m_disassembly += "bp";
 }
 
 void
 InstructionDecoder::decode_operand_BX () {
 	cout << "bx";
+	m_disassembly += "bx";
 }
 
 void
 InstructionDecoder::decode_operand_CX () {
 	cout << "cx";
+	m_disassembly += "cx";
 }
 
 void
 InstructionDecoder::decode_operand_DI () {
 	cout << "di";
+	m_disassembly += "di";
 }
 
 void
 InstructionDecoder::decode_operand_DX () {
 	cout << "dx";
+	m_disassembly += "dx";
 }
 
 void
@@ -135,6 +156,7 @@ InstructionDecoder::decode_operand_Eb () {
 		break;
 	case 3: // r/m is treated as a "reg" field
 		cout << reg_index_8_names[m_modrm.rm];
+		m_disassembly += reg_index_8_names[m_modrm.rm];
 		break;
 	//default - FIXME
 	}
@@ -152,6 +174,7 @@ InstructionDecoder::decode_operand_Ev () {
 		break;
 	case 3: // r/m is treated as a "reg" field
 		cout << reg_index_16_names[m_modrm.rm];
+		m_disassembly += reg_index_16_names[m_modrm.rm];
 		break;
 	//default - FIXME
 	}
@@ -169,6 +192,7 @@ InstructionDecoder::decode_operand_Ew () {
 		break;
 	case 3: // r/m is treated as a "reg" field
 		cout << reg_index_16_names[m_modrm.rm];
+		m_disassembly += reg_index_16_names[m_modrm.rm];
 		break;
 	//default - FIXME
 	}

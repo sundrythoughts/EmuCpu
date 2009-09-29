@@ -24,6 +24,7 @@ private:
 
 	typedef void (InstructionDecoder::*DecodeFunc) ();
 	std::map<std::string, DecodeFunc> m_decode_map;
+	std::string m_disassembly;
 
 public:
 
@@ -80,6 +81,10 @@ public:
 	/**
 	*/
 	void next_instruction ();
+
+	/**
+	*/
+	const std::string& get_disassembly () const;
 
 protected:
 	void insert_decode_pair (const char *s, DecodeFunc f) {

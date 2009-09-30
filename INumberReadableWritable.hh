@@ -16,10 +16,10 @@ public:
 
 //#if 0
 	/** */
-	virtual operator const T& () const = 0;
+	virtual operator const T& () = 0;
 
 	/** */
-	virtual const T& getValue () const = 0;
+	virtual const T& getValue () = 0;
 
 	/** */
 	virtual const INumberReadableWritable<T>& operator++ () = 0;

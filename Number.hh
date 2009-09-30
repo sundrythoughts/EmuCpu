@@ -87,12 +87,12 @@ public:
 	}
 
 	/** */
-	virtual operator const T& () const {
+	virtual operator const T& () {
 		return *m_num;
 	}
 
 	/** */
-	virtual const T& getValue () const {
+	virtual const T& getValue () {
 		return *m_num;
 	}
 

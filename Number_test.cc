@@ -95,6 +95,8 @@ int main (int argc, char **argv) {
 		unsigned char n1 = 10;
 		Number<unsigned char> num1 (n1);
 
+		//num1.signal_value_changed ().connect (sigc::ptr_fun (&value_changed<int>));
+
 		if (11 != ++num1) {
 			print_failed (TEST_NUMBER);
 		}

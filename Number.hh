@@ -2,20 +2,17 @@
 #define NUMBER_HH
 
 #include <sigc++/sigc++.h>
-#include <iostream>
+#include "INumberReadableWritable.hh"
 
-/**
-*/
 template<typename T>
-class Number : public sigc::trackable {
+class Number : public sigc::trackable, public INumberReadableWritable<T> {
 	T *m_num;
 	bool m_deletable;
-	sigc::signal<void, const T&> m_signal_value_changed;
+	sigc::signal<void, T> m_signal_value_changed;
 
 public:
 	/** */
-	Number () {
-		//std::cout << "Number ()" << std::endl;
+	Number () : sigc::trackable () {
 		m_num = new T ();
 		m_deletable = true;
 
@@ -24,7 +21,6 @@ public:
 
 	/** */
 	Number (const Number<T> &src) : sigc::trackable () {
-		//std::cout << "Number (const Number<T> &src)" << std::endl;
 		//if (src.m_deletable) {
 			m_num = new T ();
 			*m_num = *(src.m_num);
@@ -41,9 +37,7 @@ public:
 	}
 
 	/** */
-	Number (T &r) {
-		//std::cout << "Number (T &r)" << std::endl;
-		//std::cout << "Number (" << r << ")" << std::endl;
+	Number (T &r) : sigc::trackable () {
 		m_num = &r;
 		m_deletable = false;
 
@@ -51,8 +45,7 @@ public:
 	}
 
 	/** */
-	Number (const T &r) {
-		//std::cout << "Number (const T &r)" << std::endl;
+	Number (const T &r) : sigc::trackable () {
 		m_num = new T ();
 		*m_num = r;
 		m_deletable = true;
@@ -61,8 +54,7 @@ public:
 	}
 
 	/** */
-	~Number () {
-		//std::cout << "~Number ()" << std::endl;
+	virtual ~Number () {
 		if (m_deletable) {
 			delete m_num;
 		}
@@ -88,68 +80,53 @@ public:
 		*m_num = r;
 	}
 
+	void connectToSignalValueChanged (const sigc::slot<void, T> &slot) {
+		m_signal_value_changed.connect (slot);
+
+		m_signal_value_changed.emit (*m_num);
+	}
+
 	/** */
-	operator const T& () const {
-		//std::cout << "operator const T& () const" << std::endl;
+	virtual operator const T& () const {
 		return *m_num;
 	}
 
 	/** */
-	const T& get_value () const {
+	virtual const T& getValue () const {
 		return *m_num;
 	}
 
 	/** */
-	sigc::signal<void, const T&>& signal_value_changed () {
-		return m_signal_value_changed;
-	}
-
-	/** */
-	const Number<T>& operator++ () {
-		//std::cout << "const Number<T>& operator++ ()" << std::endl;
+	virtual const INumberReadableWritable<T>& operator++ () {
 		++(*m_num);
 		m_signal_value_changed.emit (*m_num);
 		return *this;
 	}
 
 	/** */
-	const T operator++ (int) {
-		//std::cout << "const T operator++ (int)" << std::endl;
+	virtual const T operator++ (int) {
 		T prev = (*m_num)++;
 		m_signal_value_changed.emit (*m_num);
 		return prev;
 	}
 
 	/** */
-	const Number<T>& operator-- () {
-		//std::cout << "const Number<T>& operator-- ()" << std::endl;
+	virtual const INumberReadableWritable<T>& operator-- () {
 		--(*m_num);
 		m_signal_value_changed.emit (*m_num);
 		return *this;
 	}
 
 	/** */
-	const T operator-- (int) {
-		//std::cout << "const T operator-- (int)" << std::endl;
+	virtual const T operator-- (int) {
 		T prev = (*m_num)--;
 		m_signal_value_changed.emit (*m_num);
 		return prev;
 	}
 
-	/** */
-	Number<T>& operator= (const Number<T> &rhs) {
-		//std::cout << "Number<T>& operator= (const Number<T> &rhs)" << std::endl;
-
-		*m_num = *(rhs.m_num);
-
-		m_signal_value_changed.emit (*m_num);
-
-		return *this;
-	}
-
 #if 0 //FIXME - probably not needed
-	Number<T>& operator= (T &rhs) {
-		std::cout << "Number<T>& operator= (T &rhs)" << std::endl;
+	INumberWritable<T>& operator= (T &rhs) {
+		//std::cout << "INumberWritable<T>& operator= (T &rhs)" << std::endl;
 
 		*m_num = rhs;
 
@@ -160,9 +137,7 @@ public:
 #endif
 
 	/** */
-	Number<T>& operator= (const T &rhs) {
-		//std::cout << "Number<T>& operator= (const T &rhs)" << std::endl;
-
+	virtual INumberReadableWritable<T>& operator= (const T &rhs) {
 		*m_num = rhs;
 
 		m_signal_value_changed.emit (*m_num);
@@ -171,140 +146,70 @@ public:
 	}
 
 	/** */
-	Number<T>& operator+= (const Number<T>& right) {
-		*m_num += *(right.m_num);
-		m_signal_value_changed.emit (*m_num);
-		return *this;
-	}
-
-	/** */
-	Number<T>& operator+= (const T& right) {
+	virtual INumberReadableWritable<T>& operator+= (const T& right) {
 		*m_num += right;
 		m_signal_value_changed.emit (*m_num);
 		return *this;
 	}
 
 	/** */
-	Number<T>& operator-= (const Number<T>& right) {
-		*m_num -= *(right.m_num);
-		m_signal_value_changed.emit (*m_num);
-		return *this;
-	}
-
-	/** */
-	Number<T>& operator-= (const T& right) {
+	virtual INumberReadableWritable<T>& operator-= (const T& right) {
 		*m_num -= right;
 		m_signal_value_changed.emit (*m_num);
 		return *this;
 	}
 
 	/** */
-	Number<T>& operator*= (const Number<T>& right) {
-		*m_num *= *(right.m_num);
-		m_signal_value_changed.emit (*m_num);
-		return *this;
-	}
-
-	/** */
-	Number<T>& operator*= (const T& right) {
+	virtual INumberReadableWritable<T>& operator*= (const T& right) {
 		*m_num *= right;
 		m_signal_value_changed.emit (*m_num);
 		return *this;
 	}
 
 	/** */
-	Number<T>& operator/= (const Number<T>& right) {
-		*m_num /= *(right.m_num);
-		m_signal_value_changed.emit (*m_num);
-		return *this;
-	}
-
-	/** */
-	Number<T>& operator/= (const T& right) {
+	virtual INumberReadableWritable<T>& operator/= (const T& right) {
 		*m_num /= right;
 		m_signal_value_changed.emit (*m_num);
 		return *this;
 	}
 
 	/** */
-	Number<T>& operator%= (const Number<T>& right) {
-		*m_num %= *(right.m_num);
-		m_signal_value_changed.emit (*m_num);
-		return *this;
-	}
-
-	/** */
-	Number<T>& operator%= (const T& right) {
+	virtual INumberReadableWritable<T>& operator%= (const T& right) {
 		*m_num %= right;
 		m_signal_value_changed.emit (*m_num);
 		return *this;
 	}
 
 	/** */
-	Number<T>& operator^= (const Number<T>& right) {
-		*m_num ^= *(right.m_num);
-		m_signal_value_changed.emit (*m_num);
-		return *this;
-	}
-
-	/** */
-	Number<T>& operator^= (const T& right) {
+	virtual INumberReadableWritable<T>& operator^= (const T& right) {
 		*m_num ^= right;
 		m_signal_value_changed.emit (*m_num);
 		return *this;
 	}
 
 	/** */
-	Number<T>& operator&= (const Number<T>& right) {
-		*m_num &= *(right.m_num);
-		m_signal_value_changed.emit (*m_num);
-		return *this;
-	}
-
-	/** */
-	Number<T>& operator&= (const T& right) {
+	virtual INumberReadableWritable<T>& operator&= (const T& right) {
 		*m_num &= right;
 		m_signal_value_changed.emit (*m_num);
 		return *this;
 	}
 
 	/** */
-	Number<T>& operator|= (const Number<T>& right) {
-		*m_num |= *(right.m_num);
-		m_signal_value_changed.emit (*m_num);
-		return *this;
-	}
-
-	/** */
-	Number<T>& operator|= (const T& right) {
+	virtual INumberReadableWritable<T>& operator|= (const T& right) {
 		*m_num |= right;
 		m_signal_value_changed.emit (*m_num);
 		return *this;
 	}
 
 	/** */
-	Number<T>& operator>>= (const Number<T>& right) {
-		*m_num >>= *(right.m_num);
-		m_signal_value_changed.emit (*m_num);
-		return *this;
-	}
-
-	/** */
-	Number<T>& operator>>= (const T& right) {
+	virtual INumberReadableWritable<T>& operator>>= (const T& right) {
 		*m_num >>= right;
 		m_signal_value_changed.emit (*m_num);
 		return *this;
 	}
 
 	/** */
-	Number<T>& operator<<= (const Number<T>& right) {
-		*m_num <<= *(right.m_num);
-		m_signal_value_changed.emit (*m_num);
-		return *this;
-	}
-
-	/** */
-	Number<T>& operator<<= (const T& right) {
+	virtual INumberReadableWritable<T>& operator<<= (const T& right) {
 		*m_num <<= right;
 		m_signal_value_changed.emit (*m_num);
 		return *this;

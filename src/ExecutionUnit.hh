@@ -6,6 +6,7 @@
 #include "Defines.hh"
 #include <iostream>
 #include <cstdio>
+#include <sigc++/sigc++.h>
 
 /**
 */
@@ -15,6 +16,16 @@ class ExecutionUnit {
 	Register<unsigned short> m_regs16[REG_COUNT_16];
 
 	BusInterfaceUnit *m_biu;
+
+	sigc::signal<void, bool> m_signal_value_changed_reg_flag_af;
+	sigc::signal<void, bool> m_signal_value_changed_reg_flag_cf;
+	sigc::signal<void, bool> m_signal_value_changed_reg_flag_df;
+	sigc::signal<void, bool> m_signal_value_changed_reg_flag_if;
+	sigc::signal<void, bool> m_signal_value_changed_reg_flag_of;
+	sigc::signal<void, bool> m_signal_value_changed_reg_flag_pf;
+	sigc::signal<void, bool> m_signal_value_changed_reg_flag_sf;
+	sigc::signal<void, bool> m_signal_value_changed_reg_flag_tf;
+	sigc::signal<void, bool> m_signal_value_changed_reg_flag_zf;
 
 public:
 	/** */
@@ -54,6 +65,16 @@ public:
 
 	/** */
 	void connectTo (BusInterfaceUnit &biu);
+
+	void connectToSignalValueChangedRegFlagsAF (const sigc::slot<void, bool> &slot);
+	void connectToSignalValueChangedRegFlagsCF (const sigc::slot<void, bool> &slot);
+	void connectToSignalValueChangedRegFlagsDF (const sigc::slot<void, bool> &slot);
+	void connectToSignalValueChangedRegFlagsIF (const sigc::slot<void, bool> &slot);
+	void connectToSignalValueChangedRegFlagsOF (const sigc::slot<void, bool> &slot);
+	void connectToSignalValueChangedRegFlagsPF (const sigc::slot<void, bool> &slot);
+	void connectToSignalValueChangedRegFlagsSF (const sigc::slot<void, bool> &slot);
+	void connectToSignalValueChangedRegFlagsTF (const sigc::slot<void, bool> &slot);
+	void connectToSignalValueChangedRegFlagsZF (const sigc::slot<void, bool> &slot);
 
 	/** */
 	BusInterfaceUnit& getBusInterfaceUnit ();

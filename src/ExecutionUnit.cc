@@ -8,6 +8,69 @@ ExecutionUnit::connectTo (BusInterfaceUnit &biu) {
 	//FIXME - connect to signals
 }
 
+void
+ExecutionUnit::connectToSignalValueChangedRegFlagsAF (const sigc::slot<void, bool> &slot) {
+	m_signal_value_changed_reg_flag_af.connect (slot);
+
+	m_signal_value_changed_reg_flag_af.emit (getRegFlagsAF ());
+}
+
+void
+ExecutionUnit::connectToSignalValueChangedRegFlagsCF (const sigc::slot<void, bool> &slot) {
+	m_signal_value_changed_reg_flag_cf.connect (slot);
+
+	m_signal_value_changed_reg_flag_cf.emit (getRegFlagsCF ());
+}
+
+void
+ExecutionUnit::connectToSignalValueChangedRegFlagsDF (const sigc::slot<void, bool> &slot) {
+	m_signal_value_changed_reg_flag_df.connect (slot);
+
+	m_signal_value_changed_reg_flag_df.emit (getRegFlagsDF ());
+}
+
+void
+ExecutionUnit::connectToSignalValueChangedRegFlagsIF (const sigc::slot<void, bool> &slot) {
+	m_signal_value_changed_reg_flag_if.connect (slot);
+
+	m_signal_value_changed_reg_flag_if.emit (getRegFlagsIF ());
+}
+
+void
+ExecutionUnit::connectToSignalValueChangedRegFlagsOF (const sigc::slot<void, bool> &slot) {
+	m_signal_value_changed_reg_flag_of.connect (slot);
+
+	m_signal_value_changed_reg_flag_of.emit (getRegFlagsOF ());
+}
+
+void
+ExecutionUnit::connectToSignalValueChangedRegFlagsPF (const sigc::slot<void, bool> &slot) {
+	m_signal_value_changed_reg_flag_pf.connect (slot);
+
+	m_signal_value_changed_reg_flag_pf.emit (getRegFlagsPF ());
+}
+
+void
+ExecutionUnit::connectToSignalValueChangedRegFlagsSF (const sigc::slot<void, bool> &slot) {
+	m_signal_value_changed_reg_flag_sf.connect (slot);
+
+	m_signal_value_changed_reg_flag_sf.emit (getRegFlagsSF ());
+}
+
+void
+ExecutionUnit::connectToSignalValueChangedRegFlagsTF (const sigc::slot<void, bool> &slot) {
+	m_signal_value_changed_reg_flag_tf.connect (slot);
+
+	m_signal_value_changed_reg_flag_tf.emit (getRegFlagsTF ());
+}
+
+void
+ExecutionUnit::connectToSignalValueChangedRegFlagsZF (const sigc::slot<void, bool> &slot) {
+	m_signal_value_changed_reg_flag_zf.connect (slot);
+
+	m_signal_value_changed_reg_flag_zf.emit (getRegFlagsZF ());
+}
+
 BusInterfaceUnit&
 ExecutionUnit::getBusInterfaceUnit () {
 	return *m_biu;
@@ -216,6 +279,8 @@ ExecutionUnit::setRegFlagsAF (bool val) {
 	else {
 		Utility::clear_bit (m_regs16[REG_FLAGS], 4);
 	}
+
+	m_signal_value_changed_reg_flag_af.emit (getRegFlagsAF ());
 }
 
 bool
@@ -231,6 +296,8 @@ ExecutionUnit::setRegFlagsCF (bool val) {
 	else {
 		Utility::clear_bit (m_regs16[REG_FLAGS], 0);
 	}
+
+	m_signal_value_changed_reg_flag_cf.emit (getRegFlagsCF ());
 }
 
 bool
@@ -246,6 +313,8 @@ ExecutionUnit::setRegFlagsDF (bool val) {
 	else {
 		Utility::clear_bit (m_regs16[REG_FLAGS], 10);
 	}
+
+	m_signal_value_changed_reg_flag_df.emit (getRegFlagsDF ());
 }
 
 bool
@@ -261,6 +330,8 @@ ExecutionUnit::setRegFlagsIF (bool val) {
 	else {
 		Utility::clear_bit (m_regs16[REG_FLAGS], 9);
 	}
+
+	m_signal_value_changed_reg_flag_if.emit (getRegFlagsIF ());
 }
 
 bool
@@ -276,6 +347,8 @@ ExecutionUnit::setRegFlagsOF (bool val) {
 	else {
 		Utility::clear_bit (m_regs16[REG_FLAGS], 11);
 	}
+
+	m_signal_value_changed_reg_flag_of.emit (getRegFlagsOF ());
 }
 
 bool
@@ -291,6 +364,8 @@ ExecutionUnit::setRegFlagsPF (bool val) {
 	else {
 		Utility::clear_bit (m_regs16[REG_FLAGS], 2);
 	}
+
+	m_signal_value_changed_reg_flag_pf.emit (getRegFlagsPF ());
 }
 
 bool
@@ -306,6 +381,8 @@ ExecutionUnit::setRegFlagsSF (bool val) {
 	else {
 		Utility::clear_bit (m_regs16[REG_FLAGS], 7);
 	}
+
+	m_signal_value_changed_reg_flag_sf.emit (getRegFlagsSF ());
 }
 
 bool
@@ -321,6 +398,8 @@ ExecutionUnit::setRegFlagsTF (bool val) {
 	else {
 		Utility::clear_bit (m_regs16[REG_FLAGS], 8);
 	}
+
+	m_signal_value_changed_reg_flag_tf.emit (getRegFlagsTF ());
 }
 
 bool
@@ -336,5 +415,7 @@ ExecutionUnit::setRegFlagsZF (bool val) {
 	else {
 		Utility::clear_bit (m_regs16[REG_FLAGS], 6);
 	}
+
+	m_signal_value_changed_reg_flag_zf.emit (getRegFlagsZF ());
 }
 

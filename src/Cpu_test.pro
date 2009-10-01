@@ -1,5 +1,7 @@
 TARGET = Cpu_test
 
+CONFIG += debug
+
 CONFIG += link_pkgconfig
 PKGCONFIG += sigc++-2.0
 
@@ -28,3 +30,16 @@ SOURCES += MemoryAddress.cc
 
 HEADERS += Utility.hh
 SOURCES += Utility.cc
+
+HEADERS += FlagRegisterSignalsAndSlots.hh
+SOURCES += FlagRegisterSignalsAndSlots.cc
+
+HEADERS += MemorySignalsAndSlots.hh
+SOURCES += MemorySignalsAndSlots.cc
+
+HEADERS += GeneralRegisterSignalsAndSlots.hh
+SOURCES += GeneralRegisterSignalsAndSlots.cc
+
+HEADERS += SegmentRegisterSignalsAndSlots.hh
+SOURCES += SegmentRegisterSignalsAndSlots.cc
+

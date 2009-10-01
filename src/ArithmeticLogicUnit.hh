@@ -3,7 +3,7 @@
 
 #include "ExecutionUnit.hh"
 #include "Utility.hh"
-#include "Number.hh"
+#include "Register.hh"
 #include <iostream>
 
 /**

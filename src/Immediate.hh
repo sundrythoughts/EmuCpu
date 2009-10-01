@@ -111,6 +111,12 @@ private:
 	}
 
 	/** */
+	virtual INumberReadableWritable<T>& operator= (const Immediate<T> &right) {
+		std::cerr << "Debug: class Immediate is read-only" << std::endl;
+		return *this;
+	}
+
+	/** */
 	virtual INumberReadableWritable<T>& operator+= (const T& right) {
 		std::cerr << "Debug: class Immediate is read-only" << std::endl;
 		return *this;

@@ -82,6 +82,14 @@ public:
 	}
 
 	/** */
+	virtual INumberReadableWritable<T>& operator= (const MemoryAddress<T> &right) {
+		m_num = right.getValue ();
+		write ();
+
+		return *this;
+	}
+
+	/** */
 	virtual INumberReadableWritable<T>& operator+= (const T& right) {
 		read ();
 		m_num += right;

@@ -139,7 +139,6 @@ public:
 
 	/** */
 	virtual INumberReadableWritable<T>& operator= (const T &right) {
-		std::cout << "here" << std::endl;
 		*m_num = right;
 
 		m_signal_value_changed.emit (*m_num);
@@ -149,7 +148,15 @@ public:
 
 	/** */
 	virtual INumberReadableWritable<T>& operator= (const INumberReadableWritable<T> &right) {
-		std::cout << "here" << std::endl;
+		*m_num = right.getValue ();
+
+		m_signal_value_changed.emit (*m_num);
+
+		return *this;
+	}
+
+	/** */
+	virtual INumberReadableWritable<T>& operator= (const Register<T> &right) {
 		*m_num = right.getValue ();
 
 		m_signal_value_changed.emit (*m_num);

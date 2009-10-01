@@ -1,5 +1,5 @@
 #include "BusInterfaceUnit.hh"
-#include "Number.hh"
+#include "Register.hh"
 #include "MemoryAddress.hh"
 #include <memory>
 
@@ -102,14 +102,14 @@ int main (int argc, char **argv) {
 		unsigned short seg = 0;
 		unsigned short offset = 0;
 
-		auto_ptr<MemoryAddress> addr (biu.get_memory_address (seg, offset));
+		MemoryAddress<int> *tmp_addr;
+		biu.get_memory_address (tmp_addr, seg, offset);
+		auto_ptr<MemoryAddress<int> > addr (tmp_addr);
 
 		int src = 250;
 		int dest;
-		addr->write (src);
-		if (!addr->read (dest)) {
-			print_failed (TEST_NUMBER);
-		}
+		*addr = src;
+		dest = *addr;
 		if (src != dest) {
 			print_failed (TEST_NUMBER);
 		}
@@ -126,14 +126,14 @@ int main (int argc, char **argv) {
 		unsigned short seg = 0xF000;
 		unsigned short offset = 0xFFFF;
 
-		auto_ptr<MemoryAddress> addr (biu.get_memory_address (seg, offset));
+		MemoryAddress<char> *tmp_addr;
+		biu.get_memory_address (tmp_addr, seg, offset);
+		auto_ptr<MemoryAddress<char> > addr (tmp_addr);
 
 		char src = 'J';
 		char dest;
-		addr->write (src);
-		if (!addr->read (dest)) {
-			print_failed (TEST_NUMBER);
-		}
+		*addr = src;
+		dest = *addr;
 		if (src != dest) {
 			print_failed (TEST_NUMBER);
 		}
@@ -150,14 +150,14 @@ int main (int argc, char **argv) {
 		unsigned short seg = 0xF000;
 		unsigned short offset = 0xFFFF;
 
-		auto_ptr<MemoryAddress> addr (biu.get_memory_address (seg, offset));
+		MemoryAddress<int> *tmp_addr;
+		biu.get_memory_address (tmp_addr, seg, offset);
+		auto_ptr<MemoryAddress<int> > addr (tmp_addr);
 
 		int src = 10;
 		int dest;
-		addr->write (src);
-		if (addr->read (dest)) {
-			print_failed (TEST_NUMBER);
-		}
+		*addr = src;
+		dest = *addr;
 
 		if (ps) {
 			print_passed (TEST_NUMBER);
@@ -170,15 +170,15 @@ int main (int argc, char **argv) {
 		unsigned short seg = 0;
 		unsigned short offset = 0;
 
-		auto_ptr<MemoryAddress> addr (biu.get_memory_address (seg, offset));
+		MemoryAddress<int> *tmp_addr;
+		biu.get_memory_address (tmp_addr, seg, offset);
+		auto_ptr<MemoryAddress<int> > addr (tmp_addr);
 
-		Number<int> src = 113;
-		Number<int> dest;
-		addr->write (src);
+		Register<int> src = 113;
+		Register<int> dest;
+		*addr = src;
+		dest = *addr;
 
-		if (!addr->read (dest)) {
-			print_failed (TEST_NUMBER);
-		}
 		if (src != dest) {
 			print_failed (TEST_NUMBER);
 		}
@@ -196,19 +196,17 @@ int main (int argc, char **argv) {
 		unsigned short seg = 0x0;
 		unsigned short offset = 0x0;
 
-		auto_ptr<MemoryAddress> addr (biu.get_memory_address (seg, offset));
+		MemoryAddress<int> *tmp_addr;
+		biu.get_memory_address (tmp_addr, seg, offset);
+		auto_ptr<MemoryAddress<int> > addr (tmp_addr);
 
-		if (!addr->write (0x10203040)) {
-			print_failed (TEST_NUMBER);
-		}
-
+		*addr = 0x10203040;
 
 		offset = 10;
-		auto_ptr<MemoryAddress> addr2 (biu.get_memory_address (seg, offset));
+		biu.get_memory_address (tmp_addr, seg, offset);
+		auto_ptr<MemoryAddress<int> > addr2 (tmp_addr);
 
-		if (!addr2->write ((short)0x1234)) {
-			print_failed (TEST_NUMBER);
-		}
+		*addr2 = 0x1234;
 
 		cout << "DUMP:" << endl;
 		mem.print_memory_dump (0, 12);
@@ -217,17 +215,17 @@ int main (int argc, char **argv) {
 		seg = 0x0000;
 		offset = 0x0000;
 
-		auto_ptr<MemoryAddress> addr3 (biu.get_memory_address (seg, offset));
+		biu.get_memory_address (tmp_addr, seg, offset);
+		auto_ptr<MemoryAddress<int> > addr3 (tmp_addr);
 
-		if (!addr3->write ((unsigned char)0x72)) {
-			print_failed (TEST_NUMBER);
-		}
+		*addr3 = 0x72;
 
 		seg = 0x0001;
-		auto_ptr<MemoryAddress> addr4 (biu.get_memory_address (seg, offset));
-		if (!addr4->write ((unsigned char)0x56)) {
-			print_failed (TEST_NUMBER);
-		}
+
+		biu.get_memory_address (tmp_addr, seg, offset);
+		auto_ptr<MemoryAddress<int> > addr4 (tmp_addr);
+
+		*addr4 = 0x56;
 
 		cout << "DUMP:" << endl;
 		mem.print_memory_dump (0, 35);
@@ -243,25 +241,30 @@ int main (int argc, char **argv) {
 
 		unsigned short seg = 0x0;
 		unsigned short offset = 0x0;
-		auto_ptr<MemoryAddress> addr (biu.get_memory_address (seg, offset));
-		if (!addr->write (0x10203040)) {
-			print_failed (TEST_NUMBER);
-		}
+
+		MemoryAddress<int> *tmp_addr;
+		biu.get_memory_address (tmp_addr, seg, offset);
+		auto_ptr<MemoryAddress<int> > addr (tmp_addr);
+
+		*addr = 0x10203040;
+
 		offset = 10;
-		auto_ptr<MemoryAddress> addr2 (biu.get_memory_address (seg, offset));
-		if (!addr2->write ((short)0x1234)) {
-			print_failed (TEST_NUMBER);
-		}
+
+		biu.get_memory_address (tmp_addr, seg, offset);
+		auto_ptr<MemoryAddress<int> > addr2 (tmp_addr);
+
+		*addr2 = 0x1234;
 
 		cout << "DUMP:" << endl;
 		mem.print_memory_dump (0, 12);
 
 		seg = 0xF000;
 		offset = 0xFFFF;
-		auto_ptr<MemoryAddress> addr3 (biu.get_memory_address (seg, offset));
-		if (!addr3->write ((unsigned char)0x72)) {
-			print_failed (TEST_NUMBER);
-		}
+
+		biu.get_memory_address (tmp_addr, seg, offset);
+		auto_ptr<MemoryAddress<int> > addr3 (tmp_addr);
+
+		*addr3 = 0x72;
 
 		cout << "DUMP:" << endl;
 		mem.print_memory_dump (1048570, 1048576);

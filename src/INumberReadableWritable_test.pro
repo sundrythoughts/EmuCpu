@@ -17,3 +17,5 @@ SOURCES += Register.cc
 
 HEADERS += MemoryAddress.hh
 SOURCES += MemoryAddress.cc
+
+HEADERS += Memory.hh

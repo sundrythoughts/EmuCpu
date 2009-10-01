@@ -11,11 +11,11 @@ class Memory {
 
 public:
 	/** */
-	Memory (unsigned int n_bytes) : m_memory (n_bytes) {
+	Memory (size_t n_bytes) : m_memory (n_bytes) {
 	}
 
 	/** */
-	unsigned int get_memory_size () const {
+	size_t getMemorySize () const {
 		return m_memory.size ();
 	}
 
@@ -26,11 +26,11 @@ public:
 	@return true if successful, false if unsuccessful.
 	*/
 	template<typename T>
-	bool read (unsigned int addr, T &dest) const;
+	bool read (size_t addr, T &dest) const;
 
 	/** */
 	template<typename T>
-	bool read (unsigned int addr, INumberReadableWritable<T> &dest) const;
+	bool read (size_t addr, INumberReadableWritable<T> &dest) const;
 
 	/**
 	@brief Write T bytes of data into addr from src.
@@ -39,19 +39,19 @@ public:
 	@return true if successful, false if unsuccessful.
 	*/
 	template<typename T>
-	bool write (unsigned int addr, const T &src);
+	bool write (size_t addr, const T &src);
 
 	/** */
 	template<typename T>
-	bool write (unsigned int addr, const INumberReadableWritable<T> &src);
+	bool write (size_t addr, const INumberReadableWritable<T> &src);
 
 	/** */
-	void print_memory_dump (unsigned int start, unsigned int end);
+	void printMemoryDump (size_t start, size_t end);
 };
 
 template<typename T>
 bool
-Memory::read (unsigned int addr, T &dest) const {
+Memory::read (size_t addr, T &dest) const {
 	if (!(addr + sizeof(T) - 1 < m_memory.size ())) {
 		return false;
 	}
@@ -63,7 +63,7 @@ Memory::read (unsigned int addr, T &dest) const {
 
 template<typename T>
 bool
-Memory::read (unsigned int addr, INumberReadableWritable<T> &dest) const {
+Memory::read (size_t addr, INumberReadableWritable<T> &dest) const {
 	if (!(addr + sizeof(T) - 1 < m_memory.size ())) {
 		return false;
 	}
@@ -75,7 +75,7 @@ Memory::read (unsigned int addr, INumberReadableWritable<T> &dest) const {
 
 template<typename T>
 bool
-Memory::write (unsigned int addr, const T &src) {
+Memory::write (size_t addr, const T &src) {
 	if (!(addr + sizeof(T) - 1 < m_memory.size ())) {
 		return false;
 	}
@@ -88,7 +88,7 @@ Memory::write (unsigned int addr, const T &src) {
 
 template<typename T>
 bool
-Memory::write (unsigned int addr, const INumberReadableWritable<T> &src) {
+Memory::write (size_t addr, const INumberReadableWritable<T> &src) {
 	if (!(addr + sizeof(T) - 1 < m_memory.size ())) {
 		return false;
 	}

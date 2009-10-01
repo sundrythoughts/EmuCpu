@@ -14,8 +14,8 @@ SOURCES += ExecutionUnit.cc
 HEADERS += Utility.hh
 SOURCES += Utility.cc
 
-HEADERS += Number.hh
-SOURCES += Number.cc
+HEADERS += Register.hh
+SOURCES += Register.cc
 
 HEADERS += BusInterfaceUnit.hh
 SOURCES += BusInterfaceUnit.cc

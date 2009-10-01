@@ -250,28 +250,30 @@ ArithmeticLogicUnit::op_dec_16 (unsigned short dest, unsigned short &ret) {
 
 void
 ArithmeticLogicUnit::op_div_8 (unsigned char src) {
-	Number<unsigned short> ax = m_eunit->get_reg_ax ();
-	Number<unsigned char> &al = m_eunit->get_reg_al ();
-	Number<unsigned char> &ah = m_eunit->get_reg_ah ();
+	Register<unsigned short> ax = m_eunit->get_reg_ax ();
+	Register<unsigned char> &al = m_eunit->get_reg_al ();
+	Register<unsigned char> &ah = m_eunit->get_reg_ah ();
 
 	if (src == 0) {
 		//FIXME - interrupt 0
 	}
 
-	Number<unsigned char> tmp = ax / src;
+	Register<unsigned char> tmp = ax / src;
+
 	if (tmp > 0xFF) {
 		//FIXME - interrupt 0
 	}
 	else {
-		al = tmp;
+		al = tmp; //FIXME - this has a problem
 		ah = ax % src;
 	}
 }
 
 void
 ArithmeticLogicUnit::op_div_16 (unsigned short src) {
-	Number<unsigned short> &ax = m_eunit->get_reg_ax ();
-	Number<unsigned short> &dx = m_eunit->get_reg_dx ();
+	Register<unsigned short> &ax = m_eunit->get_reg_ax ();
+	Register<unsigned short> &dx = m_eunit->get_reg_dx ();
+
 	unsigned int dx_ax = dx;
 	dx_ax <<= 16;
 	dx_ax += ax;
@@ -280,21 +282,23 @@ ArithmeticLogicUnit::op_div_16 (unsigned short src) {
 		//FIXME - interrupt 0
 	}
 
-	Number<unsigned short> tmp = dx_ax / src;
+	Register<unsigned short> tmp = dx_ax / src;
+
 	if (tmp > (unsigned short)0xFFFF) {
 		//FIXME - interrupt 0
 	}
+
 	else {
-		ax = tmp;
+		ax = tmp; //FIXME - this has a linking problem
 		dx = dx_ax % src;
 	}
 }
 
 void
 ArithmeticLogicUnit::op_idiv_8 (unsigned char src) {
-	Number<unsigned short> ax = m_eunit->get_reg_ax ();
-	Number<unsigned char> &al = m_eunit->get_reg_al ();
-	Number<unsigned char> &ah = m_eunit->get_reg_ah ();
+	Register<unsigned short> ax = m_eunit->get_reg_ax ();
+	Register<unsigned char> &al = m_eunit->get_reg_al ();
+	Register<unsigned char> &ah = m_eunit->get_reg_ah ();
 
 	if (src == 0) {
 		//FIXME - interrupt 0
@@ -312,8 +316,8 @@ ArithmeticLogicUnit::op_idiv_8 (unsigned char src) {
 
 void
 ArithmeticLogicUnit::op_idiv_16 (unsigned short src) {
-	Number<unsigned short> &ax = m_eunit->get_reg_ax ();
-	Number<unsigned short> &dx = m_eunit->get_reg_dx ();
+	Register<unsigned short> &ax = m_eunit->get_reg_ax ();
+	Register<unsigned short> &dx = m_eunit->get_reg_dx ();
 	unsigned int dx_ax = dx;
 	dx_ax <<= 16;
 	dx_ax += ax;
@@ -334,9 +338,9 @@ ArithmeticLogicUnit::op_idiv_16 (unsigned short src) {
 
 void
 ArithmeticLogicUnit::op_imul_8 (unsigned char src) {
-	Number<unsigned short> &ax = m_eunit->get_reg_ax ();
-	Number<unsigned char> &al = m_eunit->get_reg_al ();
-	Number<unsigned char> &ah = m_eunit->get_reg_ah ();
+	Register<unsigned short> &ax = m_eunit->get_reg_ax ();
+	Register<unsigned char> &al = m_eunit->get_reg_al ();
+	Register<unsigned char> &ah = m_eunit->get_reg_ah ();
 
 	ax = (char)src * (char)al;
 	unsigned char al_sign_ext = (Utility::get_bit (al, sizeof(unsigned char) - 1)) ? 0xFF : 0;
@@ -352,8 +356,8 @@ ArithmeticLogicUnit::op_imul_8 (unsigned char src) {
 
 void
 ArithmeticLogicUnit::op_imul_16 (unsigned short src) {
-	Number<unsigned short> &ax = m_eunit->get_reg_ax ();
-	Number<unsigned short> &dx = m_eunit->get_reg_dx ();
+	Register<unsigned short> &ax = m_eunit->get_reg_ax ();
+	Register<unsigned short> &dx = m_eunit->get_reg_dx ();
 	unsigned int dx_ax = dx;
 	dx_ax <<= 16;
 	dx_ax += ax;
@@ -403,9 +407,9 @@ ArithmeticLogicUnit::op_inc_16 (unsigned short dest, unsigned short &ret) {
 
 void
 ArithmeticLogicUnit::op_mul_8 (unsigned char src) {
-	Number<unsigned short> &ax = m_eunit->get_reg_ax ();
-	Number<unsigned char> &al = m_eunit->get_reg_al ();
-	Number<unsigned char> &ah = m_eunit->get_reg_ah ();
+	Register<unsigned short> &ax = m_eunit->get_reg_ax ();
+	Register<unsigned char> &al = m_eunit->get_reg_al ();
+	Register<unsigned char> &ah = m_eunit->get_reg_ah ();
 
 	ax = src * al;
 
@@ -420,8 +424,8 @@ ArithmeticLogicUnit::op_mul_8 (unsigned char src) {
 
 void
 ArithmeticLogicUnit::op_mul_16 (unsigned short src) {
-	Number<unsigned short> &ax = m_eunit->get_reg_ax ();
-	Number<unsigned short> &dx = m_eunit->get_reg_dx ();
+	Register<unsigned short> &ax = m_eunit->get_reg_ax ();
+	Register<unsigned short> &dx = m_eunit->get_reg_dx ();
 	unsigned int dx_ax = dx;
 	dx_ax <<= 16;
 	dx_ax += ax;

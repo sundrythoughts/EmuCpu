@@ -1,8 +1,6 @@
 #ifndef UTILITY_HH
 #define UTILITY_HH
 
-//#include <stdio.h>
-
 class Utility {
 
 public:

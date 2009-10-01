@@ -1,7 +1,7 @@
 #ifndef MEMORY_HH
 #define MEMORY_HH
 
-#include "Number.hh"
+#include "INumberReadableWritable.hh"
 #include <vector>
 
 /**
@@ -30,7 +30,7 @@ public:
 
 	/** */
 	template<typename T>
-	bool read (unsigned int addr, Number<T> &dest) const;
+	bool read (unsigned int addr, INumberReadableWritable<T> &dest) const;
 
 	/**
 	@brief Write T bytes of data into addr from src.
@@ -43,7 +43,7 @@ public:
 
 	/** */
 	template<typename T>
-	bool write (unsigned int addr, const Number<T> &src);
+	bool write (unsigned int addr, const INumberReadableWritable<T> &src);
 
 	/** */
 	void print_memory_dump (unsigned int start, unsigned int end);
@@ -63,7 +63,7 @@ Memory::read (unsigned int addr, T &dest) const {
 
 template<typename T>
 bool
-Memory::read (unsigned int addr, Number<T> &dest) const {
+Memory::read (unsigned int addr, INumberReadableWritable<T> &dest) const {
 	if (!(addr + sizeof(T) - 1 < m_memory.size ())) {
 		return false;
 	}
@@ -88,7 +88,7 @@ Memory::write (unsigned int addr, const T &src) {
 
 template<typename T>
 bool
-Memory::write (unsigned int addr, const Number<T> &src) {
+Memory::write (unsigned int addr, const INumberReadableWritable<T> &src) {
 	if (!(addr + sizeof(T) - 1 < m_memory.size ())) {
 		return false;
 	}

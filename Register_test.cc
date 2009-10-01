@@ -1,4 +1,4 @@
-#include "Number.hh"
+#include "Register.hh"
 #include "Utility.hh"
 #include <iostream>
 
@@ -29,7 +29,7 @@ int main (int argc, char **argv) {
 		ps = true;
 
 		int n1 = 5;
-		Number<int> num1 (n1);
+		Register<int> num1 (n1);
 
 		if (-5 != -num1) {
 			print_failed (TEST_NUMBER);
@@ -50,7 +50,7 @@ int main (int argc, char **argv) {
 		ps = true;
 
 		unsigned char n1 = 0xF0;
-		Number<unsigned char> num1 (n1);
+		Register<unsigned char> num1 (n1);
 
 		//FIXME
 		if (n1 != ~num1) {
@@ -72,7 +72,7 @@ int main (int argc, char **argv) {
 		ps = true;
 
 		unsigned char n1 = 1;
-		Number<unsigned char> num1 (n1);
+		Register<unsigned char> num1 (n1);
 
 		if (0 != !num1) {
 			print_failed (TEST_NUMBER);
@@ -93,9 +93,13 @@ int main (int argc, char **argv) {
 		ps = true;
 
 		unsigned char n1 = 10;
-		Number<unsigned char> num1 (n1);
+		Register<unsigned char> num1 (n1);
 
 		//num1.signal_value_changed ().connect (sigc::ptr_fun (&value_changed<int>));
+
+		if (num1 != num1) {
+			print_failed (TEST_NUMBER);
+		}
 
 		if (11 != ++num1) {
 			print_failed (TEST_NUMBER);
@@ -110,13 +114,13 @@ int main (int argc, char **argv) {
 		}
 	}//end Test 4
 
-
+//#if 0
 	{//Test 5
 		++TEST_NUMBER;
 		ps = true;
 
 		unsigned char n1 = 10;
-		Number<unsigned char> num1 (n1);
+		Register<unsigned char> num1 (n1);
 
 		if (10 != num1++) {
 			print_failed (TEST_NUMBER);
@@ -137,7 +141,7 @@ int main (int argc, char **argv) {
 		ps = true;
 
 		unsigned char n1 = 10;
-		Number<unsigned char> num1 (n1);
+		Register<unsigned char> num1 (n1);
 
 		if (9 != --num1) {
 			print_failed (TEST_NUMBER);
@@ -158,7 +162,7 @@ int main (int argc, char **argv) {
 		ps = true;
 
 		unsigned char n1 = 10;
-		Number<unsigned char> num1 (n1);
+		Register<unsigned char> num1 (n1);
 
 		if (10 != num1--) {
 			print_failed (TEST_NUMBER);
@@ -180,12 +184,12 @@ int main (int argc, char **argv) {
 
 		unsigned char n1 = 10;
 		unsigned char n2 = 13;
-		Number<unsigned char> num1 (n1);
-		Number<unsigned char> num2 (n2);
+		Register<unsigned char> num1 (n1);
+		Register<unsigned char> num2 (n2);
 
 		num1 = num2;
 
-		if (num1.get_value () != num2.get_value ()) {
+		if (num1.getValue () != num2.getValue ()) {
 			print_failed (TEST_NUMBER);
 		}
 
@@ -209,12 +213,12 @@ int main (int argc, char **argv) {
 
 		unsigned int n1 = 5123;
 		unsigned char n2 = 13;
-		Number<unsigned int> num1 (n1);
-		Number<unsigned char> num2 (n2);
+		Register<unsigned int> num1 (n1);
+		Register<unsigned char> num2 (n2);
 
 		num1 = num2;
 
-		if (num1.get_value () != num2.get_value ()) {
+		if (num1.getValue () != num2.getValue ()) {
 			print_failed (TEST_NUMBER);
 		}
 
@@ -238,15 +242,15 @@ int main (int argc, char **argv) {
 
 		unsigned int n1 = 500;
 		unsigned short n2 = 13;
-		Number<unsigned int> num1 (n1);
+		Register<unsigned int> num1 (n1);
 
 		num1 = n2;
 
-		if (num1.get_value () != n2) {
+		if (num1.getValue () != n2) {
 			print_failed (TEST_NUMBER);
 		}
 
-		if (n2 != num1.get_value ()) {
+		if (n2 != num1.getValue ()) {
 			print_failed (TEST_NUMBER);
 		}
 
@@ -262,16 +266,16 @@ int main (int argc, char **argv) {
 
 		unsigned char n1 = 10;
 		unsigned char n2 = 13;
-		Number<unsigned char> num1 (n1);
-		Number<unsigned char> num2 (n2);
+		Register<unsigned char> num1 (n1);
+		Register<unsigned char> num2 (n2);
 
 		num1 += num2;
 
-		if (num1.get_value () != 23) {
+		if (num1.getValue () != 23) {
 			print_failed (TEST_NUMBER);
 		}
 
-		if (23 != num1.get_value ()) {
+		if (23 != num1.getValue ()) {
 			print_failed (TEST_NUMBER);
 		}
 
@@ -287,16 +291,16 @@ int main (int argc, char **argv) {
 
 		unsigned int n1 = 500;
 		unsigned char n2 = 13;
-		Number<unsigned int> num1 (n1);
-		Number<unsigned char> num2 (n2);
+		Register<unsigned int> num1 (n1);
+		Register<unsigned char> num2 (n2);
 
 		num1 += num2;
 
-		if (num1.get_value () != 513) {
+		if (num1.getValue () != 513) {
 			print_failed (TEST_NUMBER);
 		}
 
-		if (513 != num1.get_value ()) {
+		if (513 != num1.getValue ()) {
 			print_failed (TEST_NUMBER);
 		}
 
@@ -312,15 +316,15 @@ int main (int argc, char **argv) {
 
 		unsigned int n1 = 500;
 		unsigned char n2 = 13;
-		Number<unsigned int> num1 (n1);
+		Register<unsigned int> num1 (n1);
 
 		num1 += n2;
 
-		if (num1.get_value () != 513) {
+		if (num1.getValue () != 513) {
 			print_failed (TEST_NUMBER);
 		}
 
-		if (513 != num1.get_value ()) {
+		if (513 != num1.getValue ()) {
 			print_failed (TEST_NUMBER);
 		}
 
@@ -336,16 +340,16 @@ int main (int argc, char **argv) {
 
 		unsigned char n1 = 23;
 		unsigned char n2 = 13;
-		Number<unsigned char> num1 (n1);
-		Number<unsigned char> num2 (n2);
+		Register<unsigned char> num1 (n1);
+		Register<unsigned char> num2 (n2);
 
 		num1 -= num2;
 
-		if (num1.get_value () != 10) {
+		if (num1.getValue () != 10) {
 			print_failed (TEST_NUMBER);
 		}
 
-		if (10 != num1.get_value ()) {
+		if (10 != num1.getValue ()) {
 			print_failed (TEST_NUMBER);
 		}
 
@@ -361,16 +365,16 @@ int main (int argc, char **argv) {
 
 		unsigned int n1 = 500;
 		unsigned char n2 = 10;
-		Number<unsigned int> num1 (n1);
-		Number<unsigned char> num2 (n2);
+		Register<unsigned int> num1 (n1);
+		Register<unsigned char> num2 (n2);
 
 		num1 -= num2;
 
-		if (num1.get_value () != 490) {
+		if (num1.getValue () != 490) {
 			print_failed (TEST_NUMBER);
 		}
 
-		if (490 != num1.get_value ()) {
+		if (490 != num1.getValue ()) {
 			print_failed (TEST_NUMBER);
 		}
 
@@ -386,15 +390,15 @@ int main (int argc, char **argv) {
 
 		unsigned int n1 = 500;
 		unsigned char n2 = 13;
-		Number<unsigned int> num1 (n1);
+		Register<unsigned int> num1 (n1);
 
 		num1 -= n2;
 
-		if (num1.get_value () != 487) {
+		if (num1.getValue () != 487) {
 			print_failed (TEST_NUMBER);
 		}
 
-		if (487 != num1.get_value ()) {
+		if (487 != num1.getValue ()) {
 			print_failed (TEST_NUMBER);
 		}
 
@@ -410,16 +414,16 @@ int main (int argc, char **argv) {
 
 		unsigned char n1 = 2;
 		unsigned char n2 = 10;
-		Number<unsigned char> num1 (n1);
-		Number<unsigned char> num2 (n2);
+		Register<unsigned char> num1 (n1);
+		Register<unsigned char> num2 (n2);
 
 		num1 *= num2;
 
-		if (num1.get_value () != 20) {
+		if (num1.getValue () != 20) {
 			print_failed (TEST_NUMBER);
 		}
 
-		if (20 != num1.get_value ()) {
+		if (20 != num1.getValue ()) {
 			print_failed (TEST_NUMBER);
 		}
 
@@ -435,16 +439,16 @@ int main (int argc, char **argv) {
 
 		unsigned int n1 = 500;
 		unsigned char n2 = 10;
-		Number<unsigned int> num1 (n1);
-		Number<unsigned char> num2 (n2);
+		Register<unsigned int> num1 (n1);
+		Register<unsigned char> num2 (n2);
 
 		num1 *= num2;
 
-		if (num1.get_value () != 5000) {
+		if (num1.getValue () != 5000) {
 			print_failed (TEST_NUMBER);
 		}
 
-		if (5000 != num1.get_value ()) {
+		if (5000 != num1.getValue ()) {
 			print_failed (TEST_NUMBER);
 		}
 
@@ -460,15 +464,15 @@ int main (int argc, char **argv) {
 
 		unsigned int n1 = 500;
 		unsigned char n2 = 10;
-		Number<unsigned int> num1 (n1);
+		Register<unsigned int> num1 (n1);
 
 		num1 *= n2;
 
-		if (num1.get_value () != 5000) {
+		if (num1.getValue () != 5000) {
 			print_failed (TEST_NUMBER);
 		}
 
-		if (5000 != num1.get_value ()) {
+		if (5000 != num1.getValue ()) {
 			print_failed (TEST_NUMBER);
 		}
 
@@ -484,16 +488,16 @@ int main (int argc, char **argv) {
 
 		unsigned char n1 = 10;
 		unsigned char n2 = 2;
-		Number<unsigned char> num1 (n1);
-		Number<unsigned char> num2 (n2);
+		Register<unsigned char> num1 (n1);
+		Register<unsigned char> num2 (n2);
 
 		num1 /= num2;
 
-		if (num1.get_value () != 5) {
+		if (num1.getValue () != 5) {
 			print_failed (TEST_NUMBER);
 		}
 
-		if (5 != num1.get_value ()) {
+		if (5 != num1.getValue ()) {
 			print_failed (TEST_NUMBER);
 		}
 
@@ -509,16 +513,16 @@ int main (int argc, char **argv) {
 
 		unsigned int n1 = 500;
 		unsigned char n2 = 10;
-		Number<unsigned int> num1 (n1);
-		Number<unsigned char> num2 (n2);
+		Register<unsigned int> num1 (n1);
+		Register<unsigned char> num2 (n2);
 
 		num1 /= num2;
 
-		if (num1.get_value () != 50) {
+		if (num1.getValue () != 50) {
 			print_failed (TEST_NUMBER);
 		}
 
-		if (50 != num1.get_value ()) {
+		if (50 != num1.getValue ()) {
 			print_failed (TEST_NUMBER);
 		}
 
@@ -534,15 +538,15 @@ int main (int argc, char **argv) {
 
 		unsigned int n1 = 500;
 		unsigned char n2 = 10;
-		Number<unsigned int> num1 (n1);
+		Register<unsigned int> num1 (n1);
 
 		num1 /= n2;
 
-		if (num1.get_value () != 50) {
+		if (num1.getValue () != 50) {
 			print_failed (TEST_NUMBER);
 		}
 
-		if (50 != num1.get_value ()) {
+		if (50 != num1.getValue ()) {
 			print_failed (TEST_NUMBER);
 		}
 
@@ -558,16 +562,16 @@ int main (int argc, char **argv) {
 
 		unsigned char n1 = 10;
 		unsigned char n2 = 2;
-		Number<unsigned char> num1 (n1);
-		Number<unsigned char> num2 (n2);
+		Register<unsigned char> num1 (n1);
+		Register<unsigned char> num2 (n2);
 
 		num1 %= num2;
 
-		if (num1.get_value () != 0) {
+		if (num1.getValue () != 0) {
 			print_failed (TEST_NUMBER);
 		}
 
-		if (0 != num1.get_value ()) {
+		if (0 != num1.getValue ()) {
 			print_failed (TEST_NUMBER);
 		}
 
@@ -583,16 +587,16 @@ int main (int argc, char **argv) {
 
 		unsigned int n1 = 500;
 		unsigned char n2 = 10;
-		Number<unsigned int> num1 (n1);
-		Number<unsigned char> num2 (n2);
+		Register<unsigned int> num1 (n1);
+		Register<unsigned char> num2 (n2);
 
 		num1 %= num2;
 
-		if (num1.get_value () != 0) {
+		if (num1.getValue () != 0) {
 			print_failed (TEST_NUMBER);
 		}
 
-		if (0 != num1.get_value ()) {
+		if (0 != num1.getValue ()) {
 			print_failed (TEST_NUMBER);
 		}
 
@@ -608,15 +612,15 @@ int main (int argc, char **argv) {
 
 		unsigned int n1 = 500;
 		unsigned char n2 = 10;
-		Number<unsigned int> num1 (n1);
+		Register<unsigned int> num1 (n1);
 
 		num1 %= n2;
 
-		if (num1.get_value () != 0) {
+		if (num1.getValue () != 0) {
 			print_failed (TEST_NUMBER);
 		}
 
-		if (0 != num1.get_value ()) {
+		if (0 != num1.getValue ()) {
 			print_failed (TEST_NUMBER);
 		}
 
@@ -632,16 +636,16 @@ int main (int argc, char **argv) {
 
 		unsigned char n1 = 10;
 		unsigned char n2 = 2;
-		Number<unsigned char> num1 (n1);
-		Number<unsigned char> num2 (n2);
+		Register<unsigned char> num1 (n1);
+		Register<unsigned char> num2 (n2);
 
 		num1 ^= num2;
 
-		if (num1.get_value () != 8) {
+		if (num1.getValue () != 8) {
 			print_failed (TEST_NUMBER);
 		}
 
-		if (8 != num1.get_value ()) {
+		if (8 != num1.getValue ()) {
 			print_failed (TEST_NUMBER);
 		}
 
@@ -657,16 +661,16 @@ int main (int argc, char **argv) {
 
 		unsigned int n1 = 500;
 		unsigned char n2 = 10;
-		Number<unsigned int> num1 (n1);
-		Number<unsigned char> num2 (n2);
+		Register<unsigned int> num1 (n1);
+		Register<unsigned char> num2 (n2);
 
 		num1 ^= num2;
 
-		if (num1.get_value () != 510) {
+		if (num1.getValue () != 510) {
 			print_failed (TEST_NUMBER);
 		}
 
-		if (510 != num1.get_value ()) {
+		if (510 != num1.getValue ()) {
 			print_failed (TEST_NUMBER);
 		}
 
@@ -682,15 +686,15 @@ int main (int argc, char **argv) {
 
 		unsigned int n1 = 500;
 		unsigned char n2 = 10;
-		Number<unsigned int> num1 (n1);
+		Register<unsigned int> num1 (n1);
 
 		num1 ^= n2;
 
-		if (num1.get_value () != 510) {
+		if (num1.getValue () != 510) {
 			print_failed (TEST_NUMBER);
 		}
 
-		if (510 != num1.get_value ()) {
+		if (510 != num1.getValue ()) {
 			print_failed (TEST_NUMBER);
 		}
 
@@ -706,16 +710,16 @@ int main (int argc, char **argv) {
 
 		unsigned char n1 = 10;
 		unsigned char n2 = 2;
-		Number<unsigned char> num1 (n1);
-		Number<unsigned char> num2 (n2);
+		Register<unsigned char> num1 (n1);
+		Register<unsigned char> num2 (n2);
 
 		num1 &= num2;
 
-		if (num1.get_value () != 2) {
+		if (num1.getValue () != 2) {
 			print_failed (TEST_NUMBER);
 		}
 
-		if (2 != num1.get_value ()) {
+		if (2 != num1.getValue ()) {
 			print_failed (TEST_NUMBER);
 		}
 
@@ -731,16 +735,16 @@ int main (int argc, char **argv) {
 
 		unsigned int n1 = 500;
 		unsigned char n2 = 10;
-		Number<unsigned int> num1 (n1);
-		Number<unsigned char> num2 (n2);
+		Register<unsigned int> num1 (n1);
+		Register<unsigned char> num2 (n2);
 
 		num1 &= num2;
 
-		if (num1.get_value () != 0) {
+		if (num1.getValue () != 0) {
 			print_failed (TEST_NUMBER);
 		}
 
-		if (0 != num1.get_value ()) {
+		if (0 != num1.getValue ()) {
 			print_failed (TEST_NUMBER);
 		}
 
@@ -756,15 +760,15 @@ int main (int argc, char **argv) {
 
 		unsigned int n1 = 500;
 		unsigned char n2 = 10;
-		Number<unsigned int> num1 (n1);
+		Register<unsigned int> num1 (n1);
 
 		num1 &= n2;
 
-		if (num1.get_value () != 0) {
+		if (num1.getValue () != 0) {
 			print_failed (TEST_NUMBER);
 		}
 
-		if (0 != num1.get_value ()) {
+		if (0 != num1.getValue ()) {
 			print_failed (TEST_NUMBER);
 		}
 
@@ -780,16 +784,16 @@ int main (int argc, char **argv) {
 
 		unsigned char n1 = 10;
 		unsigned char n2 = 2;
-		Number<unsigned char> num1 (n1);
-		Number<unsigned char> num2 (n2);
+		Register<unsigned char> num1 (n1);
+		Register<unsigned char> num2 (n2);
 
 		num1 |= num2;
 
-		if (num1.get_value () != 10) {
+		if (num1.getValue () != 10) {
 			print_failed (TEST_NUMBER);
 		}
 
-		if (10 != num1.get_value ()) {
+		if (10 != num1.getValue ()) {
 			print_failed (TEST_NUMBER);
 		}
 
@@ -805,16 +809,16 @@ int main (int argc, char **argv) {
 
 		unsigned int n1 = 500;
 		unsigned char n2 = 10;
-		Number<unsigned int> num1 (n1);
-		Number<unsigned char> num2 (n2);
+		Register<unsigned int> num1 (n1);
+		Register<unsigned char> num2 (n2);
 
 		num1 |= num2;
 
-		if (num1.get_value () != 510) {
+		if (num1.getValue () != 510) {
 			print_failed (TEST_NUMBER);
 		}
 
-		if (510 != num1.get_value ()) {
+		if (510 != num1.getValue ()) {
 			print_failed (TEST_NUMBER);
 		}
 
@@ -830,15 +834,15 @@ int main (int argc, char **argv) {
 
 		unsigned int n1 = 500;
 		unsigned char n2 = 10;
-		Number<unsigned int> num1 (n1);
+		Register<unsigned int> num1 (n1);
 
 		num1 |= n2;
 
-		if (num1.get_value () != 510) {
+		if (num1.getValue () != 510) {
 			print_failed (TEST_NUMBER);
 		}
 
-		if (510 != num1.get_value ()) {
+		if (510 != num1.getValue ()) {
 			print_failed (TEST_NUMBER);
 		}
 
@@ -854,16 +858,16 @@ int main (int argc, char **argv) {
 
 		unsigned char n1 = 10;
 		unsigned char n2 = 2;
-		Number<unsigned char> num1 (n1);
-		Number<unsigned char> num2 (n2);
+		Register<unsigned char> num1 (n1);
+		Register<unsigned char> num2 (n2);
 
 		num1 >>= num2;
 
-		if (num1.get_value () != 2) {
+		if (num1.getValue () != 2) {
 			print_failed (TEST_NUMBER);
 		}
 
-		if (2 != num1.get_value ()) {
+		if (2 != num1.getValue ()) {
 			print_failed (TEST_NUMBER);
 		}
 
@@ -879,16 +883,16 @@ int main (int argc, char **argv) {
 
 		unsigned int n1 = 500;
 		unsigned char n2 = 5;
-		Number<unsigned int> num1 (n1);
-		Number<unsigned char> num2 (n2);
+		Register<unsigned int> num1 (n1);
+		Register<unsigned char> num2 (n2);
 
 		num1 >>= num2;
 
-		if (num1.get_value () != 15) {
+		if (num1.getValue () != 15) {
 			print_failed (TEST_NUMBER);
 		}
 
-		if (15 != num1.get_value ()) {
+		if (15 != num1.getValue ()) {
 			print_failed (TEST_NUMBER);
 		}
 
@@ -904,15 +908,15 @@ int main (int argc, char **argv) {
 
 		unsigned int n1 = 500;
 		unsigned char n2 = 5;
-		Number<unsigned int> num1 (n1);
+		Register<unsigned int> num1 (n1);
 
 		num1 >>= n2;
 
-		if (num1.get_value () != 15) {
+		if (num1.getValue () != 15) {
 			print_failed (TEST_NUMBER);
 		}
 
-		if (15 != num1.get_value ()) {
+		if (15 != num1.getValue ()) {
 			print_failed (TEST_NUMBER);
 		}
 
@@ -928,16 +932,16 @@ int main (int argc, char **argv) {
 
 		unsigned char n1 = 10;
 		unsigned char n2 = 2;
-		Number<unsigned char> num1 (n1);
-		Number<unsigned char> num2 (n2);
+		Register<unsigned char> num1 (n1);
+		Register<unsigned char> num2 (n2);
 
 		num1 <<= num2;
 
-		if (num1.get_value () != 40) {
+		if (num1.getValue () != 40) {
 			print_failed (TEST_NUMBER);
 		}
 
-		if (40 != num1.get_value ()) {
+		if (40 != num1.getValue ()) {
 			print_failed (TEST_NUMBER);
 		}
 
@@ -953,16 +957,16 @@ int main (int argc, char **argv) {
 
 		unsigned int n1 = 500;
 		unsigned char n2 = 5;
-		Number<unsigned int> num1 (n1);
-		Number<unsigned char> num2 (n2);
+		Register<unsigned int> num1 (n1);
+		Register<unsigned char> num2 (n2);
 
 		num1 <<= num2;
 
-		if (num1.get_value () != 16000) {
+		if (num1.getValue () != 16000) {
 			print_failed (TEST_NUMBER);
 		}
 
-		if (16000 != num1.get_value ()) {
+		if (16000 != num1.getValue ()) {
 			print_failed (TEST_NUMBER);
 		}
 
@@ -978,15 +982,15 @@ int main (int argc, char **argv) {
 
 		unsigned int n1 = 500;
 		unsigned char n2 = 5;
-		Number<unsigned int> num1 (n1);
+		Register<unsigned int> num1 (n1);
 
 		num1 <<= n2;
 
-		if (num1.get_value () != 16000) {
+		if (num1.getValue () != 16000) {
 			print_failed (TEST_NUMBER);
 		}
 
-		if (16000 != num1.get_value ()) {
+		if (16000 != num1.getValue ()) {
 			print_failed (TEST_NUMBER);
 		}
 
@@ -994,6 +998,7 @@ int main (int argc, char **argv) {
 			print_passed (TEST_NUMBER);
 		}
 	}//end Test 40
+//#endif
 
 
 	{//Test 41
@@ -1002,8 +1007,8 @@ int main (int argc, char **argv) {
 
 		unsigned char n1 = 10;
 		unsigned char n2 = 2;
-		Number<unsigned char> num1 (n1);
-		Number<unsigned char> num2 (n2);
+		Register<unsigned char> num1 (n1);
+		Register<unsigned char> num2 (n2);
 
 		if (num1 + num2 != 12) {
 			print_failed (TEST_NUMBER);
@@ -1025,8 +1030,8 @@ int main (int argc, char **argv) {
 
 		unsigned int n1 = 500;
 		unsigned char n2 = 5;
-		Number<unsigned int> num1 (n1);
-		Number<unsigned char> num2 (n2);
+		Register<unsigned int> num1 (n1);
+		Register<unsigned char> num2 (n2);
 
 		if (num1 + num2 != 505) {
 			print_failed (TEST_NUMBER);
@@ -1048,7 +1053,7 @@ int main (int argc, char **argv) {
 
 		unsigned int n1 = 500;
 		unsigned char n2 = 5;
-		Number<unsigned int> num1 (n1);
+		Register<unsigned int> num1 (n1);
 
 		if (num1 + n2 != 505) {
 			print_failed (TEST_NUMBER);
@@ -1070,8 +1075,8 @@ int main (int argc, char **argv) {
 
 		unsigned char n1 = 10;
 		unsigned char n2 = 2;
-		Number<unsigned char> num1 (n1);
-		Number<unsigned char> num2 (n2);
+		Register<unsigned char> num1 (n1);
+		Register<unsigned char> num2 (n2);
 
 		if (num1 - num2 != 8) {
 			print_failed (TEST_NUMBER);
@@ -1093,8 +1098,8 @@ int main (int argc, char **argv) {
 
 		unsigned int n1 = 500;
 		unsigned char n2 = 5;
-		Number<unsigned int> num1 (n1);
-		Number<unsigned char> num2 (n2);
+		Register<unsigned int> num1 (n1);
+		Register<unsigned char> num2 (n2);
 
 		if (num1 - num2 != 495) {
 			print_failed (TEST_NUMBER);
@@ -1116,7 +1121,7 @@ int main (int argc, char **argv) {
 
 		unsigned int n1 = 500;
 		unsigned char n2 = 5;
-		Number<unsigned int> num1 (n1);
+		Register<unsigned int> num1 (n1);
 
 		if (num1 - n2 != 495) {
 			print_failed (TEST_NUMBER);
@@ -1138,8 +1143,8 @@ int main (int argc, char **argv) {
 
 		unsigned char n1 = 10;
 		unsigned char n2 = 2;
-		Number<unsigned char> num1 (n1);
-		Number<unsigned char> num2 (n2);
+		Register<unsigned char> num1 (n1);
+		Register<unsigned char> num2 (n2);
 
 		if (num1 * num2 != 20) {
 			print_failed (TEST_NUMBER);
@@ -1161,8 +1166,8 @@ int main (int argc, char **argv) {
 
 		unsigned int n1 = 500;
 		unsigned char n2 = 5;
-		Number<unsigned int> num1 (n1);
-		Number<unsigned char> num2 (n2);
+		Register<unsigned int> num1 (n1);
+		Register<unsigned char> num2 (n2);
 
 		if (num1 * num2 != 2500) {
 			print_failed (TEST_NUMBER);
@@ -1184,7 +1189,7 @@ int main (int argc, char **argv) {
 
 		unsigned int n1 = 500;
 		unsigned char n2 = 5;
-		Number<unsigned int> num1 (n1);
+		Register<unsigned int> num1 (n1);
 
 		if (num1 * n2 != 2500) {
 			print_failed (TEST_NUMBER);
@@ -1206,8 +1211,8 @@ int main (int argc, char **argv) {
 
 		unsigned char n1 = 10;
 		unsigned char n2 = 2;
-		Number<unsigned char> num1 (n1);
-		Number<unsigned char> num2 (n2);
+		Register<unsigned char> num1 (n1);
+		Register<unsigned char> num2 (n2);
 
 		if (num1 / num2 != 5) {
 			print_failed (TEST_NUMBER);
@@ -1229,8 +1234,8 @@ int main (int argc, char **argv) {
 
 		unsigned int n1 = 500;
 		unsigned char n2 = 5;
-		Number<unsigned int> num1 (n1);
-		Number<unsigned char> num2 (n2);
+		Register<unsigned int> num1 (n1);
+		Register<unsigned char> num2 (n2);
 
 		if (num1 / num2 != 100) {
 			print_failed (TEST_NUMBER);
@@ -1252,7 +1257,7 @@ int main (int argc, char **argv) {
 
 		unsigned int n1 = 500;
 		unsigned char n2 = 5;
-		Number<unsigned int> num1 (n1);
+		Register<unsigned int> num1 (n1);
 
 		if (num1 / n2 != 100) {
 			print_failed (TEST_NUMBER);
@@ -1274,8 +1279,8 @@ int main (int argc, char **argv) {
 
 		unsigned char n1 = 10;
 		unsigned char n2 = 2;
-		Number<unsigned char> num1 (n1);
-		Number<unsigned char> num2 (n2);
+		Register<unsigned char> num1 (n1);
+		Register<unsigned char> num2 (n2);
 
 		if (num1 % num2 != 0) {
 			print_failed (TEST_NUMBER);
@@ -1297,8 +1302,8 @@ int main (int argc, char **argv) {
 
 		unsigned int n1 = 500;
 		unsigned char n2 = 5;
-		Number<unsigned int> num1 (n1);
-		Number<unsigned char> num2 (n2);
+		Register<unsigned int> num1 (n1);
+		Register<unsigned char> num2 (n2);
 
 		if (num1 % num2 != 0) {
 			print_failed (TEST_NUMBER);
@@ -1320,7 +1325,7 @@ int main (int argc, char **argv) {
 
 		unsigned int n1 = 500;
 		unsigned char n2 = 5;
-		Number<unsigned int> num1 (n1);
+		Register<unsigned int> num1 (n1);
 
 		if (num1 % n2 != 0) {
 			print_failed (TEST_NUMBER);
@@ -1342,8 +1347,8 @@ int main (int argc, char **argv) {
 
 		unsigned char n1 = 10;
 		unsigned char n2 = 2;
-		Number<unsigned char> num1 (n1);
-		Number<unsigned char> num2 (n2);
+		Register<unsigned char> num1 (n1);
+		Register<unsigned char> num2 (n2);
 
 		if ((num1 ^ num2) != 8) {
 			print_failed (TEST_NUMBER);
@@ -1365,8 +1370,8 @@ int main (int argc, char **argv) {
 
 		unsigned int n1 = 500;
 		unsigned char n2 = 5;
-		Number<unsigned int> num1 (n1);
-		Number<unsigned char> num2 (n2);
+		Register<unsigned int> num1 (n1);
+		Register<unsigned char> num2 (n2);
 
 		if ((num1 ^ num2) != 497) {
 			print_failed (TEST_NUMBER);
@@ -1388,7 +1393,7 @@ int main (int argc, char **argv) {
 
 		unsigned int n1 = 500;
 		unsigned char n2 = 5;
-		Number<unsigned int> num1 (n1);
+		Register<unsigned int> num1 (n1);
 
 		if ((num1 ^ n2) != 497) {
 			print_failed (TEST_NUMBER);
@@ -1410,8 +1415,8 @@ int main (int argc, char **argv) {
 
 		unsigned char n1 = 10;
 		unsigned char n2 = 2;
-		Number<unsigned char> num1 (n1);
-		Number<unsigned char> num2 (n2);
+		Register<unsigned char> num1 (n1);
+		Register<unsigned char> num2 (n2);
 
 		if ((num1 & num2) != 2) {
 			print_failed (TEST_NUMBER);
@@ -1433,8 +1438,8 @@ int main (int argc, char **argv) {
 
 		unsigned int n1 = 500;
 		unsigned char n2 = 5;
-		Number<unsigned int> num1 (n1);
-		Number<unsigned char> num2 (n2);
+		Register<unsigned int> num1 (n1);
+		Register<unsigned char> num2 (n2);
 
 		if ((num1 & num2) != 4) {
 			print_failed (TEST_NUMBER);
@@ -1456,7 +1461,7 @@ int main (int argc, char **argv) {
 
 		unsigned int n1 = 500;
 		unsigned char n2 = 5;
-		Number<unsigned int> num1 (n1);
+		Register<unsigned int> num1 (n1);
 
 		if ((num1 & n2) != 4) {
 			print_failed (TEST_NUMBER);
@@ -1478,8 +1483,8 @@ int main (int argc, char **argv) {
 
 		unsigned char n1 = 10;
 		unsigned char n2 = 2;
-		Number<unsigned char> num1 (n1);
-		Number<unsigned char> num2 (n2);
+		Register<unsigned char> num1 (n1);
+		Register<unsigned char> num2 (n2);
 
 		if ((num1 | num2) != 10) {
 			print_failed (TEST_NUMBER);
@@ -1501,8 +1506,8 @@ int main (int argc, char **argv) {
 
 		unsigned int n1 = 500;
 		unsigned char n2 = 5;
-		Number<unsigned int> num1 (n1);
-		Number<unsigned char> num2 (n2);
+		Register<unsigned int> num1 (n1);
+		Register<unsigned char> num2 (n2);
 
 		if ((num1 | num2) != 501) {
 			print_failed (TEST_NUMBER);
@@ -1524,7 +1529,7 @@ int main (int argc, char **argv) {
 
 		unsigned int n1 = 500;
 		unsigned char n2 = 5;
-		Number<unsigned int> num1 (n1);
+		Register<unsigned int> num1 (n1);
 
 		if ((num1 | n2) != 501) {
 			print_failed (TEST_NUMBER);
@@ -1546,8 +1551,8 @@ int main (int argc, char **argv) {
 
 		unsigned char n1 = 10;
 		unsigned char n2 = 2;
-		Number<unsigned char> num1 (n1);
-		Number<unsigned char> num2 (n2);
+		Register<unsigned char> num1 (n1);
+		Register<unsigned char> num2 (n2);
 
 		if ((num1 << num2) != 40) {
 			print_failed (TEST_NUMBER);
@@ -1569,8 +1574,8 @@ int main (int argc, char **argv) {
 
 		unsigned int n1 = 500;
 		unsigned char n2 = 5;
-		Number<unsigned int> num1 (n1);
-		Number<unsigned char> num2 (n2);
+		Register<unsigned int> num1 (n1);
+		Register<unsigned char> num2 (n2);
 
 		if ((num1 << num2) != 16000) {
 			print_failed (TEST_NUMBER);
@@ -1592,7 +1597,7 @@ int main (int argc, char **argv) {
 
 		unsigned int n1 = 500;
 		unsigned char n2 = 5;
-		Number<unsigned int> num1 (n1);
+		Register<unsigned int> num1 (n1);
 
 		if ((num1 << n2) != 16000) {
 			print_failed (TEST_NUMBER);
@@ -1614,8 +1619,8 @@ int main (int argc, char **argv) {
 
 		unsigned char n1 = 10;
 		unsigned char n2 = 2;
-		Number<unsigned char> num1 (n1);
-		Number<unsigned char> num2 (n2);
+		Register<unsigned char> num1 (n1);
+		Register<unsigned char> num2 (n2);
 
 		if ((num1 >> num2) != 2) {
 			print_failed (TEST_NUMBER);
@@ -1637,8 +1642,8 @@ int main (int argc, char **argv) {
 
 		unsigned int n1 = 500;
 		unsigned char n2 = 5;
-		Number<unsigned int> num1 (n1);
-		Number<unsigned char> num2 (n2);
+		Register<unsigned int> num1 (n1);
+		Register<unsigned char> num2 (n2);
 
 		if ((num1 >> num2) != 15) {
 			print_failed (TEST_NUMBER);
@@ -1660,7 +1665,7 @@ int main (int argc, char **argv) {
 
 		unsigned int n1 = 500;
 		unsigned char n2 = 5;
-		Number<unsigned int> num1 (n1);
+		Register<unsigned int> num1 (n1);
 
 		if ((num1 >> n2) != 15) {
 			print_failed (TEST_NUMBER);
@@ -1682,8 +1687,8 @@ int main (int argc, char **argv) {
 
 		unsigned char n1 = 10;
 		unsigned char n2 = 2;
-		Number<unsigned char> num1 (n1);
-		Number<unsigned char> num2 (n2);
+		Register<unsigned char> num1 (n1);
+		Register<unsigned char> num2 (n2);
 
 		if (num1 == num2) {
 			print_failed (TEST_NUMBER);
@@ -1705,8 +1710,8 @@ int main (int argc, char **argv) {
 
 		unsigned int n1 = 500;
 		unsigned char n2 = 5;
-		Number<unsigned int> num1 (n1);
-		Number<unsigned char> num2 (n2);
+		Register<unsigned int> num1 (n1);
+		Register<unsigned char> num2 (n2);
 
 		if (num1 == num2) {
 			print_failed (TEST_NUMBER);
@@ -1728,7 +1733,7 @@ int main (int argc, char **argv) {
 
 		unsigned int n1 = 500;
 		unsigned char n2 = 5;
-		Number<unsigned int> num1 (n1);
+		Register<unsigned int> num1 (n1);
 
 		if (num1 == n2) {
 			print_failed (TEST_NUMBER);
@@ -1750,8 +1755,8 @@ int main (int argc, char **argv) {
 
 		unsigned char n1 = 10;
 		unsigned char n2 = 10;
-		Number<unsigned char> num1 (n1);
-		Number<unsigned char> num2 (n2);
+		Register<unsigned char> num1 (n1);
+		Register<unsigned char> num2 (n2);
 
 		if (num1 != num2) {
 			print_failed (TEST_NUMBER);
@@ -1773,8 +1778,8 @@ int main (int argc, char **argv) {
 
 		unsigned int n1 = 5;
 		unsigned char n2 = 5;
-		Number<unsigned int> num1 (n1);
-		Number<unsigned char> num2 (n2);
+		Register<unsigned int> num1 (n1);
+		Register<unsigned char> num2 (n2);
 
 		if (num1 != num2) {
 			print_failed (TEST_NUMBER);
@@ -1796,7 +1801,7 @@ int main (int argc, char **argv) {
 
 		unsigned int n1 = 5;
 		unsigned char n2 = 5;
-		Number<unsigned int> num1 (n1);
+		Register<unsigned int> num1 (n1);
 
 		if (num1 != n2) {
 			print_failed (TEST_NUMBER);
@@ -1818,8 +1823,8 @@ int main (int argc, char **argv) {
 
 		unsigned char n1 = 13;
 		unsigned char n2 = 10;
-		Number<unsigned char> num1 (n1);
-		Number<unsigned char> num2 (n2);
+		Register<unsigned char> num1 (n1);
+		Register<unsigned char> num2 (n2);
 
 		if (num1 < num2) {
 			print_failed (TEST_NUMBER);
@@ -1844,8 +1849,8 @@ int main (int argc, char **argv) {
 
 		unsigned int n1 = 13;
 		unsigned char n2 = 5;
-		Number<unsigned int> num1 (n1);
-		Number<unsigned char> num2 (n2);
+		Register<unsigned int> num1 (n1);
+		Register<unsigned char> num2 (n2);
 
 		if (num1 < num2) {
 			print_failed (TEST_NUMBER);
@@ -1870,7 +1875,7 @@ int main (int argc, char **argv) {
 
 		unsigned int n1 = 13;
 		unsigned char n2 = 5;
-		Number<unsigned int> num1 (n1);
+		Register<unsigned int> num1 (n1);
 
 		if (num1 < n2) {
 			print_failed (TEST_NUMBER);
@@ -1895,8 +1900,8 @@ int main (int argc, char **argv) {
 
 		unsigned char n1 = 10;
 		unsigned char n2 = 13;
-		Number<unsigned char> num1 (n1);
-		Number<unsigned char> num2 (n2);
+		Register<unsigned char> num1 (n1);
+		Register<unsigned char> num2 (n2);
 
 		if (num1 > num2) {
 			print_failed (TEST_NUMBER);
@@ -1921,8 +1926,8 @@ int main (int argc, char **argv) {
 
 		unsigned int n1 = 5;
 		unsigned char n2 = 13;
-		Number<unsigned int> num1 (n1);
-		Number<unsigned char> num2 (n2);
+		Register<unsigned int> num1 (n1);
+		Register<unsigned char> num2 (n2);
 
 		if (num1 > num2) {
 			print_failed (TEST_NUMBER);
@@ -1947,7 +1952,7 @@ int main (int argc, char **argv) {
 
 		unsigned int n1 = 5;
 		unsigned char n2 = 13;
-		Number<unsigned int> num1 (n1);
+		Register<unsigned int> num1 (n1);
 
 		if (num1 > n2) {
 			print_failed (TEST_NUMBER);
@@ -1972,8 +1977,8 @@ int main (int argc, char **argv) {
 
 		unsigned char n1 = 13;
 		unsigned char n2 = 10;
-		Number<unsigned char> num1 (n1);
-		Number<unsigned char> num2 (n2);
+		Register<unsigned char> num1 (n1);
+		Register<unsigned char> num2 (n2);
 
 		if (num1 <= num2) {
 			print_failed (TEST_NUMBER);
@@ -1998,8 +2003,8 @@ int main (int argc, char **argv) {
 
 		unsigned int n1 = 13;
 		unsigned char n2 = 5;
-		Number<unsigned int> num1 (n1);
-		Number<unsigned char> num2 (n2);
+		Register<unsigned int> num1 (n1);
+		Register<unsigned char> num2 (n2);
 
 		if (num1 <= num2) {
 			print_failed (TEST_NUMBER);
@@ -2024,7 +2029,7 @@ int main (int argc, char **argv) {
 
 		unsigned int n1 = 13;
 		unsigned char n2 = 5;
-		Number<unsigned int> num1 (n1);
+		Register<unsigned int> num1 (n1);
 
 		if (num1 <= n2) {
 			print_failed (TEST_NUMBER);
@@ -2049,8 +2054,8 @@ int main (int argc, char **argv) {
 
 		unsigned char n1 = 10;
 		unsigned char n2 = 13;
-		Number<unsigned char> num1 (n1);
-		Number<unsigned char> num2 (n2);
+		Register<unsigned char> num1 (n1);
+		Register<unsigned char> num2 (n2);
 
 		if (num1 >= num2) {
 			print_failed (TEST_NUMBER);
@@ -2075,8 +2080,8 @@ int main (int argc, char **argv) {
 
 		unsigned int n1 = 5;
 		unsigned char n2 = 13;
-		Number<unsigned int> num1 (n1);
-		Number<unsigned char> num2 (n2);
+		Register<unsigned int> num1 (n1);
+		Register<unsigned char> num2 (n2);
 
 		if (num1 >= num2) {
 			print_failed (TEST_NUMBER);
@@ -2101,7 +2106,7 @@ int main (int argc, char **argv) {
 
 		unsigned int n1 = 5;
 		unsigned char n2 = 13;
-		Number<unsigned int> num1 (n1);
+		Register<unsigned int> num1 (n1);
 
 		if (num1 >= n2) {
 			print_failed (TEST_NUMBER);
@@ -2126,8 +2131,8 @@ int main (int argc, char **argv) {
 
 		unsigned char n1 = 10;
 		unsigned char n2 = 0;
-		Number<unsigned char> num1 (n1);
-		Number<unsigned char> num2 (n2);
+		Register<unsigned char> num1 (n1);
+		Register<unsigned char> num2 (n2);
 
 		if (num1 && num2) {
 			print_failed (TEST_NUMBER);
@@ -2149,8 +2154,8 @@ int main (int argc, char **argv) {
 
 		unsigned int n1 = 5;
 		unsigned char n2 = 0;
-		Number<unsigned int> num1 (n1);
-		Number<unsigned char> num2 (n2);
+		Register<unsigned int> num1 (n1);
+		Register<unsigned char> num2 (n2);
 
 		if (num1 && num2) {
 			print_failed (TEST_NUMBER);
@@ -2172,7 +2177,7 @@ int main (int argc, char **argv) {
 
 		unsigned int n1 = 5;
 		unsigned char n2 = 0;
-		Number<unsigned int> num1 (n1);
+		Register<unsigned int> num1 (n1);
 
 		if (num1 && n2) {
 			print_failed (TEST_NUMBER);
@@ -2194,8 +2199,8 @@ int main (int argc, char **argv) {
 
 		unsigned char n1 = 0;
 		unsigned char n2 = 0;
-		Number<unsigned char> num1 (n1);
-		Number<unsigned char> num2 (n2);
+		Register<unsigned char> num1 (n1);
+		Register<unsigned char> num2 (n2);
 
 		if (num1 || num2) {
 			print_failed (TEST_NUMBER);
@@ -2217,8 +2222,8 @@ int main (int argc, char **argv) {
 
 		unsigned int n1 = 0;
 		unsigned char n2 = 0;
-		Number<unsigned int> num1 (n1);
-		Number<unsigned char> num2 (n2);
+		Register<unsigned int> num1 (n1);
+		Register<unsigned char> num2 (n2);
 
 		if (num1 || num2) {
 			print_failed (TEST_NUMBER);
@@ -2240,7 +2245,7 @@ int main (int argc, char **argv) {
 
 		unsigned int n1 = 0;
 		unsigned char n2 = 0;
-		Number<unsigned int> num1 (n1);
+		Register<unsigned int> num1 (n1);
 
 		if (num1 || n2) {
 			print_failed (TEST_NUMBER);
@@ -2259,7 +2264,7 @@ int main (int argc, char **argv) {
 		++TEST_NUMBER;
 		ps = true;
 
-		Number<unsigned short> n = 0;
+		Register<unsigned short> n = 0;
 		Utility::set_bit (n, 3);
 
 		if (n != 8) {
@@ -2276,7 +2281,7 @@ int main (int argc, char **argv) {
 		++TEST_NUMBER;
 		ps = true;
 
-		Number<unsigned short> n = ~0;
+		Register<unsigned short> n = ~0;
 		Utility::clear_bit (n, 2);
 
 		if (n != 0xFFFB) {
@@ -2292,7 +2297,7 @@ int main (int argc, char **argv) {
 		++TEST_NUMBER;
 		ps = true;
 
-		Number<unsigned short> n = 0xF11F;
+		Register<unsigned short> n = 0xF11F;
 		bool b1 = Utility::get_bit (n, 0);
 		bool b2 = Utility::get_bit (n, 4);
 		bool b3 = Utility::get_bit (n, 7);

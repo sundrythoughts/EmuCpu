@@ -12,6 +12,3 @@ SOURCES += MemoryAddress.cc
 
 HEADERS += Memory.hh
 SOURCES += Memory.cc
-
-HEADERS += Number.hh
-SOURCES += Number.cc

@@ -1,18 +1,19 @@
-#ifndef NUMBER_HH
-#define NUMBER_HH
+#ifndef REGISTER_HH
+#define REGISTER_HH
 
 #include <sigc++/sigc++.h>
 #include "INumberReadableWritable.hh"
+#include <iostream>
 
 template<typename T>
-class Number : public sigc::trackable, public INumberReadableWritable<T> {
+class Register : public sigc::trackable, public INumberReadableWritable<T> {
 	T *m_num;
 	bool m_deletable;
 	sigc::signal<void, T> m_signal_value_changed;
 
 public:
 	/** */
-	Number () : sigc::trackable () {
+	Register () : sigc::trackable () {
 		m_num = new T ();
 		m_deletable = true;
 
@@ -20,7 +21,7 @@ public:
 	}
 
 	/** */
-	Number (const Number<T> &src) : sigc::trackable () {
+	Register (const Register<T> &src) : sigc::trackable () {
 		//if (src.m_deletable) {
 			m_num = new T ();
 			*m_num = *(src.m_num);
@@ -37,7 +38,7 @@ public:
 	}
 
 	/** */
-	Number (T &r) : sigc::trackable () {
+	Register (T &r) : sigc::trackable () {
 		m_num = &r;
 		m_deletable = false;
 
@@ -45,7 +46,7 @@ public:
 	}
 
 	/** */
-	Number (const T &r) : sigc::trackable () {
+	Register (const T &r) : sigc::trackable () {
 		m_num = new T ();
 		*m_num = r;
 		m_deletable = true;
@@ -54,7 +55,7 @@ public:
 	}
 
 	/** */
-	virtual ~Number () {
+	virtual ~Register () {
 		if (m_deletable) {
 			delete m_num;
 		}
@@ -87,12 +88,12 @@ public:
 	}
 
 	/** */
-	virtual operator const T& () {
+	virtual operator const T& () const {
 		return *m_num;
 	}
 
 	/** */
-	virtual const T& getValue () {
+	virtual const T& getValue () const {
 		return *m_num;
 	}
 
@@ -137,8 +138,19 @@ public:
 #endif
 
 	/** */
-	virtual INumberReadableWritable<T>& operator= (const T &rhs) {
-		*m_num = rhs;
+	virtual INumberReadableWritable<T>& operator= (const T &right) {
+		std::cout << "here" << std::endl;
+		*m_num = right;
+
+		m_signal_value_changed.emit (*m_num);
+
+		return *this;
+	}
+
+	/** */
+	virtual INumberReadableWritable<T>& operator= (const INumberReadableWritable<T> &right) {
+		std::cout << "here" << std::endl;
+		*m_num = right.getValue ();
 
 		m_signal_value_changed.emit (*m_num);
 
@@ -216,5 +228,5 @@ public:
 	}
 };
 
-#endif //NUMBER_HH
+#endif //REGISTER_HH
 

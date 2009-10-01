@@ -10,7 +10,7 @@ template<typename T>
 class MemoryAddress : public INumberReadableWritable<T> {
 	Memory *m_memory;
 	unsigned int m_phys_addr;
-	T m_num;
+	mutable T m_num;
 
 public:
 	/** */
@@ -20,181 +20,165 @@ public:
 	}
 
 	/** */
-	virtual operator const T& () {
-		read (m_num);
+	virtual operator const T& () const {
+		read ();
 		return m_num;
 	}
 
 	/** */
-	virtual const T& getValue () {
-		read (m_num);
+	virtual const T& getValue () const {
+		read ();
 		return m_num;
 	}
 
 	/** */
 	virtual const INumberReadableWritable<T>& operator++ () {
-		read (m_num);
-		write (++m_num);
+		read ();
+		++m_num;
+		write ();
 		return *this;
 	}
 
 	/** */
 	virtual const T operator++ (int) {
-		read (m_num);
+		read ();
 		T tmp = m_num;
-		write (++m_num);
+		++m_num;
+		write ();
 		return tmp;
 	}
 
 	/** */
 	virtual const INumberReadableWritable<T>& operator-- () {
-		read (m_num);
-		write (--m_num);
+		read ();
+		--m_num;
+		write ();
 		return *this;
 	}
 
 	/** */
 	virtual const T operator-- (int) {
-		read (m_num);
+		read ();
 		T tmp = m_num;
-		write (--m_num);
+		--m_num;
+		write ();
 		return tmp;
 	}
 
 	/** */
-	virtual INumberReadableWritable<T>& operator= (const T &rhs) {
-		m_num = rhs;
-		write (m_num);
+	virtual INumberReadableWritable<T>& operator= (const T &right) {
+		m_num = right;
+		write ();
+
+		return *this;
+	}
+
+	/** */
+	virtual INumberReadableWritable<T>& operator= (const INumberReadableWritable<T> &right) {
+		m_num = right.getValue ();
+		write ();
 
 		return *this;
 	}
 
 	/** */
 	virtual INumberReadableWritable<T>& operator+= (const T& right) {
-		read (m_num);
+		read ();
 		m_num += right;
-		write (m_num);
+		write ();
 
 		return *this;
 	}
 
 	/** */
 	virtual INumberReadableWritable<T>& operator-= (const T& right) {
-		read (m_num);
+		read ();
 		m_num -= right;
-		write (m_num);
+		write ();
 
 		return *this;
 	}
 
 	/** */
 	virtual INumberReadableWritable<T>& operator*= (const T& right) {
-		read (m_num);
+		read ();
 		m_num *= right;
-		write (m_num);
+		write ();
 
 		return *this;
 	}
 
 	/** */
 	virtual INumberReadableWritable<T>& operator/= (const T& right) {
-		read (m_num);
+		read ();
 		m_num /= right;
-		write (m_num);
+		write ();
 
 		return *this;
 	}
 
 	/** */
 	virtual INumberReadableWritable<T>& operator%= (const T& right) {
-		read (m_num);
+		read ();
 		m_num %= right;
-		write (m_num);
+		write ();
 
 		return *this;
 	}
 
 	/** */
 	virtual INumberReadableWritable<T>& operator^= (const T& right) {
-		read (m_num);
+		read ();
 		m_num ^= right;
-		write (m_num);
+		write ();
 
 		return *this;
 	}
 
 	/** */
 	virtual INumberReadableWritable<T>& operator&= (const T& right) {
-		read (m_num);
+		read ();
 		m_num &= right;
-		write (m_num);
+		write ();
 
 		return *this;
 	}
 
 	/** */
 	virtual INumberReadableWritable<T>& operator|= (const T& right) {
-		read (m_num);
+		read ();
 		m_num |= right;
-		write (m_num);
+		write ();
 
 		return *this;
 	}
 
 	/** */
 	virtual INumberReadableWritable<T>& operator>>= (const T& right) {
-		read (m_num);
+		read ();
 		m_num >>= right;
-		write (m_num);
+		write ();
 
 		return *this;
 	}
 
 	/** */
 	virtual INumberReadableWritable<T>& operator<<= (const T& right) {
-		read (m_num);
+		read ();
 		m_num <<= right;
-		write (m_num);
+		write ();
 
 		return *this;
 	}
 
 private:
-	/**
-	@brief Read T bytes of data from addr into dest.
-	@param seg The memory segment to use.
-	@param offset The offset of the memory segment.
-	@param dest The destination of the data that is read.
-	@return true if successful, false if unsuccessful.
-	*/
-	bool read (T &dest) {
-		return m_memory->read (m_phys_addr, dest);
+	bool read () const {
+		return m_memory->read (m_phys_addr, m_num);
 	}
 
-#if 0
-	/** */
-	bool read (Number<T> &dest) {
-		return m_memory->read (m_phys_addr, dest);
+	bool write () const {
+		return m_memory->write (m_phys_addr, m_num);
 	}
-#endif
-
-	/**
-	@brief Write T bytes of data into addr from src.
-	@param seg The memory segment to use.
-	@param offset The offset of the memory segment.
-	@param src The data that is written.
-	@return true if successful, false if unsuccessful.
-	*/
-	bool write (const T &src) {
-		return m_memory->write (m_phys_addr, src);
-	}
-
-#if 0
-	/** */
-	bool write (const Number<T> &src) {
-		return m_memory->write (m_phys_addr, src);
-	}
-#endif
 };
 
 #endif //MEMORY_ADDRESS_HH

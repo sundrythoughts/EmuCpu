@@ -12,6 +12,15 @@ BusInterfaceUnit::connectTo (Memory &mem) {
 	//FIXME - connect to signals
 }
 
+//Register<unsigned short>&
+//BusInterfaceUnit::getSegReg (size_t index) {
+//	return 
+//}
+
+//void
+//BusInterfaceUnit::setSegReg (size_t index, unsigned short val) {
+//}
+
 Register<unsigned short>&
 BusInterfaceUnit::getSegRegCS () {
 	return m_sreg_cs;

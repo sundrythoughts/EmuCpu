@@ -7,6 +7,7 @@ class FlagRegisterSignalsAndSlots : public QObject {
 	Q_OBJECT
 
 public:
+	void sigcSlotValueChangedFlags (unsigned short i);
 	void sigcSlotValueChangedFlagAF (bool b);
 	void sigcSlotValueChangedFlagCF (bool b);
 	void sigcSlotValueChangedFlagDF (bool b);
@@ -22,6 +23,8 @@ public slots:
 	void disable ();
 
 signals:
+	void valueChangedFlags (unsigned short i);
+
 	//1-bit flag signals
 	void valueChangedFlagAF (bool b);
 	void valueChangedFlagCF (bool b);

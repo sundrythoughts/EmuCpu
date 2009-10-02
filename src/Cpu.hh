@@ -5,6 +5,8 @@
 #include "BusInterfaceUnit.hh"
 #include "Memory.hh"
 
+#include "Loader.hh"
+
 #include "FlagRegisterSignalsAndSlots.hh"
 #include "MemorySignalsAndSlots.hh"
 #include "GeneralRegisterSignalsAndSlots.hh"
@@ -22,6 +24,8 @@ class Cpu : public QObject {
 	ExecutionUnit m_eunit;
 	BusInterfaceUnit m_biu;
 
+	Loader m_loader;
+
 	GeneralRegisterSignalsAndSlots m_gen_reg_s_s;
 	FlagRegisterSignalsAndSlots m_flag_reg_s_s;
 	SegmentRegisterSignalsAndSlots m_sreg_s_s;
@@ -31,6 +35,10 @@ public:
 	Cpu (size_t mem_size = 1048576, QObject *parent = 0) : QObject (parent), m_mem (mem_size) {
 		m_eunit.connectTo (m_biu);
 		m_biu.connectTo (m_mem);
+
+		m_loader.connectTo (m_mem);
+		m_loader.connectTo (m_eunit);
+		m_loader.connectTo (m_biu);
 
 		//connect sigc++ signals to Qt signals
 		m_eunit.getRegAX ().connectToSignalValueChanged (sigc::mem_fun (m_gen_reg_s_s, &GeneralRegisterSignalsAndSlots::sigcSlotValueChangedRegAX));
@@ -44,6 +52,7 @@ public:
 		m_eunit.getRegBP ().connectToSignalValueChanged (sigc::mem_fun (m_gen_reg_s_s, &GeneralRegisterSignalsAndSlots::sigcSlotValueChangedRegBP));
 		m_eunit.getRegSP ().connectToSignalValueChanged (sigc::mem_fun (m_gen_reg_s_s, &GeneralRegisterSignalsAndSlots::sigcSlotValueChangedRegSP));
 
+		m_eunit.connectToSignalValueChangedRegFlags (sigc::mem_fun (m_flag_reg_s_s, &FlagRegisterSignalsAndSlots::sigcSlotValueChangedFlags));
 		m_eunit.connectToSignalValueChangedRegFlagsAF (sigc::mem_fun (m_flag_reg_s_s, &FlagRegisterSignalsAndSlots::sigcSlotValueChangedFlagAF));
 		m_eunit.connectToSignalValueChangedRegFlagsCF (sigc::mem_fun (m_flag_reg_s_s, &FlagRegisterSignalsAndSlots::sigcSlotValueChangedFlagCF));
 		m_eunit.connectToSignalValueChangedRegFlagsDF (sigc::mem_fun (m_flag_reg_s_s, &FlagRegisterSignalsAndSlots::sigcSlotValueChangedFlagDF));
@@ -83,6 +92,10 @@ public slots:
 
 	void singleStepCpu () {
 		std::cout << "singleStepCpu ()" << std::endl;
+	}
+
+	void loadFile (QString file_name) {
+		m_loader.loadFile (file_name.toStdString ());
 	}
 };
 

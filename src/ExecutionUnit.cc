@@ -9,6 +9,13 @@ ExecutionUnit::connectTo (BusInterfaceUnit &biu) {
 }
 
 void
+ExecutionUnit::connectToSignalValueChangedRegFlags (const sigc::slot<void, unsigned short> &slot) {
+	m_signal_value_changed_reg_flags.connect (slot);
+
+	m_signal_value_changed_reg_flags.emit (getRegFlags ());
+}
+
+void
 ExecutionUnit::connectToSignalValueChangedRegFlagsAF (const sigc::slot<void, bool> &slot) {
 	m_signal_value_changed_reg_flag_af.connect (slot);
 
@@ -77,22 +84,22 @@ ExecutionUnit::getBusInterfaceUnit () {
 }
 
 Register<unsigned char>&
-ExecutionUnit::getReg8 (RegisterIndex8 index) {
+ExecutionUnit::getReg8 (size_t index) {
 	return m_regs8[index]; //FIXME - no bounds checking
 }
 
 void
-ExecutionUnit::setReg8 (RegisterIndex8 index, unsigned char val) {
+ExecutionUnit::setReg8 (size_t index, unsigned char val) {
 	m_regs8[index] = val; //FIXME - no bounds checking
 }
 
 Register<unsigned short>&
-ExecutionUnit::getReg16 (RegisterIndex16 index) {
+ExecutionUnit::getReg16 (size_t index) {
 	return m_regs16[index]; //FIXME - no bounds checking
 }
 
 void
-ExecutionUnit::setReg16 (RegisterIndex16 index, unsigned short val) {
+ExecutionUnit::setReg16 (size_t index, unsigned short val) {
 	m_regs16[index] = val; //FIXME - no bounds checking
 }
 

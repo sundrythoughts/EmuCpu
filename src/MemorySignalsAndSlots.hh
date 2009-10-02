@@ -11,7 +11,7 @@ public slots:
 	void disable ();
 
 signals:
-
+	void valueChanged (int phys_addr, unsigned char val);
 };
 
 #endif //MEMORY_SIGNALS_AND_SLOTS_HH

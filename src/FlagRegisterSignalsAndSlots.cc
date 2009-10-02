@@ -1,6 +1,11 @@
 #include "FlagRegisterSignalsAndSlots.hh"
 
 void
+FlagRegisterSignalsAndSlots::sigcSlotValueChangedFlags (unsigned short i) {
+	emit valueChangedFlags (i);
+}
+
+void
 FlagRegisterSignalsAndSlots::sigcSlotValueChangedFlagAF (bool b) {
 	emit valueChangedFlagAF (b);
 }

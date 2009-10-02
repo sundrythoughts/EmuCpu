@@ -16,6 +16,9 @@ SOURCES += ExecutionUnit.cc
 HEADERS += BusInterfaceUnit.hh
 SOURCES += BusInterfaceUnit.cc
 
+HEADERS += Loader.hh
+SOURCES += Loader.cc
+
 HEADERS += Register.hh
 SOURCES += Register.cc
 

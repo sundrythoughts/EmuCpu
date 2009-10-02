@@ -17,6 +17,7 @@ class ExecutionUnit {
 
 	BusInterfaceUnit *m_biu;
 
+	sigc::signal<void, unsigned short> m_signal_value_changed_reg_flags;
 	sigc::signal<void, bool> m_signal_value_changed_reg_flag_af;
 	sigc::signal<void, bool> m_signal_value_changed_reg_flag_cf;
 	sigc::signal<void, bool> m_signal_value_changed_reg_flag_df;
@@ -66,6 +67,7 @@ public:
 	/** */
 	void connectTo (BusInterfaceUnit &biu);
 
+	void connectToSignalValueChangedRegFlags (const sigc::slot<void, unsigned short> &slot);
 	void connectToSignalValueChangedRegFlagsAF (const sigc::slot<void, bool> &slot);
 	void connectToSignalValueChangedRegFlagsCF (const sigc::slot<void, bool> &slot);
 	void connectToSignalValueChangedRegFlagsDF (const sigc::slot<void, bool> &slot);
@@ -80,16 +82,16 @@ public:
 	BusInterfaceUnit& getBusInterfaceUnit ();
 
 	/** */
-	Register<unsigned char>& getReg8 (RegisterIndex8 index);
+	Register<unsigned char>& getReg8 (size_t index);
 
 	/** */
-	void setReg8 (RegisterIndex8 index, unsigned char val);
+	void setReg8 (size_t index, unsigned char val);
 
 	/** */
-	Register<unsigned short>& getReg16 (RegisterIndex16 index);
+	Register<unsigned short>& getReg16 (size_t index);
 
 	/** */
-	void setReg16 (RegisterIndex16 index, unsigned short val);
+	void setReg16 (size_t index, unsigned short val);
 
 	/** */
 	Register<unsigned short>& getRegAX ();

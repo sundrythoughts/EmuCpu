@@ -48,6 +48,12 @@ public:
 	void connectTo (Memory &mem);
 
 	/** */
+	//Register<unsigned short>& getSegReg (size_t index);
+
+	/** */
+	//void setSegReg (size_t index, unsigned short val);
+
+	/** */
 	Register<unsigned short>& getSegRegCS ();
 
 	/** */

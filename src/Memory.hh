@@ -15,8 +15,13 @@ public:
 	}
 
 	/** */
-	size_t getMemorySize () const {
+	size_t size () const {
 		return m_memory.size ();
+	}
+
+	/** */
+	unsigned char* data () {
+		return m_memory.data ();
 	}
 
 	/**

@@ -19,10 +19,10 @@ public slots:
 
 signals:
 	//segment register signals
-	void valueChangedSRegCS (unsigned short i);
-	void valueChangedSRegDS (unsigned short i);
-	void valueChangedSRegES (unsigned short i);
-	void valueChangedSRegSS (unsigned short i);
+	void valueChangedSegRegCS (unsigned short i);
+	void valueChangedSegRegDS (unsigned short i);
+	void valueChangedSegRegES (unsigned short i);
+	void valueChangedSegRegSS (unsigned short i);
 
 	//instruction pointer signals
 	void valueChangedRegIP (unsigned short i);

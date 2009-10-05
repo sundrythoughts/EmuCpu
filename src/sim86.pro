@@ -1,6 +1,38 @@
 TARGET = sim86
 
-SOURCES += main.cc
+CONFIG += debug
+
+CONFIG += link_pkgconfig
+PKGCONFIG += sigc++-2.0
+
+SOURCES += Sim86.cc
+
+HEADERS += Cpu.hh
+SOURCES += Cpu.cc
+
+HEADERS += ExecutionUnit.hh
+SOURCES += ExecutionUnit.cc
+
+HEADERS += BusInterfaceUnit.hh
+SOURCES += BusInterfaceUnit.cc
+
+HEADERS += Memory.hh
+SOURCES += Memory.cc
+
+HEADERS += Loader.hh
+SOURCES += Loader.cc
+
+HEADERS += FlagRegisterSignalsAndSlots.hh
+SOURCES += FlagRegisterSignalsAndSlots.cc
+
+HEADERS += GeneralRegisterSignalsAndSlots.hh
+SOURCES += GeneralRegisterSignalsAndSlots.cc
+
+HEADERS += SegmentRegisterSignalsAndSlots.hh
+SOURCES += SegmentRegisterSignalsAndSlots.cc
+
+HEADERS += MemorySignalsAndSlots.hh
+SOURCES += MemorySignalsAndSlots.cc
 
 FORMS += FlagsWidget.ui
 HEADERS += FlagsWidget.hh

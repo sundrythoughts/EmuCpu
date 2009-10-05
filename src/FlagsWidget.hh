@@ -47,7 +47,8 @@ public slots:
 	}
 
 	void setFlags (unsigned short i) {
-		FlagsMask mask = i;
+		FlagsMask mask;
+		mask.flags = i;
 
 		setFlagCF (mask.f_cf);
 		setFlagPF (mask.f_pf);

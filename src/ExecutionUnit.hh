@@ -67,7 +67,6 @@ public:
 	/** */
 	void connectTo (BusInterfaceUnit &biu);
 
-	void connectToSignalValueChangedRegFlags (const sigc::slot<void, unsigned short> &slot);
 	void connectToSignalValueChangedRegFlagsAF (const sigc::slot<void, bool> &slot);
 	void connectToSignalValueChangedRegFlagsCF (const sigc::slot<void, bool> &slot);
 	void connectToSignalValueChangedRegFlagsDF (const sigc::slot<void, bool> &slot);

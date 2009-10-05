@@ -9,13 +9,6 @@ ExecutionUnit::connectTo (BusInterfaceUnit &biu) {
 }
 
 void
-ExecutionUnit::connectToSignalValueChangedRegFlags (const sigc::slot<void, unsigned short> &slot) {
-	m_signal_value_changed_reg_flags.connect (slot);
-
-	m_signal_value_changed_reg_flags.emit (getRegFlags ());
-}
-
-void
 ExecutionUnit::connectToSignalValueChangedRegFlagsAF (const sigc::slot<void, bool> &slot) {
 	m_signal_value_changed_reg_flag_af.connect (slot);
 

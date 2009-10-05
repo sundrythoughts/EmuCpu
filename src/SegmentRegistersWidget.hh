@@ -25,23 +25,23 @@ public slots:
 	}
 
 	void setSegRegCS (unsigned short i) {
-		m_ln_cs->setText (QString::number (i, 16));
+		m_ln_cs->setText (QString::number (i, 16).toUpper ());
 	}
 
 	void setSegRegDS (unsigned short i) {
-		m_ln_ds->setText (QString::number (i, 16));
+		m_ln_ds->setText (QString::number (i, 16).toUpper ());
 	}
 
 	void setSegRegES (unsigned short i) {
-		m_ln_es->setText (QString::number (i, 16));
+		m_ln_es->setText (QString::number (i, 16).toUpper ());
 	}
 
 	void setSegRegSS (unsigned short i) {
-		m_ln_ss->setText (QString::number (i, 16));
+		m_ln_ss->setText (QString::number (i, 16).toUpper ());
 	}
 
 	void setRegIP (unsigned short i) {
-		m_ln_ip->setText (QString::number (i, 16));
+		m_ln_ip->setText (QString::number (i, 16).toUpper ());
 	}
 };
 

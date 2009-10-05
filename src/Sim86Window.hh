@@ -75,7 +75,7 @@ public:
 		addAction (m_act_run_halt);
 		addAction (m_act_run_single_step);
 
-		std::cout << actions ().size () << std::endl;
+		//std::cout << actions ().size () << std::endl;
 
 		//connect signals
 		connect (m_act_view_regs, SIGNAL(toggled (bool)), &m_general_registers_widget, SLOT(enableDisableToggle (bool)));
@@ -86,6 +86,34 @@ public:
 		connect (m_act_view_memory, SIGNAL(toggled (bool)), this, SLOT(enableDisableToggleMemory (bool)));
 		connect (m_act_view_disassembly, SIGNAL(toggled (bool)), &m_disassembly_widget, SLOT(enableDisableToggle (bool)));
 		connect (m_act_view_disassembly, SIGNAL(toggled (bool)), this, SLOT(enableDisableToggleDisassembly (bool)));
+	}
+
+	FlagsWidget& getFlagsWidget () {
+		return m_flags_widget;
+	}
+
+	GeneralRegistersWidget& getGeneralRegistersWidget () {
+		return m_general_registers_widget;
+	}
+
+	SegmentRegistersWidget& getSegmentRegistersWidget () {
+		return m_segment_registers_widget;
+	}
+
+	StackWidget& getStackWidget () {
+		return m_stack_widget;
+	}
+
+	DisassemblyWidget& getDisassemblyWidget () {
+		return m_disassembly_widget;
+	}
+
+	MemoryWidget& getMemoryWidget () {
+		return m_memory_widget;
+	}
+
+	TerminalWidget& getTerminalWidget () {
+		return m_terminal_widget;
 	}
 };
 

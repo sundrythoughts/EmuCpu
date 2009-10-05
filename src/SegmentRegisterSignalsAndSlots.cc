@@ -2,22 +2,22 @@
 
 void
 SegmentRegisterSignalsAndSlots::sigcSlotValueChangedSRegCS (unsigned short i) {
-	emit valueChangedSRegCS (i);
+	emit valueChangedSegRegCS (i);
 }
 
 void
 SegmentRegisterSignalsAndSlots::sigcSlotValueChangedSRegDS (unsigned short i) {
-	emit valueChangedSRegDS (i);
+	emit valueChangedSegRegDS (i);
 }
 
 void
 SegmentRegisterSignalsAndSlots::sigcSlotValueChangedSRegES (unsigned short i) {
-	emit valueChangedSRegES (i);
+	emit valueChangedSegRegES (i);
 }
 
 void
 SegmentRegisterSignalsAndSlots::sigcSlotValueChangedSRegSS (unsigned short i) {
-	emit valueChangedSRegSS (i);
+	emit valueChangedSegRegSS (i);
 }
 
 void

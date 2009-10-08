@@ -17,8 +17,7 @@ public:
 	void sigcSlotValueChangedRegSP (unsigned short i);
 
 public slots:
-	void enable ();
-	void disable ();
+	void enableDisable (bool b);
 
 signals:
 	//16-bit general registers signals

@@ -1,5 +1,6 @@
 #include "FlagRegisterSignalsAndSlots.hh"
 
+/* SIGC++ SLOTS */
 void
 FlagRegisterSignalsAndSlots::sigcSlotValueChangedFlags (unsigned short i) {
 	emit valueChangedFlags (i);
@@ -50,14 +51,10 @@ FlagRegisterSignalsAndSlots::sigcSlotValueChangedFlagZF (bool b) {
 	emit valueChangedFlagZF (b);
 }
 
+/* QT SLOTS */
 void
-FlagRegisterSignalsAndSlots::enable () {
-	blockSignals (false);
-}
-
-void
-FlagRegisterSignalsAndSlots::disable () {
-	blockSignals (true);
+FlagRegisterSignalsAndSlots::enableDisable (bool b) {
+	blockSignals (b);
 }
 
 

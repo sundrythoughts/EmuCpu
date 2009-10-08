@@ -7,6 +7,9 @@ PKGCONFIG += sigc++-2.0
 
 SOURCES += Sim86.cc
 
+HEADERS += ProxyLayer.hh
+SOURCES += ProxyLayer.cc
+
 HEADERS += Cpu.hh
 SOURCES += Cpu.cc
 

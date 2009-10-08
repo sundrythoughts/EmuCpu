@@ -19,8 +19,7 @@ public:
 	void sigcSlotValueChangedFlagZF (bool b);
 
 public slots:
-	void enable ();
-	void disable ();
+	void enableDisable (bool b);
 
 signals:
 	void valueChangedFlags (unsigned short i);

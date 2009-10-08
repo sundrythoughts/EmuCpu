@@ -1,6 +1,7 @@
 #ifndef MEMORY_HH
 #define MEMORY_HH
 
+#include <sigc++/sigc++.h>
 #include "INumberReadableWritable.hh"
 #include <vector>
 
@@ -8,10 +9,25 @@
 */
 class Memory {
 	std::vector<unsigned char> m_memory;
+	sigc::signal<void, int, unsigned char> m_signal_value_changed;
 
 public:
 	/** */
-	Memory (size_t n_bytes) : m_memory (n_bytes) {
+	Memory () {
+	}
+
+	/** */
+	void resize (size_t sz, bool clr=false) {
+		if (clr) {
+			m_memory.clear ();
+		}
+
+		m_memory.resize (sz, 0);
+	}
+
+	/** */
+	unsigned char operator[] (size_t index) const {
+		return m_memory[index];
 	}
 
 	/** */
@@ -22,6 +38,18 @@ public:
 	/** */
 	unsigned char* data () {
 		return m_memory.data ();
+	}
+
+	/** */
+	sigc::signal<void, int, unsigned char>& signalValueChanged () {
+		return m_signal_value_changed;
+	}
+
+	/** */
+	void emitValueChangedForAll () const {
+		for (size_t i = 0; i < m_memory.size (); ++i) {
+			m_signal_value_changed.emit (i, m_memory[i]);
+		}
 	}
 
 	/**
@@ -88,6 +116,10 @@ Memory::write (size_t addr, const T &src) {
 	T *tmp = (T*)&m_memory[addr];
 	*tmp = src;
 
+	for (size_t i = addr; i < sizeof(T); ++i) {
+		m_signal_value_changed.emit (i, m_memory[i]);
+	}
+
 	return true;
 }
 
@@ -100,6 +132,10 @@ Memory::write (size_t addr, const INumberReadableWritable<T> &src) {
 
 	T *tmp = (T*)&m_memory[addr];
 	*tmp = src;
+
+	for (size_t i = addr; i < sizeof(T); ++i) {
+		m_signal_value_changed.emit (i, m_memory[i]);
+	}
 
 	return true;
 }

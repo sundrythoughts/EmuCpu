@@ -139,6 +139,8 @@ public:
 		m_biu->setRegIP (m_regs[m_IP]);
 		m_eunit->setReg16 (REG_FLAGS, m_regs[m_FLAGS]);
 
+		m_memory->emitValueChangedForAll ();
+
 		return ret;
 	}
 

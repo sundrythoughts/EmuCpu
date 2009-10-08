@@ -26,11 +26,6 @@ SegmentRegisterSignalsAndSlots::sigcSlotValueChangedRegIP (unsigned short i) {
 }
 
 void
-SegmentRegisterSignalsAndSlots::enable () {
-	blockSignals (false);
-}
-
-void
-SegmentRegisterSignalsAndSlots::disable () {
-	blockSignals (true);
+SegmentRegisterSignalsAndSlots::enableDisable (bool b) {
+	blockSignals (b);
 }

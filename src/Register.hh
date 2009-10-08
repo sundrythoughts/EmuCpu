@@ -81,10 +81,8 @@ public:
 		*m_num = r;
 	}
 
-	void connectToSignalValueChanged (const sigc::slot<void, T> &slot) {
-		m_signal_value_changed.connect (slot);
-
-		m_signal_value_changed.emit (*m_num);
+	sigc::signal<void, T>& signalValueChanged () {
+		return m_signal_value_changed;
 	}
 
 	/** */

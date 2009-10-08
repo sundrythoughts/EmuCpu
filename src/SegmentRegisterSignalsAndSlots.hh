@@ -14,8 +14,7 @@ public:
 	void sigcSlotValueChangedRegIP (unsigned short i);
 
 public slots:
-	void enable ();
-	void disable ();
+	void enableDisable (bool b);
 
 signals:
 	//segment register signals

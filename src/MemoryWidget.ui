@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>733</width>
+    <height>640</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -22,11 +22,11 @@
        <bold>false</bold>
       </font>
      </property>
-     <column>
+     <row>
       <property name="text">
-       <string>Address</string>
+       <string>1</string>
       </property>
-     </column>
+     </row>
      <column>
       <property name="text">
        <string>Raw Data</string>

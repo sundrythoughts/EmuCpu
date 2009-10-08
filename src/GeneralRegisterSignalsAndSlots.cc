@@ -1,5 +1,6 @@
 #include "GeneralRegisterSignalsAndSlots.hh"
 
+/* SIGC++ SLOTS */
 void
 GeneralRegisterSignalsAndSlots::sigcSlotValueChangedRegAX (unsigned short i) {
 	emit valueChangedRegAX (i);
@@ -40,13 +41,9 @@ GeneralRegisterSignalsAndSlots::sigcSlotValueChangedRegSP (unsigned short i) {
 	emit valueChangedRegSP (i);
 }
 
+/* QT SLOTS */
 void
-GeneralRegisterSignalsAndSlots::enable () {
-	blockSignals (false);
-}
-
-void
-GeneralRegisterSignalsAndSlots::disable () {
-	blockSignals (true);
+GeneralRegisterSignalsAndSlots::enableDisable (bool b) {
+	blockSignals (b);
 }
 

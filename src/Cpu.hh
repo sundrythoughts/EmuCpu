@@ -11,6 +11,7 @@
 #include <sigc++/sigc++.h>
 
 #include <QThread>
+#include <QMutex>
 
 class Cpu : public QThread {
 	Q_OBJECT
@@ -31,6 +32,7 @@ public: //FIXME - only public temporarly
 private:
 	Loader m_loader;
 
+	QMutex m_mutex;
 	bool m_thread_run;
 
 public:
@@ -64,42 +66,60 @@ protected:
 	virtual void run () {
 		m_thread_run = true;
 
-		//while (m_thread_run) {
-			/*switch (m_cpu_state) {
+		while (m_thread_run) {
+			switch (m_cpu_state) {
 			case CPU_STATE_RUN:
+				//std::cout << "cpu_state_run" << std::endl;
 				break;
 			case CPU_STATE_SINGLE_STEP:
+				//std::cout << "cpu_state_single_step" << std::endl;
+				m_mutex.lock ();
+					m_cpu_state = CPU_STATE_PAUSE;
+				m_mutex.unlock ();
 				break;
 			case CPU_STATE_PAUSE:
+				//std::cout << "cpu_state_pause" << std::endl;
+				QThread::usleep (100000);
+				//QThread::yieldCurrentThread ();
 				break;
-			}*/
-			//exec ();
-
-			//std::cout << "here" << std::endl;
-		//}
+			}
+		}
 	}
 
 public slots:
 	void startCpu () {
 		std::cout << "startCpu ()" << std::endl;
+		m_mutex.lock ();
 		m_cpu_state = CPU_STATE_RUN;
+		m_mutex.unlock ();
 	}
 
 	void pauseCpu () {
 		std::cout << "pauseCpu ()" << std::endl;
+		m_mutex.lock ();
 		m_cpu_state = CPU_STATE_PAUSE;
+		m_mutex.unlock ();
 	}
 
 	void resetCpu () {
+		pauseCpu ();
 		std::cout << "resetCpu ()" << std::endl;
 	}
 
 	void singleStepCpu () {
 		std::cout << "singleStepCpu ()" << std::endl;
+		m_mutex.lock ();
 		m_cpu_state = CPU_STATE_SINGLE_STEP;
+		m_mutex.unlock ();
+	}
+
+	void shutdownCpu () {
+		m_thread_run = false;
+		wait ();
 	}
 
 	void loadFile (QString file_name) {
+		pauseCpu ();
 		m_loader.loadFile (file_name.toStdString ());
 	}
 };

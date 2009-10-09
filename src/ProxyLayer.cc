@@ -113,3 +113,4 @@ ProxyLayer::connectUiSignalsToCpuSlots (Sim86Window &win, Cpu &cpu) {
 	QObject::connect (&win, SIGNAL(loadFile (QString)),
 	                  &cpu, SLOT(loadFile (QString)));
 }
+

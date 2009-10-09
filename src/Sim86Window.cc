@@ -55,3 +55,4 @@ Sim86Window::Sim86Window (QWidget *parent) : QMainWindow (parent) {
 	connect (m_act_run_single_step, SIGNAL(triggered ()), this, SIGNAL(singleStepCpu ()));
 	connect (m_act_debug_reset, SIGNAL(triggered ()), this, SIGNAL(resetCpu ()));
 }
+

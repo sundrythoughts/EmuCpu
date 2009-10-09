@@ -23,14 +23,18 @@ int main (int argc, char **argv) {
 	cpu.m_biu.setSegRegDS (0xFFF2);
 	cpu.m_biu.setSegRegES (0xFFF3);
 	cpu.m_biu.setSegRegSS (0xFFF4);
-	*/
+
 	cpu.m_biu.setRegIP (0xFFF5);
 
 	cpu.m_eunit.setRegSP (0xFF);
 
-	//cpu.loadFile ("../testing/TEST5.OBJ");
+	cpu.loadFile ("../testing/TEST5.OBJ");
+	*/
 
-	//cpu.start ();
+	QObject::connect (&app, SIGNAL(aboutToQuit ()),
+	                  &cpu, SLOT(shutdownCpu ()));
+
+	cpu.start ();
 
 	sim.show ();
 

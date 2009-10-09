@@ -11,6 +11,11 @@ MemorySignalsAndSlots::sigcSlotResized (size_t sz) {
 	emit resized (sz);
 }
 
+void
+MemorySignalsAndSlots::sigcSlotReloaded (const unsigned char *arr, size_t sz) {
+	emit reloaded (arr, sz);
+}
+
 /* SIGC++ SIGNALS */
 sigc::signal<void, size_t>&
 MemorySignalsAndSlots::sigcSignalResize () {

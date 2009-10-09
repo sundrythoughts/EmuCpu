@@ -4,6 +4,8 @@
 
 #include <QApplication>
 
+#include <iostream>
+
 int main (int argc, char **argv) {
 	QApplication app (argc, argv);
 
@@ -27,9 +29,10 @@ int main (int argc, char **argv) {
 	cpu.m_biu.setRegIP (0xFFF5);
 
 	cpu.m_eunit.setRegSP (0xFF);
-
-	cpu.loadFile ("../testing/TEST5.OBJ");
 	*/
+	//cpu.loadFile ("../testing/TEST5.OBJ");
+
+	cpu.getMemory ().resize (48001);
 
 	QObject::connect (&app, SIGNAL(aboutToQuit ()),
 	                  &cpu, SLOT(shutdownCpu ()));

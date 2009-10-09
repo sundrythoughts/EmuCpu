@@ -25,7 +25,6 @@ class Cpu : public QThread {
 	CpuStateEnum m_cpu_state;
 
 	Memory m_mem;
-public: //FIXME - only public temporarly
 	ExecutionUnit m_eunit;
 	BusInterfaceUnit m_biu;
 
@@ -36,9 +35,7 @@ private:
 	bool m_thread_run;
 
 public:
-	Cpu (size_t mem_size = 1048576, QObject *parent = 0) : QThread (parent) {
-		m_mem.resize (mem_size);
-
+	Cpu (QObject *parent = 0) : QThread (parent) {
 		m_cpu_state = CPU_STATE_PAUSE;
 
 		m_eunit.connectTo (m_biu);
@@ -88,14 +85,14 @@ protected:
 
 public slots:
 	void startCpu () {
-		std::cout << "startCpu ()" << std::endl;
+		//std::cout << "startCpu ()" << std::endl;
 		m_mutex.lock ();
 		m_cpu_state = CPU_STATE_RUN;
 		m_mutex.unlock ();
 	}
 
 	void pauseCpu () {
-		std::cout << "pauseCpu ()" << std::endl;
+		//std::cout << "pauseCpu ()" << std::endl;
 		m_mutex.lock ();
 		m_cpu_state = CPU_STATE_PAUSE;
 		m_mutex.unlock ();
@@ -103,11 +100,11 @@ public slots:
 
 	void resetCpu () {
 		pauseCpu ();
-		std::cout << "resetCpu ()" << std::endl;
+		//std::cout << "resetCpu ()" << std::endl;
 	}
 
 	void singleStepCpu () {
-		std::cout << "singleStepCpu ()" << std::endl;
+		//std::cout << "singleStepCpu ()" << std::endl;
 		m_mutex.lock ();
 		m_cpu_state = CPU_STATE_SINGLE_STEP;
 		m_mutex.unlock ();
@@ -121,6 +118,7 @@ public slots:
 	void loadFile (QString file_name) {
 		pauseCpu ();
 		m_loader.loadFile (file_name.toStdString ());
+		//m_mem.write<unsigned int> (14, 0x01020304);
 	}
 };
 

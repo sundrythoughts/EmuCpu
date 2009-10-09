@@ -40,6 +40,8 @@ ProxyLayer::connectCpuSignalsToUiSlots (Cpu &cpu, Sim86Window &win) {
 	cpu.getBusInterfaceUnit ().getRegIP ().signalValueChanged ().connect (sigc::mem_fun (m_sreg_s_s, &SegmentRegisterSignalsAndSlots::sigcSlotValueChangedRegIP));
 
 	cpu.getMemory ().signalValueChanged ().connect (sigc::mem_fun (m_mem_s_s, &MemorySignalsAndSlots::sigcSlotValueChanged));
+	cpu.getMemory ().signalResized ().connect (sigc::mem_fun (m_mem_s_s, &MemorySignalsAndSlots::sigcSlotResized));
+	cpu.getMemory ().signalReloaded ().connect (sigc::mem_fun (m_mem_s_s, &MemorySignalsAndSlots::sigcSlotReloaded));
 
 	//connect ProxyLayer Qt signals to Sim86Window Qt slots
 
@@ -98,6 +100,17 @@ ProxyLayer::connectCpuSignalsToUiSlots (Cpu &cpu, Sim86Window &win) {
 	//Memory Widget Signals and Slots
 	QObject::connect (&m_mem_s_s, SIGNAL(valueChanged (int, unsigned char)),
 		          &win.getMemoryWidget (), SLOT(setMemoryAddress (int, unsigned char)));
+	QObject::connect (&m_mem_s_s, SIGNAL(resized (size_t)),
+		          &win.getMemoryWidget (), SLOT(resize (size_t)));
+	QObject::connect (&m_mem_s_s, SIGNAL(reloaded (const unsigned char*, size_t)),
+		          &win.getMemoryWidget (), SLOT(setAllMemoryAddresses (const unsigned char*, size_t)));
+
+	//Stack Widget Signals and Slots
+	//FIXME
+
+	//Disassembly Widget Signals and Slots
+	//FIXME
+	
 }
 
 void

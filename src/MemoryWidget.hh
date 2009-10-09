@@ -16,7 +16,7 @@ public:
 		setupUi (this);
 
 		//FIXME - temp test
-		resize (100000);
+		//resize (100000);
 	}
 
 public slots:
@@ -31,27 +31,25 @@ public slots:
 
 	void resize (size_t sz) {
 		int curr_cnt = m_tbl_memory->rowCount ();
+		size_t mod = sz % 16;
+		sz /= 16;
+		if (mod) {
+			++sz;
+		}
 		m_tbl_memory->setRowCount (sz);
 		for (size_t i = curr_cnt; i < sz; ++i) {
-			QTableWidgetItem *item = new QTableWidgetItem (QString::number (i, 16).toUpper ().rightJustified (5, '0'));
+			QTableWidgetItem *item = new QTableWidgetItem (QString::number (i * 16, 16).toUpper ().rightJustified (5, '0'));
 			m_tbl_memory->setVerticalHeaderItem (i, item);
 		}
+		//std::cout << "resize" << std::endl;
 	}
 
-	void setMemoryAddress (int addr, unsigned char val) {
-		//if (addr >= m_tbl_memory->rowCount ()) {
-		//	m_tbl_memory->setRowCount (addr);
-		//}
+	void setMemoryAddress (int addr, unsigned char val);
 
-		//QTableWidgetItem *item = new QTableWidgetItem (QString::number (val).toUpper ());
-		//m_tbl_memory->setItem (addr, 0, item);
-		//std::cout << (unsigned int)val << ' ';
-		//FIXME
-	}
+	void setAllMemoryAddresses (const unsigned char *arr, size_t sz);
 
-	void setAllMemoryAddresses (const unsigned char *arr, size_t sz) {
-		//FIXME
-	}
+private:
+	void setTableWidgetRowFromStrings (int row, const QString &raw_mem, const QString &ascii);
 };
 
 #endif //MEMORY_WIDGET_HH

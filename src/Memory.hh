@@ -10,6 +10,8 @@
 class Memory {
 	std::vector<unsigned char> m_memory;
 	sigc::signal<void, int, unsigned char> m_signal_value_changed;
+	sigc::signal<void, size_t> m_signal_resized;
+	sigc::signal<void, const unsigned char*, size_t> m_signal_reloaded;
 
 public:
 	/** */
@@ -23,6 +25,8 @@ public:
 		}
 
 		m_memory.resize (sz, 0);
+
+		m_signal_resized (m_memory.size ());
 	}
 
 	/** */
@@ -43,6 +47,16 @@ public:
 	/** */
 	sigc::signal<void, int, unsigned char>& signalValueChanged () {
 		return m_signal_value_changed;
+	}
+
+	/** */
+	sigc::signal<void, size_t>& signalResized () {
+		return m_signal_resized;
+	}
+
+	/** */
+	sigc::signal<void, const unsigned char*, size_t> signalReloaded () {
+		return m_signal_reloaded;
 	}
 
 	/** */
@@ -116,7 +130,7 @@ Memory::write (size_t addr, const T &src) {
 	T *tmp = (T*)&m_memory[addr];
 	*tmp = src;
 
-	for (size_t i = addr; i < sizeof(T); ++i) {
+	for (size_t i = addr; i < addr + sizeof(T); ++i) {
 		m_signal_value_changed.emit (i, m_memory[i]);
 	}
 
@@ -133,7 +147,7 @@ Memory::write (size_t addr, const INumberReadableWritable<T> &src) {
 	T *tmp = (T*)&m_memory[addr];
 	*tmp = src;
 
-	for (size_t i = addr; i < sizeof(T); ++i) {
+	for (size_t i = addr; i < addr + sizeof(T); ++i) {
 		m_signal_value_changed.emit (i, m_memory[i]);
 	}
 

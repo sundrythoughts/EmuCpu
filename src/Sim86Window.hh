@@ -36,6 +36,20 @@ private slots:
 		m_tab_widget->setTabEnabled (m_tab_widget->indexOf (m_tab_memory), b);
 	}
 
+	void openFile () {
+		QString file_name = QFileDialog::getOpenFileName (this, "Load file...");
+		if (!file_name.isNull ()) {
+			//QFileInfo f_info (filename);
+			//m_file = f_info.fileName ();
+			//std::cout << m_file.toAscii ().constData () << std::endl;
+			//m_lnedit_file_name->setText (filename);
+			emit loadFile (file_name);
+		}
+		else {
+			//FIXME
+		}
+	}
+
 signals:
 	void startCpu ();
 	void resetCpu ();

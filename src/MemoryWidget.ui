@@ -18,6 +18,7 @@
     <widget class="QTableWidget" name="m_tbl_memory">
      <property name="font">
       <font>
+       <pointsize>10</pointsize>
        <weight>50</weight>
        <bold>false</bold>
       </font>
@@ -26,7 +27,7 @@
       <set>QAbstractItemView::NoEditTriggers</set>
      </property>
      <property name="alternatingRowColors">
-      <bool>false</bool>
+      <bool>true</bool>
      </property>
      <property name="showGrid">
       <bool>true</bool>
@@ -41,12 +42,6 @@
       <bool>true</bool>
      </attribute>
      <attribute name="verticalHeaderVisible">
-      <bool>true</bool>
-     </attribute>
-     <attribute name="verticalHeaderVisible">
-      <bool>true</bool>
-     </attribute>
-     <attribute name="horizontalHeaderVisible">
       <bool>true</bool>
      </attribute>
      <column>

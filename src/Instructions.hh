@@ -2,7 +2,7 @@
 #define INSTRUCTIONS_HH
 
 #include <vector>
-#include "Value.hh"
+#include "INumberReadableWritable.hh"
 
 class Instructions;
 
@@ -13,9 +13,15 @@ public:
 	unsigned int operand_count;
 	const char *operand_codes[3];
 	unsigned int group;
-	void (*execute_func) (std::vector<Value> *ops);
 
-	void execute (std::vector<Value> *ops) {
+	void (*decode_func) (std::vector<INumberReadableWritable*> *ops);
+	void (*execute_func) (std::vector<INumberReadableWritable*> *ops);
+
+	void decode (std::vector<INumberReadableWritable*> *ops) {
+		decode_func (ops);
+	}
+
+	void execute (std::vector<INumberReadableWritable*> *ops) {
 		execute_func (ops);
 	}
 };//end class Value
@@ -28,7 +34,8 @@ public:
 		GROUP_2,
 		GROUP_3,
 		GROUP_4,
-		GROUP_5
+		GROUP_5,
+		GROUP_RESERVED
 	} InstructionGroups;
 
 	static const Instruction one_byte_opcode_instruction_map[256];

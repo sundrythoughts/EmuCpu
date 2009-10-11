@@ -64,7 +64,7 @@ public:
 			size_t i;
 			size_t sz;
 
-			for (i = 0; i < REG_COUNT_16; ++i) {
+			for (i = 0; i < Jaf::REG_COUNT_16; ++i) {
 				m_eunit->setReg16 (i, 0);
 			}
 
@@ -124,20 +124,20 @@ public:
 
 		fclose (f);
 
-		m_eunit->setReg16 (REG_AX, m_regs[m_AX]);
-		m_eunit->setReg16 (REG_BX, m_regs[m_BX]);
-		m_eunit->setReg16 (REG_CX, m_regs[m_CX]);
-		m_eunit->setReg16 (REG_DX, m_regs[m_DX]);
-		m_eunit->setReg16 (REG_SP, m_regs[m_SP]);
-		m_eunit->setReg16 (REG_BP, m_regs[m_BP]);
-		m_eunit->setReg16 (REG_SI, m_regs[m_SI]);
-		m_eunit->setReg16 (REG_DI, m_regs[m_DI]);
+		m_eunit->setReg16 (Jaf::REG_AX, m_regs[m_AX]);
+		m_eunit->setReg16 (Jaf::REG_BX, m_regs[m_BX]);
+		m_eunit->setReg16 (Jaf::REG_CX, m_regs[m_CX]);
+		m_eunit->setReg16 (Jaf::REG_DX, m_regs[m_DX]);
+		m_eunit->setReg16 (Jaf::REG_SP, m_regs[m_SP]);
+		m_eunit->setReg16 (Jaf::REG_BP, m_regs[m_BP]);
+		m_eunit->setReg16 (Jaf::REG_SI, m_regs[m_SI]);
+		m_eunit->setReg16 (Jaf::REG_DI, m_regs[m_DI]);
 		m_biu->setSegRegCS (m_regs[m_CS]);
 		m_biu->setSegRegDS (m_regs[m_DS]);
 		m_biu->setSegRegSS (m_regs[m_SS]);
 		m_biu->setSegRegES (m_regs[m_ES]);
 		m_biu->setRegIP (m_regs[m_IP]);
-		m_eunit->setReg16 (REG_FLAGS, m_regs[m_FLAGS]);
+		m_eunit->setReg16 (Jaf::REG_FLAGS, m_regs[m_FLAGS]);
 
 		m_memory->signalReloaded ().emit (m_memory->data (), m_memory->size ());
 

@@ -13,9 +13,9 @@ Memory management works if the Value is not storing a pointer.
 Memory management can also be manual if init(false) is called.
 */
 class Value {
-	void *_data; //pointer to data
-	std::string _type_name; //typeid type name FIXME - might only need a pointer comparison because typeid ().name () returns a {const char*}
-	bool _call_free; //free the _data? (Yes/No)
+	void *m_data; //pointer to data
+	std::string m_type_name; //typeid type name FIXME - might only need a pointer comparison because typeid ().name () returns a {const char*}
+	bool m_call_free; //free the _data? (Yes/No)
 	bool (Value::*free_func) (); //pointer to the correct free<T> () function
 	bool (Value::*copy_func) (Value &dest); //pointer to the correct copy<T> () function
 
@@ -23,14 +23,14 @@ public:
 
 	/**
 	*/
-	Value () : _data (0) {
+	Value () : m_data (0) {
 	}
 
 	/**
 	@brief Automaticaly free data if init (true).
 	*/
 	~Value () {
-		if (_call_free) {
+		if (m_call_free) {
 			free ();
 		}
 	}
@@ -42,14 +42,14 @@ public:
 	*/
 	template<typename T>
 	bool init (bool del_data = true) {
-		if (_data) {
+		if (m_data) {
 			std::cerr << "class Value - Unable to initialize a Value that is already initialized." << std::endl;
 			return false;
 		}
 
-		_data = new T ();
-		_type_name = typeid(T).name ();
-		_call_free = del_data;
+		m_data = new T ();
+		m_type_name = typeid(T).name ();
+		m_call_free = del_data;
 		free_func = &Value::free_template<T>;
 		copy_func = &Value::copy_template<T>;
 		return true;
@@ -60,7 +60,7 @@ public:
 	@return Raw data pointer.
 	*/
 	const void* get_pointer () {
-		return _data;
+		return m_data;
 	}
 
 	/**
@@ -68,7 +68,7 @@ public:
 	@return Typeid type name string.
 	*/
 	const std::string& type_name () const {
-		return _type_name;
+		return m_type_name;
 	}
 
 	/**
@@ -78,16 +78,16 @@ public:
 	*/
 	template<typename T>
 	bool get_value (T &v) {
-		if (!_data) {
+		if (!m_data) {
 			std::cerr << "class Value - Unable to initialize a Value that is already initialized." << std::endl;
 			return false;
 		}
-		if (0 != std::strcmp (_type_name.c_str (), typeid(T).name ())) {
+		if (0 != std::strcmp (m_type_name.c_str (), typeid(T).name ())) {
 			std::cerr << "class Value - Trying to use an incompatible type." << std::endl;
 			return false;
 		}
 
-		T *tmp = (T*)_data;
+		T *tmp = (T*)m_data;
 		v = *tmp;
 		return true;
 	}
@@ -99,16 +99,16 @@ public:
 	*/
 	template<typename T>
 	bool get_value_pointer (T* &v) {
-		if (!_data) {
+		if (!m_data) {
 			std::cerr << "class Value - Unable to initialize a Value that is already initialized." << std::endl;
 			return false;
 		}
-		if (0 != std::strcmp (_type_name.c_str (), typeid(T).name ())) {
+		if (0 != std::strcmp (m_type_name.c_str (), typeid(T).name ())) {
 			std::cerr << "class Value - Trying to use an incompatible type." << std::endl;
 			return false;
 		}
 
-		v = (T*)_data;
+		v = (T*)m_data;
 		return true;
 	}
 
@@ -119,16 +119,16 @@ public:
 	*/
 	template<typename T>
 	bool set_value (const T &v) const {
-		if (!_data) {
+		if (!m_data) {
 			std::cerr << "class Value - Unable to initialize a Value that is already initialized." << std::endl;
 			return false;
 		}
-		if (0 != std::strcmp (_type_name.c_str (), typeid(T).name ())) {
+		if (0 != std::strcmp (m_type_name.c_str (), typeid(T).name ())) {
 			std::cerr << "class Value - Trying to use an incompatible type." << std::endl;
 			return false;
 		}
 
-		T *tmp = (T*)_data;
+		T *tmp = (T*)m_data;
 		*tmp = v;
 
 		return true;
@@ -155,19 +155,19 @@ private:
 	*/
 	template<typename T>
 	bool free_template () {
-		if (!_data) {
+		if (!m_data) {
 			std::cerr << "class Value - Unable to initialize a Value that is already initialized." << std::endl;
 			return false;
 		}
-		if (0 != std::strcmp (_type_name.c_str (), typeid(T).name ())) {
+		if (0 != std::strcmp (m_type_name.c_str (), typeid(T).name ())) {
 			std::cerr << "class Value - Trying to use an incompatible type." << std::endl;
 			return false;
 		}
 
-		delete (T*)(_data);
-		_data = 0;
-		_type_name.clear ();
-		_call_free = true;
+		delete (T*)(m_data);
+		m_data = 0;
+		m_type_name.clear ();
+		m_call_free = true;
 		return true;
 	}
 
@@ -176,22 +176,22 @@ private:
 	*/
 	template<typename T>
 	bool copy_template (Value &dest) {
-		if (!_data || !dest._data) {
+		if (!m_data || !dest.m_data) {
 			std::cerr << "class Value - Unable to initialize a Value that is already initialized." << std::endl;
 			return false;
 		}
-		if (0 != std::strcmp (_type_name.c_str (), dest._type_name.c_str ())) {
+		if (0 != std::strcmp (m_type_name.c_str (), dest.m_type_name.c_str ())) {
 			std::cerr << "class Value - Trying to use an incompatible type." << std::endl;
 			return false;
 		}
 
 		T *p1, *p2;
-		p1 = (T*)_data;
-		p2 = (T*)dest._data;
+		p1 = (T*)m_data;
+		p2 = (T*)dest.m_data;
 
 		*p2 = *p1;
-		dest._type_name = _type_name;
-		_call_free = dest._call_free;
+		dest.m_type_name = m_type_name;
+		m_call_free = dest.m_call_free;
 		free_func = dest.free_func;
 		copy_func = dest.copy_func;
 		return true;

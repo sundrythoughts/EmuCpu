@@ -19,23 +19,24 @@ static void print_failed (int i) {
 }
 
 int main (int argc, char **argv) {
-	Memory mem (1048576);
+	Memory mem;
+	mem.resize (1048576);
 	BusInterfaceUnit biu;
-	biu.connect_to (mem);
+	biu.connectTo (mem);
 	ExecutionUnit eu;
-	eu.connect_to (biu);
+	eu.connectTo (biu);
 	ArithmeticLogicUnit alu;
-	alu.connect_to (eu);
+	alu.connectTo (eu);
 	int TEST_NUMBER = 0;
 
 	{//Test 1
 		++TEST_NUMBER;
 		ps = true;
 
-		eu.set_reg_flags_cf (true);
+		eu.setRegFlagsCF (true);
 		unsigned char ret;
 	//	cout << "here" << endl;
-		alu.op_adc_8 (3, 5, ret);
+		alu.opAdc (3, 5, ret);
 
 		if (ret != 9) {
 			print_failed (TEST_NUMBER);
@@ -51,9 +52,9 @@ int main (int argc, char **argv) {
 		++TEST_NUMBER;
 		ps = true;
 
-		eu.set_reg_flags_cf (true);
+		eu.setRegFlagsCF (true);
 		unsigned short ret;
-		alu.op_adc_16 (3, 5, ret);
+		alu.opAdc (3, 5, ret);
 
 		if (ret != 9) {
 			print_failed (TEST_NUMBER);
@@ -70,7 +71,7 @@ int main (int argc, char **argv) {
 		ps = true;
 
 		unsigned char ret;
-		alu.op_add_8 (3, 5, ret);
+		alu.opAdd (3, 5, ret);
 
 		if (ret != 8) {
 			print_failed (TEST_NUMBER);
@@ -87,7 +88,7 @@ int main (int argc, char **argv) {
 		ps = true;
 
 		unsigned short ret;
-		alu.op_add_16 (3, 5, ret);
+		alu.opAdd (3, 5, ret);
 
 		if (ret != 8) {
 			print_failed (TEST_NUMBER);
@@ -104,7 +105,7 @@ int main (int argc, char **argv) {
 		ps = true;
 
 		unsigned char ret;
-		alu.op_and_8 (3, 5, ret);
+		alu.opAnd (3, 5, ret);
 
 		if (ret != 1) {
 			print_failed (TEST_NUMBER);
@@ -121,7 +122,7 @@ int main (int argc, char **argv) {
 		ps = true;
 
 		unsigned short ret;
-		alu.op_and_16 (3, 5, ret);
+		alu.opAnd (3, 5, ret);
 
 		if (ret != 1) {
 			print_failed (TEST_NUMBER);
@@ -137,16 +138,16 @@ int main (int argc, char **argv) {
 		++TEST_NUMBER;
 		ps = true;
 
-		eu.set_reg_flags_cf (true);
-		alu.op_cmc ();
+		eu.setRegFlagsCF (true);
+		alu.opCmc ();
 
-		if (eu.get_reg_flags_cf () != false) {
+		if (eu.getRegFlagsCF () != false) {
 			print_failed (TEST_NUMBER);
 		}
 
-		alu.op_cmc ();
+		alu.opCmc ();
 
-		if (eu.get_reg_flags_cf () != true) {
+		if (eu.getRegFlagsCF () != true) {
 			print_failed (TEST_NUMBER);
 		}
 
@@ -161,7 +162,7 @@ int main (int argc, char **argv) {
 		ps = true;
 
 		unsigned char ret;
-		alu.op_cmp_8 (5, 3);
+		alu.opCmp ((unsigned char)5, (unsigned char)3);
 
 		if (true) {
 			print_failed (TEST_NUMBER);
@@ -178,7 +179,7 @@ int main (int argc, char **argv) {
 		ps = true;
 
 		unsigned short ret;
-		alu.op_cmp_16 (5, 3);
+		alu.opCmp ((unsigned short)5, (unsigned short)3);
 
 		if (true) {
 			print_failed (TEST_NUMBER);
@@ -195,7 +196,7 @@ int main (int argc, char **argv) {
 		ps = true;
 
 		unsigned char ret;
-		alu.op_dec_8 (5, ret);
+		alu.opDec (5, ret);
 
 		if (ret != 4) {
 			print_failed (TEST_NUMBER);
@@ -212,7 +213,7 @@ int main (int argc, char **argv) {
 		ps = true;
 
 		unsigned short ret;
-		alu.op_dec_16 (5, ret);
+		alu.opDec (5, ret);
 
 		if (ret != 4) {
 			print_failed (TEST_NUMBER);
@@ -228,10 +229,10 @@ int main (int argc, char **argv) {
 		++TEST_NUMBER;
 		ps = true;
 
-		eu.set_reg_ax (17);
-		alu.op_div_8 (3);
-		unsigned char al = eu.get_reg_al ();
-		unsigned char ah = eu.get_reg_ah ();
+		eu.setRegAX (17);
+		alu.opDiv ((unsigned char)3);
+		unsigned char al = eu.getRegAL ();
+		unsigned char ah = eu.getRegAH ();
 
 		if (al != 5) {
 			print_failed (TEST_NUMBER);
@@ -251,11 +252,11 @@ int main (int argc, char **argv) {
 		++TEST_NUMBER;
 		ps = true;
 
-		eu.set_reg_dx (0);
-		eu.set_reg_ax (17);
-		alu.op_div_16 (3);
-		unsigned short ax = eu.get_reg_ax ();
-		unsigned short dx = eu.get_reg_dx ();
+		eu.setRegDX (0);
+		eu.setRegAX (17);
+		alu.opDiv ((unsigned short)3);
+		unsigned short ax = eu.getRegAX ();
+		unsigned short dx = eu.getRegDX ();
 
 		if (ax != 5) {
 			print_failed (TEST_NUMBER);
@@ -275,10 +276,10 @@ int main (int argc, char **argv) {
 		++TEST_NUMBER;
 		ps = true;
 
-		eu.set_reg_ax (17);
-		alu.op_idiv_8 (-3);
-		unsigned char al = eu.get_reg_al ();
-		unsigned char ah = eu.get_reg_ah ();
+		eu.setRegAX (17);
+		alu.opIdiv ((unsigned char)-3);
+		unsigned char al = eu.getRegAL ();
+		unsigned char ah = eu.getRegAH ();
 
 		if (al != (unsigned char)-5) {
 			print_failed (TEST_NUMBER);
@@ -298,11 +299,11 @@ int main (int argc, char **argv) {
 		++TEST_NUMBER;
 		ps = true;
 
-		eu.set_reg_dx (0);
-		eu.set_reg_ax (17);
-		alu.op_idiv_16 (-3);
-		unsigned short ax = eu.get_reg_ax ();
-		unsigned short dx = eu.get_reg_dx ();
+		eu.setRegDX (0);
+		eu.setRegAX (17);
+		alu.opIdiv ((unsigned short)-3);
+		unsigned short ax = eu.getRegAX ();
+		unsigned short dx = eu.getRegDX ();
 
 		if (ax != (unsigned short)-5) {
 			print_failed (TEST_NUMBER);
@@ -322,9 +323,9 @@ int main (int argc, char **argv) {
 		++TEST_NUMBER;
 		ps = true;
 
-		eu.set_reg_al (-5);
-		alu.op_imul_8 (3);
-		unsigned short ax = eu.get_reg_ax ();
+		eu.setRegAL (-5);
+		alu.opImul ((unsigned char)3);
+		unsigned short ax = eu.getRegAX ();
 
 		if (ax != (unsigned short)-15) {
 			print_failed (TEST_NUMBER);
@@ -340,14 +341,14 @@ int main (int argc, char **argv) {
 		++TEST_NUMBER;
 		ps = true;
 
-		eu.set_reg_ax (-5);
-		alu.op_imul_16 (3);
+		eu.setRegAX (-5);
+		alu.opImul ((unsigned short)3);
 
 		unsigned int dx_ax;
 		unsigned short *dx_ax_ptr = (unsigned short*)&dx_ax;
 
-		unsigned short ax = eu.get_reg_ax ();
-		unsigned short dx = eu.get_reg_dx ();
+		unsigned short ax = eu.getRegAX ();
+		unsigned short dx = eu.getRegDX ();
 
 		dx_ax_ptr[0] = ax;
 		dx_ax_ptr[1] = dx;
@@ -367,7 +368,7 @@ int main (int argc, char **argv) {
 		ps = true;
 
 		unsigned char ret;
-		alu.op_inc_8 (5, ret);
+		alu.opInc (5, ret);
 
 		if (ret != 6) {
 			print_failed (TEST_NUMBER);
@@ -384,7 +385,7 @@ int main (int argc, char **argv) {
 		ps = true;
 
 		unsigned short ret;
-		alu.op_inc_16 (5, ret);
+		alu.opInc (5, ret);
 
 		if (ret != 6) {
 			print_failed (TEST_NUMBER);
@@ -400,9 +401,9 @@ int main (int argc, char **argv) {
 		++TEST_NUMBER;
 		ps = true;
 
-		eu.set_reg_al (5);
-		alu.op_mul_8 (3);
-		unsigned short ax = eu.get_reg_ax ();
+		eu.setRegAL (5);
+		alu.opMul ((unsigned char)3);
+		unsigned short ax = eu.getRegAX ();
 
 		if (ax != 15) {
 			print_failed (TEST_NUMBER);
@@ -418,14 +419,14 @@ int main (int argc, char **argv) {
 		++TEST_NUMBER;
 		ps = true;
 
-		eu.set_reg_ax (5);
-		alu.op_mul_16 (3);
+		eu.setRegAX (5);
+		alu.opMul ((unsigned short)3);
 
 		unsigned int dx_ax = 0;
 		unsigned short *dx_ax_ptr = (unsigned short*)&dx_ax;
 
-		unsigned short ax = eu.get_reg_ax ();
-		unsigned short dx = eu.get_reg_dx ();
+		unsigned short ax = eu.getRegAX ();
+		unsigned short dx = eu.getRegDX ();
 
 		dx_ax_ptr[0] = ax;
 		dx_ax_ptr[1] = dx;
@@ -446,7 +447,7 @@ int main (int argc, char **argv) {
 		ps = true;
 
 		unsigned char ret;
-		alu.op_neg_8 (5, ret);
+		alu.opNeg (5, ret);
 
 		if (ret != 0xFB) {
 			print_failed (TEST_NUMBER);
@@ -463,7 +464,7 @@ int main (int argc, char **argv) {
 		ps = true;
 
 		unsigned short ret;
-		alu.op_neg_16 (5, ret);
+		alu.opNeg (5, ret);
 
 		if (ret != 0xFFFB) {
 			print_failed (TEST_NUMBER);
@@ -480,7 +481,7 @@ int main (int argc, char **argv) {
 		ps = true;
 
 		unsigned char ret;
-		alu.op_or_8 (3, 5, ret);
+		alu.opOr (3, 5, ret);
 
 		if (ret != 7) {
 			print_failed (TEST_NUMBER);
@@ -497,7 +498,7 @@ int main (int argc, char **argv) {
 		ps = true;
 
 		unsigned short ret;
-		alu.op_or_16 (3, 5, ret);
+		alu.opOr (3, 5, ret);
 
 		if (ret != 7) {
 			print_failed (TEST_NUMBER);
@@ -514,8 +515,8 @@ int main (int argc, char **argv) {
 		ps = true;
 
 		unsigned char ret;
-		eu.set_reg_flags_cf (true);
-		alu.op_rcl_8 (2, 3, ret);
+		eu.setRegFlagsCF (true);
+		alu.opRcl (2, 3, ret);
 
 		if (ret != 0x14) {
 			print_failed (TEST_NUMBER);
@@ -532,8 +533,8 @@ int main (int argc, char **argv) {
 		ps = true;
 
 		unsigned short ret;
-		eu.set_reg_flags_cf (true);
-		alu.op_rcl_16 (2, 3, ret);
+		eu.setRegFlagsCF (true);
+		alu.opRcl (2, 3, ret);
 
 		if (ret != 0x0014) {
 			print_failed (TEST_NUMBER);
@@ -550,8 +551,8 @@ int main (int argc, char **argv) {
 		ps = true;
 
 		unsigned char ret;
-		eu.set_reg_flags_cf (true);
-		alu.op_rcr_8 (2, 3, ret);
+		eu.setRegFlagsCF (true);
+		alu.opRcr (2, 3, ret);
 
 		if (ret != 0xA0) {
 			print_failed (TEST_NUMBER);
@@ -568,8 +569,8 @@ int main (int argc, char **argv) {
 		ps = true;
 
 		unsigned short ret;
-		eu.set_reg_flags_cf (true);
-		alu.op_rcr_16 (2, 3, ret);
+		eu.setRegFlagsCF (true);
+		alu.opRcr (2, 3, ret);
 
 		if (ret != 0xA000) {
 			print_failed (TEST_NUMBER);
@@ -586,7 +587,7 @@ int main (int argc, char **argv) {
 		ps = true;
 
 		unsigned char ret;
-		alu.op_rol_8 (2, 3, ret);
+		alu.opRol (2, 3, ret);
 
 		if (ret != 0x10) {
 			print_failed (TEST_NUMBER);
@@ -603,7 +604,7 @@ int main (int argc, char **argv) {
 		ps = true;
 
 		unsigned short ret;
-		alu.op_rol_16 (2, 3, ret);
+		alu.opRol (2, 3, ret);
 
 		if (ret != 0x0010) {
 			print_failed (TEST_NUMBER);
@@ -620,7 +621,7 @@ int main (int argc, char **argv) {
 		ps = true;
 
 		unsigned char ret;
-		alu.op_ror_8 (2, 3, ret);
+		alu.opRor (2, 3, ret);
 
 		if (ret != 0x40) {
 			print_failed (TEST_NUMBER);
@@ -637,7 +638,7 @@ int main (int argc, char **argv) {
 		ps = true;
 
 		unsigned short ret;
-		alu.op_ror_16 (2, 3, ret);
+		alu.opRor (2, 3, ret);
 
 		if (ret != 0x4000) {
 			print_failed (TEST_NUMBER);
@@ -654,7 +655,7 @@ int main (int argc, char **argv) {
 		ps = true;
 
 		unsigned char ret;
-		alu.op_sal_8 (2, 3, ret);
+		alu.opSal (2, 3, ret);
 
 		if (ret != 0x10) {
 			print_failed (TEST_NUMBER);
@@ -671,7 +672,7 @@ int main (int argc, char **argv) {
 		ps = true;
 
 		unsigned short ret;
-		alu.op_sal_16 (2, 3, ret);
+		alu.opSal (2, 3, ret);
 
 		if (ret != 0x0010) {
 			print_failed (TEST_NUMBER);
@@ -688,7 +689,7 @@ int main (int argc, char **argv) {
 		ps = true;
 
 		unsigned char ret;
-		alu.op_sar_8 (0x80, 3, ret);
+		alu.opSar (0x80, 3, ret);
 
 		if (ret != 0xF0) {
 			print_failed (TEST_NUMBER);
@@ -705,7 +706,7 @@ int main (int argc, char **argv) {
 		ps = true;
 
 		unsigned short ret;
-		alu.op_sar_16 (0x8000, 3, ret);
+		alu.opSar (0x8000, 3, ret);
 
 		if (ret != 0xF000) {
 			print_failed (TEST_NUMBER);
@@ -721,9 +722,9 @@ int main (int argc, char **argv) {
 		++TEST_NUMBER;
 		ps = true;
 
-		eu.set_reg_flags_cf (true);
+		eu.setRegFlagsCF (true);
 		unsigned char ret;
-		alu.op_sbb_8 (5, 3, ret);
+		alu.opSbb (5, 3, ret);
 
 		if (ret != 1) {
 			print_failed (TEST_NUMBER);
@@ -739,9 +740,9 @@ int main (int argc, char **argv) {
 		++TEST_NUMBER;
 		ps = true;
 
-		eu.set_reg_flags_cf (true);
+		eu.setRegFlagsCF (true);
 		unsigned short ret;
-		alu.op_sbb_16 (5, 3, ret);
+		alu.opSbb (5, 3, ret);
 
 		if (ret != 1) {
 			print_failed (TEST_NUMBER);
@@ -758,7 +759,7 @@ int main (int argc, char **argv) {
 		ps = true;
 
 		unsigned char ret;
-		alu.op_shl_8 (2, 3, ret);
+		alu.opShl (2, 3, ret);
 
 		if (ret != 0x10) {
 			print_failed (TEST_NUMBER);
@@ -775,7 +776,7 @@ int main (int argc, char **argv) {
 		ps = true;
 
 		unsigned short ret;
-		alu.op_shl_16 (2, 3, ret);
+		alu.opShl (2, 3, ret);
 
 		if (ret != 0x0010) {
 			print_failed (TEST_NUMBER);
@@ -792,7 +793,7 @@ int main (int argc, char **argv) {
 		ps = true;
 
 		unsigned char ret;
-		alu.op_shr_8 (0x80, 3, ret);
+		alu.opShr (0x80, 3, ret);
 
 		if (ret != 0x10) {
 			print_failed (TEST_NUMBER);
@@ -809,7 +810,7 @@ int main (int argc, char **argv) {
 		ps = true;
 
 		unsigned short ret;
-		alu.op_shr_16 (0x8000, 3, ret);
+		alu.opShr (0x8000, 3, ret);
 
 		if (ret != 0x1000) {
 			print_failed (TEST_NUMBER);
@@ -826,7 +827,7 @@ int main (int argc, char **argv) {
 		ps = true;
 
 		unsigned char ret;
-		alu.op_sub_8 (5, 3, ret);
+		alu.opSub (5, 3, ret);
 
 		if (ret != 2) {
 			print_failed (TEST_NUMBER);
@@ -843,7 +844,7 @@ int main (int argc, char **argv) {
 		ps = true;
 
 		unsigned short ret;
-		alu.op_sub_16 (5, 3, ret);
+		alu.opSub (5, 3, ret);
 
 		if (ret != 2) {
 			print_failed (TEST_NUMBER);
@@ -860,7 +861,7 @@ int main (int argc, char **argv) {
 		ps = true;
 
 		unsigned char ret;
-		alu.op_test_8 (5, 3);
+		alu.opTest ((unsigned char)5, (unsigned char)3);
 
 		if (true) {
 			print_failed (TEST_NUMBER);
@@ -877,7 +878,7 @@ int main (int argc, char **argv) {
 		ps = true;
 
 		unsigned short ret;
-		alu.op_test_16 (5, 3);
+		alu.opTest ((unsigned short)5, (unsigned short)3);
 
 		if (true) {
 			print_failed (TEST_NUMBER);
@@ -894,7 +895,7 @@ int main (int argc, char **argv) {
 		ps = true;
 
 		unsigned char ret;
-		alu.op_xor_8 (3, 5, ret);
+		alu.opXor (3, 5, ret);
 
 		if (ret != 6) {
 			print_failed (TEST_NUMBER);
@@ -911,7 +912,7 @@ int main (int argc, char **argv) {
 		ps = true;
 
 		unsigned short ret;
-		alu.op_xor_16 (3, 5, ret);
+		alu.opXor (3, 5, ret);
 
 		if (ret != 6) {
 			print_failed (TEST_NUMBER);

@@ -11,9 +11,9 @@
 /**
 */
 class ExecutionUnit {
-	unsigned short m_regs[REG_COUNT_16];
-	Register<unsigned char> m_regs8[REG_COUNT_8];
-	Register<unsigned short> m_regs16[REG_COUNT_16];
+	unsigned short m_regs[Jaf::REG_COUNT_16];
+	Register<unsigned char> m_regs8[Jaf::REG_COUNT_8];
+	Register<unsigned short> m_regs16[Jaf::REG_COUNT_16];
 
 	BusInterfaceUnit *m_biu;
 
@@ -32,29 +32,29 @@ public:
 	/** */
 	ExecutionUnit () : m_biu (0)
 	{
-		unsigned char *m_a = (unsigned char*)&m_regs[REG_AX];
-		unsigned char *m_b = (unsigned char*)&m_regs[REG_BX];
-		unsigned char *m_c = (unsigned char*)&m_regs[REG_CX];
-		unsigned char *m_d = (unsigned char*)&m_regs[REG_DX];
+		unsigned char *m_a = (unsigned char*)&m_regs[Jaf::REG_AX];
+		unsigned char *m_b = (unsigned char*)&m_regs[Jaf::REG_BX];
+		unsigned char *m_c = (unsigned char*)&m_regs[Jaf::REG_CX];
+		unsigned char *m_d = (unsigned char*)&m_regs[Jaf::REG_DX];
 
-		m_regs8[REG_AL].reinitialize (m_a[0]);
-		m_regs8[REG_AH].reinitialize (m_a[1]);
-		m_regs8[REG_BL].reinitialize (m_b[0]);
-		m_regs8[REG_BH].reinitialize (m_b[1]);
-		m_regs8[REG_CL].reinitialize (m_c[0]);
-		m_regs8[REG_CH].reinitialize (m_c[1]);
-		m_regs8[REG_DL].reinitialize (m_d[0]);
-		m_regs8[REG_DH].reinitialize (m_d[1]);
+		m_regs8[Jaf::REG_AL].reinitialize (m_a[0]);
+		m_regs8[Jaf::REG_AH].reinitialize (m_a[1]);
+		m_regs8[Jaf::REG_BL].reinitialize (m_b[0]);
+		m_regs8[Jaf::REG_BH].reinitialize (m_b[1]);
+		m_regs8[Jaf::REG_CL].reinitialize (m_c[0]);
+		m_regs8[Jaf::REG_CH].reinitialize (m_c[1]);
+		m_regs8[Jaf::REG_DL].reinitialize (m_d[0]);
+		m_regs8[Jaf::REG_DH].reinitialize (m_d[1]);
 
-		m_regs16[REG_AX].reinitialize (m_regs[REG_AX]);
-		m_regs16[REG_BX].reinitialize (m_regs[REG_BX]);
-		m_regs16[REG_CX].reinitialize (m_regs[REG_CX]);
-		m_regs16[REG_DX].reinitialize (m_regs[REG_DX]);
-		m_regs16[REG_DI].reinitialize (m_regs[REG_DI]);
-		m_regs16[REG_SI].reinitialize (m_regs[REG_SI]);
-		m_regs16[REG_BP].reinitialize (m_regs[REG_BP]);
-		m_regs16[REG_SP].reinitialize (m_regs[REG_SP]);
-		m_regs16[REG_FLAGS].reinitialize (m_regs[REG_FLAGS]);
+		m_regs16[Jaf::REG_AX].reinitialize (m_regs[Jaf::REG_AX]);
+		m_regs16[Jaf::REG_BX].reinitialize (m_regs[Jaf::REG_BX]);
+		m_regs16[Jaf::REG_CX].reinitialize (m_regs[Jaf::REG_CX]);
+		m_regs16[Jaf::REG_DX].reinitialize (m_regs[Jaf::REG_DX]);
+		m_regs16[Jaf::REG_DI].reinitialize (m_regs[Jaf::REG_DI]);
+		m_regs16[Jaf::REG_SI].reinitialize (m_regs[Jaf::REG_SI]);
+		m_regs16[Jaf::REG_BP].reinitialize (m_regs[Jaf::REG_BP]);
+		m_regs16[Jaf::REG_SP].reinitialize (m_regs[Jaf::REG_SP]);
+		m_regs16[Jaf::REG_FLAGS].reinitialize (m_regs[Jaf::REG_FLAGS]);
 	}
 
 	/** */

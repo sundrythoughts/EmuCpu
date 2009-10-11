@@ -24,16 +24,16 @@ int main (int argc, char **argv) {
 	ExecutionUnit cpu;
 
 	//return 0;
-	//cpu.get_reg_ax ().signal_value_changed ().connect (sigc::ptr_fun (&value_changed<unsigned short>));
+	//cpu.getRegAX ().signal_value_changed ().connect (sigc::ptr_fun (&value_changed<unsigned short>));
 
 	int TEST_NUMBER = 0;
 
 	{//Test 1
 		++TEST_NUMBER;
 		ps = true;
-		cpu.set_reg_ah (1);
-		cpu.set_reg_al (1);
-		if (cpu.get_reg_ax () != 257) {
+		cpu.setRegAH (1);
+		cpu.setRegAL (1);
+		if (cpu.getRegAX () != 257) {
 			print_failed (TEST_NUMBER);
 		}
 
@@ -46,9 +46,9 @@ int main (int argc, char **argv) {
 	{//Test 2
 		++TEST_NUMBER;
 		ps = true;
-		cpu.set_reg_bh (1);
-		cpu.set_reg_bl (1);
-		if (cpu.get_reg_bx () != 257) {
+		cpu.setRegBH (1);
+		cpu.setRegBL (1);
+		if (cpu.getRegBX () != 257) {
 			print_failed (TEST_NUMBER);
 		}
 
@@ -61,9 +61,9 @@ int main (int argc, char **argv) {
 	{//Test 3
 		++TEST_NUMBER;
 		ps = true;
-		cpu.set_reg_ch (1);
-		cpu.set_reg_cl (1);
-		if (cpu.get_reg_cx () != 257) {
+		cpu.setRegCH (1);
+		cpu.setRegCL (1);
+		if (cpu.getRegCX () != 257) {
 			print_failed (TEST_NUMBER);
 		}
 
@@ -76,9 +76,9 @@ int main (int argc, char **argv) {
 	{//Test 4
 		++TEST_NUMBER;
 		ps = true;
-		cpu.set_reg_ch (1);
-		cpu.set_reg_cl (1);
-		if (cpu.get_reg_cx () != 257) {
+		cpu.setRegCH (1);
+		cpu.setRegCL (1);
+		if (cpu.getRegCX () != 257) {
 			print_failed (TEST_NUMBER);
 		}
 
@@ -91,12 +91,12 @@ int main (int argc, char **argv) {
 	{//Test 5
 		++TEST_NUMBER;
 		ps = true;
-		cpu.set_reg_ax (257);
+		cpu.setRegAX (257);
 
-		if (cpu.get_reg_ah () != 1) {
+		if (cpu.getRegAH () != 1) {
 			print_failed (TEST_NUMBER);
 		}
-		if (cpu.get_reg_al () != 1) {
+		if (cpu.getRegAL () != 1) {
 			print_failed (TEST_NUMBER);
 		}
 
@@ -109,12 +109,12 @@ int main (int argc, char **argv) {
 	{//Test 6
 		++TEST_NUMBER;
 		ps = true;
-		cpu.set_reg_bx (257);
+		cpu.setRegBX (257);
 
-		if (cpu.get_reg_bh () != 1) {
+		if (cpu.getRegBH () != 1) {
 			print_failed (TEST_NUMBER);
 		}
-		if (cpu.get_reg_bl () != 1) {
+		if (cpu.getRegBL () != 1) {
 			print_failed (TEST_NUMBER);
 		}
 
@@ -127,12 +127,12 @@ int main (int argc, char **argv) {
 	{//Test 7
 		++TEST_NUMBER;
 		ps = true;
-		cpu.set_reg_cx (257);
+		cpu.setRegCX (257);
 
-		if (cpu.get_reg_ch () != 1) {
+		if (cpu.getRegCH () != 1) {
 			print_failed (TEST_NUMBER);
 		}
-		if (cpu.get_reg_cl () != 1) {
+		if (cpu.getRegCL () != 1) {
 			print_failed (TEST_NUMBER);
 		}
 
@@ -145,12 +145,12 @@ int main (int argc, char **argv) {
 	{//Test 8
 		++TEST_NUMBER;
 		ps = true;
-		cpu.set_reg_dx (257);
+		cpu.setRegDX (257);
 
-		if (cpu.get_reg_dh () != 1) {
+		if (cpu.getRegDH () != 1) {
 			print_failed (TEST_NUMBER);
 		}
-		if (cpu.get_reg_dl () != 1) {
+		if (cpu.getRegDL () != 1) {
 			print_failed (TEST_NUMBER);
 		}
 
@@ -163,9 +163,9 @@ int main (int argc, char **argv) {
 	{//Test 9
 		++TEST_NUMBER;
 		ps = true;
-		cpu.set_reg_ax (257);
+		cpu.setRegAX (257);
 
-		if (cpu.get_reg_ax () != 257) {
+		if (cpu.getRegAX () != 257) {
 			print_failed (TEST_NUMBER);
 		}
 
@@ -178,9 +178,9 @@ int main (int argc, char **argv) {
 	{//Test 10
 		++TEST_NUMBER;
 		ps = true;
-		cpu.set_reg_bx (257);
+		cpu.setRegBX (257);
 
-		if (cpu.get_reg_bx () != 257) {
+		if (cpu.getRegBX () != 257) {
 			print_failed (TEST_NUMBER);
 		}
 
@@ -193,9 +193,9 @@ int main (int argc, char **argv) {
 	{//Test 11
 		++TEST_NUMBER;
 		ps = true;
-		cpu.set_reg_cx (257);
+		cpu.setRegCX (257);
 
-		if (cpu.get_reg_cx () != 257) {
+		if (cpu.getRegCX () != 257) {
 			print_failed (TEST_NUMBER);
 		}
 
@@ -208,9 +208,9 @@ int main (int argc, char **argv) {
 	{//Test 12
 		++TEST_NUMBER;
 		ps = true;
-		cpu.set_reg_dx (257);
+		cpu.setRegDX (257);
 
-		if (cpu.get_reg_dx () != 257) {
+		if (cpu.getRegDX () != 257) {
 			print_failed (TEST_NUMBER);
 		}
 
@@ -223,9 +223,9 @@ int main (int argc, char **argv) {
 	{//Test 13
 		++TEST_NUMBER;
 		ps = true;
-		cpu.set_reg_di (257);
+		cpu.setRegDI (257);
 
-		if (cpu.get_reg_di () != 257) {
+		if (cpu.getRegDI () != 257) {
 			print_failed (TEST_NUMBER);
 		}
 
@@ -237,9 +237,9 @@ int main (int argc, char **argv) {
 	{//Test 14
 		++TEST_NUMBER;
 		ps = true;
-		cpu.set_reg_si (257);
+		cpu.setRegSI (257);
 
-		if (cpu.get_reg_si () != 257) {
+		if (cpu.getRegSI () != 257) {
 			print_failed (TEST_NUMBER);
 		}
 
@@ -252,9 +252,9 @@ int main (int argc, char **argv) {
 	{//Test 15
 		++TEST_NUMBER;
 		ps = true;
-		cpu.set_reg_bp (257);
+		cpu.setRegBP (257);
 
-		if (cpu.get_reg_bp () != 257) {
+		if (cpu.getRegBP () != 257) {
 			print_failed (TEST_NUMBER);
 		}
 
@@ -267,9 +267,9 @@ int main (int argc, char **argv) {
 	{//Test 16
 		++TEST_NUMBER;
 		ps = true;
-		cpu.set_reg_sp (257);
+		cpu.setRegSP (257);
 
-		if (cpu.get_reg_sp () != 257) {
+		if (cpu.getRegSP () != 257) {
 			print_failed (TEST_NUMBER);
 		}
 
@@ -282,9 +282,9 @@ int main (int argc, char **argv) {
 	{//Test 17
 		++TEST_NUMBER;
 		ps = true;
-		cpu.set_reg_flags (257);
+		cpu.setRegFlags (257);
 
-		if (cpu.get_reg_flags () != 257) {
+		if (cpu.getRegFlags () != 257) {
 			print_failed (TEST_NUMBER);
 		}
 
@@ -298,13 +298,13 @@ int main (int argc, char **argv) {
 		++TEST_NUMBER;
 		ps = true;
 
-		cpu.set_reg_flags_af (true);
-		if (cpu.get_reg_flags_af () != true) {
+		cpu.setRegFlagsAF (true);
+		if (cpu.getRegFlagsAF () != true) {
 			print_failed (TEST_NUMBER);
 		}
 
-		cpu.set_reg_flags_af (false);
-		if (cpu.get_reg_flags_af () != false) {
+		cpu.setRegFlagsAF (false);
+		if (cpu.getRegFlagsAF () != false) {
 			print_failed (TEST_NUMBER);
 		}
 
@@ -318,13 +318,13 @@ int main (int argc, char **argv) {
 		++TEST_NUMBER;
 		ps = true;
 
-		cpu.set_reg_flags_cf (true);
-		if (cpu.get_reg_flags_cf () != true) {
+		cpu.setRegFlagsCF (true);
+		if (cpu.getRegFlagsCF () != true) {
 			print_failed (TEST_NUMBER);
 		}
 
-		cpu.set_reg_flags_cf (false);
-		if (cpu.get_reg_flags_cf () != false) {
+		cpu.setRegFlagsCF (false);
+		if (cpu.getRegFlagsCF () != false) {
 			print_failed (TEST_NUMBER);
 		}
 
@@ -338,13 +338,13 @@ int main (int argc, char **argv) {
 		++TEST_NUMBER;
 		ps = true;
 
-		cpu.set_reg_flags_df (true);
-		if (cpu.get_reg_flags_df () != true) {
+		cpu.setRegFlagsDF (true);
+		if (cpu.getRegFlagsDF () != true) {
 			print_failed (TEST_NUMBER);
 		}
 
-		cpu.set_reg_flags_df (false);
-		if (cpu.get_reg_flags_df () != false) {
+		cpu.setRegFlagsDF (false);
+		if (cpu.getRegFlagsDF () != false) {
 			print_failed (TEST_NUMBER);
 		}
 
@@ -358,13 +358,13 @@ int main (int argc, char **argv) {
 		++TEST_NUMBER;
 		ps = true;
 
-		cpu.set_reg_flags_if (true);
-		if (cpu.get_reg_flags_if () != true) {
+		cpu.setRegFlagsIF (true);
+		if (cpu.getRegFlagsIF () != true) {
 			print_failed (TEST_NUMBER);
 		}
 
-		cpu.set_reg_flags_if (false);
-		if (cpu.get_reg_flags_if () != false) {
+		cpu.setRegFlagsIF (false);
+		if (cpu.getRegFlagsIF () != false) {
 			print_failed (TEST_NUMBER);
 		}
 
@@ -378,13 +378,13 @@ int main (int argc, char **argv) {
 		++TEST_NUMBER;
 		ps = true;
 
-		cpu.set_reg_flags_of (true);
-		if (cpu.get_reg_flags_of () != true) {
+		cpu.setRegFlagsOF (true);
+		if (cpu.getRegFlagsOF () != true) {
 			print_failed (TEST_NUMBER);
 		}
 
-		cpu.set_reg_flags_of (false);
-		if (cpu.get_reg_flags_of () != false) {
+		cpu.setRegFlagsOF (false);
+		if (cpu.getRegFlagsOF () != false) {
 			print_failed (TEST_NUMBER);
 		}
 
@@ -398,13 +398,13 @@ int main (int argc, char **argv) {
 		++TEST_NUMBER;
 		ps = true;
 
-		cpu.set_reg_flags_pf (true);
-		if (cpu.get_reg_flags_pf () != true) {
+		cpu.setRegFlagsPF (true);
+		if (cpu.getRegFlagsPF () != true) {
 			print_failed (TEST_NUMBER);
 		}
 
-		cpu.set_reg_flags_pf (false);
-		if (cpu.get_reg_flags_pf () != false) {
+		cpu.setRegFlagsPF (false);
+		if (cpu.getRegFlagsPF () != false) {
 			print_failed (TEST_NUMBER);
 		}
 
@@ -418,13 +418,13 @@ int main (int argc, char **argv) {
 		++TEST_NUMBER;
 		ps = true;
 
-		cpu.set_reg_flags_sf (true);
-		if (cpu.get_reg_flags_sf () != true) {
+		cpu.setRegFlagsSF (true);
+		if (cpu.getRegFlagsSF () != true) {
 			print_failed (TEST_NUMBER);
 		}
 
-		cpu.set_reg_flags_sf (false);
-		if (cpu.get_reg_flags_sf () != false) {
+		cpu.setRegFlagsSF (false);
+		if (cpu.getRegFlagsSF () != false) {
 			print_failed (TEST_NUMBER);
 		}
 
@@ -438,13 +438,13 @@ int main (int argc, char **argv) {
 		++TEST_NUMBER;
 		ps = true;
 
-		cpu.set_reg_flags_tf (true);
-		if (cpu.get_reg_flags_tf () != true) {
+		cpu.setRegFlagsTF (true);
+		if (cpu.getRegFlagsTF () != true) {
 			print_failed (TEST_NUMBER);
 		}
 
-		cpu.set_reg_flags_tf (false);
-		if (cpu.get_reg_flags_tf () != false) {
+		cpu.setRegFlagsTF (false);
+		if (cpu.getRegFlagsTF () != false) {
 			print_failed (TEST_NUMBER);
 		}
 
@@ -458,13 +458,13 @@ int main (int argc, char **argv) {
 		++TEST_NUMBER;
 		ps = true;
 
-		cpu.set_reg_flags_zf (true);
-		if (cpu.get_reg_flags_zf () != true) {
+		cpu.setRegFlagsZF (true);
+		if (cpu.getRegFlagsZF () != true) {
 			print_failed (TEST_NUMBER);
 		}
 
-		cpu.set_reg_flags_zf (false);
-		if (cpu.get_reg_flags_zf () != false) {
+		cpu.setRegFlagsZF (false);
+		if (cpu.getRegFlagsZF () != false) {
 			print_failed (TEST_NUMBER);
 		}
 

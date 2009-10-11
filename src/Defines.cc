@@ -1,5 +1,7 @@
 #include "Defines.hh"
 
+namespace Jaf {
+
 const char* reg_index_8_names[REG_COUNT_8] = {
 	"al",
 	"cl",
@@ -30,3 +32,4 @@ const char* sreg_index_names[SREG_COUNT] = {
 	"ds"
 };
 
+} //end namespace Jaf

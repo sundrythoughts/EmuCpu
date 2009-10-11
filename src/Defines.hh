@@ -1,6 +1,8 @@
 #ifndef DEFINES_HH
 #define DEFINES_HH
 
+namespace Jaf {
+
 enum OperandSize {
 	OP_SIZE_8 = 0,
 	OP_SIZE_16
@@ -62,6 +64,8 @@ union ScaleIndexBase {
 		unsigned int scale : 2;
 	} v;
 };
+
+} //end namespace Jaf
 
 #endif //DEFINES_HH
 

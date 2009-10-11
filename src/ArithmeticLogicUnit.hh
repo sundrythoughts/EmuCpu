@@ -25,70 +25,67 @@ public:
 
 	/** */
 	void
-	connect_to (ExecutionUnit &eu);
+	connectTo (ExecutionUnit &eu);
 
 	/** FIXME */
-	void update_flag_af_8 (unsigned char result8, unsigned short result16);
+	void updateFlagAF (unsigned char result8, unsigned short result16);
 
 	/** FIXME */
-	void update_flag_af_16 (unsigned short result16, unsigned int result32);
+	void updateFlagAF (unsigned short result16, unsigned int result32);
 
 	/** */
-	void update_flag_cf_8 (unsigned char result8, unsigned short result16);
+	void updateFlagCF (unsigned char result8, unsigned short result16);
 
 	/** */
-	void update_flag_cf_16 (unsigned short result16, unsigned int result32);
+	void updateFlagCF (unsigned short result16, unsigned int result32);
 
 	/** */
-	void update_flag_of_8 (bool msb_before, bool msb_after);
+	void updateFlagOF (bool msb_before, bool msb_after);
 
 	/** */
-	void update_flag_of_16 (bool msb_before, bool msb_after);
+	void updateFlagPF (unsigned char val);
 
 	/** */
-	void update_flag_pf_8 (unsigned char val);
+	void updateFlagPF (unsigned short val);
 
 	/** */
-	void update_flag_pf_16 (unsigned short val);
+	void updateFlagSF (unsigned char val);
 
 	/** */
-	void update_flag_sf_8 (unsigned char val);
+	void updateFlagSF (unsigned short val);
 
 	/** */
-	void update_flag_sf_16 (unsigned short val);
+	void updateFlagZF (unsigned char val);
 
 	/** */
-	void update_flag_zf_8 (unsigned char val);
+	void updateFlagZF (unsigned short val);
 
 	/** */
-	void update_flag_zf_16 (unsigned short val);
+	void opAdc (unsigned char dest, unsigned char src, unsigned char &ret);
 
 	/** */
-	void op_adc_8 (unsigned char dest, unsigned char src, unsigned char &ret);
+	void opAdc (unsigned short dest, unsigned short src, unsigned short &ret);
 
 	/** */
-	void op_adc_16 (unsigned short dest, unsigned short src, unsigned short &ret);
+	void opAdd (unsigned char dest, unsigned char src, unsigned char &ret);
 
 	/** */
-	void op_add_8 (unsigned char dest, unsigned char src, unsigned char &ret);
+	void opAdd (unsigned short dest, unsigned short src, unsigned short &ret);
 
 	/** */
-	void op_add_16 (unsigned short dest, unsigned short src, unsigned short &ret);
+	void opAnd (unsigned char dest, unsigned char src, unsigned char &ret);
 
 	/** */
-	void op_and_8 (unsigned char dest, unsigned char src, unsigned char &ret);
+	void opAnd (unsigned short dest, unsigned short src, unsigned short &ret);
 
 	/** */
-	void op_and_16 (unsigned short dest, unsigned short src, unsigned short &ret);
+	void opCmc ();
 
 	/** */
-	void op_cmc ();
+	void opCmp (unsigned char dest, unsigned char src);
 
 	/** */
-	void op_cmp_8 (unsigned char dest, unsigned char src);
-
-	/** */
-	void op_cmp_16 (unsigned short dest, unsigned short src);
+	void opCmp (unsigned short dest, unsigned short src);
 
 #if 0
 	/** FIXME */
@@ -97,129 +94,129 @@ public:
 #endif
 
 	/** */
-	void op_dec_8 (unsigned char src, unsigned char &ret);
+	void opDec (unsigned char src, unsigned char &ret);
 
 	/** */
-	void op_dec_16 (unsigned short src, unsigned short &ret);
+	void opDec (unsigned short src, unsigned short &ret);
 
 	/** */
-	void op_div_8 (unsigned char src);
+	void opDiv (unsigned char src);
 
 	/** */
-	void op_div_16 (unsigned short src);
+	void opDiv (unsigned short src);
 
 	/** */
-	void op_idiv_8 (unsigned char src);
+	void opIdiv (unsigned char src);
 
 	/** */
-	void op_idiv_16 (unsigned short src);
+	void opIdiv (unsigned short src);
 
 	/** */
-	void op_imul_8 (unsigned char src);
+	void opImul (unsigned char src);
 
 	/** */
-	void op_imul_16 (unsigned short src);
+	void opImul (unsigned short src);
 
 	/** */
-	void op_inc_8 (unsigned char src, unsigned char &ret);
+	void opInc (unsigned char src, unsigned char &ret);
 
 	/** */
-	void op_inc_16 (unsigned short src, unsigned short &ret);
+	void opInc (unsigned short src, unsigned short &ret);
 
 	/** */
-	void op_mul_8 (unsigned char src);
+	void opMul (unsigned char src);
 
 	/** */
-	void op_mul_16 (unsigned short src);
+	void opMul (unsigned short src);
 
 	/** */
-	void op_neg_8 (unsigned char dest, unsigned char &ret);
+	void opNeg (unsigned char dest, unsigned char &ret);
 
 	/** */
-	void op_neg_16 (unsigned short dest, unsigned short &ret);
+	void opNeg (unsigned short dest, unsigned short &ret);
 
 	/** */
-	void op_or_8 (unsigned char dest, unsigned char src, unsigned char &ret);
+	void opOr (unsigned char dest, unsigned char src, unsigned char &ret);
 
 	/** */
-	void op_or_16 (unsigned short dest, unsigned short src, unsigned short &ret);
+	void opOr (unsigned short dest, unsigned short src, unsigned short &ret);
 
 	/** */
-	void op_rcl_8 (unsigned char dest, unsigned int cnt, unsigned char &ret);
+	void opRcl (unsigned char dest, unsigned int cnt, unsigned char &ret);
 
 	/** */
-	void op_rcl_16 (unsigned short dest, unsigned int cnt, unsigned short &ret);
+	void opRcl (unsigned short dest, unsigned int cnt, unsigned short &ret);
 
 	/** */
-	void op_rcr_8 (unsigned char dest, unsigned int cnt, unsigned char &ret);
+	void opRcr (unsigned char dest, unsigned int cnt, unsigned char &ret);
 
 	/** */
-	void op_rcr_16 (unsigned short dest, unsigned int cnt, unsigned short &ret);
+	void opRcr (unsigned short dest, unsigned int cnt, unsigned short &ret);
 
 	/** */
-	void op_rol_8 (unsigned char dest, unsigned int cnt, unsigned char &ret);
+	void opRol (unsigned char dest, unsigned int cnt, unsigned char &ret);
 
 	/** */
-	void op_rol_16 (unsigned short dest, unsigned int cnt, unsigned short &ret);
+	void opRol (unsigned short dest, unsigned int cnt, unsigned short &ret);
 
 	/** */
-	void op_ror_8 (unsigned char dest, unsigned int cnt, unsigned char &ret);
+	void opRor (unsigned char dest, unsigned int cnt, unsigned char &ret);
 
 	/** */
-	void op_ror_16 (unsigned short dest, unsigned int cnt, unsigned short &ret);
+	void opRor (unsigned short dest, unsigned int cnt, unsigned short &ret);
 
 	/** */
-	void op_sal_8 (unsigned char dest, unsigned int cnt, unsigned char &ret);
+	void opSal (unsigned char dest, unsigned int cnt, unsigned char &ret);
 
 	/** */
-	void op_sal_16 (unsigned short dest, unsigned int cnt, unsigned short &ret);
+	void opSal (unsigned short dest, unsigned int cnt, unsigned short &ret);
 
 	/** */
-	void op_sar_8 (unsigned char dest, unsigned int cnt, unsigned char &ret);
+	void opSar (unsigned char dest, unsigned int cnt, unsigned char &ret);
 
 	/** */
-	void op_sar_16 (unsigned short dest, unsigned int cnt, unsigned short &ret);
+	void opSar (unsigned short dest, unsigned int cnt, unsigned short &ret);
 
 	/** */
-	void op_sbb_8 (unsigned char dest, unsigned char src, unsigned char &ret);
+	void opSbb (unsigned char dest, unsigned char src, unsigned char &ret);
 
 	/** */
-	void op_sbb_16 (unsigned short dest, unsigned short src, unsigned short &ret);
+	void opSbb (unsigned short dest, unsigned short src, unsigned short &ret);
 
 	/** */
-	void op_shl_8 (unsigned char dest, unsigned int cnt, unsigned char &ret);
+	void opShl (unsigned char dest, unsigned int cnt, unsigned char &ret);
 
 	/** */
-	void op_shl_16 (unsigned short dest, unsigned int cnt, unsigned short &ret);
+	void opShl (unsigned short dest, unsigned int cnt, unsigned short &ret);
 
 	/** */
-	void op_shr_8 (unsigned char dest, unsigned int cnt, unsigned char &ret);
+	void opShr (unsigned char dest, unsigned int cnt, unsigned char &ret);
 
 	/** */
-	void op_shr_16 (unsigned short dest, unsigned int cnt, unsigned short &ret);
+	void opShr (unsigned short dest, unsigned int cnt, unsigned short &ret);
 
 	/** */
-	void op_sub_8 (unsigned char dest, unsigned char src, unsigned char &ret);
+	void opSub (unsigned char dest, unsigned char src, unsigned char &ret);
 
 	/** */
-	void op_sub_16 (unsigned short dest, unsigned char src, unsigned short &ret);
+	void opSub (unsigned short dest, unsigned char src, unsigned short &ret);
 
 	/** */
-	void op_test_8 (unsigned char dest, unsigned char src);
+	void opTest (unsigned char dest, unsigned char src);
 
 	/** */
-	void op_test_16 (unsigned short dest, unsigned char src);
+	void opTest (unsigned short dest, unsigned char src);
 
 	/** */
 	template<typename TDest, typename TSrc>
 	void
-	op_xchg (TDest &dest, TSrc &src);
+	opXchg (TDest &dest, TSrc &src);
 
 	/** */
-	void op_xor_8 (unsigned char dest, unsigned char src, unsigned char &ret);
+	void opXor (unsigned char dest, unsigned char src, unsigned char &ret);
 
 	/** */
-	void op_xor_16 (unsigned short dest, unsigned short src, unsigned short &ret);
+	void opXor (unsigned short dest, unsigned short src, unsigned short &ret);
 };
 
 #if 0
@@ -233,7 +230,7 @@ ArithmeticLogicUnit::cmps (TDest &dest, TSrc &src, TDest &result) {
 //FIXME - fix flags
 template<typename TDest, typename TSrc>
 void
-ArithmeticLogicUnit::op_xchg (TDest &dest, TSrc &src) {
+ArithmeticLogicUnit::opXchg (TDest &dest, TSrc &src) {
 	TDest tmp = dest;
 	dest = src;
 	src = tmp;

@@ -23,6 +23,9 @@ SOURCES += Memory.cc
 HEADERS += Loader.hh
 SOURCES += Loader.cc
 
+HEADERS += Instructions.hh
+SOURCES += Instructions.cc
+
 HEADERS += FlagRegisterSignalsAndSlots.hh
 SOURCES += FlagRegisterSignalsAndSlots.cc
 

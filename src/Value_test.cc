@@ -19,6 +19,7 @@ static void print_failed (int i) {
 int main (int argc, char **argv) {
 	int TEST_NUMBER = 1;
 
+
 	{//Test 1
 		ps = true;
 		Value v;
@@ -185,7 +186,7 @@ int main (int argc, char **argv) {
 		int *i1 = new int ();
 		*i1 = 17;
 
-		if (!v.init<int*> ()) {
+		if (!v.init<int*> (true)) {
 			print_failed (TEST_NUMBER);
 		}
 
@@ -205,8 +206,6 @@ int main (int argc, char **argv) {
 		if (*i1 != *i2) {
 			print_failed (TEST_NUMBER);
 		}
-
-		delete i1;
 
 		if (ps) {
 			print_passed (TEST_NUMBER);

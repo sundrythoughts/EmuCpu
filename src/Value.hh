@@ -15,9 +15,12 @@ Memory management can also be manual if init(false) is called.
 class Value {
 	void *m_data; //pointer to data
 	std::string m_type_name; //typeid type name FIXME - might only need a pointer comparison because typeid ().name () returns a {const char*}
-	bool m_call_free; //free the _data? (Yes/No)
+	bool m_call_free; //free the m_data? (Yes/No)
+	bool m_call_free_pointer; //free the pointer stored in m_data (Yes/No)
 	bool (Value::*free_func) (); //pointer to the correct free<T> () function
+	bool (Value::*free_pointer_func) (); //pointer to the correct free<T> () function
 	bool (Value::*copy_func) (Value &dest); //pointer to the correct copy<T> () function
+	bool (Value::*copy_pointer_func) (Value &dest); //pointer to the correct copy<T> () function
 
 public:
 
@@ -41,7 +44,7 @@ public:
 	@return true if init was successful, false if init was unsuccessful.
 	*/
 	template<typename T>
-	bool init (bool del_data = true) {
+	bool init (bool del_ptr_data = false, bool del_data = true) {
 		if (m_data) {
 			std::cerr << "class Value - Unable to initialize a Value that is already initialized." << std::endl;
 			return false;
@@ -50,8 +53,11 @@ public:
 		m_data = new T ();
 		m_type_name = typeid(T).name ();
 		m_call_free = del_data;
+		m_call_free_pointer = del_ptr_data;
 		free_func = &Value::free_template<T>;
+		free_pointer_func = &Value::free_pointer_template<T*>;
 		copy_func = &Value::copy_template<T>;
+		//FIXME - need a copy function
 		return true;
 	}
 
@@ -138,7 +144,12 @@ public:
 	@brief Free the memory of the data.
 	*/
 	bool free () {
-		return (this->*free_func) ();
+		bool ret = true;
+		if (m_call_free_pointer) {
+			ret = (this->*free_pointer_func) ();
+		}
+		ret &= (this->*free_func) ();
+		return ret;
 	}
 
 	/**
@@ -168,6 +179,25 @@ private:
 		m_data = 0;
 		m_type_name.clear ();
 		m_call_free = true;
+		return true;
+	}
+
+	/*
+	Free the memory of the data.
+	*/
+	template<typename T>
+	bool free_pointer_template () {
+		if (!m_data) {
+			std::cerr << "class Value - Unable to initialize a Value that is already initialized." << std::endl;
+			return false;
+		}
+		//if (0 != std::strcmp (m_type_name.c_str (), typeid(T).name ())) {
+		//	std::cerr << "class Value - Trying to use an incompatible type." << std::endl;
+		//	return false;
+		//}
+
+		delete *((T*)(m_data));
+
 		return true;
 	}
 

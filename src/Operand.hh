@@ -1,38 +1,21 @@
 #ifndef OPERAND_HH
 #define OPERAND_HH
 
-#include <glib-object.h>
+#include "Defines.hh"
 #include <vector>
 
 class Operand {
+	size_t m_op_size;
+	std::vector<Value> m_op_vec;
+
 
 public:
-	enum OperandType {
-		REG,
-		MEM,
-		IMM,
-		NONE
-	};
-
-private:
-	OperandType _op_type;
-	GValue *_value;
-
-public:
-	Operand () {
-		_op_type = NONE;
-		_value = (GValue*)g_malloc0 (sizeof(GValue)); //FIXME - has no mem checks
+	Operand () :  {
+		m_op_size = Jaf::OP_SIZE_NONE;
 	}
 
-	Operand (OperandType t, GValue *v) {
-		_op_type = t;
-		_value = v;
+	~Operand () {
 		
-	}
-
-	~Operand () { //FIXME - has no mem checks
-		g_value_unset (_value);
-		g_free (_value);
 	}
 
 	OperandType get_operand_type () const {

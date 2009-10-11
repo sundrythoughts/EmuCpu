@@ -1,6 +1,7 @@
 #ifndef INSTRUCTIONS_HH
 #define INSTRUCTIONS_HH
 
+#include "Value.hh"
 #include <vector>
 #include "INumberReadableWritable.hh"
 
@@ -14,14 +15,15 @@ public:
 	const char *operand_codes[3];
 	unsigned int group;
 
-	void (*decode_func) (std::vector<INumberReadableWritable*> *ops);
-	void (*execute_func) (std::vector<INumberReadableWritable*> *ops);
+	std::vector<Value>* (*decode_func) ();
 
-	void decode (std::vector<INumberReadableWritable*> *ops) {
-		decode_func (ops);
+	void (*execute_func) (std::vector<Value> *ops);
+
+	std::vector<Value>* decode () {
+		return decode_func ();
 	}
 
-	void execute (std::vector<INumberReadableWritable*> *ops) {
+	void execute (std::vector<Value> *ops) {
 		execute_func (ops);
 	}
 };//end class Value

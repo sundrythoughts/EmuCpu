@@ -5,7 +5,8 @@ namespace Jaf {
 
 enum OperandSize {
 	OP_SIZE_8 = 0,
-	OP_SIZE_16
+	OP_SIZE_16,
+	OP_SIZE_NONE
 };
 
 enum RegisterIndex8 {

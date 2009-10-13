@@ -1,5 +1,5 @@
-#ifndef REGISTER_HH
-#define REGISTER_HH
+#ifndef JAF__REGISTER_HH
+#define JAF__REGISTER_HH
 
 #include <sigc++/sigc++.h>
 #include "INumberReadableWritable.hh"
@@ -233,5 +233,5 @@ public:
 	}
 };
 
-#endif //REGISTER_HH
+#endif //JAF__REGISTER_HH
 

@@ -1,5 +1,5 @@
-#ifndef MEMORY_WIDGET_HH
-#define MEMORY_WIDGET_HH
+#ifndef JAF__MEMORY_WIDGET_HH
+#define JAF__MEMORY_WIDGET_HH
 
 #include <QtCore>
 #include <QtGui>
@@ -52,5 +52,5 @@ private:
 	void setTableWidgetRowFromStrings (int row, const QString &raw_mem, const QString &ascii);
 };
 
-#endif //MEMORY_WIDGET_HH
+#endif //JAF__MEMORY_WIDGET_HH
 

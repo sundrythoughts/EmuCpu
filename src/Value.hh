@@ -1,5 +1,5 @@
-#ifndef VALUE_HH
-#define VALUE_HH
+#ifndef JAF__VALUE_HH
+#define JAF__VALUE_HH
 
 #include <typeinfo>
 #include <string>
@@ -231,5 +231,5 @@ private:
 	Value (Value &v);
 };
 
-#endif //VALUE_HH
+#endif //JAF__VALUE_HH
 

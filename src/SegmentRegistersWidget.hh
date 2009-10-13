@@ -1,5 +1,5 @@
-#ifndef SEGMENT_REGISTERS_WIDGET_HH
-#define SEGMENT_REGISTERS_WIDGET_HH
+#ifndef JAF__SEGMENT_REGISTERS_WIDGET_HH
+#define JAF__SEGMENT_REGISTERS_WIDGET_HH
 
 #include <QtCore>
 #include <QtGui>
@@ -45,5 +45,5 @@ public slots:
 	}
 };
 
-#endif //SEGMENT_REGISTERS_WIDGET_HH
+#endif //JAF__SEGMENT_REGISTERS_WIDGET_HH
 

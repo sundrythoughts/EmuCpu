@@ -1,5 +1,5 @@
-#ifndef DISASSEMBLY_WIDGET_HH
-#define DISASSEMBLY_WIDGET_HH
+#ifndef JAF__DISASSEMBLY_WIDGET_HH
+#define JAF__DISASSEMBLY_WIDGET_HH
 
 #include <QtCore>
 #include <QtGui>
@@ -25,5 +25,5 @@ public slots:
 	}
 };
 
-#endif //DISASSEMBLY_WIDGET_HH
+#endif //JAF__DISASSEMBLY_WIDGET_HH
 

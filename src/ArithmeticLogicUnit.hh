@@ -1,5 +1,5 @@
-#ifndef ARITHMETIC_LOGIC_UNIT_HH
-#define ARITHMETIC_LOGIC_UNIT_HH
+#ifndef JAF__ARITHMETIC_LOGIC_UNIT_HH
+#define JAF__ARITHMETIC_LOGIC_UNIT_HH
 
 #include "ExecutionUnit.hh"
 #include "Utility.hh"
@@ -236,5 +236,5 @@ ArithmeticLogicUnit::opXchg (TDest &dest, TSrc &src) {
 	src = tmp;
 }
 
-#endif //ARITHMETIC_LOGIC_UNIT_HH
+#endif //JAF__ARITHMETIC_LOGIC_UNIT_HH
 

@@ -5,12 +5,12 @@
 using namespace std;
 
 void
-InstructionDecoder::connect_to (ExecutionUnit &eu) {
+InstructionDecoder::connectTo (ExecutionUnit &eu) {
 	m_eunit = &eu;
 }
 
 void
-InstructionDecoder::connect_to (BusInterfaceUnit &biu) {
+InstructionDecoder::connectTo (BusInterfaceUnit &biu) {
 	m_biu = &biu;
 }
 
@@ -155,8 +155,8 @@ InstructionDecoder::decode_operand_Eb () {
 	case 2: // DISP = disp-high: disp-low
 		break;
 	case 3: // r/m is treated as a "reg" field
-		cout << reg_index_8_names[m_modrm.rm];
-		m_disassembly += reg_index_8_names[m_modrm.rm];
+		cout << Jaf::reg_index_8_names[m_modrm.rm];
+		m_disassembly += Jaf::reg_index_8_names[m_modrm.rm];
 		break;
 	//default - FIXME
 	}
@@ -173,8 +173,8 @@ InstructionDecoder::decode_operand_Ev () {
 	case 2: // DISP = disp-high: disp-low
 		break;
 	case 3: // r/m is treated as a "reg" field
-		cout << reg_index_16_names[m_modrm.rm];
-		m_disassembly += reg_index_16_names[m_modrm.rm];
+		cout << Jaf::reg_index_16_names[m_modrm.rm];
+		m_disassembly += Jaf::reg_index_16_names[m_modrm.rm];
 		break;
 	//default - FIXME
 	}
@@ -191,8 +191,8 @@ InstructionDecoder::decode_operand_Ew () {
 	case 2: // DISP = disp-high: disp-low
 		break;
 	case 3: // r/m is treated as a "reg" field
-		cout << reg_index_16_names[m_modrm.rm];
-		m_disassembly += reg_index_16_names[m_modrm.rm];
+		cout << Jaf::reg_index_16_names[m_modrm.rm];
+		m_disassembly += Jaf::reg_index_16_names[m_modrm.rm];
 		break;
 	//default - FIXME
 	}
@@ -206,28 +206,28 @@ InstructionDecoder::decode_operand_Fv () {
 void
 InstructionDecoder::decode_operand_Gb () {
 	switch (m_modrm.reg) {
-	case REG_AL:
+	case Jaf::REG_AL:
 		cout << "al";
 		break;
-	case REG_CL:
+	case Jaf::REG_CL:
 		cout << "cl";
 		break;
-	case REG_DL:
+	case Jaf::REG_DL:
 		cout << "dl";
 		break;
-	case REG_BL:
+	case Jaf::REG_BL:
 		cout << "bl";
 		break;
-	case REG_AH:
+	case Jaf::REG_AH:
 		cout << "ah";
 		break;
-	case REG_CH:
+	case Jaf::REG_CH:
 		cout << "ch";
 		break;
-	case REG_DH:
+	case Jaf::REG_DH:
 		cout << "dh";
 		break;
-	case REG_BH:
+	case Jaf::REG_BH:
 		cout << "bh";
 		break;
 	//default - FIXME
@@ -237,28 +237,28 @@ InstructionDecoder::decode_operand_Gb () {
 void
 InstructionDecoder::decode_operand_Gv () {
 	switch (m_modrm.reg) {
-	case REG_AX:
+	case Jaf::REG_AX:
 		cout << "ax";
 		break;
-	case REG_CX:
+	case Jaf::REG_CX:
 		cout << "cx";
 		break;
-	case REG_DX:
+	case Jaf::REG_DX:
 		cout << "dx";
 		break;
-	case REG_BX:
+	case Jaf::REG_BX:
 		cout << "bx";
 		break;
-	case REG_SP:
+	case Jaf::REG_SP:
 		cout << "sp";
 		break;
-	case REG_BP:
+	case Jaf::REG_BP:
 		cout << "bp";
 		break;
-	case REG_SI:
+	case Jaf::REG_SI:
 		cout << "si";
 		break;
-	case REG_DI:
+	case Jaf::REG_DI:
 		cout << "di";
 		break;
 	//default - FIXME
@@ -313,16 +313,16 @@ InstructionDecoder::decode_operand_SI () {
 void
 InstructionDecoder::decode_operand_Sw () {
 	switch (m_modrm.reg) {
-	case SREG_ES:
+	case Jaf::SREG_ES:
 		cout << "es";
 		break;
-	case SREG_CS:
+	case Jaf::SREG_CS:
 		cout << "cs";
 		break;
-	case SREG_SS:
+	case Jaf::SREG_SS:
 		cout << "ss";
 		break;
-	case SREG_DS:
+	case Jaf::SREG_DS:
 		cout << "ds";
 		break;
 	//default - FIXME
@@ -348,4 +348,105 @@ void
 InstructionDecoder::decode_operand_Yv () {
 	//FIXME
 }
+
+std::vector<Value>*
+InstructionDecoder::decodeNone () {
+}
+
+std::vector<Value>*
+InstructionDecoder::decodeRegRM () {
+}
+
+std::vector<Value>*
+InstructionDecoder::decodeAccImm () {
+}
+
+std::vector<Value>*
+InstructionDecoder::decodeSegment () {
+}
+
+std::vector<Value>*
+InstructionDecoder::decodeAcc () {
+}
+
+std::vector<Value>*
+InstructionDecoder::decodeReg () {
+}
+
+std::vector<Value>*
+InstructionDecoder::decodeShort () {
+}
+
+std::vector<Value>*
+InstructionDecoder::decodeSegRM () {
+}
+
+std::vector<Value>*
+InstructionDecoder::decodeAccReg () {
+}
+
+std::vector<Value>*
+InstructionDecoder::decodeAccMem () {
+}
+
+std::vector<Value>*
+InstructionDecoder::decodeRegImm () {
+}
+
+std::vector<Value>*
+InstructionDecoder::decodeIntra () {
+}
+
+std::vector<Value>*
+InstructionDecoder::decodeInter () {
+}
+
+std::vector<Value>*
+InstructionDecoder::decodeXferInd () {
+}
+
+std::vector<Value>*
+InstructionDecoder::decodeRMImm () {
+}
+
+std::vector<Value>*
+InstructionDecoder::decodeAccPort () {
+}
+
+std::vector<Value>*
+InstructionDecoder::decodeRM () {
+}
+
+std::vector<Value>*
+InstructionDecoder::decodeFlags () {
+}
+
+std::vector<Value>*
+InstructionDecoder::decodeRetPop () {
+}
+
+std::vector<Value>*
+InstructionDecoder::decodeType3 () {
+}
+
+std::vector<Value>*
+InstructionDecoder::decodeEscNum () {
+}
+
+std::vector<Value>*
+InstructionDecoder::decodeAccVPort () {
+}
+
+std::vector<Value>*
+InstructionDecoder::decodeAccBase () {
+}
+
+std::vector<Value>*
+InstructionDecoder::decodeIntNum () {
+}
+
+std::vector<Value>*
+InstructionDecoder::decodeString () {
+}
+
 

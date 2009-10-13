@@ -11,6 +11,9 @@ SOURCES += ProxyLayer.cc
 HEADERS += Cpu.hh
 SOURCES += Cpu.cc
 
+HEADERS += Defines.hh
+SOURCES += Defines.cc
+
 HEADERS += ExecutionUnit.hh
 SOURCES += ExecutionUnit.cc
 
@@ -25,6 +28,9 @@ SOURCES += Loader.cc
 
 HEADERS += Instructions.hh
 SOURCES += Instructions.cc
+
+HEADERS += InstructionDecoder.hh
+SOURCES += InstructionDecoder.cc
 
 HEADERS += FlagRegisterSignalsAndSlots.hh
 SOURCES += FlagRegisterSignalsAndSlots.cc

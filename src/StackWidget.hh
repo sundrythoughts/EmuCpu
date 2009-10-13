@@ -1,5 +1,5 @@
-#ifndef STACK_WIDGET_HH
-#define STACK_WIDGET_HH
+#ifndef JAF__STACK_WIDGET_HH
+#define JAF__STACK_WIDGET_HH
 
 #include <QtCore>
 #include <QtGui>
@@ -25,5 +25,5 @@ public slots:
 	}
 };
 
-#endif //STACK_WIDGET_HH
+#endif //JAF__STACK_WIDGET_HH
 

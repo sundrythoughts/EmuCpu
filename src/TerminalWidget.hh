@@ -1,5 +1,5 @@
-#ifndef TERMINAL_WIDGET_HH
-#define TERMINAL_WIDGET_HH
+#ifndef JAF__TERMINAL_WIDGET_HH
+#define JAF__TERMINAL_WIDGET_HH
 
 #include <QtCore>
 #include <QtGui>
@@ -25,5 +25,5 @@ public slots:
 	}
 };
 
-#endif //TERMINAL_WIDGET_HH
+#endif //JAF__TERMINAL_WIDGET_HH
 

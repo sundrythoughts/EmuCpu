@@ -1,5 +1,5 @@
-#ifndef GENERAL_REGISTERS_WIDGET_HH
-#define GENERAL_REGISTERS_WIDGET_HH
+#ifndef JAF__GENERAL_REGISTERS_WIDGET_HH
+#define JAF__GENERAL_REGISTERS_WIDGET_HH
 
 #include <QtCore>
 #include <QtGui>
@@ -59,5 +59,5 @@ public slots:
 	}
 };
 
-#endif //GENERAL_REGISTERS_WIDGET_HH
+#endif //JAF__GENERAL_REGISTERS_WIDGET_HH
 

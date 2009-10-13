@@ -1,5 +1,5 @@
-#ifndef MEMORY_SIGNALS_AND_SLOTS_HH
-#define MEMORY_SIGNALS_AND_SLOTS_HH
+#ifndef JAF__MEMORY_SIGNALS_AND_SLOTS_HH
+#define JAF__MEMORY_SIGNALS_AND_SLOTS_HH
 
 #include <sigc++/sigc++.h>
 #include <QObject>
@@ -26,5 +26,5 @@ signals:
 	void reloaded (const unsigned char *arr, size_t sz);
 };
 
-#endif //MEMORY_SIGNALS_AND_SLOTS_HH
+#endif //JAF__MEMORY_SIGNALS_AND_SLOTS_HH
 

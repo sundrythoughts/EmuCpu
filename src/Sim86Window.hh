@@ -1,5 +1,5 @@
-#ifndef SIM_86_WINDOW_HH
-#define SIM_86_WINDOW_HH
+#ifndef JAF__SIM_86_WINDOW_HH
+#define JAF__SIM_86_WINDOW_HH
 
 #include <QtCore>
 #include <QtGui>
@@ -89,5 +89,5 @@ public:
 	}
 };
 
-#endif //SIM_86_WINDOW_HH
+#endif //JAF__SIM_86_WINDOW_HH
 

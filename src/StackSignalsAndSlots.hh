@@ -1,5 +1,5 @@
-#ifndef STACK_SIGNALS_AND_SLOTS_HH
-#define STACK_SIGNALS_AND_SLOTS_HH
+#ifndef JAF__STACK_SIGNALS_AND_SLOTS_HH
+#define JAF__STACK_SIGNALS_AND_SLOTS_HH
 
 #include <QObject>
 
@@ -9,5 +9,5 @@ class StackSignalsAndSlots : public QObject {
 signals:
 };
 
-#endif //STACK_SIGNALS_AND_SLOTS_HH
+#endif //JAF__STACK_SIGNALS_AND_SLOTS_HH
 

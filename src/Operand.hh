@@ -1,5 +1,5 @@
-#ifndef OPERAND_HH
-#define OPERAND_HH
+#ifndef JAF__OPERAND_HH
+#define JAF__OPERAND_HH
 
 #include "Defines.hh"
 #include <vector>
@@ -44,4 +44,5 @@ public:
 	}
 };
 
-#endif //OPERAND_HH
+#endif //JAF__OPERAND_HH
+

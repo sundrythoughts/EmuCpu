@@ -1,11 +1,14 @@
-#ifndef INSTRUCTIONS_HH
-#define INSTRUCTIONS_HH
+#ifndef JAF__INSTRUCTIONS_HH
+#define JAF__INSTRUCTIONS_HH
 
 #include "Value.hh"
 #include <vector>
 #include "INumberReadableWritable.hh"
+#include "ExecutionUnit.hh"
+#include "InstructionDecoder.hh"
 
 class Instructions;
+class InstructionDecoder;
 
 class Instruction {
 public:
@@ -15,18 +18,18 @@ public:
 	const char *operand_codes[3];
 	unsigned int group;
 
-	std::vector<Value>* (*decode_func) ();
+	std::vector<Value>* (InstructionDecoder::*decode_func) ();
 
-	void (*execute_func) (std::vector<Value> *ops);
+	void (ExecutionUnit::*execute_func) (std::vector<Value> *ops);
 
-	std::vector<Value>* decode () {
-		return decode_func ();
+	std::vector<Value>* decode (InstructionDecoder *id) {
+		return (id->*decode_func) ();
 	}
 
-	void execute (std::vector<Value> *ops) {
-		execute_func (ops);
+	void execute (ExecutionUnit *eu, std::vector<Value> *ops) {
+		(eu->*execute_func) (ops);
 	}
-};//end class Value
+}; //end class Value
 
 class Instructions {
 public:
@@ -42,7 +45,7 @@ public:
 
 	static const Instruction one_byte_opcode_instruction_map[256];
 	static const Instruction one_byte_opcode_instruction_extension_map[11][8];
-};//end class Instructions
+}; //end class Instructions
 
-#endif //INSTRUCTIONS_HH
+#endif //JAF__INSTRUCTIONS_HH
 

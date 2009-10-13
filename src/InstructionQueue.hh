@@ -1,5 +1,5 @@
-#ifndef INSTRUCTION_CODE_QUEUE_HH
-#define INSTRUCTION_CODE_QUEUE_HH
+#ifndef JAF__INSTRUCTION_CODE_QUEUE_HH
+#define JAF__INSTRUCTION_CODE_QUEUE_HH
 
 #include <vector>
 
@@ -9,4 +9,5 @@ public:
 	
 };
 
-#endif //INSTRUCTION_CODE_QUEUE_HH
+#endif //JAF__INSTRUCTION_CODE_QUEUE_HH
+

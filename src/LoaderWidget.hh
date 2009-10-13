@@ -1,5 +1,5 @@
-#ifndef LOADER_WIDGET_HH
-#define LOADER_WIDGET_HH
+#ifndef JAF__LOADER_WIDGET_HH
+#define JAF__LOADER_WIDGET_HH
 
 #include <QtCore>
 #include <QtGui>
@@ -90,5 +90,5 @@ public:
 	}
 };
 
-#endif //LOADER_WIDGET_HH
+#endif //JAF__LOADER_WIDGET_HH
 

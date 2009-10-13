@@ -1,5 +1,5 @@
-#ifndef BUS_INTERFACE_UNIT_HH
-#define BUS_INTERFACE_UNIT_HH
+#ifndef JAF__BUS_INTERFACE_UNIT_HH
+#define JAF__BUS_INTERFACE_UNIT_HH
 
 #include "Memory.hh"
 #include "Register.hh"
@@ -102,5 +102,5 @@ BusInterfaceUnit::getMemoryAddress (MemoryAddress<T> * &mem_addr, unsigned short
 	mem_addr = new MemoryAddress<T> (m_memory, seg, offset);
 }
 
-#endif //BUS_INTERFACE_UNIT_HH
+#endif //JAF__BUS_INTERFACE_UNIT_HH
 

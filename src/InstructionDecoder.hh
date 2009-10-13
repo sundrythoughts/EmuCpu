@@ -1,11 +1,12 @@
-#ifndef INSTRUCTION_DECODER_HH
-#define INSTRUCTION_DECODER_HH
+#ifndef JAF__INSTRUCTION_DECODER_HH
+#define JAF__INSTRUCTION_DECODER_HH
 
 //#include "Operand.hh"
 #include "ExecutionUnit.hh"
 #include "BusInterfaceUnit.hh"
 #include "Instructions.hh"
 #include "Defines.hh"
+#include "Value.hh"
 #include <vector>
 #include <map>
 #include <string>
@@ -20,7 +21,7 @@ public:
 
 private:
 	unsigned char *m_inst_ptr;
-	ModRM m_modrm;
+	Jaf::ModRM m_modrm;
 
 	typedef void (InstructionDecoder::*DecodeFunc) ();
 	std::map<std::string, DecodeFunc> m_decode_map;
@@ -68,11 +69,11 @@ public:
 
 	/**
 	*/
-	void connect_to (ExecutionUnit &eu);
+	void connectTo (ExecutionUnit &eu);
 
 	/**
 	*/
-	void connect_to (BusInterfaceUnit &biu);
+	void connectTo (BusInterfaceUnit &biu);
 
 	/**
 	*/
@@ -128,7 +129,34 @@ protected:
 	void decode_operand_Xv ();
 	void decode_operand_Yb ();
 	void decode_operand_Yv ();
+
+public:
+	std::vector<Value>* decodeNone ();
+	std::vector<Value>* decodeRegRM ();
+	std::vector<Value>* decodeAccImm ();
+	std::vector<Value>* decodeSegment ();
+	std::vector<Value>* decodeAcc ();
+	std::vector<Value>* decodeReg ();
+	std::vector<Value>* decodeShort ();
+	std::vector<Value>* decodeSegRM ();
+	std::vector<Value>* decodeAccReg ();
+	std::vector<Value>* decodeAccMem ();
+	std::vector<Value>* decodeRegImm ();
+	std::vector<Value>* decodeIntra ();
+	std::vector<Value>* decodeInter ();
+	std::vector<Value>* decodeXferInd ();
+	std::vector<Value>* decodeRMImm ();
+	std::vector<Value>* decodeAccPort ();
+	std::vector<Value>* decodeRM ();
+	std::vector<Value>* decodeFlags ();
+	std::vector<Value>* decodeRetPop ();
+	std::vector<Value>* decodeType3 ();
+	std::vector<Value>* decodeEscNum ();
+	std::vector<Value>* decodeAccVPort ();
+	std::vector<Value>* decodeAccBase ();
+	std::vector<Value>* decodeIntNum ();
+	std::vector<Value>* decodeString ();
 };
 
-#endif //INSTRUCTION_DECODER_HH
+#endif //JAF__INSTRUCTION_DECODER_HH
 

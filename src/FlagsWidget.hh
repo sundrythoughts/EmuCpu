@@ -1,5 +1,5 @@
-#ifndef FLAGS_WIDGET_HH
-#define FLAGS_WIDGET_HH
+#ifndef JAF__FLAGS_WIDGET_HH
+#define JAF__FLAGS_WIDGET_HH
 
 #include <QtCore>
 #include <QtGui>
@@ -98,5 +98,5 @@ public slots:
 	}
 };
 
-#endif //FLAGS_WIDGET_HH
+#endif //JAF__FLAGS_WIDGET_HH
 

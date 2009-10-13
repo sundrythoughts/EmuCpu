@@ -1,5 +1,5 @@
-#ifndef PROXY_LAYER_HH
-#define PROXY_LAYER_HH
+#ifndef JAF__PROXY_LAYER_HH
+#define JAF__PROXY_LAYER_HH
 
 #include "Cpu.hh"
 #include "Sim86Window.hh"
@@ -31,5 +31,5 @@ private:
 	void connectUiSignalsToCpuSlots (Sim86Window &win, Cpu &cpu);
 };
 
-#endif //PROXY_LAYER_HH
+#endif //JAF__PROXY_LAYER_HH
 

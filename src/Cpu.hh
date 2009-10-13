@@ -1,5 +1,5 @@
-#ifndef CPU_HH
-#define CPU_HH
+#ifndef JAF__CPU_HH
+#define JAF__CPU_HH
 
 #include "ExecutionUnit.hh"
 #include "BusInterfaceUnit.hh"
@@ -122,5 +122,5 @@ public slots:
 	}
 };
 
-#endif //CPU_HH
+#endif //JAF__CPU_HH
 

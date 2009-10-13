@@ -1,5 +1,5 @@
-#ifndef UTILITY_HH
-#define UTILITY_HH
+#ifndef JAF__UTILITY_HH
+#define JAF__UTILITY_HH
 
 class Utility {
 
@@ -54,5 +54,5 @@ Utility::clear_bit (T &val, unsigned int n) {
 	val &= mask;
 }
 
-#endif //UTILITY_HH
+#endif //JAF__UTILITY_HH
 

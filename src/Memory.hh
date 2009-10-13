@@ -1,5 +1,5 @@
-#ifndef MEMORY_HH
-#define MEMORY_HH
+#ifndef JAF__MEMORY_HH
+#define JAF__MEMORY_HH
 
 #include <sigc++/sigc++.h>
 #include "INumberReadableWritable.hh"
@@ -154,5 +154,5 @@ Memory::write (size_t addr, const INumberReadableWritable<T> &src) {
 	return true;
 }
 
-#endif //MEMORY_HH
+#endif //JAF__MEMORY_HH
 

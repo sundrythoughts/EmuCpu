@@ -1,5 +1,5 @@
-#ifndef LOADER_HH
-#define LOADER_HH
+#ifndef JAF__LOADER_HH
+#define JAF__LOADER_HH
 
 #include <vector>
 #include <cstdio>
@@ -199,5 +199,5 @@ private:
 	}
 };
 
-#endif //LOADER_HH
+#endif //JAF__LOADER_HH
 

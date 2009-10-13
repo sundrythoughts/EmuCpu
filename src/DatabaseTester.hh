@@ -1,5 +1,5 @@
-#ifndef DATABASE_TESTER_HH
-#define DATABASE_TESTER_HH
+#ifndef JAF__DATABASE_TESTER_HH
+#define JAF__DATABASE_TESTER_HH
 
 #include <QObject>
 
@@ -39,5 +39,5 @@ signals:
 	void disconnected ();
 };
 
-#endif //DATABASE_TESTER_HH
+#endif //JAF__DATABASE_TESTER_HH
 

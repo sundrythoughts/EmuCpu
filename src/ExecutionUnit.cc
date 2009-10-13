@@ -419,3 +419,7 @@ ExecutionUnit::setRegFlagsZF (bool val) {
 	m_signal_value_changed_reg_flag_zf.emit (getRegFlagsZF ());
 }
 
+void
+ExecutionUnit::execMOV (std::vector<Value> *ops) {
+}
+

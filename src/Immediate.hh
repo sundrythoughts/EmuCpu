@@ -1,5 +1,5 @@
-#ifndef IMMEDIATE_HH
-#define IMMEDIATE_HH
+#ifndef JAF__IMMEDIATE_HH
+#define JAF__IMMEDIATE_HH
 
 #include "INumberReadableWritable.hh"
 #include <iostream>
@@ -177,5 +177,5 @@ private:
 	}
 };
 
-#endif //IMMEDIATE_HH
+#endif //JAF__IMMEDIATE_HH
 

@@ -1,5 +1,5 @@
-#ifndef MEMORY_ADDRESS_HH
-#define MEMORY_ADDRESS_HH
+#ifndef JAF__MEMORY_ADDRESS_HH
+#define JAF__MEMORY_ADDRESS_HH
 
 #include "Memory.hh"
 #include "INumberReadableWritable.hh"
@@ -189,5 +189,5 @@ private:
 	}
 };
 
-#endif //MEMORY_ADDRESS_HH
+#endif //JAF__MEMORY_ADDRESS_HH
 

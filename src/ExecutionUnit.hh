@@ -1,9 +1,10 @@
-#ifndef EXECUTION_UNIT_HH
-#define EXECUTION_UNIT_HH
+#ifndef JAF__EXECUTION_UNIT_HH
+#define JAF__EXECUTION_UNIT_HH
 
 #include "BusInterfaceUnit.hh"
 #include "Register.hh"
 #include "Defines.hh"
+#include "Value.hh"
 #include <iostream>
 #include <cstdio>
 #include <sigc++/sigc++.h>
@@ -248,104 +249,110 @@ public:
 	/** */
 	void setRegFlagsZF (bool val);
 
-	void execAAA();
-	void execAAD();
-	void execAAM();
-	void execAAS();
-	void execADC();
-	void execADD();
-	void execAND();
-	void execCALL();
-	void execCALFAR();
-	void execCBW();
-	void execCLC();
-	void execCLD();
-	void execCLI();
-	void execCMC();
-	void execCMP();
-	void execCMPS();
-	void execCWD();
-	void execDAA();
-	void execDAS();
-	void execDEC();
-	void execDIV();
-	void execESC();
-	void execHLT();
-	void execIDIV();
-	void execIMUL();
-	void execIN();
-	void execINC();
-	void execINT();
-	void execINTO();
-	void execIRET();
-	void execJNBE();
-	void execJNB();
-	void execJNAE();
-	void execJNA();
-	void execJC();
-	void execJCXZ();
-	void execJE();
-	void execJG();
-	void execJGE();
-	void execJL();
-	void execJLE();
-	void execJMP();
-	void execJMPFAR();
-	void execJNC();
-	void execJNE();
-	void execJNO();
-	void execJNS();
-	void execJNP();
-	void execJO();
-	void execJPE();
-	void execJS();
-	void execLAHF();
-	void execLDS();
-	void execLEA();
-	void execLES();
-	void execLOCK();
-	void execLODS();
-	void execLOOP();
-	void execLOOPE();
-	void execLOOPNE();
-	void execMOV();
-	void execMOVS();
-	void execMUL();
-	void execNEG();
-	void execNOP();
-	void execNOT();
-	void execOR();
-	void execOUT();
-	void execPOP();
-	void execPOPF();
-	void execPUSH();
-	void execPUSHF();
-	void execRCL();
-	void execRCR();
-	void execREP();
-	void execREPNE();
-	void execRET();
-	void execRETFAR();
-	void execROL();
-	void execROR();
-	void execSAHF();
-	void execSHL();
-	void execSAR();
-	void execSBB();
-	void execSCAS();
-	void execSEG();
-	void execSHR();
-	void execSTC();
-	void execSTD();
-	void execSTI();
-	void execSTOS();
-	void execSUB();
-	void execTEST();
-	void execWAIT();
-	void execXCHG();
-	void execXLAT();
-	void execXOR();
+	void execAAA ();
+	void execAAD ();
+	void execAAM ();
+	void execAAS ();
+	void execADC ();
+	void execADD ();
+	void execAND ();
+	void execCALL ();
+	void execCALLFAR ();
+	void execCBW ();
+	void execCLC ();
+	void execCLD ();
+	void execCLI ();
+	void execCMC ();
+	void execCMP ();
+	void execCMPS ();
+	void execCWD ();
+	void execDAA ();
+	void execDAS ();
+	void execDEC ();
+	void execDIV ();
+	void execESC ();
+	void execHLT ();
+	void execIDIV ();
+	void execIMUL ();
+	void execIN ();
+	void execINC ();
+	void execINT ();
+	void execINTO ();
+	void execIRET ();
+	void execJNBE ();
+	void execJNB ();
+	void execJNAE ();
+	void execJNA ();
+	void execJC ();
+	void execJCXZ ();
+	void execJE ();
+	void execJG ();
+	void execJGE ();
+	void execJL ();
+	void execJLE ();
+	void execJMP ();
+	void execJMPFAR ();
+	void execJNC ();
+	void execJNE ();
+	void execJNO ();
+	void execJNS ();
+	void execJNP ();
+	void execJO ();
+	void execJPE ();
+	void execJS ();
+	void execLAHF ();
+	void execLDS ();
+	void execLEA ();
+	void execLES ();
+	void execLOCK ();
+	void execLODS ();
+	void execLOOP ();
+	void execLOOPE ();
+	void execLOOPNE ();
+
+	void execMOV (std::vector<Value> *ops);
+
+	template<typename T1, typename T2>
+	void execTemplateMOV (INumberReadableWritable<T1> *op1, INumberReadableWritable<T2> *op2) {
+	}
+
+	void execMOVS ();
+	void execMUL ();
+	void execNEG ();
+	void execNOP ();
+	void execNOT ();
+	void execOR ();
+	void execOUT ();
+	void execPOP ();
+	void execPOPF ();
+	void execPUSH ();
+	void execPUSHF ();
+	void execRCL ();
+	void execRCR ();
+	void execREP ();
+	void execREPNE ();
+	void execRET ();
+	void execRETFAR ();
+	void execROL ();
+	void execROR ();
+	void execSAHF ();
+	void execSHL ();
+	void execSAR ();
+	void execSBB ();
+	void execSCAS ();
+	void execSEG ();
+	void execSHR ();
+	void execSTC ();
+	void execSTD ();
+	void execSTI ();
+	void execSTOS ();
+	void execSUB ();
+	void execTEST ();
+	void execWAIT ();
+	void execXCHG ();
+	void execXLAT ();
+	void execXOR ();
 };
 
-#endif //EXECUTION_UNIT_HH
+#endif //JAF__EXECUTION_UNIT_HH
 

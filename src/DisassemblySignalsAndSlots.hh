@@ -1,5 +1,5 @@
-#ifndef DISASSEMBLY_SIGNALS_AND_SLOTS_HH
-#define DISASSEMBLY_SIGNALS_AND_SLOTS_HH
+#ifndef JAF__DISASSEMBLY_SIGNALS_AND_SLOTS_HH
+#define JAF__DISASSEMBLY_SIGNALS_AND_SLOTS_HH
 
 #include <QObject>
 
@@ -9,5 +9,5 @@ class DisassemblySignalsAndSlots : public QObject {
 signals:
 };
 
-#endif //DISASSEMBLY_SIGNALS_AND_SLOTS_HH
+#endif //JAF__DISASSEMBLY_SIGNALS_AND_SLOTS_HH
 

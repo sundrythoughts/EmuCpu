@@ -25,3 +25,11 @@
 
  * 2009-10-04 => 3 hrs
    - Still connecting the UI and the CPU (which is running in a separate thread).
+
+ * 2009-10-05 - 2009-10-08 => 9 hrs
+   - Got the threading to work correctly."
+ * 2009-10-11 => 5 hrs
+   - Added decoding and executing stubs.
+   - Modified function pointers for decoding and executing.
+   - Added possible pointer deletion to Value class.
+

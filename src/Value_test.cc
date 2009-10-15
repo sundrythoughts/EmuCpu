@@ -1,6 +1,7 @@
 #include "Value.hh"
 #include <iostream>
 #include <string>
+#include <vector>
 
 using namespace std;
 
@@ -29,13 +30,13 @@ int main (int argc, char **argv) {
 
 		string s1 = "Joseph";
 
-		if (!v.set_value (s1)) {
+		if (!v.setValue (s1)) {
 			print_failed (TEST_NUMBER);
 		}
 
 		string s2;
 
-		if (!v.get_value (s2)) {
+		if (!v.getValue (s2)) {
 			print_failed (TEST_NUMBER);
 		}
 
@@ -61,13 +62,13 @@ int main (int argc, char **argv) {
 
 		string s1 = "Joseph";
 
-		if (!v.set_value (s1)) {
+		if (!v.setValue (s1)) {
 			print_failed (TEST_NUMBER);
 		}
 
 		string s2;
 
-		if (!v.get_value (s2)) {
+		if (!v.getValue (s2)) {
 			print_failed (TEST_NUMBER);
 		}
 
@@ -85,13 +86,13 @@ int main (int argc, char **argv) {
 
 		int i1 = 13;
 
-		if (!v.set_value (i1)) {
+		if (!v.setValue (i1)) {
 			print_failed (TEST_NUMBER);
 		}
 
 		int i2;
 
-		if (!v.get_value (i2)) {
+		if (!v.getValue (i2)) {
 			print_failed (TEST_NUMBER);
 		}
 
@@ -120,7 +121,7 @@ int main (int argc, char **argv) {
 			print_failed (TEST_NUMBER);
 		}
 
-		if (!v1.set_value (5)) {
+		if (!v1.setValue (5)) {
 			print_failed (TEST_NUMBER);
 		}
 
@@ -129,15 +130,15 @@ int main (int argc, char **argv) {
 		}
 
 
-		if (!v2.set_value (13)) {
+		if (!v2.setValue (13)) {
 			print_failed (TEST_NUMBER);
 		}
 
-		if (!v1.get_value (i1)) {
+		if (!v1.getValue (i1)) {
 			print_failed (TEST_NUMBER);
 		}
 
-		if (!v2.get_value (i2)) {
+		if (!v2.getValue (i2)) {
 			print_failed (TEST_NUMBER);
 		}
 
@@ -163,11 +164,11 @@ int main (int argc, char **argv) {
 
 		int i = 10;
 
-		if (!v.set_value (i)) {
+		if (!v.setValue (i)) {
 			print_failed (TEST_NUMBER);
 		}
 
-		if (&i == v.get_pointer ()) {
+		if (&i == v.getPointer ()) {
 			print_failed (TEST_NUMBER);
 		}
 
@@ -190,12 +191,12 @@ int main (int argc, char **argv) {
 			print_failed (TEST_NUMBER);
 		}
 
-		if (!v.set_value (i1)) {
+		if (!v.setValue (i1)) {
 			print_failed (TEST_NUMBER);
 		}
 
 		int *i2;
-		if (!v.get_value (i2)) {
+		if (!v.getValue (i2)) {
 			print_failed (TEST_NUMBER);
 		}
 
@@ -224,7 +225,7 @@ int main (int argc, char **argv) {
 			print_failed (TEST_NUMBER);
 		}
 
-		if (!v.set_value ((void*)0)) {
+		if (!v.setValue ((void*)0)) {
 			print_failed (TEST_NUMBER);
 		}
 
@@ -243,20 +244,20 @@ int main (int argc, char **argv) {
 			print_failed (TEST_NUMBER);
 		}
 
-		if (!v.set_value (13)) {
+		if (!v.setValue (13)) {
 			print_failed (TEST_NUMBER);
 		}
 
 		int opsz = 32;
 		if (opsz == 16) {
 			short i;
-			if (!v.get_value (i)) {
+			if (!v.getValue (i)) {
 				print_failed (TEST_NUMBER);
 			}
 		}
 		else if (opsz == 32) {
 			int i;
-			if (!v.get_value (i)) {
+			if (!v.getValue (i)) {
 				print_failed (TEST_NUMBER);
 			}
 
@@ -264,7 +265,7 @@ int main (int argc, char **argv) {
 		}
 		else if (opsz == 64) {
 			long int i;
-			if (!v.get_value (i)) {
+			if (!v.getValue (i)) {
 				print_failed (TEST_NUMBER);
 			}
 		}
@@ -286,16 +287,16 @@ int main (int argc, char **argv) {
 			print_failed (TEST_NUMBER);
 		}
 
-		if (!v.set_value (std::string ("Joseph Freeman"))) {
+		if (!v.setValue (std::string ("Joseph Freeman"))) {
 			print_failed (TEST_NUMBER);
 		}
 
 		std::string *sp;
-		if (!v.get_value_pointer (sp)) {
+		if (!v.getValuePointer (sp)) {
 			print_failed (TEST_NUMBER);
 		}
 
-		if (sp != v.get_pointer ()) {
+		if (sp != v.getPointer ()) {
 			print_failed (TEST_NUMBER);
 		}
 
@@ -303,5 +304,18 @@ int main (int argc, char **argv) {
 			print_passed (TEST_NUMBER);
 		}		
 	}//end Test 8
+
+	{//Test 9
+		++TEST_NUMBER;
+
+		ps = true;
+
+		vector<Value> v;
+		v.resize (10);
+
+		if (ps) {
+			print_passed (TEST_NUMBER);
+		}
+	}//end Test 9
 }
 

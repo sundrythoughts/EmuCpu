@@ -26,7 +26,7 @@ public:
 
 	/**
 	*/
-	Value () : m_data (0) {
+	Value () : m_data (0), m_call_free (false) {
 	}
 
 	/**
@@ -54,9 +54,9 @@ public:
 		m_type_name = typeid(T).name ();
 		m_call_free = del_data;
 		m_call_free_pointer = del_ptr_data;
-		free_func = &Value::free_template<T>;
-		free_pointer_func = &Value::free_pointer_template<T*>;
-		copy_func = &Value::copy_template<T>;
+		free_func = &Value::freeTemplate<T>;
+		free_pointer_func = &Value::freePointerTemplate<T*>;
+		copy_func = &Value::copyTemplate<T>;
 		//FIXME - need a copy function
 		return true;
 	}
@@ -65,7 +65,7 @@ public:
 	@brief Get the raw data pointer.
 	@return Raw data pointer.
 	*/
-	const void* get_pointer () {
+	const void* getPointer () {
 		return m_data;
 	}
 
@@ -73,7 +73,7 @@ public:
 	@brief Get the typeid type name string.
 	@return Typeid type name string.
 	*/
-	const std::string& type_name () const {
+	const std::string& typeName () const {
 		return m_type_name;
 	}
 
@@ -83,7 +83,7 @@ public:
 	@return true if successful, false if unsuccessful.
 	*/
 	template<typename T>
-	bool get_value (T &v) {
+	bool getValue (T &v) {
 		if (!m_data) {
 			std::cerr << "class Value - Unable to initialize a Value that is already initialized." << std::endl;
 			return false;
@@ -104,7 +104,7 @@ public:
 	@return true if successful, false if unsuccessful.
 	*/
 	template<typename T>
-	bool get_value_pointer (T* &v) {
+	bool getValuePointer (T* &v) {
 		if (!m_data) {
 			std::cerr << "class Value - Unable to initialize a Value that is already initialized." << std::endl;
 			return false;
@@ -124,9 +124,9 @@ public:
 	@return true if successful, false if unsuccessful.
 	*/
 	template<typename T>
-	bool set_value (const T &v) const {
+	bool setValue (const T &v) const {
 		if (!m_data) {
-			std::cerr << "class Value - Unable to initialize a Value that is already initialized." << std::endl;
+			std::cerr << "class Value - Unable to initialize a Value that is not initialized." << std::endl;
 			return false;
 		}
 		if (0 != std::strcmp (m_type_name.c_str (), typeid(T).name ())) {
@@ -165,9 +165,9 @@ private:
 	Free the memory of the data.
 	*/
 	template<typename T>
-	bool free_template () {
+	bool freeTemplate () {
 		if (!m_data) {
-			std::cerr << "class Value - Unable to initialize a Value that is already initialized." << std::endl;
+			std::cerr << "class Value - Unable to free a Value that is already uninitialized." << std::endl;
 			return false;
 		}
 		if (0 != std::strcmp (m_type_name.c_str (), typeid(T).name ())) {
@@ -186,9 +186,9 @@ private:
 	Free the memory of the data.
 	*/
 	template<typename T>
-	bool free_pointer_template () {
+	bool freePointerTemplate () {
 		if (!m_data) {
-			std::cerr << "class Value - Unable to initialize a Value that is already initialized." << std::endl;
+			std::cerr << "class Value - Unable to free a pointer Value that is not initialized." << std::endl;
 			return false;
 		}
 		//if (0 != std::strcmp (m_type_name.c_str (), typeid(T).name ())) {
@@ -205,9 +205,9 @@ private:
 	Copy this into dest.
 	*/
 	template<typename T>
-	bool copy_template (Value &dest) {
+	bool copyTemplate (Value &dest) {
 		if (!m_data || !dest.m_data) {
-			std::cerr << "class Value - Unable to initialize a Value that is already initialized." << std::endl;
+			std::cerr << "class Value - Unable to copy a Value that is not initialized." << std::endl;
 			return false;
 		}
 		if (0 != std::strcmp (m_type_name.c_str (), dest.m_type_name.c_str ())) {
@@ -228,7 +228,13 @@ private:
 	}
 
 	//private copy constructor
-	Value (Value &v);
+public:
+	Value (const Value &v) {
+		m_data = 0;
+		m_type_name = "";
+		m_call_free = false;
+		m_call_free_pointer = false;
+	}
 };
 
 #endif //JAF__VALUE_HH

@@ -9,7 +9,7 @@
 template<typename T>
 class MemoryAddress : public INumberReadableWritable<T> {
 	Memory *m_memory;
-	unsigned int m_phys_addr;
+	size_t m_phys_addr;
 	mutable T m_num;
 
 public:

@@ -89,6 +89,18 @@ public:
 	/** */
 	template<typename T>
 	void getMemoryAddress (MemoryAddress<T> * &mem_addr, unsigned short seg, unsigned short offset);
+
+	template<typename T>
+	T getInstructionBytes () {
+		size_t m_phys_addr = m_sreg_cs << 4;
+		m_phys_addr += m_reg_ip;
+		T val;
+		m_memory->read (m_phys_addr, val);
+
+		m_reg_ip += sizeof(T);
+
+		return val;
+	}
 };
 
 template<typename T>

@@ -11,6 +11,12 @@ SOURCES += ProxyLayer.cc
 HEADERS += Cpu.hh
 SOURCES += Cpu.cc
 
+HEADERS += NumberWrapper.hh
+SOURCES += NumberWrapper.cc
+
+HEADERS += OperandList.hh
+SOURCES += OperandList.cc
+
 HEADERS += Defines.hh
 SOURCES += Defines.cc
 
@@ -26,8 +32,8 @@ SOURCES += Memory.cc
 HEADERS += Loader.hh
 SOURCES += Loader.cc
 
-HEADERS += Instructions.hh
-SOURCES += Instructions.cc
+HEADERS += InstructionTable.hh
+SOURCES += InstructionTable.cc
 
 HEADERS += InstructionDecoder.hh
 SOURCES += InstructionDecoder.cc

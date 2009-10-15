@@ -3,7 +3,7 @@
 //FIXME - doesn't check for validity of QTableWidgetItem
 void
 MemoryWidget::setMemoryAddress (int addr, unsigned char val) {
-	std::cout << "setMemoryAddress: " << addr << ", " << (unsigned int)val << std::endl;
+	//std::cout << "setMemoryAddress: " << addr << ", " << (unsigned int)val << std::endl;
 
 	int row_index = addr / 16;
 	int elmt_index = addr % 16;
@@ -41,7 +41,7 @@ MemoryWidget::setMemoryAddress (int addr, unsigned char val) {
 void
 MemoryWidget::setAllMemoryAddresses (const unsigned char *arr, size_t sz) {
 	//FIXME
-	std::cout << "setAllMemoryAddresses" << std::endl;
+	//std::cout << "setAllMemoryAddresses" << std::endl;
 	//for (size_t i = 0; i < sz; ++i) {
 	//	std::cout << (unsigned int)arr[i] << ' ';
 	//}

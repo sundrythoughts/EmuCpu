@@ -1,4 +1,7 @@
 #include "InstructionDecoder.hh"
+#include "MemoryAddress.hh"
+#include "Register.hh"
+#include "Immediate.hh"
 #include <iostream>
 #include <cstdio>
 
@@ -15,25 +18,31 @@ InstructionDecoder::connectTo (BusInterfaceUnit &biu) {
 }
 
 void
-InstructionDecoder::get_instruction () {
+InstructionDecoder::getInstruction () {
 	m_disassembly = "";
-	decode_instruction ();
+	decodeInstruction ();
 }
 
 void
-InstructionDecoder::next_instruction () {
+InstructionDecoder::nextInstruction () {
 	//FIXME
+	m_operands.clear ();
+
+	m_instruction_bytes.clear ();
+	m_instruction_bytes.push_back (m_biu->getInstructionBytes<unsigned char> ());
+
+	decodeInstruction ();
 }
 
 const std::string&
-InstructionDecoder::get_disassembly () const {
+InstructionDecoder::getDisassembly () const {
 	return m_disassembly;
 }
 
 void
-InstructionDecoder::decode_instruction () {
+InstructionDecoder::decodeInstruction () {
 	m_inst_ptr = &m_instruction_bytes[0];
-	const Instruction *inst = &Instructions::one_byte_opcode_instruction_map[*m_inst_ptr];
+	const InstructionTableItem *inst = &InstructionTable::one_byte_opcode_instruction_map[*m_inst_ptr];
 	cout << inst->mnemonic << " ";
 
 	++m_inst_ptr;
@@ -42,411 +51,273 @@ InstructionDecoder::decode_instruction () {
 		++m_inst_ptr;
 	}
 
-	unsigned int op_count = inst->operand_count;
-	for (unsigned int i = 0; i < op_count; ++i) {
-		(this->*(*m_decode_map.find (inst->operand_codes[i])).second) ();
+	inst->decode (this);
+	
+	//FIXME - not all execute pointers are implemented yet
+	//inst->execute (m_eunit, m_operands);
+}
 
-		if (i < op_count - 1 ) {
-			cout << ", ";
-			m_disassembly += ", ";
-		}
-	}
-
+void
+InstructionDecoder::decodeNone () {
+	//cout << "decodeNone ()" << endl;
 	cout << endl;
 }
 
 void
-InstructionDecoder::decode_operand_AH () {
-	cout << "ah";
-	m_disassembly += "ah"; 
-}
-
-void
-InstructionDecoder::decode_operand_AL () {
-	cout << "al";
-	m_disassembly += "al";
-}
-
-void
-InstructionDecoder::decode_operand_BH () {
-	cout << "bh";
-	m_disassembly += "bh";
-}
-
-void
-InstructionDecoder::decode_operand_BL () {
-	cout << "bl";
-	m_disassembly += "bl";
-}
-
-void
-InstructionDecoder::decode_operand_CH () {
-	cout << "ch";
-	m_disassembly += "ch";
-}
-
-void
-InstructionDecoder::decode_operand_CL () {
-	cout << "cl";
-	m_disassembly += "cl";
-}
-
-void
-InstructionDecoder::decode_operand_DH () {
-	cout << "dh";
-	m_disassembly += "dh";
-}
-
-void
-InstructionDecoder::decode_operand_DL () {
-	cout << "dl";
-	m_disassembly += "dl";
-}
-
-void
-InstructionDecoder::decode_operand_Ap () {
-	//FIXME
-}
-
-void
-InstructionDecoder::decode_operand_AX () {
-	cout << "ax";
-	m_disassembly += "ax";
-}
-
-void
-InstructionDecoder::decode_operand_BP () {
-	cout << "bp";
-	m_disassembly += "bp";
-}
-
-void
-InstructionDecoder::decode_operand_BX () {
-	cout << "bx";
-	m_disassembly += "bx";
-}
-
-void
-InstructionDecoder::decode_operand_CX () {
-	cout << "cx";
-	m_disassembly += "cx";
-}
-
-void
-InstructionDecoder::decode_operand_DI () {
-	cout << "di";
-	m_disassembly += "di";
-}
-
-void
-InstructionDecoder::decode_operand_DX () {
-	cout << "dx";
-	m_disassembly += "dx";
-}
-
-void
-InstructionDecoder::decode_operand_Eb () {
-	//FIXME
-	switch (m_modrm.mod) {
-	case 0: // DISP = 0, disp-low and disp-high are absent
-		break;
-	case 1: // DISP = disp-low sign-extended to 16-bits, disp-high is absent
-		break;
-	case 2: // DISP = disp-high: disp-low
-		break;
-	case 3: // r/m is treated as a "reg" field
-		cout << Jaf::reg_index_8_names[m_modrm.rm];
-		m_disassembly += Jaf::reg_index_8_names[m_modrm.rm];
-		break;
-	//default - FIXME
-	}
-}
-
-void
-InstructionDecoder::decode_operand_Ev () {
-	//FIXME
-	switch (m_modrm.mod) {
-	case 0: // DISP = 0, disp-low and disp-high are absent
-		break;
-	case 1: // DISP = disp-low sign-extended to 16-bits, disp-high is absent
-		break;
-	case 2: // DISP = disp-high: disp-low
-		break;
-	case 3: // r/m is treated as a "reg" field
-		cout << Jaf::reg_index_16_names[m_modrm.rm];
-		m_disassembly += Jaf::reg_index_16_names[m_modrm.rm];
-		break;
-	//default - FIXME
-	}
-}
-
-void
-InstructionDecoder::decode_operand_Ew () {
-	//FIXME
-	switch (m_modrm.mod) {
-	case 0: // DISP = 0, disp-low and disp-high are absent
-		break;
-	case 1: // DISP = disp-low sign-extended to 16-bits, disp-high is absent
-		break;
-	case 2: // DISP = disp-high: disp-low
-		break;
-	case 3: // r/m is treated as a "reg" field
-		cout << Jaf::reg_index_16_names[m_modrm.rm];
-		m_disassembly += Jaf::reg_index_16_names[m_modrm.rm];
-		break;
-	//default - FIXME
-	}
-}
-
-void
-InstructionDecoder::decode_operand_Fv () {
-	//FIXME
-}
-
-void
-InstructionDecoder::decode_operand_Gb () {
-	switch (m_modrm.reg) {
-	case Jaf::REG_AL:
-		cout << "al";
-		break;
-	case Jaf::REG_CL:
-		cout << "cl";
-		break;
-	case Jaf::REG_DL:
-		cout << "dl";
-		break;
-	case Jaf::REG_BL:
-		cout << "bl";
-		break;
-	case Jaf::REG_AH:
-		cout << "ah";
-		break;
-	case Jaf::REG_CH:
-		cout << "ch";
-		break;
-	case Jaf::REG_DH:
-		cout << "dh";
-		break;
-	case Jaf::REG_BH:
-		cout << "bh";
-		break;
-	//default - FIXME
-	}
-}
-
-void
-InstructionDecoder::decode_operand_Gv () {
-	switch (m_modrm.reg) {
-	case Jaf::REG_AX:
-		cout << "ax";
-		break;
-	case Jaf::REG_CX:
-		cout << "cx";
-		break;
-	case Jaf::REG_DX:
-		cout << "dx";
-		break;
-	case Jaf::REG_BX:
-		cout << "bx";
-		break;
-	case Jaf::REG_SP:
-		cout << "sp";
-		break;
-	case Jaf::REG_BP:
-		cout << "bp";
-		break;
-	case Jaf::REG_SI:
-		cout << "si";
-		break;
-	case Jaf::REG_DI:
-		cout << "di";
-		break;
-	//default - FIXME
-	}
-}
-
-void
-InstructionDecoder::decode_operand_Ib () {
-	unsigned char *imm = (unsigned char*)m_inst_ptr;
-	printf ("%x", *imm);
-	++m_inst_ptr;
-}
-
-void
-InstructionDecoder::decode_operand_Iv () {
-	unsigned short *imm = (unsigned short*)m_inst_ptr;
-	printf ("%x", *imm);
-	m_inst_ptr += sizeof(unsigned short);
-}
-
-void
-InstructionDecoder::decode_operand_Iw () {
-	unsigned short *imm = (unsigned short*)m_inst_ptr;
-	printf ("%x", *imm);
-	m_inst_ptr += sizeof(unsigned short);
-}
-
-void
-InstructionDecoder::decode_operand_Jb () {
-	unsigned char *imm = (unsigned char*)m_inst_ptr;
-	printf ("%x", *imm);
-	++m_inst_ptr;
-}
-
-void
-InstructionDecoder::decode_operand_Jv () {
-	unsigned short *imm = (unsigned short*)m_inst_ptr;
-	printf ("%x", *imm);
-	m_inst_ptr += sizeof(unsigned short);
-}
-
-void
-InstructionDecoder::decode_operand_Mp () {
-	//FIXME
-}
-
-void
-InstructionDecoder::decode_operand_SI () {
-	cout << "si";
-}
-
-void
-InstructionDecoder::decode_operand_Sw () {
-	switch (m_modrm.reg) {
-	case Jaf::SREG_ES:
-		cout << "es";
-		break;
-	case Jaf::SREG_CS:
-		cout << "cs";
-		break;
-	case Jaf::SREG_SS:
-		cout << "ss";
-		break;
-	case Jaf::SREG_DS:
-		cout << "ds";
-		break;
-	//default - FIXME
-	}
-}
-
-void
-InstructionDecoder::decode_operand_Xb () {
-	//FIXME
-}
-
-void
-InstructionDecoder::decode_operand_Xv () {
-	//FIXME
-}
-
-void
-InstructionDecoder::decode_operand_Yb () {
-	//FIXME
-}
-
-void
-InstructionDecoder::decode_operand_Yv () {
-	//FIXME
-}
-
-std::vector<Value>*
-InstructionDecoder::decodeNone () {
-}
-
-std::vector<Value>*
 InstructionDecoder::decodeRegRM () {
+	cout << "decodeRegRM ()" << endl;
 }
 
-std::vector<Value>*
+void
 InstructionDecoder::decodeAccImm () {
+	union InstMask {
+		unsigned char byte;
+		struct {
+			unsigned int w : 1;
+		};
+	};
+
+	InstMask im;
+	im.byte = m_instruction_bytes[0];
+
+	//cout << im.w << endl;
+
+	cout << "ax,";
+
+	m_operands.resize (m_operands.size () + 1);
+	m_operands.back ().init<unsigned short> (m_eunit->getRegAX ());
+
+	unsigned char *bytes;
+	if (im.w) { //16 bits
+		unsigned short imm = m_biu->getInstructionBytes<unsigned short> ();
+		bytes = (unsigned char*)&imm;
+		for (size_t i = 0; i < sizeof(imm); ++i) {
+			m_instruction_bytes.push_back (bytes[i]);
+		}
+
+		cout << (unsigned int)imm << endl;
+
+		m_operands.resize (m_operands.size () + 1);
+		m_operands.back ().init<unsigned short> (new Immediate<unsigned short> (imm), true);
+	}
+	else { //8 bits
+		unsigned char imm = m_biu->getInstructionBytes<unsigned char> ();
+		bytes = (unsigned char*)imm;
+		for (size_t i = 0; i < sizeof(imm); ++i) {
+			m_instruction_bytes.push_back (bytes[i]);
+		}
+
+		cout << (unsigned int)imm << endl;
+
+		m_operands.resize (m_operands.size () + 1);
+		m_operands.back ().init<unsigned short> (new Immediate<unsigned short> ((unsigned short)imm), true);
+	}
 }
 
-std::vector<Value>*
+void
 InstructionDecoder::decodeSegment () {
+	cout << "decodeSegment ()" << endl;
 }
 
-std::vector<Value>*
+void
 InstructionDecoder::decodeAcc () {
+	cout << "decodeAcc ()" << endl;
 }
 
-std::vector<Value>*
+void
 InstructionDecoder::decodeReg () {
+	//cout << "decodeReg ()" << endl;
+	union InstMask {
+		unsigned char byte;
+		struct {
+			unsigned int reg : 3;
+		};
+	};
+
+	InstMask im;
+	im.byte = m_instruction_bytes[0];
+
+	cout << Jaf::reg_index_16_names[im.reg] << endl;
+	m_operands.resize (m_operands.size () + 1);
+	m_operands.back ().init<unsigned short> (m_eunit->getReg16 (im.reg));
 }
 
-std::vector<Value>*
+void
 InstructionDecoder::decodeShort () {
+	cout << "decodeShort ()" << endl;
+
+	
 }
 
-std::vector<Value>*
+void
 InstructionDecoder::decodeSegRM () {
+	cout << "decodeSegRM ()" << endl;
+
 }
 
-std::vector<Value>*
+void
 InstructionDecoder::decodeAccReg () {
+	//cout << "decodeAccReg ()" << endl;
+
+	union InstMask {
+		unsigned char byte;
+		struct {
+			unsigned int reg : 3;
+		};
+	};
+
+	InstMask im;
+	im.byte = m_instruction_bytes[0];
+
+	cout << Jaf::reg_index_16_names[Jaf::REG_AX] << ",";
+	m_operands.resize (m_operands.size () + 1);
+	m_operands.back ().init<unsigned short> (m_eunit->getRegAX ());
+
+	cout << Jaf::reg_index_16_names[im.reg] << endl;
+	m_operands.resize (m_operands.size () + 1);
+	m_operands.back ().init<unsigned short> (m_eunit->getReg16 (im.reg));
 }
 
-std::vector<Value>*
+void
 InstructionDecoder::decodeAccMem () {
+	cout << "decodeAccMem ()" << endl;
+
 }
 
-std::vector<Value>*
+void
 InstructionDecoder::decodeRegImm () {
+	union InstMask {
+		unsigned char byte;
+		struct {
+			unsigned int reg : 3;
+			unsigned int w : 1;
+		};
+	};
+
+	//cout << "decodeRegImm ()" << endl;
+
+	InstMask im;
+	im.byte = m_instruction_bytes[0];
+
+	//cout << im.w << endl;
+
+	cout << Jaf::reg_index_16_names[im.reg] << ",";
+
+	unsigned char *bytes;
+	if (im.w) { //16 bits
+		m_operands.resize (m_operands.size () + 1);
+		m_operands.back ().init<unsigned short> (m_eunit->getReg16 (im.reg));
+
+		unsigned short imm = m_biu->getInstructionBytes<unsigned short> ();
+		bytes = (unsigned char*)&imm;
+		for (size_t i = 0; i < sizeof(imm); ++i) {
+			m_instruction_bytes.push_back (bytes[i]);
+		}
+
+		cout << (unsigned int)imm << endl;
+
+		m_operands.resize (m_operands.size () + 1);
+		m_operands.back ().init<unsigned short> (new Immediate<unsigned short> (imm), true);
+	}
+	else { //8 bits
+		m_operands.resize (m_operands.size () + 1);
+		m_operands.back ().init<unsigned char> (m_eunit->getReg8 (im.reg));
+
+		unsigned char imm = m_biu->getInstructionBytes<unsigned char> ();
+		bytes = (unsigned char*)imm;
+		for (size_t i = 0; i < sizeof(imm); ++i) {
+			m_instruction_bytes.push_back (bytes[i]);
+		}
+
+		cout << (unsigned int)imm << endl;
+
+		m_operands.resize (m_operands.size () + 1);
+		m_operands.back ().init<unsigned char> (new Immediate<unsigned char> (imm), true);
+	}
 }
 
-std::vector<Value>*
+void
 InstructionDecoder::decodeIntra () {
+	cout << "decodeIntra ()" << endl;
+
 }
 
-std::vector<Value>*
+void
 InstructionDecoder::decodeInter () {
+	cout << "decodeInter ()" << endl;
+
 }
 
-std::vector<Value>*
+void
 InstructionDecoder::decodeXferInd () {
+	cout << "decodeXferInd ()" << endl;
+
 }
 
-std::vector<Value>*
+void
 InstructionDecoder::decodeRMImm () {
+	cout << "decodeRMImm ()" << endl;
+
 }
 
-std::vector<Value>*
+void
 InstructionDecoder::decodeAccPort () {
+	cout << "decodeAccPort ()" << endl;
+
 }
 
-std::vector<Value>*
+void
 InstructionDecoder::decodeRM () {
+	cout << "decodeRM ()" << endl;
+
 }
 
-std::vector<Value>*
+void
 InstructionDecoder::decodeFlags () {
+	cout << "decodeFlags ()" << endl;
+
 }
 
-std::vector<Value>*
+void
 InstructionDecoder::decodeRetPop () {
+	cout << "decodeRetPop ()" << endl;
+
 }
 
-std::vector<Value>*
+void
 InstructionDecoder::decodeType3 () {
+	cout << "decodeType3 ()" << endl;
+
 }
 
-std::vector<Value>*
+void
 InstructionDecoder::decodeEscNum () {
+	cout << "decodeEscNum ()" << endl;
+
 }
 
-std::vector<Value>*
+void
 InstructionDecoder::decodeAccVPort () {
+	cout << "decodeAccVPort ()" << endl;
+
 }
 
-std::vector<Value>*
+void
 InstructionDecoder::decodeAccBase () {
+	cout << "decodeAccBase ()" << endl;
+
 }
 
-std::vector<Value>*
+void
 InstructionDecoder::decodeIntNum () {
+	cout << "decodeIntNum ()" << endl;
+
 }
 
-std::vector<Value>*
+void
 InstructionDecoder::decodeString () {
+	cout << "decodeString ()" << endl;
+
 }
 
 

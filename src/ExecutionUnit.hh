@@ -4,7 +4,7 @@
 #include "BusInterfaceUnit.hh"
 #include "Register.hh"
 #include "Defines.hh"
-#include "Value.hh"
+#include "NumberWrapper.hh"
 #include <iostream>
 #include <cstdio>
 #include <sigc++/sigc++.h>
@@ -254,7 +254,12 @@ public:
 	void execAAM ();
 	void execAAS ();
 	void execADC ();
-	void execADD ();
+
+	void execADD (std::vector<NumberWrapper> &ops);
+
+	template<typename T1, typename T2>
+	void execMOV (INumberReadableWritable<T1> &op1, INumberReadableWritable<T2> &op2);
+
 	void execAND ();
 	void execCALL ();
 	void execCALLFAR ();
@@ -310,11 +315,10 @@ public:
 	void execLOOPE ();
 	void execLOOPNE ();
 
-	void execMOV (std::vector<Value> *ops);
+	void execMOV (std::vector<NumberWrapper> &ops);
 
 	template<typename T1, typename T2>
-	void execTemplateMOV (INumberReadableWritable<T1> *op1, INumberReadableWritable<T2> *op2) {
-	}
+	void execADD (INumberReadableWritable<T1> &op1, INumberReadableWritable<T2> &op2);
 
 	void execMOVS ();
 	void execMUL ();
@@ -349,10 +353,37 @@ public:
 	void execSUB ();
 	void execTEST ();
 	void execWAIT ();
-	void execXCHG ();
+
+	void execXCHG (std::vector<NumberWrapper> &ops);
+
+	template<typename T>
+	void
+	execXCHG (INumberReadableWritable<T> &op1, INumberReadableWritable<T> &op2);
+
 	void execXLAT ();
 	void execXOR ();
 };
+
+template<typename T1, typename T2>
+void
+ExecutionUnit::execADD (INumberReadableWritable<T1> &op1, INumberReadableWritable<T2> &op2) {
+	op1 += op2; //FIXME - update flags by using the ALU
+}
+
+template<typename T1, typename T2>
+void
+ExecutionUnit::execMOV (INumberReadableWritable<T1> &op1, INumberReadableWritable<T2> &op2) {
+	op1 = op2;
+}
+
+template<typename T>
+void
+ExecutionUnit::execXCHG (INumberReadableWritable<T> &op1, INumberReadableWritable<T> &op2) {
+	T val = op1;
+	op1 = op2;
+	op2 = val;
+}
+
 
 #endif //JAF__EXECUTION_UNIT_HH
 

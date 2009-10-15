@@ -4,8 +4,6 @@
 void
 ExecutionUnit::connectTo (BusInterfaceUnit &biu) {
 	m_biu = &biu;
-
-	//FIXME - connect to signals
 }
 
 void
@@ -420,6 +418,32 @@ ExecutionUnit::setRegFlagsZF (bool val) {
 }
 
 void
-ExecutionUnit::execMOV (std::vector<Value> *ops) {
+ExecutionUnit::execADD (std::vector<NumberWrapper> &ops) {
+	if (ops[0].size () == sizeof(unsigned short)) {
+		execADD (ops[0].get<unsigned short> (), ops[1].get<unsigned short> ());
+	}
+	else {
+		execADD (ops[0].get<unsigned char> (), ops[1].get<unsigned char> ());
+	}
+}
+
+void
+ExecutionUnit::execMOV (std::vector<NumberWrapper> &ops) {
+	if (ops[0].size () == sizeof(unsigned short)) {
+		execMOV (ops[0].get<unsigned short> (), ops[1].get<unsigned short> ());
+	}
+	else {
+		execMOV (ops[0].get<unsigned char> (), ops[1].get<unsigned char> ());
+	}
+}
+
+void
+ExecutionUnit::execXCHG (std::vector<NumberWrapper> &ops) {
+	if (ops[0].size () == sizeof(unsigned short)) {
+		execXCHG (ops[0].get<unsigned short> (), ops[1].get<unsigned short> ());
+	}
+	else {
+		execXCHG (ops[0].get<unsigned char> (), ops[1].get<unsigned char> ());
+	}
 }
 

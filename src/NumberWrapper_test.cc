@@ -1,16 +1,20 @@
 #include "NumberWrapper.hh"
 #include "Register.hh"
+#include "Immediate.hh"
 #include <iostream>
 #include <vector>
 
 using namespace std;
 
 int main (int argc, char **argv) {
-	INumberReadableWritable<int> *i = new Register<int> ();
-	*i = 13;
+	int i = 13;
 	NumberWrapper w1;
-	w1.init<int> (*i, true);
+	Immediate<int> *ptr = new Immediate<int> (i);
+	w1.init<int> (ptr, true);
 
-	NumberWrapper w2 (w1);
+	//NumberWrapper w2 (w1);
+
+	cout << w1.get<int> () << endl;
+	//cout << w2.get<int> () << endl;
 }
 

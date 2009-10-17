@@ -2,6 +2,7 @@
 #define JAF__CPU_HH
 
 #include "ExecutionUnit.hh"
+#include "ArithmeticLogicUnit.hh"
 #include "BusInterfaceUnit.hh"
 #include "Memory.hh"
 #include "InstructionDecoder.hh"
@@ -14,8 +15,17 @@
 #include <QThread>
 #include <QMutex>
 
+class ExecutionUnit;
+class BusInterfaceUnit;
+class ArithmeticLogicUnit;
+class BusInterfaceUnit;
+class Memory;
+class CpuPrivate;
+
 class Cpu : public QThread {
 	Q_OBJECT
+
+	CpuPrivate *p;
 
 	enum CpuStateEnum {
 		CPU_STATE_RUN,
@@ -24,39 +34,21 @@ class Cpu : public QThread {
 	};
 
 	CpuStateEnum m_cpu_state;
-
-	Memory m_mem;
-	ExecutionUnit m_eunit;
-	BusInterfaceUnit m_biu;
-	InstructionDecoder m_decoder;
-
-private:
-	Loader m_loader;
-
 	QMutex m_mutex;
 	bool m_thread_run;
 
 public:
-	Cpu (QObject *parent = 0) : QThread (parent) {
-		m_cpu_state = CPU_STATE_PAUSE;
+	Cpu (QObject *parent = 0);
 
-		m_eunit.connectTo (m_biu);
-
-		m_biu.connectTo (m_mem);
-
-		m_decoder.connectTo (m_biu);
-		m_decoder.connectTo (m_eunit);
-
-		m_loader.connectTo (m_mem);
-		m_loader.connectTo (m_eunit);
-		m_loader.connectTo (m_biu);
-	}
+	~Cpu ();
 
 	ExecutionUnit& getExecutionUnit ();
 
 	BusInterfaceUnit& getBusInterfaceUnit ();
 
 	Memory& getMemory ();
+
+	ArithmeticLogicUnit& getArithmeticLogicUnit ();
 
 protected:
 	//override

@@ -1,3 +1,6 @@
+#include "InstructionTable.hh"
+#include "ExecutionUnit.hh"
+#include "BusInterfaceUnit.hh"
 #include "InstructionDecoder.hh"
 #include "MemoryAddress.hh"
 #include "Register.hh"
@@ -7,14 +10,26 @@
 
 using namespace std;
 
-void
-InstructionDecoder::connectTo (ExecutionUnit &eu) {
-	m_eunit = &eu;
+class InstructionDecoderPrivate {
+public:
+	Cpu *m_cpu;
+	ExecutionUnit *m_eunit;
+	BusInterfaceUnit *m_biu;
+};
+
+InstructionDecoder::InstructionDecoder () {
+	p = new InstructionDecoderPrivate ();
+}
+
+InstructionDecoder::~InstructionDecoder () {
+	delete p;
 }
 
 void
-InstructionDecoder::connectTo (BusInterfaceUnit &biu) {
-	m_biu = &biu;
+InstructionDecoder::connectTo (Cpu &cpu) {
+	p->m_cpu = &cpu;
+	p->m_eunit = &cpu.getExecutionUnit ();
+	p->m_biu = &cpu.getBusInterfaceUnit ();
 }
 
 void
@@ -29,7 +44,7 @@ InstructionDecoder::nextInstruction () {
 	m_operands.clear ();
 
 	m_instruction_bytes.clear ();
-	m_instruction_bytes.push_back (m_biu->getInstructionBytes<unsigned char> ());
+	m_instruction_bytes.push_back (p->m_biu->getInstructionBytes<unsigned char> ());
 
 	decodeInstruction ();
 }
@@ -54,7 +69,7 @@ InstructionDecoder::decodeInstruction () {
 	inst->decode (this);
 	
 	//FIXME - not all execute pointers are implemented yet
-	//inst->execute (m_eunit, m_operands);
+	inst->execute (p->m_eunit, m_operands);
 }
 
 void
@@ -85,11 +100,11 @@ InstructionDecoder::decodeAccImm () {
 	cout << "ax,";
 
 	m_operands.resize (m_operands.size () + 1);
-	m_operands.back ().init<unsigned short> (m_eunit->getRegAX ());
+	m_operands.back ().init<unsigned short> (p->m_eunit->getRegAX ());
 
 	unsigned char *bytes;
 	if (im.w) { //16 bits
-		unsigned short imm = m_biu->getInstructionBytes<unsigned short> ();
+		const unsigned short imm = p->m_biu->getInstructionBytes<unsigned short> ();
 		bytes = (unsigned char*)&imm;
 		for (size_t i = 0; i < sizeof(imm); ++i) {
 			m_instruction_bytes.push_back (bytes[i]);
@@ -99,9 +114,13 @@ InstructionDecoder::decodeAccImm () {
 
 		m_operands.resize (m_operands.size () + 1);
 		m_operands.back ().init<unsigned short> (new Immediate<unsigned short> (imm), true);
+
+		//FIXME - debugging
+		//std::cout << m_operands.back ().get<unsigned short> () << std::endl;
+
 	}
 	else { //8 bits
-		unsigned char imm = m_biu->getInstructionBytes<unsigned char> ();
+		const unsigned char imm = p->m_biu->getInstructionBytes<unsigned char> ();
 		bytes = (unsigned char*)imm;
 		for (size_t i = 0; i < sizeof(imm); ++i) {
 			m_instruction_bytes.push_back (bytes[i]);
@@ -139,14 +158,20 @@ InstructionDecoder::decodeReg () {
 
 	cout << Jaf::reg_index_16_names[im.reg] << endl;
 	m_operands.resize (m_operands.size () + 1);
-	m_operands.back ().init<unsigned short> (m_eunit->getReg16 (im.reg));
+	m_operands.back ().init<unsigned short> (p->m_eunit->getReg16 (im.reg));
 }
 
 void
 InstructionDecoder::decodeShort () {
-	cout << "decodeShort ()" << endl;
+	//cout << "decodeShort ()" << endl;
 
-	
+	char imm = p->m_biu->getInstructionBytes<char> ();
+	m_instruction_bytes.push_back ((unsigned char)imm);
+
+	cout << (int)imm << endl;
+
+	m_operands.resize (m_operands.size () + 1);
+	m_operands.back ().init<char> (new Immediate<char> (imm), true);
 }
 
 void
@@ -171,11 +196,11 @@ InstructionDecoder::decodeAccReg () {
 
 	cout << Jaf::reg_index_16_names[Jaf::REG_AX] << ",";
 	m_operands.resize (m_operands.size () + 1);
-	m_operands.back ().init<unsigned short> (m_eunit->getRegAX ());
+	m_operands.back ().init<unsigned short> (p->m_eunit->getRegAX ());
 
 	cout << Jaf::reg_index_16_names[im.reg] << endl;
 	m_operands.resize (m_operands.size () + 1);
-	m_operands.back ().init<unsigned short> (m_eunit->getReg16 (im.reg));
+	m_operands.back ().init<unsigned short> (p->m_eunit->getReg16 (im.reg));
 }
 
 void
@@ -206,9 +231,9 @@ InstructionDecoder::decodeRegImm () {
 	unsigned char *bytes;
 	if (im.w) { //16 bits
 		m_operands.resize (m_operands.size () + 1);
-		m_operands.back ().init<unsigned short> (m_eunit->getReg16 (im.reg));
+		m_operands.back ().init<unsigned short> (p->m_eunit->getReg16 (im.reg));
 
-		unsigned short imm = m_biu->getInstructionBytes<unsigned short> ();
+		const unsigned short imm = p->m_biu->getInstructionBytes<unsigned short> ();
 		bytes = (unsigned char*)&imm;
 		for (size_t i = 0; i < sizeof(imm); ++i) {
 			m_instruction_bytes.push_back (bytes[i]);
@@ -221,9 +246,9 @@ InstructionDecoder::decodeRegImm () {
 	}
 	else { //8 bits
 		m_operands.resize (m_operands.size () + 1);
-		m_operands.back ().init<unsigned char> (m_eunit->getReg8 (im.reg));
+		m_operands.back ().init<unsigned char> (p->m_eunit->getReg8 (im.reg));
 
-		unsigned char imm = m_biu->getInstructionBytes<unsigned char> ();
+		const unsigned char imm = p->m_biu->getInstructionBytes<unsigned char> ();
 		bytes = (unsigned char*)imm;
 		for (size_t i = 0; i < sizeof(imm); ++i) {
 			m_instruction_bytes.push_back (bytes[i]);

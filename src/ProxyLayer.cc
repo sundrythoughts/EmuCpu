@@ -22,15 +22,17 @@ ProxyLayer::connectCpuSignalsToUiSlots (Cpu &cpu, Sim86Window &win) {
 
 	cpu.getExecutionUnit ().getRegFlags ().signalValueChanged ().connect (sigc::mem_fun (m_flag_reg_s_s, &FlagRegisterSignalsAndSlots::sigcSlotValueChangedFlags));
 
-	cpu.getExecutionUnit ().connectToSignalValueChangedRegFlagsAF (sigc::mem_fun (m_flag_reg_s_s, &FlagRegisterSignalsAndSlots::sigcSlotValueChangedFlagAF));
-	cpu.getExecutionUnit ().connectToSignalValueChangedRegFlagsCF (sigc::mem_fun (m_flag_reg_s_s, &FlagRegisterSignalsAndSlots::sigcSlotValueChangedFlagCF));
-	cpu.getExecutionUnit ().connectToSignalValueChangedRegFlagsDF (sigc::mem_fun (m_flag_reg_s_s, &FlagRegisterSignalsAndSlots::sigcSlotValueChangedFlagDF));
-	cpu.getExecutionUnit ().connectToSignalValueChangedRegFlagsIF (sigc::mem_fun (m_flag_reg_s_s, &FlagRegisterSignalsAndSlots::sigcSlotValueChangedFlagIF));
-	cpu.getExecutionUnit ().connectToSignalValueChangedRegFlagsOF (sigc::mem_fun (m_flag_reg_s_s, &FlagRegisterSignalsAndSlots::sigcSlotValueChangedFlagOF));
-	cpu.getExecutionUnit ().connectToSignalValueChangedRegFlagsPF (sigc::mem_fun (m_flag_reg_s_s, &FlagRegisterSignalsAndSlots::sigcSlotValueChangedFlagPF));
-	cpu.getExecutionUnit ().connectToSignalValueChangedRegFlagsSF (sigc::mem_fun (m_flag_reg_s_s, &FlagRegisterSignalsAndSlots::sigcSlotValueChangedFlagSF));
-	cpu.getExecutionUnit ().connectToSignalValueChangedRegFlagsTF (sigc::mem_fun (m_flag_reg_s_s, &FlagRegisterSignalsAndSlots::sigcSlotValueChangedFlagTF));
-	cpu.getExecutionUnit ().connectToSignalValueChangedRegFlagsZF (sigc::mem_fun (m_flag_reg_s_s, &FlagRegisterSignalsAndSlots::sigcSlotValueChangedFlagZF));
+//#if 0
+	cpu.getExecutionUnit ().signalValueChangedRegFlagsAF ().connect (sigc::mem_fun (m_flag_reg_s_s, &FlagRegisterSignalsAndSlots::sigcSlotValueChangedFlagAF));
+	cpu.getExecutionUnit ().signalValueChangedRegFlagsCF ().connect (sigc::mem_fun (m_flag_reg_s_s, &FlagRegisterSignalsAndSlots::sigcSlotValueChangedFlagCF));
+	cpu.getExecutionUnit ().signalValueChangedRegFlagsDF ().connect (sigc::mem_fun (m_flag_reg_s_s, &FlagRegisterSignalsAndSlots::sigcSlotValueChangedFlagDF));
+	cpu.getExecutionUnit ().signalValueChangedRegFlagsIF ().connect (sigc::mem_fun (m_flag_reg_s_s, &FlagRegisterSignalsAndSlots::sigcSlotValueChangedFlagIF));
+	cpu.getExecutionUnit ().signalValueChangedRegFlagsOF ().connect (sigc::mem_fun (m_flag_reg_s_s, &FlagRegisterSignalsAndSlots::sigcSlotValueChangedFlagOF));
+	cpu.getExecutionUnit ().signalValueChangedRegFlagsPF ().connect (sigc::mem_fun (m_flag_reg_s_s, &FlagRegisterSignalsAndSlots::sigcSlotValueChangedFlagPF));
+	cpu.getExecutionUnit ().signalValueChangedRegFlagsSF ().connect (sigc::mem_fun (m_flag_reg_s_s, &FlagRegisterSignalsAndSlots::sigcSlotValueChangedFlagSF));
+	cpu.getExecutionUnit ().signalValueChangedRegFlagsTF ().connect (sigc::mem_fun (m_flag_reg_s_s, &FlagRegisterSignalsAndSlots::sigcSlotValueChangedFlagTF));
+	cpu.getExecutionUnit ().signalValueChangedRegFlagsZF ().connect (sigc::mem_fun (m_flag_reg_s_s, &FlagRegisterSignalsAndSlots::sigcSlotValueChangedFlagZF));
+//#endif
 
 	cpu.getBusInterfaceUnit ().getSegRegCS ().signalValueChanged ().connect (sigc::mem_fun (m_sreg_s_s, &SegmentRegisterSignalsAndSlots::sigcSlotValueChangedSRegCS));
 	cpu.getBusInterfaceUnit ().getSegRegDS ().signalValueChanged ().connect (sigc::mem_fun (m_sreg_s_s, &SegmentRegisterSignalsAndSlots::sigcSlotValueChangedSRegDS));

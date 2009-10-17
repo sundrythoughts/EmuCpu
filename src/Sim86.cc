@@ -37,6 +37,8 @@ int main (int argc, char **argv) {
 	QObject::connect (&app, SIGNAL(aboutToQuit ()),
 	                  &cpu, SLOT(shutdownCpu ()));
 
+	//cpu.getExecutionUnit ().setRegAX (10);
+
 	cpu.start ();
 
 	sim.show ();

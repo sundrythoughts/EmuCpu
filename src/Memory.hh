@@ -55,7 +55,7 @@ public:
 	}
 
 	/** */
-	sigc::signal<void, const unsigned char*, size_t> signalReloaded () {
+	sigc::signal<void, const unsigned char*, size_t>& signalReloaded () {
 		return m_signal_reloaded;
 	}
 

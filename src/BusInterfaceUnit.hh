@@ -7,9 +7,14 @@
 #include <vector>
 #include <iostream>
 
+class Cpu;
+class BusInterfaceUnitPrivate;
+
 /**
 */
 class BusInterfaceUnit {
+	BusInterfaceUnitPrivate *p;
+
 	unsigned short m_cs;
 	unsigned short m_ds;
 	unsigned short m_es;
@@ -22,30 +27,23 @@ class BusInterfaceUnit {
 	Register<unsigned short> m_sreg_es;
 	Register<unsigned short> m_sreg_ss;
 	Register<unsigned short> m_reg_ip;
-
 	Memory *m_memory;
 
 public:
 	/** */
-	BusInterfaceUnit () : m_cs (0), m_ds (0), m_es (0), m_ss (0), m_ip (0), m_seg_override (-1),
-	                      m_sreg_cs (m_cs), m_sreg_ds (m_ds),
-	                      m_sreg_es (m_es), m_sreg_ss (m_ss),
-	                      m_reg_ip (m_ip), m_memory (0)
-	{
-	}
+	BusInterfaceUnit ();
 
 	/** */
 	BusInterfaceUnit (const BusInterfaceUnit &src);
 
 	/** */
-	~BusInterfaceUnit () {
-	}
+	~BusInterfaceUnit ();
 
 	/** */
 	void initialize ();
 
 	/** */
-	void connectTo (Memory &mem);
+	void connectTo (Cpu &cpu);
 
 	/** */
 	//Register<unsigned short>& getSegReg (size_t index);

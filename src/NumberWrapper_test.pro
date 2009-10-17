@@ -1,5 +1,7 @@
 TARGET = NumberWrapper_test
 
+CONFIG += debug
+
 CONFIG += link_pkgconfig
 PKGCONFIG += sigc++-2.0
 
@@ -12,3 +14,6 @@ HEADERS += INumberReadableWritable.hh
 
 HEADERS += Register.hh
 SOURCES += Register.cc
+
+HEADERS += Immediate.hh
+SOURCES += Immediate.cc

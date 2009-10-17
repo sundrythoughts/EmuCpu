@@ -1,4 +1,22 @@
 #include "BusInterfaceUnit.hh"
+#include "Cpu.hh"
+
+class BusInterfaceUnitPrivate {
+public:
+	Cpu *m_cpu;
+};
+
+BusInterfaceUnit::BusInterfaceUnit () : m_cs (0), m_ds (0), m_es (0), m_ss (0), m_ip (0), m_seg_override (-1),
+                                        m_sreg_cs (m_cs), m_sreg_ds (m_ds),
+                                        m_sreg_es (m_es), m_sreg_ss (m_ss),
+                                        m_reg_ip (m_ip), m_memory (0)
+{
+	p = new BusInterfaceUnitPrivate ();
+}
+
+BusInterfaceUnit::~BusInterfaceUnit () {
+	delete p;
+}
 
 void
 BusInterfaceUnit::initialize () {
@@ -6,8 +24,9 @@ BusInterfaceUnit::initialize () {
 }
 
 void
-BusInterfaceUnit::connectTo (Memory &mem) {
-	m_memory = &mem;
+BusInterfaceUnit::connectTo (Cpu &cpu) {
+	p->m_cpu = &cpu;
+	m_memory = &cpu.getMemory ();
 
 	//FIXME - connect to signals
 }

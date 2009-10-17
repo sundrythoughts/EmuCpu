@@ -3,6 +3,7 @@
 
 #include "INumberReadableWritable.hh"
 #include <stdexcept>
+#include <iostream>
 
 class NumberWrapper {
 	void *m_num;
@@ -56,7 +57,7 @@ public:
 	}
 
 	bool isNull () const {
-		
+		return m_num == 0;
 	}
 
 	template<typename T>
@@ -70,6 +71,7 @@ public:
 
 	void free () {
 		(this->*free_func_ptr) ();
+		m_size = 0;
 	}
 
 private:

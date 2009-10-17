@@ -137,6 +137,7 @@ public:
 
 	/** */
 	virtual INumberReadableWritable<T>& operator= (const T &right) {
+		//std::cout << right << std::endl; //FIXME - debugging
 		*m_num = right;
 
 		m_signal_value_changed.emit (*m_num);

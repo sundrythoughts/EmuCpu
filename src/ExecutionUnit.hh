@@ -1,85 +1,46 @@
 #ifndef JAF__EXECUTION_UNIT_HH
 #define JAF__EXECUTION_UNIT_HH
 
-#include "BusInterfaceUnit.hh"
 #include "Register.hh"
 #include "Defines.hh"
 #include "NumberWrapper.hh"
+
 #include <iostream>
 #include <cstdio>
+#include <vector>
+
 #include <sigc++/sigc++.h>
+
+class Cpu;
+class ExecutionUnitPrivate;
 
 /**
 */
 class ExecutionUnit {
-	unsigned short m_regs[Jaf::REG_COUNT_16];
-	Register<unsigned char> m_regs8[Jaf::REG_COUNT_8];
-	Register<unsigned short> m_regs16[Jaf::REG_COUNT_16];
-
-	BusInterfaceUnit *m_biu;
-
-	sigc::signal<void, unsigned short> m_signal_value_changed_reg_flags;
-	sigc::signal<void, bool> m_signal_value_changed_reg_flag_af;
-	sigc::signal<void, bool> m_signal_value_changed_reg_flag_cf;
-	sigc::signal<void, bool> m_signal_value_changed_reg_flag_df;
-	sigc::signal<void, bool> m_signal_value_changed_reg_flag_if;
-	sigc::signal<void, bool> m_signal_value_changed_reg_flag_of;
-	sigc::signal<void, bool> m_signal_value_changed_reg_flag_pf;
-	sigc::signal<void, bool> m_signal_value_changed_reg_flag_sf;
-	sigc::signal<void, bool> m_signal_value_changed_reg_flag_tf;
-	sigc::signal<void, bool> m_signal_value_changed_reg_flag_zf;
+	ExecutionUnitPrivate *p;
 
 public:
 	/** */
-	ExecutionUnit () : m_biu (0)
-	{
-		unsigned char *m_a = (unsigned char*)&m_regs[Jaf::REG_AX];
-		unsigned char *m_b = (unsigned char*)&m_regs[Jaf::REG_BX];
-		unsigned char *m_c = (unsigned char*)&m_regs[Jaf::REG_CX];
-		unsigned char *m_d = (unsigned char*)&m_regs[Jaf::REG_DX];
-
-		m_regs8[Jaf::REG_AL].reinitialize (m_a[0]);
-		m_regs8[Jaf::REG_AH].reinitialize (m_a[1]);
-		m_regs8[Jaf::REG_BL].reinitialize (m_b[0]);
-		m_regs8[Jaf::REG_BH].reinitialize (m_b[1]);
-		m_regs8[Jaf::REG_CL].reinitialize (m_c[0]);
-		m_regs8[Jaf::REG_CH].reinitialize (m_c[1]);
-		m_regs8[Jaf::REG_DL].reinitialize (m_d[0]);
-		m_regs8[Jaf::REG_DH].reinitialize (m_d[1]);
-
-		m_regs16[Jaf::REG_AX].reinitialize (m_regs[Jaf::REG_AX]);
-		m_regs16[Jaf::REG_BX].reinitialize (m_regs[Jaf::REG_BX]);
-		m_regs16[Jaf::REG_CX].reinitialize (m_regs[Jaf::REG_CX]);
-		m_regs16[Jaf::REG_DX].reinitialize (m_regs[Jaf::REG_DX]);
-		m_regs16[Jaf::REG_DI].reinitialize (m_regs[Jaf::REG_DI]);
-		m_regs16[Jaf::REG_SI].reinitialize (m_regs[Jaf::REG_SI]);
-		m_regs16[Jaf::REG_BP].reinitialize (m_regs[Jaf::REG_BP]);
-		m_regs16[Jaf::REG_SP].reinitialize (m_regs[Jaf::REG_SP]);
-		m_regs16[Jaf::REG_FLAGS].reinitialize (m_regs[Jaf::REG_FLAGS]);
-	}
+	ExecutionUnit ();
 
 	/** */
 	ExecutionUnit (const ExecutionUnit &src);
 
 	/** */
-	~ExecutionUnit () {
-	}
+	~ExecutionUnit ();
 
 	/** */
-	void connectTo (BusInterfaceUnit &biu);
+	void connectTo (Cpu &cpu);
 
-	void connectToSignalValueChangedRegFlagsAF (const sigc::slot<void, bool> &slot);
-	void connectToSignalValueChangedRegFlagsCF (const sigc::slot<void, bool> &slot);
-	void connectToSignalValueChangedRegFlagsDF (const sigc::slot<void, bool> &slot);
-	void connectToSignalValueChangedRegFlagsIF (const sigc::slot<void, bool> &slot);
-	void connectToSignalValueChangedRegFlagsOF (const sigc::slot<void, bool> &slot);
-	void connectToSignalValueChangedRegFlagsPF (const sigc::slot<void, bool> &slot);
-	void connectToSignalValueChangedRegFlagsSF (const sigc::slot<void, bool> &slot);
-	void connectToSignalValueChangedRegFlagsTF (const sigc::slot<void, bool> &slot);
-	void connectToSignalValueChangedRegFlagsZF (const sigc::slot<void, bool> &slot);
-
-	/** */
-	BusInterfaceUnit& getBusInterfaceUnit ();
+	sigc::signal<void, bool>& signalValueChangedRegFlagsAF ();
+	sigc::signal<void, bool>& signalValueChangedRegFlagsCF ();
+	sigc::signal<void, bool>& signalValueChangedRegFlagsDF ();
+	sigc::signal<void, bool>& signalValueChangedRegFlagsIF ();
+	sigc::signal<void, bool>& signalValueChangedRegFlagsOF ();
+	sigc::signal<void, bool>& signalValueChangedRegFlagsPF ();
+	sigc::signal<void, bool>& signalValueChangedRegFlagsSF ();
+	sigc::signal<void, bool>& signalValueChangedRegFlagsTF ();
+	sigc::signal<void, bool>& signalValueChangedRegFlagsZF ();
 
 	/** */
 	Register<unsigned char>& getReg8 (size_t index);
@@ -257,9 +218,6 @@ public:
 
 	void execADD (std::vector<NumberWrapper> &ops);
 
-	template<typename T1, typename T2>
-	void execMOV (INumberReadableWritable<T1> &op1, INumberReadableWritable<T2> &op2);
-
 	void execAND ();
 	void execCALL ();
 	void execCALLFAR ();
@@ -273,14 +231,18 @@ public:
 	void execCWD ();
 	void execDAA ();
 	void execDAS ();
-	void execDEC ();
+
+	void execDEC (std::vector<NumberWrapper> &ops);
+
 	void execDIV ();
 	void execESC ();
 	void execHLT ();
 	void execIDIV ();
 	void execIMUL ();
 	void execIN ();
-	void execINC ();
+
+	void execINC (std::vector<NumberWrapper> &ops);
+
 	void execINT ();
 	void execINTO ();
 	void execIRET ();
@@ -290,7 +252,9 @@ public:
 	void execJNA ();
 	void execJC ();
 	void execJCXZ ();
-	void execJE ();
+
+	void execJE (std::vector<NumberWrapper> &ops);
+
 	void execJG ();
 	void execJGE ();
 	void execJL ();
@@ -316,9 +280,6 @@ public:
 	void execLOOPNE ();
 
 	void execMOV (std::vector<NumberWrapper> &ops);
-
-	template<typename T1, typename T2>
-	void execADD (INumberReadableWritable<T1> &op1, INumberReadableWritable<T2> &op2);
 
 	void execMOVS ();
 	void execMUL ();
@@ -356,34 +317,9 @@ public:
 
 	void execXCHG (std::vector<NumberWrapper> &ops);
 
-	template<typename T>
-	void
-	execXCHG (INumberReadableWritable<T> &op1, INumberReadableWritable<T> &op2);
-
 	void execXLAT ();
 	void execXOR ();
 };
-
-template<typename T1, typename T2>
-void
-ExecutionUnit::execADD (INumberReadableWritable<T1> &op1, INumberReadableWritable<T2> &op2) {
-	op1 += op2; //FIXME - update flags by using the ALU
-}
-
-template<typename T1, typename T2>
-void
-ExecutionUnit::execMOV (INumberReadableWritable<T1> &op1, INumberReadableWritable<T2> &op2) {
-	op1 = op2;
-}
-
-template<typename T>
-void
-ExecutionUnit::execXCHG (INumberReadableWritable<T> &op1, INumberReadableWritable<T> &op2) {
-	T val = op1;
-	op1 = op2;
-	op2 = val;
-}
-
 
 #endif //JAF__EXECUTION_UNIT_HH
 

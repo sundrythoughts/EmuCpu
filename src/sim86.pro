@@ -1,9 +1,13 @@
 TARGET = sim86
 
+CONFIG += debug
+
 CONFIG += link_pkgconfig
 PKGCONFIG += sigc++-2.0
 
 SOURCES += Sim86.cc
+
+HEADERS += InstructionExecuter.hh
 
 HEADERS += ProxyLayer.hh
 SOURCES += ProxyLayer.cc
@@ -22,6 +26,9 @@ SOURCES += Defines.cc
 
 HEADERS += ExecutionUnit.hh
 SOURCES += ExecutionUnit.cc
+
+HEADERS += ArithmeticLogicUnit.hh
+SOURCES += ArithmeticLogicUnit.cc
 
 HEADERS += BusInterfaceUnit.hh
 SOURCES += BusInterfaceUnit.cc

@@ -1,31 +1,32 @@
 #ifndef JAF__ARITHMETIC_LOGIC_UNIT_HH
 #define JAF__ARITHMETIC_LOGIC_UNIT_HH
 
-#include "ExecutionUnit.hh"
+#include "Cpu.hh"
 #include "Utility.hh"
 #include "Register.hh"
 #include <iostream>
 
+class Cpu;
+class ArithmeticLogicUnitPrivate;
+
 /**
 */
 class ArithmeticLogicUnit {
-	ExecutionUnit *m_eunit;
+	ArithmeticLogicUnitPrivate *p;
 
 public:
 	/** */
-	ArithmeticLogicUnit () {
-	}
+	ArithmeticLogicUnit ();
 
 	/** */
 	ArithmeticLogicUnit (const ArithmeticLogicUnit &src);
 
 	/** */
-	~ArithmeticLogicUnit () {
-	}
+	~ArithmeticLogicUnit ();
 
 	/** */
 	void
-	connectTo (ExecutionUnit &eu);
+	connectTo (Cpu &cpu);
 
 	/** FIXME */
 	void updateFlagAF (unsigned char result8, unsigned short result16);

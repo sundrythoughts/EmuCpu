@@ -2,9 +2,7 @@
 #define JAF__INSTRUCTION_DECODER_HH
 
 //#include "Operand.hh"
-#include "ExecutionUnit.hh"
-#include "BusInterfaceUnit.hh"
-#include "InstructionTable.hh"
+#include "Cpu.hh"
 #include "Defines.hh"
 #include "NumberWrapper.hh"
 #include <vector>
@@ -12,9 +10,11 @@
 #include <string>
 #include <utility>
 
+class Cpu;
+class InstructionDecoderPrivate;
+
 class InstructionDecoder {
-	ExecutionUnit *m_eunit;
-	BusInterfaceUnit *m_biu;
+	InstructionDecoderPrivate *p;
 
 public:
 	std::vector<unsigned char> m_instruction_bytes;
@@ -30,16 +30,13 @@ private:
 
 public:
 
-	InstructionDecoder () {
-	}
+	InstructionDecoder ();
+
+	~InstructionDecoder ();
 
 	/**
 	*/
-	void connectTo (ExecutionUnit &eu);
-
-	/**
-	*/
-	void connectTo (BusInterfaceUnit &biu);
+	void connectTo (Cpu &cpu);
 
 	/**
 	*/

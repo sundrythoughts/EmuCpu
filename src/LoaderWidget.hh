@@ -1,3 +1,8 @@
+/**
+@file LoaderWidget.hh
+@brief 
+*/
+
 #ifndef JAF__LOADER_WIDGET_HH
 #define JAF__LOADER_WIDGET_HH
 

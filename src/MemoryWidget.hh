@@ -1,3 +1,8 @@
+/**
+@file MemoryWidget.hh
+@brief Widget for displaying the memory.
+*/
+
 #ifndef JAF__MEMORY_WIDGET_HH
 #define JAF__MEMORY_WIDGET_HH
 
@@ -8,10 +13,15 @@
 
 #include "ui_MemoryWidget.h"
 
+/**
+@class MemoryWidget
+@brief Widget for displaying the memory.
+*/
 class MemoryWidget : public QWidget, protected Ui::MemoryWidget {
 	Q_OBJECT
 
 public:
+	/** */
 	MemoryWidget (QWidget *parent = 0) : QWidget (parent) {
 		setupUi (this);
 
@@ -20,6 +30,7 @@ public:
 	}
 
 public slots:
+	/** */
 	void enableDisableToggle (bool b) {
 		if (b) {
 			show ();
@@ -29,6 +40,7 @@ public slots:
 		}
 	}
 
+	/** */
 	void resize (size_t sz) {
 		int curr_cnt = m_tbl_memory->rowCount ();
 		size_t mod = sz % 16;
@@ -44,13 +56,16 @@ public slots:
 		//std::cout << "resize" << std::endl;
 	}
 
+	/** */
 	void setMemoryAddress (int addr, unsigned char val);
 
+	/** */
 	void setAllMemoryAddresses (const unsigned char *arr, size_t sz);
 
 private:
 	void setTableWidgetRowFromStrings (int row, const QString &raw_mem, const QString &ascii);
-};
+
+}; //end namespace MemoryWidget
 
 #endif //JAF__MEMORY_WIDGET_HH
 

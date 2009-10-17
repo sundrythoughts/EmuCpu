@@ -1,3 +1,8 @@
+/**
+@file InstructionTable.hh
+@brief List of all the instructions in the 8086.
+*/
+
 #ifndef JAF__INSTRUCTION_TABLE_HH
 #define JAF__INSTRUCTION_TABLE_HH
 
@@ -10,16 +15,16 @@
 class InstructionTable;
 class InstructionDecoder;
 
+/**
+@class InstructionTableItem
+@brief Holds information needed to decode and execute the instruction.
+*/
 class InstructionTableItem {
 public:
 	const char *mnemonic;
 	bool has_modrm;
-	unsigned int operand_count;
-	const char *operand_codes[3];
 	unsigned int group;
-
 	void (InstructionDecoder::*decode_func) ();
-
 	void (ExecutionUnit::*execute_func) (std::vector<NumberWrapper> &ops);
 
 	void decode (InstructionDecoder *id) const {
@@ -31,6 +36,10 @@ public:
 	}
 }; //end class InstructionTableItem
 
+/**
+@class InstructionTable
+@brief Holds the primary and secondary opcode tables.
+*/
 class InstructionTable {
 public:
 	enum {

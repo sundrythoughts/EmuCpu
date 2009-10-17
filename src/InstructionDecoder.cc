@@ -1,7 +1,6 @@
 #include "InstructionTable.hh"
 #include "ExecutionUnit.hh"
 #include "BusInterfaceUnit.hh"
-#include "Memory.hh"
 #include "InstructionDecoder.hh"
 #include "MemoryAddress.hh"
 #include "Register.hh"
@@ -16,7 +15,6 @@ public:
 	Cpu *m_cpu;
 	ExecutionUnit *m_eunit;
 	BusInterfaceUnit *m_biu;
-	Memory *m_mem;
 };
 
 InstructionDecoder::InstructionDecoder () {
@@ -32,7 +30,6 @@ InstructionDecoder::connectTo (Cpu &cpu) {
 	p->m_cpu = &cpu;
 	p->m_eunit = &cpu.getExecutionUnit ();
 	p->m_biu = &cpu.getBusInterfaceUnit ();
-	p->m_mem = &cpu.getMemory ();
 }
 
 void
@@ -77,7 +74,6 @@ InstructionDecoder::decodeInstruction () {
 
 void
 InstructionDecoder::decodeNone () {
-	//cout << "decodeNone ()" << endl;
 	cout << endl;
 }
 
@@ -147,7 +143,6 @@ InstructionDecoder::decodeAcc () {
 
 void
 InstructionDecoder::decodeReg () {
-	//cout << "decodeReg ()" << endl;
 	union InstMask {
 		unsigned char byte;
 		struct {
@@ -165,8 +160,6 @@ InstructionDecoder::decodeReg () {
 
 void
 InstructionDecoder::decodeShort () {
-	//cout << "decodeShort ()" << endl;
-
 	char imm = p->m_biu->getInstructionBytes<char> ();
 	m_instruction_bytes.push_back ((unsigned char)imm);
 
@@ -184,8 +177,6 @@ InstructionDecoder::decodeSegRM () {
 
 void
 InstructionDecoder::decodeAccReg () {
-	//cout << "decodeAccReg ()" << endl;
-
 	union InstMask {
 		unsigned char byte;
 		struct {
@@ -207,7 +198,6 @@ InstructionDecoder::decodeAccReg () {
 
 void
 InstructionDecoder::decodeAccMem () {
-	//cout << "decodeAccMem ()" << endl;
 	union InstMask {
 		unsigned char byte;
 		struct {
@@ -231,25 +221,25 @@ InstructionDecoder::decodeAccMem () {
 	if (im.w) { //16 bits
 		if (!im.d == 0) {
 			cout << "[" << (unsigned int)mem << "],ax" << endl;
-			m_operands[0].init<unsigned short> (new MemoryAddress<unsigned short> (p->m_mem, p->m_biu->getSegRegDS (), mem), true);
+			m_operands[0].init<unsigned short> (p->m_biu->getMemoryAddress<unsigned short> (p->m_biu->getSegRegDS (), mem), true);
 			m_operands[1].init<unsigned short> (p->m_eunit->getRegAX ());
 		}
 		else {
 			cout << "ax,[" << (unsigned int)mem << "]" << endl;
 			m_operands[0].init<unsigned short> (p->m_eunit->getRegAX ());
-			m_operands[1].init<unsigned short> (new MemoryAddress<unsigned short> (p->m_mem, p->m_biu->getSegRegDS (), mem), true);
+			m_operands[1].init<unsigned short> (p->m_biu->getMemoryAddress<unsigned short> (p->m_biu->getSegRegDS (), mem), true);
 		}
 	}
 	else { //8 bits
 		if (!im.d == 0) {
 			cout << "[" << (unsigned int)mem << "],al" << endl;
-			m_operands[0].init<unsigned char> (new MemoryAddress<unsigned char> (p->m_mem, p->m_biu->getSegRegDS (), mem), true);
+			m_operands[0].init<unsigned char> (p->m_biu->getMemoryAddress<unsigned char> (p->m_biu->getSegRegDS (), mem), true);
 			m_operands[1].init<unsigned char> (p->m_eunit->getRegAL ());
 		}
 		else {
 			cout << "al,[" << (unsigned int)mem << "]" << endl;
 			m_operands[0].init<unsigned char> (p->m_eunit->getRegAL ());
-			m_operands[1].init<unsigned char> (new MemoryAddress<unsigned char> (p->m_mem, p->m_biu->getSegRegDS (), mem), true);
+			m_operands[1].init<unsigned char> (p->m_biu->getMemoryAddress<unsigned char> (p->m_biu->getSegRegDS (), mem), true);
 		}
 	}
 }
@@ -264,12 +254,8 @@ InstructionDecoder::decodeRegImm () {
 		};
 	};
 
-	//cout << "decodeRegImm ()" << endl;
-
 	InstMask im;
 	im.byte = m_instruction_bytes[0];
-
-	//cout << im.w << endl;
 
 	cout << Jaf::reg_index_16_names[im.reg] << ",";
 
@@ -308,8 +294,6 @@ InstructionDecoder::decodeRegImm () {
 
 void
 InstructionDecoder::decodeIntra () {
-	//cout << "decodeIntra ()" << endl;
-
 	unsigned char *bytes;
 	const short imm = p->m_biu->getInstructionBytes<short> ();
 	bytes = (unsigned char*)&imm;

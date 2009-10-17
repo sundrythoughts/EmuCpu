@@ -1,3 +1,8 @@
+/**
+@file ProxyLayer.hh
+@brief Signal translation layer between the Gui and the Cpu.
+*/
+
 #ifndef JAF__PROXY_LAYER_HH
 #define JAF__PROXY_LAYER_HH
 
@@ -12,6 +17,10 @@
 #include <sigc++/sigc++.h>
 #include <QObject>
 
+/**
+@class ProxyLayer
+@brief Signal translation layer between the Gui and the Cpu.
+*/
 class ProxyLayer : public QObject {
 	Q_OBJECT
 
@@ -21,15 +30,17 @@ class ProxyLayer : public QObject {
 	MemorySignalsAndSlots m_mem_s_s;
 
 public:
+	/** */
 	ProxyLayer () {
 	}
 
+	/** */
 	void connectCpuAndUi (Cpu &cpu, Sim86Window &win);
 
 private:
 	void connectCpuSignalsToUiSlots (Cpu &cpu, Sim86Window &win);
 	void connectUiSignalsToCpuSlots (Sim86Window &win, Cpu &cpu);
-};
+}; //end class ProxyLayer
 
 #endif //JAF__PROXY_LAYER_HH
 

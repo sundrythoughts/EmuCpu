@@ -1,3 +1,8 @@
+/**
+@file MemoryAddress.hh
+@brief Implementation of INumberReadableWritable for memory addresses.
+*/
+
 #ifndef JAF__MEMORY_ADDRESS_HH
 #define JAF__MEMORY_ADDRESS_HH
 
@@ -5,6 +10,8 @@
 #include "INumberReadableWritable.hh"
 
 /**
+@class MemoryAddress
+@brief Implementation of INumberReadableWritable for memory addresses.
 */
 template<typename T>
 class MemoryAddress : public INumberReadableWritable<T> {
@@ -19,13 +26,13 @@ public:
 		m_phys_addr += offset;
 	}
 
-	/** */
+	/** Implicit cast to stored value */
 	virtual operator const T& () const {
 		read ();
 		return m_num;
 	}
 
-	/** */
+	/** Get the stored value */
 	virtual const T& getValue () const {
 		read ();
 		return m_num;
@@ -187,7 +194,7 @@ private:
 	bool write () const {
 		return m_memory->write (m_phys_addr, m_num);
 	}
-};
+}; //end class MemoryAddress
 
 #endif //JAF__MEMORY_ADDRESS_HH
 

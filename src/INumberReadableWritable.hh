@@ -1,9 +1,16 @@
+/**
+@file INumberReadableWritable.hh
+@brief Interface for Immediate, Register, and MemoryAddress.
+*/
+
 #ifndef JAF__I_NUMBER_READABLE_WRITABLE_HH
 #define JAF__I_NUMBER_READABLE_WRITABLE_HH
 
 #include <iostream>
 
 /**
+@class INumberReadableWritable
+@brief Interface for Immediate, Register, and MemoryAddress.
 */
 template<typename T>
 class INumberReadableWritable {
@@ -13,11 +20,10 @@ public:
 	virtual ~INumberReadableWritable () {
 	}
 
-//#if 0
-	/** */
+	/** Implicit cast to stored value */
 	virtual operator const T& () const = 0;
 
-	/** */
+	/** Get the stored value */
 	virtual const T& getValue () const = 0;
 
 	/** */
@@ -67,8 +73,7 @@ public:
 
 	/** */
 	virtual INumberReadableWritable<T>& operator<<= (const T& right) = 0;
-//#endif
-};
+}; //end class INumberReadableWritable
 
 #endif //JAF__I_NUMBER_READABLE_WRITABLE_HH
 

@@ -1,6 +1,7 @@
+DESTDIR = ..
 TARGET = sim86
 
-CONFIG += debug
+CONFIG += qt thread debug
 
 CONFIG += link_pkgconfig
 PKGCONFIG += sigc++-2.0

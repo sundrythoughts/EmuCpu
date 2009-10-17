@@ -1,21 +1,47 @@
+/**
+@file Utility.hh
+@brief Various utility functions.
+*/
+
 #ifndef JAF__UTILITY_HH
 #define JAF__UTILITY_HH
 
+/**
+@class Utility
+@brief Various utility functions.
+*/
 class Utility {
 
 public:
+	/**
+	@brief Get a bit
+	@param n The bit index to get where 0 is the LSB.
+	*/
 	template<typename T>
 	static bool get_bit (const T &val, unsigned int n);
 
+	/**
+	@brief Set a bit
+	@param n The bit index to clear where 0 is the LSB.
+	@param b The new value of bit n.
+	*/
 	template<typename T>
 	static void set_bit (T &val, unsigned int n, bool b);
 
+	/**
+	@brief Set a bit
+	@param n The bit index to set where 0 is the LSB.
+	*/
 	template<typename T>
 	static void set_bit (T &val, unsigned int n);
 
+	/**
+	@brief Clear a bit
+	@param n The bit index to clear where 0 is the LSB.
+	*/
 	template<typename T>
 	static void clear_bit (T &val, unsigned int n);
-};
+}; //end class Utility
 
 template<typename T>
 bool

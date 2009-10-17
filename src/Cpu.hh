@@ -1,3 +1,8 @@
+/**
+@file Cpu.hh
+@brief Manage a thread that holds all the components of a Cpu.
+*/
+
 #ifndef JAF__CPU_HH
 #define JAF__CPU_HH
 
@@ -22,6 +27,10 @@ class BusInterfaceUnit;
 class Memory;
 class CpuPrivate;
 
+/**
+@class Cpu
+@brief Manage a thread that holds all the components of a Cpu.
+*/
 class Cpu : public QThread {
 	Q_OBJECT
 
@@ -38,35 +47,48 @@ class Cpu : public QThread {
 	bool m_thread_run;
 
 public:
+	/** */
 	Cpu (QObject *parent = 0);
 
+	/** */
 	~Cpu ();
 
+	/** */
 	ExecutionUnit& getExecutionUnit ();
 
+	/** */
 	BusInterfaceUnit& getBusInterfaceUnit ();
 
+	/** */
 	Memory& getMemory ();
 
+	/** */
 	ArithmeticLogicUnit& getArithmeticLogicUnit ();
 
 protected:
 	//override
+	/** */
 	virtual void run ();
 
 public slots:
+	/** */
 	void startCpu ();
 
+	/** */
 	void pauseCpu ();
 
+	/** */
 	void resetCpu ();
 
+	/** */
 	void singleStepCpu ();
 
+	/** */
 	void shutdownCpu ();
 
+	/** */
 	void loadFile (QString file_name);
-};
+}; //end class Cpu
 
 #endif //JAF__CPU_HH
 

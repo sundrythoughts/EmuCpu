@@ -1,3 +1,8 @@
+/**
+@file Register.hh
+@brief Implementation of INumberReadableWritable for register values.
+*/
+
 #ifndef JAF__REGISTER_HH
 #define JAF__REGISTER_HH
 
@@ -5,6 +10,10 @@
 #include "INumberReadableWritable.hh"
 #include <iostream>
 
+/**
+@class Register
+@brief Implementation of INumberReadableWritable for register values.
+*/
 template<typename T>
 class Register : public sigc::trackable, public INumberReadableWritable<T> {
 	T *m_num;
@@ -93,26 +102,27 @@ public:
 		*m_num = r;
 	}
 
-	/** */
+	/** Signal activated when Register value is changed */
 	sigc::signal<void, T>& signalValueChanged () {
 		return m_signal_value_changed;
 	}
 
-	/** */
+	/** Signal activated when Register value is changed */
 	sigc::signal<void>& signalEmitSignalValueChanged () {
 		return m_signal_emit_signal_value_changed;
 	}
 
+	/** */
 	void emitSignalValueChanged () {
 		m_signal_value_changed.emit (*m_num);
 	}
 
-	/** */
+	/** Implicit cast to stored value */
 	virtual operator const T& () const {
 		return *m_num;
 	}
 
-	/** */
+	/** Get the stored value */
 	virtual const T& getValue () const {
 		return *m_num;
 	}
@@ -271,7 +281,7 @@ public:
 		m_signal_emit_signal_value_changed.emit ();
 		return *this;
 	}
-};
+}; //end class Register
 
 #endif //JAF__REGISTER_HH
 

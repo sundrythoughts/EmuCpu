@@ -1,3 +1,8 @@
+/**
+@file BusInterfaceUnit.hh
+@brief Manages the segment registers, the instruction pointer, and memory access.
+*/
+
 #ifndef JAF__BUS_INTERFACE_UNIT_HH
 #define JAF__BUS_INTERFACE_UNIT_HH
 
@@ -11,6 +16,8 @@ class Cpu;
 class BusInterfaceUnitPrivate;
 
 /**
+@class BusInterfaceUnit
+@brief Manages the segment registers, the instruction pointer, and memory access.
 */
 class BusInterfaceUnit {
 	BusInterfaceUnitPrivate *p;
@@ -42,7 +49,7 @@ public:
 	/** */
 	void initialize ();
 
-	/** */
+	/** Create a connection to the Cpu */
 	void connectTo (Cpu &cpu);
 
 	/** */
@@ -88,6 +95,12 @@ public:
 	template<typename T>
 	void getMemoryAddress (MemoryAddress<T> * &mem_addr, unsigned short seg, unsigned short offset);
 
+	/** */
+	template<typename T>
+	MemoryAddress<T>*
+	getMemoryAddress (unsigned short seg, unsigned short offset);
+
+	/** Read sizeof(T) bytes starting at IP and then increment IP sizeof(T) bytes */
 	template<typename T>
 	T getInstructionBytes () {
 		size_t m_phys_addr = m_sreg_cs << 4;
@@ -99,7 +112,7 @@ public:
 
 		return val;
 	}
-};
+}; //end class BusInterfaceUnit
 
 template<typename T>
 void
@@ -110,6 +123,17 @@ BusInterfaceUnit::getMemoryAddress (MemoryAddress<T> * &mem_addr, unsigned short
 	}
 
 	mem_addr = new MemoryAddress<T> (m_memory, seg, offset);
+}
+
+template<typename T>
+MemoryAddress<T>*
+BusInterfaceUnit::getMemoryAddress (unsigned short seg, unsigned short offset) {
+	if (m_seg_override != (unsigned short)-1) {
+		seg = m_seg_override;
+		m_seg_override = (unsigned short)-1;
+	}
+
+	return new MemoryAddress<T> (m_memory, seg, offset);
 }
 
 #endif //JAF__BUS_INTERFACE_UNIT_HH

@@ -1,3 +1,8 @@
+/**
+@file ExecutionUnit.hh
+@brief Manage the general registers, flag register, and instruction execution.
+*/
+
 #ifndef JAF__EXECUTION_UNIT_HH
 #define JAF__EXECUTION_UNIT_HH
 
@@ -15,6 +20,8 @@ class Cpu;
 class ExecutionUnitPrivate;
 
 /**
+@class ExecutionUnit
+@brief Manage the general registers, flag register, and instruction execution.
 */
 class ExecutionUnit {
 	ExecutionUnitPrivate *p;
@@ -29,9 +36,10 @@ public:
 	/** */
 	~ExecutionUnit ();
 
-	/** */
+	/** Create a connection to the Cpu */
 	void connectTo (Cpu &cpu);
 
+	//FIXME - I don't think I need these
 	sigc::signal<void, bool>& signalValueChangedRegFlagsAF ();
 	sigc::signal<void, bool>& signalValueChangedRegFlagsCF ();
 	sigc::signal<void, bool>& signalValueChangedRegFlagsDF ();
@@ -42,16 +50,16 @@ public:
 	sigc::signal<void, bool>& signalValueChangedRegFlagsTF ();
 	sigc::signal<void, bool>& signalValueChangedRegFlagsZF ();
 
-	/** */
+	/** Get an 8-bit register given its index */
 	Register<unsigned char>& getReg8 (size_t index);
 
-	/** */
+	/** Set an 8-bit register given its index */
 	void setReg8 (size_t index, unsigned char val);
 
-	/** */
+	/** Get a 16-bit register given its index */
 	Register<unsigned short>& getReg16 (size_t index);
 
-	/** */
+	/** Set a 16-bit register given its index */
 	void setReg16 (size_t index, unsigned short val);
 
 	/** */
@@ -210,125 +218,297 @@ public:
 	/** */
 	void setRegFlagsZF (bool val);
 
+	/** */
 	void execAAA ();
+
+	/** */
 	void execAAD ();
+
+	/** */
 	void execAAM ();
+
+	/** */
 	void execAAS ();
+
+	/** */
 	void execADC ();
 
+	/** */
 	void execADD (std::vector<NumberWrapper> &ops);
 
+	/** */
 	void execAND (std::vector<NumberWrapper> &ops);
 
+	/** */
 	void execCALL ();
+
+	/** */
 	void execCALLFAR ();
+
+	/** */
 	void execCBW ();
+
+	/** */
 	void execCLC ();
+
+	/** */
 	void execCLD ();
+
+	/** */
 	void execCLI ();
+
+	/** */
 	void execCMC ();
+
+	/** */
 	void execCMP ();
+
+	/** */
 	void execCMPS ();
+
+	/** */
 	void execCWD ();
+
+	/** */
 	void execDAA ();
+
+	/** */
 	void execDAS ();
 
+	/** */
 	void execDEC (std::vector<NumberWrapper> &ops);
 
+	/** */
 	void execDIV ();
+
+	/** */
 	void execESC ();
+
+	/** */
 	void execHLT ();
+
+	/** */
 	void execIDIV ();
+
+	/** */
 	void execIMUL ();
+
+	/** */
 	void execIN ();
 
+	/** */
 	void execINC (std::vector<NumberWrapper> &ops);
 
+	/** */
 	void execINT ();
+
+	/** */
 	void execINTO ();
+
+	/** */
 	void execIRET ();
+
+	/** */
 	void execJNBE ();
+
+	/** */
 	void execJNB ();
+
+	/** */
 	void execJNAE ();
+
+	/** */
 	void execJNA ();
+
+	/** */
 	void execJC ();
+
+	/** */
 	void execJCXZ ();
 
+	/** */
 	void execJE (std::vector<NumberWrapper> &ops);
 
+	/** */
 	void execJG ();
+
+	/** */
 	void execJGE ();
+
+	/** */
 	void execJL ();
+
+	/** */
 	void execJLE ();
 
+	/** */
 	void execJMP (std::vector<NumberWrapper> &ops);
 
+	/** */
 	void execJMPFAR ();
+
+	/** */
 	void execJNC ();
 
+	/** */
 	void execJNE (std::vector<NumberWrapper> &ops);
 
+	/** */
 	void execJNO ();
+
+	/** */
 	void execJNS ();
+
+	/** */
 	void execJNP ();
+
+	/** */
 	void execJO ();
+
+	/** */
 	void execJPE ();
+
+	/** */
 	void execJS ();
+
+	/** */
 	void execLAHF ();
+
+	/** */
 	void execLDS ();
+
+	/** */
 	void execLEA ();
+
+	/** */
 	void execLES ();
+
+	/** */
 	void execLOCK ();
+
+	/** */
 	void execLODS ();
+
+	/** */
 	void execLOOP ();
+
+	/** */
 	void execLOOPE ();
+
+	/** */
 	void execLOOPNE ();
 
+	/** */
 	void execMOV (std::vector<NumberWrapper> &ops);
 
+	/** */
 	void execMOVS ();
+
+	/** */
 	void execMUL ();
+
+	/** */
 	void execNEG ();
+
+	/** */
 	void execNOP (std::vector<NumberWrapper> &ops);
+
+	/** */
 	void execNOT ();
 
+	/** */
 	void execOR (std::vector<NumberWrapper> &ops);
 
+	/** */
 	void execOUT ();
+
+	/** */
 	void execPOP ();
+
+	/** */
 	void execPOPF ();
+
+	/** */
 	void execPUSH ();
+
+	/** */
 	void execPUSHF ();
+
+	/** */
 	void execRCL ();
+
+	/** */
 	void execRCR ();
+
+	/** */
 	void execREP ();
+
+	/** */
 	void execREPNE ();
+
+	/** */
 	void execRET ();
+
+	/** */
 	void execRETFAR ();
+
+	/** */
 	void execROL ();
+
+	/** */
 	void execROR ();
+
+	/** */
 	void execSAHF ();
+
+	/** */
 	void execSHL ();
+
+	/** */
 	void execSAR ();
+
+	/** */
 	void execSBB ();
+
+	/** */
 	void execSCAS ();
+
+	/** */
 	void execSEG ();
+
+	/** */
 	void execSHR ();
+
+	/** */
 	void execSTC ();
+
+	/** */
 	void execSTD ();
+
+	/** */
 	void execSTI ();
+
+	/** */
 	void execSTOS ();
 
+	/** */
 	void execSUB (std::vector<NumberWrapper> &ops);
 
+	/** */
 	void execTEST ();
+
+	/** */
 	void execWAIT ();
 
+	/** */
 	void execXCHG (std::vector<NumberWrapper> &ops);
 
+	/** */
 	void execXLAT ();
+
+	/** */
 	void execXOR ();
-};
+}; //end class ExecutionUnit
 
 #endif //JAF__EXECUTION_UNIT_HH
 

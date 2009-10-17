@@ -1,3 +1,8 @@
+/**
+@file Loader.hh
+@brief Load an obj file into memory.
+*/
+
 #ifndef JAF__LOADER_HH
 #define JAF__LOADER_HH
 
@@ -9,10 +14,12 @@
 #include "Cpu.hh"
 #include "Defines.hh"
 
-//class ExecutionUnit;
-
 class LoaderPrivate;
 
+/**
+@class Loader
+@brief Load an obj file into memory.
+*/
 class Loader {
 	enum Registers {
 		m_AX,
@@ -40,17 +47,30 @@ class Loader {
 
 	LoaderPrivate *p;
 
+	unsigned int physicalAddress (unsigned int seg, unsigned int offset);
+
 public:
+	/** */
 	Loader ();
 
+	/** */
 	~Loader ();
 
+	/** Create a connection to the Cpu */
 	void connectTo (Cpu &cpu);
 
+	/**
+	@brief Load a file into memory
+	@param filename The file to load.
+	@brief If true, then clear the memory before loading.
+	@return true if successful, false if unsuccessful
+	*/
 	bool loadFile (std::string filename, bool clear = false);
 
+	/** Return the checksum of the memory */
 	int checksumMemory ();
 
+	/** Return the checksum of the registers */
 	int checksumRegisters ();
 
 #if 0
@@ -79,9 +99,7 @@ public:
 	}
 #endif
 
-private:
-	unsigned int physicalAddress (unsigned int seg, unsigned int offset);
-};
+}; //end class Loader
 
 #endif //JAF__LOADER_HH
 

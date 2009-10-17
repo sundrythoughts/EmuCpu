@@ -1,3 +1,8 @@
+/**
+@file Value.hh
+@brief Wrapper to hold any type of value.
+*/
+
 #ifndef JAF__VALUE_HH
 #define JAF__VALUE_HH
 
@@ -24,8 +29,7 @@ class Value {
 
 public:
 
-	/**
-	*/
+	/** */
 	Value () : m_data (0), m_call_free (false) {
 	}
 
@@ -229,13 +233,14 @@ private:
 
 	//private copy constructor
 public:
+	/** */
 	Value (const Value &v) {
 		m_data = 0;
 		m_type_name = "";
 		m_call_free = false;
 		m_call_free_pointer = false;
 	}
-};
+}; //end class Value
 
 #endif //JAF__VALUE_HH
 

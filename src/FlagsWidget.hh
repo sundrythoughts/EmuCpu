@@ -1,3 +1,8 @@
+/**
+@file FlagsWidget.hh
+@brief Widget for displaying the flags.
+*/
+
 #ifndef JAF__FLAGS_WIDGET_HH
 #define JAF__FLAGS_WIDGET_HH
 
@@ -6,6 +11,10 @@
 
 #include "ui_FlagsWidget.h"
 
+/**
+@class FlagsWidget
+@brief Widget for displaying the flags
+*/
 class FlagsWidget : public QDockWidget, protected Ui::FlagsWidget {
 	Q_OBJECT
 
@@ -32,11 +41,13 @@ class FlagsWidget : public QDockWidget, protected Ui::FlagsWidget {
 	};
 
 public:
+	/** */
 	FlagsWidget (QWidget *parent = 0) : QDockWidget (parent) {
 		setupUi (this);
 	}
 
 public slots:
+	/** */
 	void enableDisableToggle (bool b) {
 		if (b) {
 			show ();
@@ -46,6 +57,7 @@ public slots:
 		}
 	}
 
+	/** */
 	void setFlags (unsigned short i) {
 		FlagsMask mask;
 		mask.flags = i;
@@ -61,6 +73,7 @@ public slots:
 		setFlagOF (mask.f_of);
 	}
 
+	//FIXME - I don't think these are needed
 	void setFlagCF (bool v) {
 		m_lcd_cf->display (v);
 	}
@@ -96,7 +109,8 @@ public slots:
 	void setFlagOF (bool v) {
 		m_lcd_of->display (v);
 	}
-};
+
+}; //end class FlagsWidget
 
 #endif //JAF__FLAGS_WIDGET_HH
 

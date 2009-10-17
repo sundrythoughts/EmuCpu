@@ -1,9 +1,18 @@
+/**
+@file Immediate.hh
+@brief Read-only implementation of INumberReadableWritable for immediate values.
+*/
+
 #ifndef JAF__IMMEDIATE_HH
 #define JAF__IMMEDIATE_HH
 
 #include "INumberReadableWritable.hh"
 #include <iostream>
 
+/**
+@class Immediate
+@brief Read-only implementation of INumberReadableWritable for immediate values.
+*/
 template<typename T>
 class Immediate : public INumberReadableWritable<T> {
 	T *m_num;
@@ -59,130 +68,111 @@ public:
 	}
 
 private:
-	/** */
 	void reinitialize (T &r) {
 		std::cerr << "Debug: class Immediate is read-only" << std::endl;
 	}
 
-	/** */
 	void reinitialize (const T &r) {
 		std::cerr << "Debug: class Immediate is read-only" << std::endl;
 	}
 
 public:
-	/** */
+	/** Implicit cast to stored value */
 	virtual operator const T& () const {
 		return *m_num;
 	}
 
-	/** */
+	/** Get the stored value */
 	virtual const T& getValue () const {
 		return *m_num;
 	}
 
 private:
-	/** */
 	virtual const INumberReadableWritable<T>& operator++ () {
 		std::cerr << "Debug: class Immediate is read-only" << std::endl;
 		return *this;
 	}
 
-	/** */
 	virtual const T operator++ (int) {
 		std::cerr << "Debug: class Immediate is read-only" << std::endl;
 		return *m_num;
 	}
 
-	/** */
 	virtual const INumberReadableWritable<T>& operator-- () {
 		std::cerr << "Debug: class Immediate is read-only" << std::endl;
 		return *this;
 	}
 
-	/** */
 	virtual const T operator-- (int) {
 		std::cerr << "Debug: class Immediate is read-only" << std::endl;
 		return *m_num;
 	}
 
-	/** */
 	virtual INumberReadableWritable<T>& operator= (const T &right) {
 		std::cerr << "Debug: class Immediate is read-only" << std::endl;
 		return *this;
 	}
 
-	/** */
 	virtual INumberReadableWritable<T>& operator= (const INumberReadableWritable<T> &right) {
 		std::cerr << "Debug: class Immediate is read-only" << std::endl;
 		return *this;
 	}
 
-	/** */
 	virtual INumberReadableWritable<T>& operator= (const Immediate<T> &right) {
 		std::cerr << "Debug: class Immediate is read-only" << std::endl;
 		return *this;
 	}
 
-	/** */
 	virtual INumberReadableWritable<T>& operator+= (const T& right) {
 		std::cerr << "Debug: class Immediate is read-only" << std::endl;
 		return *this;
 	}
 
-	/** */
 	virtual INumberReadableWritable<T>& operator-= (const T& right) {
 		std::cerr << "Debug: class Immediate is read-only" << std::endl;
 		return *this;
 	}
 
-	/** */
 	virtual INumberReadableWritable<T>& operator*= (const T& right) {
 		std::cerr << "Debug: class Immediate is read-only" << std::endl;
 		return *this;
 	}
 
-	/** */
 	virtual INumberReadableWritable<T>& operator/= (const T& right) {
 		std::cerr << "Debug: class Immediate is read-only" << std::endl;
 		return *this;
 	}
 
-	/** */
 	virtual INumberReadableWritable<T>& operator%= (const T& right) {
 		std::cerr << "Debug: class Immediate is read-only" << std::endl;
 		return *this;
 	}
 
-	/** */
 	virtual INumberReadableWritable<T>& operator^= (const T& right) {
 		std::cerr << "Debug: class Immediate is read-only" << std::endl;
 		return *this;
 	}
 
-	/** */
 	virtual INumberReadableWritable<T>& operator&= (const T& right) {
 		std::cerr << "Debug: class Immediate is read-only" << std::endl;
 		return *this;
 	}
 
-	/** */
 	virtual INumberReadableWritable<T>& operator|= (const T& right) {
 		std::cerr << "Debug: class Immediate is read-only" << std::endl;
 		return *this;
 	}
 
-	/** */
 	virtual INumberReadableWritable<T>& operator>>= (const T& right) {
 		std::cerr << "Debug: class Immediate is read-only" << std::endl;
 		return *this;
 	}
 
-	/** */
 	virtual INumberReadableWritable<T>& operator<<= (const T& right) {
 		std::cerr << "Debug: class Immediate is read-only" << std::endl;
 		return *this;
 	}
-};
+}; //end class Immediate
 
 #endif //JAF__IMMEDIATE_HH
 

@@ -218,7 +218,8 @@ public:
 
 	void execADD (std::vector<NumberWrapper> &ops);
 
-	void execAND ();
+	void execAND (std::vector<NumberWrapper> &ops);
+
 	void execCALL ();
 	void execCALLFAR ();
 	void execCBW ();
@@ -259,10 +260,14 @@ public:
 	void execJGE ();
 	void execJL ();
 	void execJLE ();
-	void execJMP ();
+
+	void execJMP (std::vector<NumberWrapper> &ops);
+
 	void execJMPFAR ();
 	void execJNC ();
-	void execJNE ();
+
+	void execJNE (std::vector<NumberWrapper> &ops);
+
 	void execJNO ();
 	void execJNS ();
 	void execJNP ();
@@ -284,9 +289,11 @@ public:
 	void execMOVS ();
 	void execMUL ();
 	void execNEG ();
-	void execNOP ();
+	void execNOP (std::vector<NumberWrapper> &ops);
 	void execNOT ();
-	void execOR ();
+
+	void execOR (std::vector<NumberWrapper> &ops);
+
 	void execOUT ();
 	void execPOP ();
 	void execPOPF ();
@@ -311,7 +318,9 @@ public:
 	void execSTD ();
 	void execSTI ();
 	void execSTOS ();
-	void execSUB ();
+
+	void execSUB (std::vector<NumberWrapper> &ops);
+
 	void execTEST ();
 	void execWAIT ();
 

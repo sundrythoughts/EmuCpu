@@ -1,12 +1,12 @@
 #include "InstructionTable.hh"
 
 const InstructionTableItem InstructionTable::one_byte_opcode_instruction_map[256] = {
-	/* 00 */
+	/* 0x */
 	{"add", true, 2, {"Eb","Gb",0}, GROUP_NONE, &InstructionDecoder::decodeRegRM},
 	{"add", true, 2, {"Ev","Gv",0}, GROUP_NONE, &InstructionDecoder::decodeRegRM},
 	{"add", true, 2, {"Gb","Eb",0}, GROUP_NONE, &InstructionDecoder::decodeRegRM},
 	{"add", true, 2, {"Gv","Ev",0}, GROUP_NONE, &InstructionDecoder::decodeRegRM},
-	{"add", false, 2, {"AL","Ib",0}, GROUP_NONE, &InstructionDecoder::decodeAccImm},
+	{"add", false, 2, {"AL","Ib",0}, GROUP_NONE, &InstructionDecoder::decodeAccImm, &ExecutionUnit::execADD},
 	{"add", false, 2, {"AX","Iv",0}, GROUP_NONE, &InstructionDecoder::decodeAccImm, &ExecutionUnit::execADD},
 	{"push es", false, 0, {0,0,0}, GROUP_NONE, &InstructionDecoder::decodeSegment},
 	{"pop es", false, 0, {0,0,0}, GROUP_NONE, &InstructionDecoder::decodeSegment},
@@ -14,12 +14,12 @@ const InstructionTableItem InstructionTable::one_byte_opcode_instruction_map[256
 	{"or", true, 2, {"Ev","Gv",0}, GROUP_NONE, &InstructionDecoder::decodeRegRM},
 	{"or", true, 2, {"Gb","Eb",0}, GROUP_NONE, &InstructionDecoder::decodeRegRM},
 	{"or", true, 2, {"Gv","Ev",0}, GROUP_NONE, &InstructionDecoder::decodeRegRM},
-	{"or", false, 2, {"AL","Ib",0}, GROUP_NONE, &InstructionDecoder::decodeAccImm},
-	{"or", false, 2, {"AX","Iv",0}, GROUP_NONE, &InstructionDecoder::decodeAccImm},
+	{"or", false, 2, {"AL","Ib",0}, GROUP_NONE, &InstructionDecoder::decodeAccImm, &ExecutionUnit::execOR},
+	{"or", false, 2, {"AX","Iv",0}, GROUP_NONE, &InstructionDecoder::decodeAccImm, &ExecutionUnit::execOR},
 	{"push cs", false, 0, {0,0,0}, GROUP_NONE, &InstructionDecoder::decodeSegment},
 	{0, false, 0, {0,0,0}, GROUP_RESERVED},
 
-	/* 01 */
+	/* 1x */
 	{"adc", true, 2, {"Eb","Gb",0}, GROUP_NONE, &InstructionDecoder::decodeRegRM},
 	{"adc", true, 2, {"Ev","Gv",0}, GROUP_NONE, &InstructionDecoder::decodeRegRM},
 	{"adc", true, 2, {"Gb","Eb",0}, GROUP_NONE, &InstructionDecoder::decodeRegRM},
@@ -37,25 +37,25 @@ const InstructionTableItem InstructionTable::one_byte_opcode_instruction_map[256
 	{"push ds", false, 0, {0,0,0}, GROUP_NONE, &InstructionDecoder::decodeSegment},
 	{"pop ds", false, 0, {0,0,0}, GROUP_NONE, &InstructionDecoder::decodeSegment},
 
-	/* 02 */
+	/* 2x */
 	{"and", true, 2, {"Eb","Gb",0}, GROUP_NONE, &InstructionDecoder::decodeRegRM},
 	{"and", true, 2, {"Ev","Gv",0}, GROUP_NONE, &InstructionDecoder::decodeRegRM},
 	{"and", true, 2, {"Gb","Eb",0}, GROUP_NONE, &InstructionDecoder::decodeRegRM},
 	{"and", true, 2, {"Gv","Ev",0}, GROUP_NONE, &InstructionDecoder::decodeRegRM},
-	{"and", false, 2, {"AL","Ib",0}, GROUP_NONE, &InstructionDecoder::decodeAccImm},
-	{"and", false, 2, {"AX","Iv",0}, GROUP_NONE, &InstructionDecoder::decodeAccImm},
+	{"and", false, 2, {"AL","Ib",0}, GROUP_NONE, &InstructionDecoder::decodeAccImm, &ExecutionUnit::execAND},
+	{"and", false, 2, {"AX","Iv",0}, GROUP_NONE, &InstructionDecoder::decodeAccImm, &ExecutionUnit::execAND},
 	{0, false, 0, {0,0,0}, GROUP_RESERVED},
 	{"daa", false, 0, {0,0,0}, GROUP_NONE, &InstructionDecoder::decodeAcc},
 	{"sub", true, 2, {"Eb","Gb",0}, GROUP_NONE, &InstructionDecoder::decodeRegRM},
 	{"sub", true, 2, {"Ev","Gv",0}, GROUP_NONE, &InstructionDecoder::decodeRegRM},
 	{"sub", true, 2, {"Gb","Eb",0}, GROUP_NONE, &InstructionDecoder::decodeRegRM},
 	{"sub", true, 2, {"Gv","Ev",0}, GROUP_NONE, &InstructionDecoder::decodeRegRM},
-	{"sub", false, 2, {"AL","Ib",0}, GROUP_NONE, &InstructionDecoder::decodeAccImm},
-	{"sub", false, 2, {"AX","Iv",0}, GROUP_NONE, &InstructionDecoder::decodeAccImm},
+	{"sub", false, 2, {"AL","Ib",0}, GROUP_NONE, &InstructionDecoder::decodeAccImm, &ExecutionUnit::execSUB},
+	{"sub", false, 2, {"AX","Iv",0}, GROUP_NONE, &InstructionDecoder::decodeAccImm, &ExecutionUnit::execSUB},
 	{0, false, 0, {0,0,0}, GROUP_RESERVED},
 	{"das", false, 0, {0,0,0}, GROUP_NONE, &InstructionDecoder::decodeAcc},
 	
-	/* 03 */
+	/* 3x */
 	{"xor", true, 2, {"Eb","Gb",0}, GROUP_NONE, &InstructionDecoder::decodeRegRM},
 	{"xor", true, 2, {"Ev","Gv",0}, GROUP_NONE, &InstructionDecoder::decodeRegRM},
 	{"xor", true, 2, {"Gb","Eb",0}, GROUP_NONE, &InstructionDecoder::decodeRegRM},
@@ -73,7 +73,7 @@ const InstructionTableItem InstructionTable::one_byte_opcode_instruction_map[256
 	{0, false, 0, {0,0,0}, GROUP_RESERVED},
 	{"aas", false, 0, {0,0,0}, GROUP_NONE, &InstructionDecoder::decodeAcc},
 
-	/* 04 */
+	/* 4x */
 	{"inc", false, 1, {"AX",0,0}, GROUP_NONE, &InstructionDecoder::decodeReg, &ExecutionUnit::execINC},
 	{"inc", false, 1, {"CX",0,0}, GROUP_NONE, &InstructionDecoder::decodeReg, &ExecutionUnit::execINC},
 	{"inc", false, 1, {"DX",0,0}, GROUP_NONE, &InstructionDecoder::decodeReg, &ExecutionUnit::execINC},
@@ -91,7 +91,7 @@ const InstructionTableItem InstructionTable::one_byte_opcode_instruction_map[256
 	{"dec", false, 1, {"SI",0,0}, GROUP_NONE, &InstructionDecoder::decodeReg, &ExecutionUnit::execDEC},
 	{"dec", false, 1, {"DI",0,0}, GROUP_NONE, &InstructionDecoder::decodeReg, &ExecutionUnit::execDEC},
 
-	/* 05 */
+	/* 5x */
 	{"push", false, 1, {"AX",0,0}, GROUP_NONE, &InstructionDecoder::decodeReg},
 	{"push", false, 1, {"CX",0,0}, GROUP_NONE, &InstructionDecoder::decodeReg},
 	{"push", false, 1, {"DX",0,0}, GROUP_NONE, &InstructionDecoder::decodeReg},
@@ -109,7 +109,7 @@ const InstructionTableItem InstructionTable::one_byte_opcode_instruction_map[256
 	{"pop", false, 1, {"SI",0,0}, GROUP_NONE, &InstructionDecoder::decodeReg},
 	{"pop", false, 1, {"DI",0,0}, GROUP_NONE, &InstructionDecoder::decodeReg},
 
-	/* 06 */
+	/* 6x */
 	{0, false, 0, {0,0,0}, GROUP_RESERVED},
 	{0, false, 0, {0,0,0}, GROUP_RESERVED},
 	{0, false, 0, {0,0,0}, GROUP_RESERVED},
@@ -127,13 +127,13 @@ const InstructionTableItem InstructionTable::one_byte_opcode_instruction_map[256
 	{0, false, 0, {0,0,0}, GROUP_RESERVED},
 	{0, false, 0, {0,0,0}, GROUP_RESERVED},
 
-	/* 07 */
+	/* 7x */
 	{"jo", false, 1, {"Jb",0,0}, GROUP_NONE, &InstructionDecoder::decodeShort},
 	{"jno", false, 1, {"Jb",0,0}, GROUP_NONE, &InstructionDecoder::decodeShort},
 	{"jb/jnae/jc", false, 1, {"Jb",0,0}, GROUP_NONE, &InstructionDecoder::decodeShort},
 	{"jnb/jae/jnc", false, 1, {"Jb",0,0}, GROUP_NONE, &InstructionDecoder::decodeShort},
 	{"jz/je", false, 1, {"Jb",0,0}, GROUP_NONE, &InstructionDecoder::decodeShort, &ExecutionUnit::execJE},
-	{"jnz/jne", false, 1, {"Jb",0,0}, GROUP_NONE, &InstructionDecoder::decodeShort},
+	{"jnz/jne", false, 1, {"Jb",0,0}, GROUP_NONE, &InstructionDecoder::decodeShort, &ExecutionUnit::execJNE},
 	{"jbe/jna", false, 1, {"Jb",0,0}, GROUP_NONE, &InstructionDecoder::decodeShort},
 	{"jnbe/ja", false, 1, {"Jb",0,0}, GROUP_NONE, &InstructionDecoder::decodeShort},
 	{"js", false, 1, {"Jb",0,0}, GROUP_NONE, &InstructionDecoder::decodeShort},
@@ -145,7 +145,7 @@ const InstructionTableItem InstructionTable::one_byte_opcode_instruction_map[256
 	{"jle/jng", false, 1, {"Jb",0,0}, GROUP_NONE, &InstructionDecoder::decodeShort},
 	{"jnle/jg", false, 1, {"Jb",0,0}, GROUP_NONE, &InstructionDecoder::decodeShort},
 
-	/* 08 */
+	/* 8x */
 	{0, false, 2, {"Eb","Ib",0}, GROUP_1},
 	{0, false, 2, {"Ev","Iv",0}, GROUP_1},
 	{0, false, 2, {"Ev","Ib",0}, GROUP_1},
@@ -163,15 +163,15 @@ const InstructionTableItem InstructionTable::one_byte_opcode_instruction_map[256
 	{"mov", true, 2, {"Sw","Ew",0}, GROUP_NONE, &InstructionDecoder::decodeSegRM},
 	{"pop", true, 1, {"Ev",0,0}, GROUP_NONE},
 
-	/* 09 */
-	{"nop", false, 0, {0,0,0}, GROUP_NONE, &InstructionDecoder::decodeAccReg},
-	{"xchg", false, 1, {"CX",0,0}, GROUP_NONE, &InstructionDecoder::decodeAccReg},
-	{"xchg", false, 1, {"DX",0,0}, GROUP_NONE, &InstructionDecoder::decodeAccReg},
+	/* 9x */
+	{"nop", false, 0, {0,0,0}, GROUP_NONE, &InstructionDecoder::decodeAccReg, &ExecutionUnit::execNOP},
+	{"xchg", false, 1, {"CX",0,0}, GROUP_NONE, &InstructionDecoder::decodeAccReg, &ExecutionUnit::execXCHG},
+	{"xchg", false, 1, {"DX",0,0}, GROUP_NONE, &InstructionDecoder::decodeAccReg, &ExecutionUnit::execXCHG},
 	{"xchg", false, 1, {"BX",0,0}, GROUP_NONE, &InstructionDecoder::decodeAccReg, &ExecutionUnit::execXCHG},
-	{"xchg", false, 1, {"SP",0,0}, GROUP_NONE, &InstructionDecoder::decodeAccReg},
-	{"xchg", false, 1, {"BP",0,0}, GROUP_NONE, &InstructionDecoder::decodeAccReg},
-	{"xchg", false, 1, {"SI",0,0}, GROUP_NONE, &InstructionDecoder::decodeAccReg},
-	{"xchg", false, 1, {"DI",0,0}, GROUP_NONE, &InstructionDecoder::decodeAccReg},
+	{"xchg", false, 1, {"SP",0,0}, GROUP_NONE, &InstructionDecoder::decodeAccReg, &ExecutionUnit::execXCHG},
+	{"xchg", false, 1, {"BP",0,0}, GROUP_NONE, &InstructionDecoder::decodeAccReg, &ExecutionUnit::execXCHG},
+	{"xchg", false, 1, {"SI",0,0}, GROUP_NONE, &InstructionDecoder::decodeAccReg, &ExecutionUnit::execXCHG},
+	{"xchg", false, 1, {"DI",0,0}, GROUP_NONE, &InstructionDecoder::decodeAccReg, &ExecutionUnit::execXCHG},
 	{"cbw", false, 0, {0,0,0}, GROUP_NONE, &InstructionDecoder::decodeAcc},
 	{"cwd", false, 0, {0,0,0}, GROUP_NONE, &InstructionDecoder::decodeAcc},
 	{"call", false, 1, {"Ap",0,0}, GROUP_NONE, &InstructionDecoder::decodeInter},
@@ -181,11 +181,11 @@ const InstructionTableItem InstructionTable::one_byte_opcode_instruction_map[256
 	{"sahf", false, 0, {0,0,0}, GROUP_NONE, &InstructionDecoder::decodeFlags},
 	{"lahf", false, 0, {0,0,0}, GROUP_NONE, &InstructionDecoder::decodeFlags},
 
-	/* 0A */
-	{"mov", false, 2, {"AL","Ob",0}, GROUP_NONE, &InstructionDecoder::decodeAccMem},
-	{"mov", false, 2, {"AX","Ov",0}, GROUP_NONE, &InstructionDecoder::decodeAccMem},
-	{"mov", false, 2, {"Ob","AL",0}, GROUP_NONE, &InstructionDecoder::decodeAccMem},
-	{"mov", false, 2, {"Ov","AX",0}, GROUP_NONE, &InstructionDecoder::decodeAccMem},
+	/* Ax */
+	{"mov", false, 2, {"AL","Ob",0}, GROUP_NONE, &InstructionDecoder::decodeAccMem, &ExecutionUnit::execMOV},
+	{"mov", false, 2, {"AX","Ov",0}, GROUP_NONE, &InstructionDecoder::decodeAccMem, &ExecutionUnit::execMOV},
+	{"mov", false, 2, {"Ob","AL",0}, GROUP_NONE, &InstructionDecoder::decodeAccMem, &ExecutionUnit::execMOV},
+	{"mov", false, 2, {"Ov","AX",0}, GROUP_NONE, &InstructionDecoder::decodeAccMem, &ExecutionUnit::execMOV},
 	{"movsb", false, 2, {"Xb","Yb",0}, GROUP_NONE, &InstructionDecoder::decodeString},
 	{"movsw", false, 2, {"Xv","Yv",0}, GROUP_NONE, &InstructionDecoder::decodeString},
 	{"cmpsw", false, 2, {"Xb","Yb",0}, GROUP_NONE, &InstructionDecoder::decodeString},
@@ -199,25 +199,25 @@ const InstructionTableItem InstructionTable::one_byte_opcode_instruction_map[256
 	{"scasb", false, 2, {"AL","Yb",0}, GROUP_NONE, &InstructionDecoder::decodeString},
 	{"scasw", false, 2, {"AX","Yv",0}, GROUP_NONE, &InstructionDecoder::decodeString},
 
-	/* 0B */
-	{"mov", false, 2, {"AL","Ib",0}, GROUP_NONE, &InstructionDecoder::decodeRegImm},
-	{"mov", false, 2, {"CL","Ib",0}, GROUP_NONE, &InstructionDecoder::decodeRegImm},
-	{"mov", false, 2, {"DL","Ib",0}, GROUP_NONE, &InstructionDecoder::decodeRegImm},
-	{"mov", false, 2, {"BL","Ib",0}, GROUP_NONE, &InstructionDecoder::decodeRegImm},
-	{"mov", false, 2, {"AH","Ib",0}, GROUP_NONE, &InstructionDecoder::decodeRegImm},
-	{"mov", false, 2, {"CH","Ib",0}, GROUP_NONE, &InstructionDecoder::decodeRegImm},
-	{"mov", false, 2, {"DH","Ib",0}, GROUP_NONE, &InstructionDecoder::decodeRegImm},
-	{"mov", false, 2, {"BH","Ib",0}, GROUP_NONE, &InstructionDecoder::decodeRegImm},
+	/* Bx */
+	{"mov", false, 2, {"AL","Ib",0}, GROUP_NONE, &InstructionDecoder::decodeRegImm, &ExecutionUnit::execMOV},
+	{"mov", false, 2, {"CL","Ib",0}, GROUP_NONE, &InstructionDecoder::decodeRegImm, &ExecutionUnit::execMOV},
+	{"mov", false, 2, {"DL","Ib",0}, GROUP_NONE, &InstructionDecoder::decodeRegImm, &ExecutionUnit::execMOV},
+	{"mov", false, 2, {"BL","Ib",0}, GROUP_NONE, &InstructionDecoder::decodeRegImm, &ExecutionUnit::execMOV},
+	{"mov", false, 2, {"AH","Ib",0}, GROUP_NONE, &InstructionDecoder::decodeRegImm, &ExecutionUnit::execMOV},
+	{"mov", false, 2, {"CH","Ib",0}, GROUP_NONE, &InstructionDecoder::decodeRegImm, &ExecutionUnit::execMOV},
+	{"mov", false, 2, {"DH","Ib",0}, GROUP_NONE, &InstructionDecoder::decodeRegImm, &ExecutionUnit::execMOV},
+	{"mov", false, 2, {"BH","Ib",0}, GROUP_NONE, &InstructionDecoder::decodeRegImm, &ExecutionUnit::execMOV},
 	{"mov", false, 2, {"AX","Iv",0}, GROUP_NONE, &InstructionDecoder::decodeRegImm, &ExecutionUnit::execMOV},
-	{"mov", false, 2, {"CX","Iv",0}, GROUP_NONE, &InstructionDecoder::decodeRegImm},
-	{"mov", false, 2, {"DX","Iv",0}, GROUP_NONE, &InstructionDecoder::decodeRegImm},
-	{"mov", false, 2, {"BX","Iv",0}, GROUP_NONE, &InstructionDecoder::decodeRegImm},
-	{"mov", false, 2, {"SP","Iv",0}, GROUP_NONE, &InstructionDecoder::decodeRegImm},
-	{"mov", false, 2, {"BP","Iv",0}, GROUP_NONE, &InstructionDecoder::decodeRegImm},
-	{"mov", false, 2, {"SI","Iv",0}, GROUP_NONE, &InstructionDecoder::decodeRegImm},
-	{"mov", false, 2, {"DI","Iv",0}, GROUP_NONE, &InstructionDecoder::decodeRegImm},
+	{"mov", false, 2, {"CX","Iv",0}, GROUP_NONE, &InstructionDecoder::decodeRegImm, &ExecutionUnit::execMOV},
+	{"mov", false, 2, {"DX","Iv",0}, GROUP_NONE, &InstructionDecoder::decodeRegImm, &ExecutionUnit::execMOV},
+	{"mov", false, 2, {"BX","Iv",0}, GROUP_NONE, &InstructionDecoder::decodeRegImm, &ExecutionUnit::execMOV},
+	{"mov", false, 2, {"SP","Iv",0}, GROUP_NONE, &InstructionDecoder::decodeRegImm, &ExecutionUnit::execMOV},
+	{"mov", false, 2, {"BP","Iv",0}, GROUP_NONE, &InstructionDecoder::decodeRegImm, &ExecutionUnit::execMOV},
+	{"mov", false, 2, {"SI","Iv",0}, GROUP_NONE, &InstructionDecoder::decodeRegImm, &ExecutionUnit::execMOV},
+	{"mov", false, 2, {"DI","Iv",0}, GROUP_NONE, &InstructionDecoder::decodeRegImm, &ExecutionUnit::execMOV},
 
-	/* 0C */
+	/* Cx */
 	{0, false, 0, {0,0,0}, GROUP_RESERVED},
 	{0, false, 0, {0,0,0}, GROUP_RESERVED},
 	{"ret", false, 1, {"Iw",0,0}, GROUP_NONE, &InstructionDecoder::decodeRetPop},
@@ -235,7 +235,7 @@ const InstructionTableItem InstructionTable::one_byte_opcode_instruction_map[256
 	{"into", false, 0, {0,0,0}, GROUP_NONE, &InstructionDecoder::decodeNone},
 	{"iret", false, 0, {0,0,0}, GROUP_NONE, &InstructionDecoder::decodeNone},
 
-	/* 0D */
+	/* Dx */
 	{0, true, 2, {"Eb",0,0}, GROUP_2},
 	{0, true, 2, {"Ev",0,0}, GROUP_2},
 	{0, true, 2, {"Eb","CL",0}, GROUP_2},
@@ -253,7 +253,7 @@ const InstructionTableItem InstructionTable::one_byte_opcode_instruction_map[256
 	{"esc 6", false, 0, {0,0,0}, GROUP_NONE, &InstructionDecoder::decodeEscNum},
 	{"esc 7", false, 0, {0,0,0}, GROUP_NONE, &InstructionDecoder::decodeEscNum},
 
-	/* 0E */
+	/* Ex */
 	{"loopne/loopnz", false, 1, {"Jb",0,0}, GROUP_NONE, &InstructionDecoder::decodeShort},
 	{"loope/loopz", false, 1, {"Jb",0,0}, GROUP_NONE, &InstructionDecoder::decodeShort},
 	{"loop", false, 1, {"Jb",0,0}, GROUP_NONE, &InstructionDecoder::decodeShort},
@@ -263,15 +263,15 @@ const InstructionTableItem InstructionTable::one_byte_opcode_instruction_map[256
 	{"out", false, 2, {"Ib","AL",0}, GROUP_NONE, &InstructionDecoder::decodeAccPort},
 	{"out", false, 2, {"Ib","AX",0}, GROUP_NONE, &InstructionDecoder::decodeAccPort},
 	{"call", false, 1, {"Jv",0,0}, GROUP_NONE, &InstructionDecoder::decodeIntra},
-	{"jmp", false, 1, {"Jv",0,0}, GROUP_NONE, &InstructionDecoder::decodeIntra},
+	{"jmp", false, 1, {"Jv",0,0}, GROUP_NONE, &InstructionDecoder::decodeIntra,  &ExecutionUnit::execJMP},
 	{"jmp", false, 1, {"Ap",0,0}, GROUP_NONE, &InstructionDecoder::decodeInter},
-	{"jmp", false, 1, {"Jb",0,0}, GROUP_NONE, &InstructionDecoder::decodeShort},
+	{"jmp", false, 1, {"Jb",0,0}, GROUP_NONE, &InstructionDecoder::decodeShort, &ExecutionUnit::execJMP},
 	{"in", false, 2, {"AL","DX",0}, GROUP_NONE, &InstructionDecoder::decodeAccVPort},
 	{"in", false, 2, {"AX","DX",0}, GROUP_NONE, &InstructionDecoder::decodeAccVPort},
 	{"out", false, 2, {"DX","AL",0}, GROUP_NONE, &InstructionDecoder::decodeAccVPort},
 	{"out", false, 2, {"DX","AX",0}, GROUP_NONE, &InstructionDecoder::decodeAccVPort},
 
-	/* 0F */
+	/* Fx */
 	{"lock", false, 0, {0,0,0}, GROUP_NONE, &InstructionDecoder::decodeNone},
 	{0, false, 0, {0,0,0}, GROUP_RESERVED},
 	{"repne", false, 0, {0,0,0}, GROUP_NONE, &InstructionDecoder::decodeNone},

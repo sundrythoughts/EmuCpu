@@ -32,9 +32,16 @@ public:
 	}
 
 	/** */
-	Immediate (T &r) {
-		m_num = &r;
-		m_deletable = false;
+	Immediate (T &r, bool cp=false) {
+		if (cp) {
+			m_num = new T ();
+			*m_num = r;
+			m_deletable = true;
+		}
+		else {
+			m_num = &r;
+			m_deletable = false;
+		}
 	}
 
 	/** */

@@ -10,6 +10,7 @@ class Register : public sigc::trackable, public INumberReadableWritable<T> {
 	T *m_num;
 	bool m_deletable;
 	sigc::signal<void, T> m_signal_value_changed;
+	sigc::signal<void> m_signal_emit_signal_value_changed;
 
 public:
 	/** */
@@ -18,6 +19,7 @@ public:
 		m_deletable = true;
 
 		m_signal_value_changed.emit (*m_num);
+		m_signal_emit_signal_value_changed.emit ();
 	}
 
 	/** */
@@ -35,14 +37,23 @@ public:
 		*/
 
 		m_signal_value_changed.emit (*m_num);
+		m_signal_emit_signal_value_changed.emit ();
 	}
 
 	/** */
-	Register (T &r) : sigc::trackable () {
-		m_num = &r;
-		m_deletable = false;
+	Register (T &r, bool cp=false) : sigc::trackable () {
+		if (cp) {
+			m_num = new T ();
+			*m_num = r;
+			m_deletable = true;
+		}
+		else {
+			m_num = &r;
+			m_deletable = false;
+		}
 
 		m_signal_value_changed.emit (*m_num);
+		m_signal_emit_signal_value_changed.emit ();
 	}
 
 	/** */
@@ -52,6 +63,7 @@ public:
 		m_deletable = true;
 
 		m_signal_value_changed.emit (*m_num);
+		m_signal_emit_signal_value_changed.emit ();
 	}
 
 	/** */
@@ -81,8 +93,18 @@ public:
 		*m_num = r;
 	}
 
+	/** */
 	sigc::signal<void, T>& signalValueChanged () {
 		return m_signal_value_changed;
+	}
+
+	/** */
+	sigc::signal<void>& signalEmitSignalValueChanged () {
+		return m_signal_emit_signal_value_changed;
+	}
+
+	void emitSignalValueChanged () {
+		m_signal_value_changed.emit (*m_num);
 	}
 
 	/** */
@@ -99,6 +121,7 @@ public:
 	virtual const INumberReadableWritable<T>& operator++ () {
 		++(*m_num);
 		m_signal_value_changed.emit (*m_num);
+		m_signal_emit_signal_value_changed.emit ();
 		return *this;
 	}
 
@@ -106,6 +129,7 @@ public:
 	virtual const T operator++ (int) {
 		T prev = (*m_num)++;
 		m_signal_value_changed.emit (*m_num);
+		m_signal_emit_signal_value_changed.emit ();
 		return prev;
 	}
 
@@ -113,6 +137,7 @@ public:
 	virtual const INumberReadableWritable<T>& operator-- () {
 		--(*m_num);
 		m_signal_value_changed.emit (*m_num);
+		m_signal_emit_signal_value_changed.emit ();
 		return *this;
 	}
 
@@ -120,6 +145,7 @@ public:
 	virtual const T operator-- (int) {
 		T prev = (*m_num)--;
 		m_signal_value_changed.emit (*m_num);
+		m_signal_emit_signal_value_changed.emit ();
 		return prev;
 	}
 
@@ -141,6 +167,7 @@ public:
 		*m_num = right;
 
 		m_signal_value_changed.emit (*m_num);
+		m_signal_emit_signal_value_changed.emit ();
 
 		return *this;
 	}
@@ -150,6 +177,7 @@ public:
 		*m_num = right.getValue ();
 
 		m_signal_value_changed.emit (*m_num);
+		m_signal_emit_signal_value_changed.emit ();
 
 		return *this;
 	}
@@ -159,6 +187,7 @@ public:
 		*m_num = right.getValue ();
 
 		m_signal_value_changed.emit (*m_num);
+		m_signal_emit_signal_value_changed.emit ();
 
 		return *this;
 	}
@@ -167,6 +196,7 @@ public:
 	virtual INumberReadableWritable<T>& operator+= (const T& right) {
 		*m_num += right;
 		m_signal_value_changed.emit (*m_num);
+		m_signal_emit_signal_value_changed.emit ();
 		return *this;
 	}
 
@@ -174,6 +204,7 @@ public:
 	virtual INumberReadableWritable<T>& operator-= (const T& right) {
 		*m_num -= right;
 		m_signal_value_changed.emit (*m_num);
+		m_signal_emit_signal_value_changed.emit ();
 		return *this;
 	}
 
@@ -181,6 +212,7 @@ public:
 	virtual INumberReadableWritable<T>& operator*= (const T& right) {
 		*m_num *= right;
 		m_signal_value_changed.emit (*m_num);
+		m_signal_emit_signal_value_changed.emit ();
 		return *this;
 	}
 
@@ -188,6 +220,7 @@ public:
 	virtual INumberReadableWritable<T>& operator/= (const T& right) {
 		*m_num /= right;
 		m_signal_value_changed.emit (*m_num);
+		m_signal_emit_signal_value_changed.emit ();
 		return *this;
 	}
 
@@ -195,6 +228,7 @@ public:
 	virtual INumberReadableWritable<T>& operator%= (const T& right) {
 		*m_num %= right;
 		m_signal_value_changed.emit (*m_num);
+		m_signal_emit_signal_value_changed.emit ();
 		return *this;
 	}
 
@@ -202,6 +236,7 @@ public:
 	virtual INumberReadableWritable<T>& operator^= (const T& right) {
 		*m_num ^= right;
 		m_signal_value_changed.emit (*m_num);
+		m_signal_emit_signal_value_changed.emit ();
 		return *this;
 	}
 
@@ -209,6 +244,7 @@ public:
 	virtual INumberReadableWritable<T>& operator&= (const T& right) {
 		*m_num &= right;
 		m_signal_value_changed.emit (*m_num);
+		m_signal_emit_signal_value_changed.emit ();
 		return *this;
 	}
 
@@ -216,6 +252,7 @@ public:
 	virtual INumberReadableWritable<T>& operator|= (const T& right) {
 		*m_num |= right;
 		m_signal_value_changed.emit (*m_num);
+		m_signal_emit_signal_value_changed.emit ();
 		return *this;
 	}
 
@@ -223,6 +260,7 @@ public:
 	virtual INumberReadableWritable<T>& operator>>= (const T& right) {
 		*m_num >>= right;
 		m_signal_value_changed.emit (*m_num);
+		m_signal_emit_signal_value_changed.emit ();
 		return *this;
 	}
 
@@ -230,6 +268,7 @@ public:
 	virtual INumberReadableWritable<T>& operator<<= (const T& right) {
 		*m_num <<= right;
 		m_signal_value_changed.emit (*m_num);
+		m_signal_emit_signal_value_changed.emit ();
 		return *this;
 	}
 };

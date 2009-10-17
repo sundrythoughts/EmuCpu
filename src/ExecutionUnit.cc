@@ -55,6 +55,15 @@ ExecutionUnit::ExecutionUnit () {
 	p->m_regs16[Jaf::REG_BP].reinitialize (p->m_regs[Jaf::REG_BP]);
 	p->m_regs16[Jaf::REG_SP].reinitialize (p->m_regs[Jaf::REG_SP]);
 	p->m_regs16[Jaf::REG_FLAGS].reinitialize (p->m_regs[Jaf::REG_FLAGS]);
+
+	p->m_regs8[Jaf::REG_AL].signalEmitSignalValueChanged ().connect (sigc::mem_fun (p->m_regs16[Jaf::REG_AX], &Register<unsigned short>::emitSignalValueChanged));
+	p->m_regs8[Jaf::REG_AH].signalEmitSignalValueChanged ().connect (sigc::mem_fun (p->m_regs16[Jaf::REG_AX], &Register<unsigned short>::emitSignalValueChanged));
+	p->m_regs8[Jaf::REG_BL].signalEmitSignalValueChanged ().connect (sigc::mem_fun (p->m_regs16[Jaf::REG_BX], &Register<unsigned short>::emitSignalValueChanged));
+	p->m_regs8[Jaf::REG_BH].signalEmitSignalValueChanged ().connect (sigc::mem_fun (p->m_regs16[Jaf::REG_BX], &Register<unsigned short>::emitSignalValueChanged));
+	p->m_regs8[Jaf::REG_CL].signalEmitSignalValueChanged ().connect (sigc::mem_fun (p->m_regs16[Jaf::REG_CX], &Register<unsigned short>::emitSignalValueChanged));
+	p->m_regs8[Jaf::REG_CH].signalEmitSignalValueChanged ().connect (sigc::mem_fun (p->m_regs16[Jaf::REG_CX], &Register<unsigned short>::emitSignalValueChanged));
+	p->m_regs8[Jaf::REG_DL].signalEmitSignalValueChanged ().connect (sigc::mem_fun (p->m_regs16[Jaf::REG_DX], &Register<unsigned short>::emitSignalValueChanged));
+	p->m_regs8[Jaf::REG_DH].signalEmitSignalValueChanged ().connect (sigc::mem_fun (p->m_regs16[Jaf::REG_DX], &Register<unsigned short>::emitSignalValueChanged));
 }
 
 ExecutionUnit::~ExecutionUnit () {
@@ -472,16 +481,26 @@ ExecutionUnit::execADD (std::vector<NumberWrapper> &ops) {
 		unsigned short ret;
 		p->m_alu->opAdd (ops[0].get<unsigned short> (), ops[1].get<unsigned short> (), ret);
 		ops[0].get<unsigned short> () = ret;
-
-		//FIXME - debugging
-		//std::cout << ops[0].get<unsigned short> () << " + " << ops[1].get<unsigned short> () << " = " << ret << std::endl;
 	}
 	else {
 		//execADD (ops[0].get<unsigned char> (), ops[1].get<unsigned char> ());
 		unsigned char ret;
 		p->m_alu->opAdd (ops[0].get<unsigned char> (), ops[1].get<unsigned char> (), ret);
 		ops[0].get<unsigned char> () = ret;
-		//ops[0].get<unsigned char> () += ops[1].get<unsigned char> ();
+	}
+}
+
+void
+ExecutionUnit::execAND (std::vector<NumberWrapper> &ops) {
+	if (ops[0].size () == sizeof(unsigned short)) {
+		unsigned short ret;
+		p->m_alu->opAnd (ops[0].get<unsigned short> (), ops[1].get<unsigned short> (), ret);
+		ops[0].get<unsigned short> () = ret;
+	}
+	else {
+		unsigned char ret;
+		p->m_alu->opAnd (ops[0].get<unsigned char> (), ops[1].get<unsigned char> (), ret);
+		ops[0].get<unsigned char> () = ret;
 	}
 }
 
@@ -519,6 +538,38 @@ ExecutionUnit::execINC (std::vector<NumberWrapper> &ops) {
 
 void
 ExecutionUnit::execJE (std::vector<NumberWrapper> &ops) {
+	if (getRegFlagsZF () != true) {
+		return;
+	}
+
+	if (ops[0].size () == sizeof(short)) {
+		//execJE (ops[0].get<short> ());
+		p->m_biu->getRegIP () += ops[0].get<short> ();
+	}
+	else {
+		//execJE (ops[0].get<char> ());
+		p->m_biu->getRegIP () += ops[0].get<char> ();
+	}
+}
+
+void
+ExecutionUnit::execJMP (std::vector<NumberWrapper> &ops) {
+	if (ops[0].size () == sizeof(short)) {
+		//execJE (ops[0].get<short> ());
+		p->m_biu->getRegIP () += ops[0].get<short> ();
+	}
+	else {
+		//execJE (ops[0].get<char> ());
+		p->m_biu->getRegIP () += ops[0].get<char> ();
+	}
+}
+
+void
+ExecutionUnit::execJNE (std::vector<NumberWrapper> &ops) {
+	if (getRegFlagsZF () != false) {
+		return;
+	}
+
 	if (ops[0].size () == sizeof(short)) {
 		//execJE (ops[0].get<short> ());
 		p->m_biu->getRegIP () += ops[0].get<short> ();
@@ -532,18 +583,45 @@ ExecutionUnit::execJE (std::vector<NumberWrapper> &ops) {
 void
 ExecutionUnit::execMOV (std::vector<NumberWrapper> &ops) {
 	if (ops[0].size () == sizeof(unsigned short)) {
-		//FIXME - debugging
-		//std::cout << "execMOV (" << ops[0].get<unsigned short> () << " , " << ops[1].get<unsigned short> () << ")" << std::endl;
-
 		//InstructionExecuter::execMOV (*p->m_cpu, ops[0].get<unsigned short> (), ops[1].get<unsigned short> ());
 		ops[0].get<unsigned short> () = ops[1].get<unsigned short> ();
 	}
 	else {
-		//FIXME - debugging
-		//std::cout << "execMOV (" << ops[0].get<unsigned char> () << " , " << ops[1].get<unsigned char> () << ")" << std::endl;
-
-		InstructionExecuter::execMOV (*p->m_cpu, ops[0].get<unsigned char> (), ops[1].get<unsigned char> ());
+		//InstructionExecuter::execMOV (*p->m_cpu, ops[0].get<unsigned char> (), ops[1].get<unsigned char> ());
 		ops[0].get<unsigned char> () = ops[1].get<unsigned char> ();
+	}
+}
+
+void
+ExecutionUnit::execNOP (std::vector<NumberWrapper> &ops) {
+	//does nothing
+}
+
+void
+ExecutionUnit::execOR (std::vector<NumberWrapper> &ops) {
+	if (ops[0].size () == sizeof(unsigned short)) {
+		unsigned short ret;
+		p->m_alu->opOr (ops[0].get<unsigned short> (), ops[1].get<unsigned short> (), ret);
+		ops[0].get<unsigned short> () = ret;
+	}
+	else {
+		unsigned char ret;
+		p->m_alu->opOr (ops[0].get<unsigned char> (), ops[1].get<unsigned char> (), ret);
+		ops[0].get<unsigned char> () = ret;
+	}
+}
+
+void
+ExecutionUnit::execSUB (std::vector<NumberWrapper> &ops) {
+	if (ops[0].size () == sizeof(unsigned short)) {
+		unsigned short ret;
+		p->m_alu->opSub (ops[0].get<unsigned short> (), ops[1].get<unsigned short> (), ret);
+		ops[0].get<unsigned short> () = ret;
+	}
+	else {
+		unsigned char ret;
+		p->m_alu->opSub (ops[0].get<unsigned char> (), ops[1].get<unsigned char> (), ret);
+		ops[0].get<unsigned char> () = ret;
 	}
 }
 

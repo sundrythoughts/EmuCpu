@@ -1,13 +1,18 @@
 #include "Loader.hh"
+
+#include "CpuComponents.hh"
 #include "Memory.hh"
 #include "ExecutionUnit.hh"
 #include "BusInterfaceUnit.hh"
+#include "Defines.hh"
+
+#include <vector>
 
 class LoaderPrivate {
 public:
 	std::vector<unsigned short> m_regs;
 
-	Cpu *m_cpu;
+	CpuComponents *m_cpu;
 	Memory *m_memory;
 	ExecutionUnit *m_eunit;
 	BusInterfaceUnit *m_biu;
@@ -23,7 +28,7 @@ Loader::~Loader () {
 }
 
 void
-Loader::connectTo (Cpu &cpu) {
+Loader::connectTo (CpuComponents &cpu) {
 	p->m_cpu = &cpu;
 	p->m_memory = &cpu.getMemory ();
 	p->m_eunit = &cpu.getExecutionUnit ();
@@ -111,8 +116,7 @@ Loader::loadFile (std::string filename, bool clear) {
 	p->m_biu->setRegIP (p->m_regs[m_IP]);
 	p->m_eunit->setReg16 (Jaf::REG_FLAGS, p->m_regs[m_FLAGS]);
 
-	//FIXME
-	//p->m_memory->signalReloaded ().emit (p->m_memory->data (), p->m_memory->size ());
+	p->m_memory->emitSignalReloaded ();
 
 	return ret;
 }

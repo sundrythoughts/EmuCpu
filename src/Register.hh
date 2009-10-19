@@ -6,9 +6,8 @@
 #ifndef JAF__REGISTER_HH
 #define JAF__REGISTER_HH
 
-#include <sigc++/sigc++.h>
 #include "INumberReadableWritable.hh"
-#include <iostream>
+#include <sigc++/sigc++.h>
 
 /**
 @class Register
@@ -159,21 +158,8 @@ public:
 		return prev;
 	}
 
-#if 0 //FIXME - probably not needed
-	INumberWritable<T>& operator= (T &rhs) {
-		//std::cout << "INumberWritable<T>& operator= (T &rhs)" << std::endl;
-
-		*m_num = rhs;
-
-		m_signal_value_changed.emit (*m_num);
-
-		return *this;
-	}
-#endif
-
 	/** */
 	virtual INumberReadableWritable<T>& operator= (const T &right) {
-		//std::cout << right << std::endl; //FIXME - debugging
 		*m_num = right;
 
 		m_signal_value_changed.emit (*m_num);

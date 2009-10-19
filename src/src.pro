@@ -1,7 +1,8 @@
 DESTDIR = ..
 TARGET = sim86
 
-CONFIG += qt thread debug
+#CONFIG += qt thread debug
+CONFIG += qt thread
 
 CONFIG += link_pkgconfig
 PKGCONFIG += sigc++-2.0
@@ -15,6 +16,9 @@ SOURCES += ProxyLayer.cc
 
 HEADERS += Cpu.hh
 SOURCES += Cpu.cc
+
+HEADERS += CpuComponents.hh
+SOURCES += CpuComponents.cc
 
 HEADERS += NumberWrapper.hh
 SOURCES += NumberWrapper.cc
@@ -46,6 +50,9 @@ SOURCES += InstructionTable.cc
 HEADERS += InstructionDecoder.hh
 SOURCES += InstructionDecoder.cc
 
+HEADERS += InstructionDisassembly.hh
+SOURCES += InstructionDisassembly.cc
+
 HEADERS += FlagRegisterSignalsAndSlots.hh
 SOURCES += FlagRegisterSignalsAndSlots.cc
 
@@ -57,6 +64,9 @@ SOURCES += SegmentRegisterSignalsAndSlots.cc
 
 HEADERS += MemorySignalsAndSlots.hh
 SOURCES += MemorySignalsAndSlots.cc
+
+HEADERS += DisassemblySignalsAndSlots.hh
+SOURCES += DisassemblySignalsAndSlots.cc
 
 FORMS += FlagsWidget.ui
 HEADERS += FlagsWidget.hh

@@ -6,7 +6,6 @@
 #ifndef JAF__I_NUMBER_READABLE_WRITABLE_HH
 #define JAF__I_NUMBER_READABLE_WRITABLE_HH
 
-#include <iostream>
 
 /**
 @class INumberReadableWritable
@@ -73,6 +72,7 @@ public:
 
 	/** */
 	virtual INumberReadableWritable<T>& operator<<= (const T& right) = 0;
+
 }; //end class INumberReadableWritable
 
 #endif //JAF__I_NUMBER_READABLE_WRITABLE_HH

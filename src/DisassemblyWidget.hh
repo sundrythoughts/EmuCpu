@@ -20,20 +20,18 @@ class DisassemblyWidget : public QWidget, protected Ui::DisassemblyWidget {
 
 public:
 	/** */
-	DisassemblyWidget (QWidget *parent = 0) : QWidget (parent) {
-		setupUi (this);
-	}
+	DisassemblyWidget (QWidget *parent = 0);
 
 public slots:
 	/** */
-	void enableDisableToggle (bool b) {
-		if (b) {
-			show ();
-		}
-		else {
-			hide ();
-		}
-	}
+	void enableDisableToggle (bool b);
+
+	/** */
+	void addNextInstruction (QString seg_off, QString mcode, QString asm_code, QString addr_mode);
+
+signals:
+	/** */
+	void enableDisable (bool b);
 
 }; //end class DisassemblyWidget
 

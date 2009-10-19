@@ -22,18 +22,6 @@ ProxyLayer::connectCpuSignalsToUiSlots (Cpu &cpu, Sim86Window &win) {
 
 	cpu.getExecutionUnit ().getRegFlags ().signalValueChanged ().connect (sigc::mem_fun (m_flag_reg_s_s, &FlagRegisterSignalsAndSlots::sigcSlotValueChangedFlags));
 
-//#if 0
-	cpu.getExecutionUnit ().signalValueChangedRegFlagsAF ().connect (sigc::mem_fun (m_flag_reg_s_s, &FlagRegisterSignalsAndSlots::sigcSlotValueChangedFlagAF));
-	cpu.getExecutionUnit ().signalValueChangedRegFlagsCF ().connect (sigc::mem_fun (m_flag_reg_s_s, &FlagRegisterSignalsAndSlots::sigcSlotValueChangedFlagCF));
-	cpu.getExecutionUnit ().signalValueChangedRegFlagsDF ().connect (sigc::mem_fun (m_flag_reg_s_s, &FlagRegisterSignalsAndSlots::sigcSlotValueChangedFlagDF));
-	cpu.getExecutionUnit ().signalValueChangedRegFlagsIF ().connect (sigc::mem_fun (m_flag_reg_s_s, &FlagRegisterSignalsAndSlots::sigcSlotValueChangedFlagIF));
-	cpu.getExecutionUnit ().signalValueChangedRegFlagsOF ().connect (sigc::mem_fun (m_flag_reg_s_s, &FlagRegisterSignalsAndSlots::sigcSlotValueChangedFlagOF));
-	cpu.getExecutionUnit ().signalValueChangedRegFlagsPF ().connect (sigc::mem_fun (m_flag_reg_s_s, &FlagRegisterSignalsAndSlots::sigcSlotValueChangedFlagPF));
-	cpu.getExecutionUnit ().signalValueChangedRegFlagsSF ().connect (sigc::mem_fun (m_flag_reg_s_s, &FlagRegisterSignalsAndSlots::sigcSlotValueChangedFlagSF));
-	cpu.getExecutionUnit ().signalValueChangedRegFlagsTF ().connect (sigc::mem_fun (m_flag_reg_s_s, &FlagRegisterSignalsAndSlots::sigcSlotValueChangedFlagTF));
-	cpu.getExecutionUnit ().signalValueChangedRegFlagsZF ().connect (sigc::mem_fun (m_flag_reg_s_s, &FlagRegisterSignalsAndSlots::sigcSlotValueChangedFlagZF));
-//#endif
-
 	cpu.getBusInterfaceUnit ().getSegRegCS ().signalValueChanged ().connect (sigc::mem_fun (m_sreg_s_s, &SegmentRegisterSignalsAndSlots::sigcSlotValueChangedSRegCS));
 	cpu.getBusInterfaceUnit ().getSegRegDS ().signalValueChanged ().connect (sigc::mem_fun (m_sreg_s_s, &SegmentRegisterSignalsAndSlots::sigcSlotValueChangedSRegDS));
 	cpu.getBusInterfaceUnit ().getSegRegES ().signalValueChanged ().connect (sigc::mem_fun (m_sreg_s_s, &SegmentRegisterSignalsAndSlots::sigcSlotValueChangedSRegES));
@@ -45,29 +33,13 @@ ProxyLayer::connectCpuSignalsToUiSlots (Cpu &cpu, Sim86Window &win) {
 	cpu.getMemory ().signalResized ().connect (sigc::mem_fun (m_mem_s_s, &MemorySignalsAndSlots::sigcSlotResized));
 	cpu.getMemory ().signalReloaded ().connect (sigc::mem_fun (m_mem_s_s, &MemorySignalsAndSlots::sigcSlotReloaded));
 
+	cpu.getInstructionDecoder ().signalNextInstruction ().connect (sigc::mem_fun (m_disasm_s_s, &DisassemblySignalsAndSlots::sigcSlotNextInstruction));
+
 	//connect ProxyLayer Qt signals to Sim86Window Qt slots
 
 	//Flag Register Widget Signals and Slots
 	QObject::connect (&m_flag_reg_s_s, SIGNAL(valueChangedFlags (unsigned short)),
 		          &win.getFlagsWidget (), SLOT(setFlags (unsigned short)));
-	QObject::connect (&m_flag_reg_s_s, SIGNAL(valueChangedFlagAF (bool)),
-		          &win.getFlagsWidget (), SLOT(setFlagAF (bool)));
-	QObject::connect (&m_flag_reg_s_s, SIGNAL(valueChangedFlagCF (bool)),
-		          &win.getFlagsWidget (), SLOT(setFlagCF (bool)));
-	QObject::connect (&m_flag_reg_s_s, SIGNAL(valueChangedFlagDF (bool)),
-		          &win.getFlagsWidget (), SLOT(setFlagDF (bool)));
-	QObject::connect (&m_flag_reg_s_s, SIGNAL(valueChangedFlagIF (bool)),
-		          &win.getFlagsWidget (), SLOT(setFlagIF (bool)));
-	QObject::connect (&m_flag_reg_s_s, SIGNAL(valueChangedFlagOF (bool)),
-		          &win.getFlagsWidget (), SLOT(setFlagOF (bool)));
-	QObject::connect (&m_flag_reg_s_s, SIGNAL(valueChangedFlagPF (bool)),
-		          &win.getFlagsWidget (), SLOT(setFlagPF (bool)));
-	QObject::connect (&m_flag_reg_s_s, SIGNAL(valueChangedFlagSF (bool)),
-		          &win.getFlagsWidget (), SLOT(setFlagSF (bool)));
-	QObject::connect (&m_flag_reg_s_s, SIGNAL(valueChangedFlagTF (bool)),
-		          &win.getFlagsWidget (), SLOT(setFlagTF (bool)));
-	QObject::connect (&m_flag_reg_s_s, SIGNAL(valueChangedFlagZF (bool)),
-		          &win.getFlagsWidget (), SLOT(setFlagZF (bool)));
 
 	//Segment Register Widget Signals and Slots
 	QObject::connect (&m_sreg_s_s, SIGNAL(valueChangedSegRegCS (unsigned short)),
@@ -107,12 +79,13 @@ ProxyLayer::connectCpuSignalsToUiSlots (Cpu &cpu, Sim86Window &win) {
 	QObject::connect (&m_mem_s_s, SIGNAL(reloaded (const unsigned char*, size_t)),
 		          &win.getMemoryWidget (), SLOT(setAllMemoryAddresses (const unsigned char*, size_t)));
 
-	//Stack Widget Signals and Slots
-	//FIXME
-
 	//Disassembly Widget Signals and Slots
 	//FIXME
-	
+	QObject::connect (&m_disasm_s_s, SIGNAL(nextInstruction (QString, QString, QString, QString)),
+		          &win.getDisassemblyWidget (), SLOT(addNextInstruction (QString, QString, QString, QString)));
+
+	//Stack Widget Signals and Slots
+	//FIXME
 }
 
 void
@@ -127,5 +100,18 @@ ProxyLayer::connectUiSignalsToCpuSlots (Sim86Window &win, Cpu &cpu) {
 	                  &cpu, SLOT(resetCpu ()));
 	QObject::connect (&win, SIGNAL(loadFile (QString)),
 	                  &cpu, SLOT(loadFile (QString)));
+	QObject::connect (&win, SIGNAL(setSpeed (int)),
+	                  &cpu, SLOT(setSpeed (int)));
+
+	QObject::connect (&win.getMemoryWidget (), SIGNAL(enableDisable (bool)),
+	                  &m_mem_s_s, SLOT(enableDisable (bool)));
+	QObject::connect (&win.getDisassemblyWidget (), SIGNAL(enableDisable (bool)),
+	                  &m_disasm_s_s, SLOT(enableDisable (bool)));
+	QObject::connect (&win.getFlagsWidget (), SIGNAL(enableDisable (bool)),
+	                  &m_flag_reg_s_s, SLOT(enableDisable (bool)));
+	QObject::connect (&win.getGeneralRegistersWidget (), SIGNAL(enableDisable (bool)),
+	                  &m_gen_reg_s_s, SLOT(enableDisable (bool)));
+	QObject::connect (&win.getSegmentRegistersWidget (), SIGNAL(enableDisable (bool)),
+	                  &m_sreg_s_s, SLOT(enableDisable (bool)));
 }
 

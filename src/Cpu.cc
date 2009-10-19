@@ -1,25 +1,16 @@
 #include "Cpu.hh"
 
+
 class CpuPrivate {
 public:
-	Memory m_mem;
-	ExecutionUnit m_eunit;
-	ArithmeticLogicUnit m_alu;
-	BusInterfaceUnit m_biu;
-	InstructionDecoder m_decoder;
-	Loader m_loader;
+	CpuComponents m_cpu_comps;
 };
 
 Cpu::Cpu (QObject *parent) : QThread (parent) {
 	p = new CpuPrivate ();
 
 	m_cpu_state = CPU_STATE_PAUSE;
-
-	p->m_eunit.connectTo (*this);
-	p->m_alu.connectTo (*this);
-	p->m_decoder.connectTo (*this);
-	p->m_loader.connectTo (*this);
-	p->m_biu.connectTo (*this);
+	m_thread_delay = 5000;
 }
 
 Cpu::~Cpu () {
@@ -28,22 +19,32 @@ Cpu::~Cpu () {
 
 ExecutionUnit&
 Cpu::getExecutionUnit () {
-	return p->m_eunit;
+	return p->m_cpu_comps.getExecutionUnit ();
 }
 
 BusInterfaceUnit&
 Cpu::getBusInterfaceUnit () {
-	return p->m_biu;
+	return p->m_cpu_comps.getBusInterfaceUnit ();
 }
 
 Memory&
 Cpu::getMemory () {
-	return p->m_mem;
+	return p->m_cpu_comps.getMemory ();
 }
 
 ArithmeticLogicUnit&
 Cpu::getArithmeticLogicUnit () {
-	return p->m_alu;
+	return p->m_cpu_comps.getArithmeticLogicUnit ();
+}
+
+InstructionDecoder&
+Cpu::getInstructionDecoder () {
+	return p->m_cpu_comps.getInstructionDecoder ();
+}
+
+Loader&
+Cpu::getLoader () {
+	return p->m_cpu_comps.getLoader ();
 }
 
 //override
@@ -55,11 +56,12 @@ Cpu::run () {
 		switch (m_cpu_state) {
 		case CPU_STATE_RUN:
 			//std::cout << "cpu_state_run" << std::endl;
-			p->m_decoder.nextInstruction ();
+			getInstructionDecoder ().nextInstruction ();
+			QThread::usleep (m_thread_delay);
 			break;
 		case CPU_STATE_SINGLE_STEP:
 			//std::cout << "cpu_state_single_step" << std::endl;
-			p->m_decoder.nextInstruction ();
+			getInstructionDecoder ().nextInstruction ();
 			m_mutex.lock ();
 				m_cpu_state = CPU_STATE_PAUSE;
 			m_mutex.unlock ();
@@ -70,13 +72,22 @@ Cpu::run () {
 			//QThread::yieldCurrentThread ();
 			break;
 		}
-		std::cout << "";
+
+		if (p->m_cpu_comps.getHalt ()) {
+			m_mutex.lock ();
+				m_cpu_state = CPU_STATE_PAUSE;
+			m_mutex.unlock ();
+			p->m_cpu_comps.setHalt (false);
+		}
 	}
 }
 
 void
 Cpu::startCpu () {
-	//std::cout << "startCpu ()" << std::endl;
+	if (!isRunning ()) {
+		return;
+	}
+
 	m_mutex.lock ();
 	m_cpu_state = CPU_STATE_RUN;
 	m_mutex.unlock ();
@@ -84,7 +95,6 @@ Cpu::startCpu () {
 
 void
 Cpu::pauseCpu () {
-	//std::cout << "pauseCpu ()" << std::endl;
 	m_mutex.lock ();
 	m_cpu_state = CPU_STATE_PAUSE;
 	m_mutex.unlock ();
@@ -93,12 +103,10 @@ Cpu::pauseCpu () {
 void
 Cpu::resetCpu () {
 	pauseCpu ();
-	//std::cout << "resetCpu ()" << std::endl;
 }
 
 void
 Cpu::singleStepCpu () {
-	//std::cout << "singleStepCpu ()" << std::endl;
 	m_mutex.lock ();
 	m_cpu_state = CPU_STATE_SINGLE_STEP;
 	m_mutex.unlock ();
@@ -113,6 +121,12 @@ Cpu::shutdownCpu () {
 void
 Cpu::loadFile (QString file_name) {
 	pauseCpu ();
-	p->m_loader.loadFile (file_name.toStdString ());
-	//m_mem.write<unsigned int> (14, 0x01020304);
+	getLoader ().loadFile (file_name.toStdString ());
+	start ();
 }
+
+void
+Cpu::setSpeed (int i) {
+	m_thread_delay = i;
+}
+

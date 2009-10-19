@@ -1,4 +1,5 @@
 #include "MemorySignalsAndSlots.hh"
+#include <iostream>
 
 /* SIGC++ SLOTS */
 void
@@ -25,7 +26,7 @@ MemorySignalsAndSlots::sigcSignalResize () {
 /* QT SLOTS */
 void
 MemorySignalsAndSlots::enableDisable (bool b) {
-	blockSignals (b);
+	blockSignals (!b);
 }
 
 void

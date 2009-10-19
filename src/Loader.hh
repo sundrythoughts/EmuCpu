@@ -6,14 +6,9 @@
 #ifndef JAF__LOADER_HH
 #define JAF__LOADER_HH
 
-#include <vector>
-#include <cstdio>
-#include <iostream>
 #include <string>
 
-#include "Cpu.hh"
-#include "Defines.hh"
-
+class CpuComponents;
 class LoaderPrivate;
 
 /**
@@ -57,7 +52,7 @@ public:
 	~Loader ();
 
 	/** Create a connection to the Cpu */
-	void connectTo (Cpu &cpu);
+	void connectTo (CpuComponents &cpu);
 
 	/**
 	@brief Load a file into memory
@@ -72,32 +67,6 @@ public:
 
 	/** Return the checksum of the registers */
 	int checksumRegisters ();
-
-#if 0
-	void print_registers () {
-		for (unsigned int i = 0; i < m_regs.size (); ++i) {
-			std::printf ("%x ", m_regs[i]);
-		}
-		std::cout << std::endl;
-	}
-
-	void print_memory () {
-		for (unsigned int i = 0; i < m_memory.size (); ++i) {
-			if (m_memory[i] != 0) {
-				std::printf ("%x ", m_memory[i]);
-			}
-		}
-		printf ("\n");
-	}
-
-	void print_byte_array (void *arr, unsigned int szof, unsigned int len) {
-		unsigned char *cptr = (unsigned char*)arr;
-		for (unsigned int i = 0; i < szof * len; ++i) {
-			printf ("%x ", (unsigned int)cptr[i]);
-		}
-		printf ("\n");
-	}
-#endif
 
 }; //end class Loader
 

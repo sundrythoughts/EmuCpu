@@ -7,14 +7,16 @@
 using namespace std;
 
 int main (int argc, char **argv) {
-	int i = 13;
-	NumberWrapper w1;
-	Immediate<int> *ptr = new Immediate<int> (i);
-	w1.init<int> (ptr, true);
+	NumberWrapper vec[2];
+	//NumberWrapper w;
 
-	//NumberWrapper w2 (w1);
+	Immediate<char> *ptr = new Immediate<char> (10);
+	vec[0].init<char> (ptr, true);
 
-	cout << w1.get<int> () << endl;
-	//cout << w2.get<int> () << endl;
+	//vec[0].free ();
+	//vec[1].free ();
+
+	//cout << vec[0].toString () << endl;
+	//cout << vec[1].toString () << endl;
 }
 

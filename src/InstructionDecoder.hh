@@ -6,15 +6,10 @@
 #ifndef JAF__INSTRUCTION_DECODER_HH
 #define JAF__INSTRUCTION_DECODER_HH
 
-#include "Cpu.hh"
-#include "Defines.hh"
-#include "NumberWrapper.hh"
-#include <vector>
-#include <map>
 #include <string>
-#include <utility>
+#include <sigc++/sigc++.h>
 
-class Cpu;
+class CpuComponents;
 class InstructionDecoderPrivate;
 
 /**
@@ -24,17 +19,7 @@ class InstructionDecoderPrivate;
 class InstructionDecoder {
 	InstructionDecoderPrivate *p;
 
-public: //FIXME - this shouldn't be public
-	std::vector<unsigned char> m_instruction_bytes;
-
-private:
-	unsigned char *m_inst_ptr;
-	Jaf::ModRM m_modrm;
-
-	std::vector<NumberWrapper> m_operands;
-
 	typedef void (InstructionDecoder::*DecodeFunc) ();
-	std::string m_disassembly;
 
 public:
 	/** */
@@ -43,8 +28,8 @@ public:
 	/** */
 	~InstructionDecoder ();
 
-	/** Create a connection to the Cpu */
-	void connectTo (Cpu &cpu);
+	/** Create a connection to the CpuComponents */
+	void connectTo (CpuComponents &cpu);
 
 	/** Re-decode the current instruction */
 	void getInstruction ();
@@ -52,8 +37,10 @@ public:
 	/** Decode the next instruction */
 	void nextInstruction ();
 
-	/** Get the disassembly of the next instruction */
-	const std::string& getDisassembly () const;
+	sigc::signal<void, const std::string&,
+	                   const std::string&,
+	                   const std::string&,
+	                   const std::string&>& signalNextInstruction ();
 
 protected:
 
@@ -135,6 +122,7 @@ public:
 
 	/** Decode addressing mode String */
 	void decodeString ();
+
 }; //end class InstructionDecoder
 
 #endif //JAF__INSTRUCTION_DECODER_HH

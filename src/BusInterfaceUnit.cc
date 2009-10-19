@@ -1,9 +1,9 @@
 #include "BusInterfaceUnit.hh"
-#include "Cpu.hh"
+#include "CpuComponents.hh"
 
 class BusInterfaceUnitPrivate {
 public:
-	Cpu *m_cpu;
+	CpuComponents *m_cpu;
 };
 
 BusInterfaceUnit::BusInterfaceUnit () : m_cs (0), m_ds (0), m_es (0), m_ss (0), m_ip (0), m_seg_override (-1),
@@ -24,7 +24,7 @@ BusInterfaceUnit::initialize () {
 }
 
 void
-BusInterfaceUnit::connectTo (Cpu &cpu) {
+BusInterfaceUnit::connectTo (CpuComponents &cpu) {
 	p->m_cpu = &cpu;
 	m_memory = &cpu.getMemory ();
 

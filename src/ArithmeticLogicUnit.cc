@@ -1,10 +1,14 @@
 #include "ArithmeticLogicUnit.hh"
+
+#include "CpuComponents.hh"
+#include "Utility.hh"
+#include "Register.hh"
 #include "ExecutionUnit.hh"
-#include <iostream>
+//#include <iostream>
 
 class ArithmeticLogicUnitPrivate {
 public:
-	Cpu *m_cpu;
+	CpuComponents *m_cpu;
 	ExecutionUnit *m_eunit;
 };
 
@@ -17,7 +21,7 @@ ArithmeticLogicUnit::~ArithmeticLogicUnit () {
 }
 
 void
-ArithmeticLogicUnit::connectTo (Cpu &cpu) {
+ArithmeticLogicUnit::connectTo (CpuComponents &cpu) {
 	p->m_cpu = &cpu;
 	p->m_eunit = &cpu.getExecutionUnit ();
 }
@@ -103,7 +107,6 @@ ArithmeticLogicUnit::opAdc (unsigned char dest, unsigned char src, unsigned char
 	updateFlagCF (ret, result);
 	updateFlagOF (msb_before, Utility::get_bit (ret, sizeof(ret) - 1));
 	updateFlagPF (ret);
-//	std::cout << "here" << std::endl;
 	updateFlagSF (ret);
 	updateFlagZF (ret);
 }

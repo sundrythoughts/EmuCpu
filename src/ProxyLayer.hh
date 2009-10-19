@@ -13,9 +13,10 @@
 #include "MemorySignalsAndSlots.hh"
 #include "GeneralRegisterSignalsAndSlots.hh"
 #include "SegmentRegisterSignalsAndSlots.hh"
+#include "DisassemblySignalsAndSlots.hh"
 
 #include <sigc++/sigc++.h>
-#include <QObject>
+#include <QtCore>
 
 /**
 @class ProxyLayer
@@ -28,6 +29,7 @@ class ProxyLayer : public QObject {
 	FlagRegisterSignalsAndSlots m_flag_reg_s_s;
 	SegmentRegisterSignalsAndSlots m_sreg_s_s;
 	MemorySignalsAndSlots m_mem_s_s;
+	DisassemblySignalsAndSlots m_disasm_s_s;
 
 public:
 	/** */

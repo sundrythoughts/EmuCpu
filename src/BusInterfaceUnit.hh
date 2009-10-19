@@ -12,7 +12,7 @@
 #include <vector>
 #include <iostream>
 
-class Cpu;
+class CpuComponents;
 class BusInterfaceUnitPrivate;
 
 /**
@@ -49,8 +49,8 @@ public:
 	/** */
 	void initialize ();
 
-	/** Create a connection to the Cpu */
-	void connectTo (Cpu &cpu);
+	/** Create a connection to the CpuComponents */
+	void connectTo (CpuComponents &cpu);
 
 	/** */
 	//Register<unsigned short>& getSegReg (size_t index);

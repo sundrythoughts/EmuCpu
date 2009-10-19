@@ -6,14 +6,9 @@
 #ifndef JAF__INSTRUCTION_TABLE_HH
 #define JAF__INSTRUCTION_TABLE_HH
 
-#include "NumberWrapper.hh"
 #include <vector>
-#include "INumberReadableWritable.hh"
 #include "ExecutionUnit.hh"
 #include "InstructionDecoder.hh"
-
-class InstructionTable;
-class InstructionDecoder;
 
 /**
 @class InstructionTableItem
@@ -25,13 +20,13 @@ public:
 	bool has_modrm;
 	unsigned int group;
 	void (InstructionDecoder::*decode_func) ();
-	void (ExecutionUnit::*execute_func) (std::vector<NumberWrapper> &ops);
+	void (ExecutionUnit::*execute_func) (OperandList &ops);
 
 	void decode (InstructionDecoder *id) const {
 		(id->*decode_func) ();
 	}
 
-	void execute (ExecutionUnit *eu, std::vector<NumberWrapper> &ops) const {
+	void execute (ExecutionUnit *eu, OperandList &ops) const {
 		(eu->*execute_func) (ops);
 	}
 }; //end class InstructionTableItem

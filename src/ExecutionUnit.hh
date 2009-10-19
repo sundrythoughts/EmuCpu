@@ -7,16 +7,10 @@
 #define JAF__EXECUTION_UNIT_HH
 
 #include "Register.hh"
-#include "Defines.hh"
-#include "NumberWrapper.hh"
-
-#include <iostream>
-#include <cstdio>
-#include <vector>
-
 #include <sigc++/sigc++.h>
 
-class Cpu;
+class CpuComponents;
+class OperandList;
 class ExecutionUnitPrivate;
 
 /**
@@ -37,18 +31,7 @@ public:
 	~ExecutionUnit ();
 
 	/** Create a connection to the Cpu */
-	void connectTo (Cpu &cpu);
-
-	//FIXME - I don't think I need these
-	sigc::signal<void, bool>& signalValueChangedRegFlagsAF ();
-	sigc::signal<void, bool>& signalValueChangedRegFlagsCF ();
-	sigc::signal<void, bool>& signalValueChangedRegFlagsDF ();
-	sigc::signal<void, bool>& signalValueChangedRegFlagsIF ();
-	sigc::signal<void, bool>& signalValueChangedRegFlagsOF ();
-	sigc::signal<void, bool>& signalValueChangedRegFlagsPF ();
-	sigc::signal<void, bool>& signalValueChangedRegFlagsSF ();
-	sigc::signal<void, bool>& signalValueChangedRegFlagsTF ();
-	sigc::signal<void, bool>& signalValueChangedRegFlagsZF ();
+	void connectTo (CpuComponents &cpu);
 
 	/** Get an 8-bit register given its index */
 	Register<unsigned char>& getReg8 (size_t index);
@@ -219,6 +202,9 @@ public:
 	void setRegFlagsZF (bool val);
 
 	/** */
+	void execNotImplemented (OperandList &ops);
+
+	/** */
 	void execAAA ();
 
 	/** */
@@ -234,10 +220,10 @@ public:
 	void execADC ();
 
 	/** */
-	void execADD (std::vector<NumberWrapper> &ops);
+	void execADD (OperandList &ops);
 
 	/** */
-	void execAND (std::vector<NumberWrapper> &ops);
+	void execAND (OperandList &ops);
 
 	/** */
 	void execCALL ();
@@ -276,7 +262,7 @@ public:
 	void execDAS ();
 
 	/** */
-	void execDEC (std::vector<NumberWrapper> &ops);
+	void execDEC (OperandList &ops);
 
 	/** */
 	void execDIV ();
@@ -285,7 +271,7 @@ public:
 	void execESC ();
 
 	/** */
-	void execHLT ();
+	void execHLT (OperandList &ops);
 
 	/** */
 	void execIDIV ();
@@ -297,7 +283,7 @@ public:
 	void execIN ();
 
 	/** */
-	void execINC (std::vector<NumberWrapper> &ops);
+	void execINC (OperandList &ops);
 
 	/** */
 	void execINT ();
@@ -327,7 +313,7 @@ public:
 	void execJCXZ ();
 
 	/** */
-	void execJE (std::vector<NumberWrapper> &ops);
+	void execJE (OperandList &ops);
 
 	/** */
 	void execJG ();
@@ -342,7 +328,7 @@ public:
 	void execJLE ();
 
 	/** */
-	void execJMP (std::vector<NumberWrapper> &ops);
+	void execJMP (OperandList &ops);
 
 	/** */
 	void execJMPFAR ();
@@ -351,7 +337,7 @@ public:
 	void execJNC ();
 
 	/** */
-	void execJNE (std::vector<NumberWrapper> &ops);
+	void execJNE (OperandList &ops);
 
 	/** */
 	void execJNO ();
@@ -399,7 +385,7 @@ public:
 	void execLOOPNE ();
 
 	/** */
-	void execMOV (std::vector<NumberWrapper> &ops);
+	void execMOV (OperandList &ops);
 
 	/** */
 	void execMOVS ();
@@ -411,13 +397,13 @@ public:
 	void execNEG ();
 
 	/** */
-	void execNOP (std::vector<NumberWrapper> &ops);
+	void execNOP (OperandList &ops);
 
 	/** */
 	void execNOT ();
 
 	/** */
-	void execOR (std::vector<NumberWrapper> &ops);
+	void execOR (OperandList &ops);
 
 	/** */
 	void execOUT ();
@@ -492,7 +478,7 @@ public:
 	void execSTOS ();
 
 	/** */
-	void execSUB (std::vector<NumberWrapper> &ops);
+	void execSUB (OperandList &ops);
 
 	/** */
 	void execTEST ();
@@ -501,7 +487,7 @@ public:
 	void execWAIT ();
 
 	/** */
-	void execXCHG (std::vector<NumberWrapper> &ops);
+	void execXCHG (OperandList &ops);
 
 	/** */
 	void execXLAT ();

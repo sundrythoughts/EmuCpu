@@ -6,12 +6,9 @@
 #ifndef JAF__ARITHMETIC_LOGIC_UNIT_HH
 #define JAF__ARITHMETIC_LOGIC_UNIT_HH
 
-#include "Cpu.hh"
-#include "Utility.hh"
-#include "Register.hh"
-#include <iostream>
+//#include "CpuComponents.hh"
 
-class Cpu;
+class CpuComponents;
 class ArithmeticLogicUnitPrivate;
 
 /**
@@ -33,7 +30,7 @@ public:
 
 	/** Create a connection to the Cpu */
 	void
-	connectTo (Cpu &cpu);
+	connectTo (CpuComponents &cpu);
 
 	//FIXME
 	/**

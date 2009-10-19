@@ -44,6 +44,6 @@ GeneralRegisterSignalsAndSlots::sigcSlotValueChangedRegSP (unsigned short i) {
 /* QT SLOTS */
 void
 GeneralRegisterSignalsAndSlots::enableDisable (bool b) {
-	blockSignals (b);
+	blockSignals (!b);
 }
 

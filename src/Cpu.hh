@@ -6,25 +6,13 @@
 #ifndef JAF__CPU_HH
 #define JAF__CPU_HH
 
-#include "ExecutionUnit.hh"
-#include "ArithmeticLogicUnit.hh"
-#include "BusInterfaceUnit.hh"
-#include "Memory.hh"
-#include "InstructionDecoder.hh"
-
-#include "Loader.hh"
+#include "CpuComponents.hh"
 
 #include <iostream>
-#include <sigc++/sigc++.h>
 
 #include <QThread>
 #include <QMutex>
 
-class ExecutionUnit;
-class BusInterfaceUnit;
-class ArithmeticLogicUnit;
-class BusInterfaceUnit;
-class Memory;
 class CpuPrivate;
 
 /**
@@ -45,6 +33,7 @@ class Cpu : public QThread {
 	CpuStateEnum m_cpu_state;
 	QMutex m_mutex;
 	bool m_thread_run;
+	unsigned long int m_thread_delay;
 
 public:
 	/** */
@@ -64,6 +53,12 @@ public:
 
 	/** */
 	ArithmeticLogicUnit& getArithmeticLogicUnit ();
+
+	/** */
+	InstructionDecoder& getInstructionDecoder ();
+
+	/** */
+	Loader& getLoader ();
 
 protected:
 	//override
@@ -88,6 +83,10 @@ public slots:
 
 	/** */
 	void loadFile (QString file_name);
+
+	/** */
+	void setSpeed (int);
+
 }; //end class Cpu
 
 #endif //JAF__CPU_HH

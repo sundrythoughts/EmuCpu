@@ -33,7 +33,13 @@ public slots:
 		else {
 			hide ();
 		}
+
+		emit enableDisable (b);
 	}
+
+signals:
+	/** */
+	void enableDisable (bool b);
 
 }; //end class StackWidget
 

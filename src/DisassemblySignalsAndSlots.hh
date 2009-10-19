@@ -6,7 +6,8 @@
 #ifndef JAF__DISASSEMBLY_SIGNALS_AND_SLOTS_HH
 #define JAF__DISASSEMBLY_SIGNALS_AND_SLOTS_HH
 
-#include <QObject>
+#include <string>
+#include <QtCore>
 
 /**
 @class DisassemblySignalsAndSlots
@@ -15,7 +16,15 @@
 class DisassemblySignalsAndSlots : public QObject {
 	Q_OBJECT
 
+public:
+	void sigcSlotNextInstruction (const std::string&, const std::string&, const std::string&, const std::string&);
+
+public slots:
+	/** */
+	void enableDisable (bool b);
+
 signals:
+	void nextInstruction (QString seg_off, QString mcode, QString asm_code, QString addr_mode);
 
 }; //end class DisassemblySignalsAndSlots
 

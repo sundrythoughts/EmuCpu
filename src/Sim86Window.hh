@@ -78,6 +78,9 @@ signals:
 	/** */
 	void loadFile (QString file_name);
 
+	/** */
+	void setSpeed (int i);
+
 public:
 	/** */
 	Sim86Window (QWidget *parent = 0);

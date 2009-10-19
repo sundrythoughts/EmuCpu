@@ -34,6 +34,8 @@ public slots:
 		else {
 			hide ();
 		}
+
+		emit enableDisable (b);
 	}
 
 	/** */
@@ -60,6 +62,10 @@ public slots:
 	void setRegIP (unsigned short i) {
 		m_ln_ip->setText (QString::number (i, 16).toUpper ());
 	}
+
+signals:
+	/** */
+	void enableDisable (bool b);
 
 }; //end class SegmentRegistersWidget
 

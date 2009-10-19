@@ -35,6 +35,8 @@ public slots:
 		else {
 			hide ();
 		}
+
+		emit enableDisable (b);
 	}
 
 	/** */
@@ -76,6 +78,10 @@ public slots:
 	void setRegSP (unsigned short i) {
 		m_ln_sp->setText (QString::number (i, 16).toUpper ());
 	}
+
+signals:
+	/** */
+	void enableDisable (bool b);
 
 }; //end class GeneralRegistersWidget
 

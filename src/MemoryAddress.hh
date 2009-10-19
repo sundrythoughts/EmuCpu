@@ -6,8 +6,8 @@
 #ifndef JAF__MEMORY_ADDRESS_HH
 #define JAF__MEMORY_ADDRESS_HH
 
-#include "Memory.hh"
 #include "INumberReadableWritable.hh"
+#include "Memory.hh"
 
 /**
 @class MemoryAddress

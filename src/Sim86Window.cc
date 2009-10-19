@@ -57,5 +57,7 @@ Sim86Window::Sim86Window (QWidget *parent) : QMainWindow (parent) {
 	connect (m_act_debug_reset, SIGNAL(triggered ()), this, SIGNAL(resetCpu ()));
 
 	connect (m_act_file_open, SIGNAL(triggered ()), this, SLOT(openFile ()));
+
+	connect (m_sld_speed, SIGNAL(valueChanged (int)), this, SIGNAL(setSpeed (int)));
 }
 

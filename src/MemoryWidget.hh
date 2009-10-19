@@ -38,6 +38,8 @@ public slots:
 		else {
 			hide ();
 		}
+
+		emit enableDisable (b);
 	}
 
 	/** */
@@ -61,6 +63,10 @@ public slots:
 
 	/** */
 	void setAllMemoryAddresses (const unsigned char *arr, size_t sz);
+
+signals:
+	/** */
+	void enableDisable (bool b);
 
 private:
 	void setTableWidgetRowFromStrings (int row, const QString &raw_mem, const QString &ascii);

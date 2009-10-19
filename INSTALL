@@ -1,0 +1,12 @@
+INSTALLING PACKAGES THAT SIM8086 DEPENDS ON:
+ * Make sure the following packages are installed:
+   - qt4-dev-tools
+   - libsigc++-2.0-dev
+   - freetds-dev
+ * Ubuntu/Debian package install command: sudo apt-get install qt4-dev-tools libsigc++-2.0-dev freetds-dev
+
+COMPILING SIM8086 FOR ANYTHING OTHER THAN UBUNTU 9.04 32-bit:
+ * cd to sim8086 root directory
+ * qmake -o Makefile sim86.pro
+ * make
+ * ./sim86

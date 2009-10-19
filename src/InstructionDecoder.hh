@@ -48,6 +48,9 @@ protected:
 	void decodeInstruction ();
 
 public:
+	/** */
+	void decodeNotImplemented ();
+
 	/** Decode addressing mode None */
 	void decodeNone ();
 

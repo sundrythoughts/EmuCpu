@@ -471,7 +471,7 @@ ExecutionUnit::execINC (OperandList &ops) {
 
 void
 ExecutionUnit::execJE (OperandList &ops) {
-	if (getRegFlagsZF () != true) {
+	if (getRegFlagsZF () == false) {
 		return;
 	}
 
@@ -495,7 +495,7 @@ ExecutionUnit::execJMP (OperandList &ops) {
 
 void
 ExecutionUnit::execJNE (OperandList &ops) {
-	if (getRegFlagsZF () != false) {
+	if (getRegFlagsZF () == true) {
 		return;
 	}
 

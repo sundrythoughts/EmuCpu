@@ -118,6 +118,11 @@ InstructionDecoder::decodeInstruction () {
 }
 
 void
+InstructionDecoder::decodeNotImplemented () {
+	std::cerr << "decodeNotImplemented (): this addressing mode is not implemented or doesn't exist" << std::endl;
+}
+
+void
 InstructionDecoder::decodeNone () {
 	p->m_disassembly.setAddressingMode ("None");
 }
@@ -211,7 +216,7 @@ void
 InstructionDecoder::decodeShort () {
 	p->m_disassembly.setAddressingMode ("Short");
 
-	char imm = p->m_biu->getInstructionBytes<char> ();
+	const char imm = p->m_biu->getInstructionBytes<char> ();
 	p->m_instruction_bytes.push_back ((unsigned char)imm);
 
 	p->m_disasm << ", " << std::setfill ('0') << std::setw (sizeof(imm) << 1) << std::hex << (unsigned int)imm;

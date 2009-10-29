@@ -55,6 +55,9 @@ ExecutionUnit::ExecutionUnit () {
 	p->m_regs16[Jaf::REG_SP].reinitialize (p->m_regs[Jaf::REG_SP]);
 	p->m_regs16[Jaf::REG_FLAGS].reinitialize (p->m_regs[Jaf::REG_FLAGS]);
 
+	//initialize registers values
+	reset ();
+
 	p->m_regs8[Jaf::REG_AL].signalEmitSignalValueChanged ().connect (sigc::mem_fun (p->m_regs16[Jaf::REG_AX], &Register<unsigned short>::emitSignalValueChanged));
 	p->m_regs8[Jaf::REG_AH].signalEmitSignalValueChanged ().connect (sigc::mem_fun (p->m_regs16[Jaf::REG_AX], &Register<unsigned short>::emitSignalValueChanged));
 	p->m_regs8[Jaf::REG_BL].signalEmitSignalValueChanged ().connect (sigc::mem_fun (p->m_regs16[Jaf::REG_BX], &Register<unsigned short>::emitSignalValueChanged));
@@ -75,6 +78,11 @@ ExecutionUnit::connectTo (CpuComponents &cpu) {
 	p->m_cpu = &cpu;
 	p->m_biu = &cpu.getBusInterfaceUnit ();
 	p->m_alu = &cpu.getArithmeticLogicUnit ();
+}
+
+void
+ExecutionUnit::reset () {
+	resetRegFlags ();
 }
 
 Register<unsigned char>&
@@ -255,6 +263,11 @@ ExecutionUnit::getRegSP () {
 void
 ExecutionUnit::setRegSP (unsigned short val) {
 	p->m_regs16[Jaf::REG_SP] = val;
+}
+
+void
+ExecutionUnit::resetRegFlags (unsigned short val) {
+	setRegFlags (val);
 }
 
 Register<unsigned short>&
@@ -465,6 +478,16 @@ ExecutionUnit::execCLC (OperandList &ops) {
 }
 
 void
+ExecutionUnit::execCLD (OperandList &ops) {
+	setRegFlagsDF (false);
+}
+
+void
+ExecutionUnit::execCLI (OperandList &ops) {
+	setRegFlagsIF (false);
+}
+
+void
 ExecutionUnit::execCWD (OperandList &ops) {
 	if (getRegAX () < 0x8000) {
 		setRegDX (0);
@@ -548,7 +571,11 @@ ExecutionUnit::execJNE (OperandList &ops) {
 
 void
 ExecutionUnit::execLAHF (OperandList &ops) {
-	setRegAH (getRegFlags ());
+	//FIXME - make sure this works for high byte of flags
+	unsigned short f = getRegFlags ();
+	f &= 0xFFD7;
+	f |= 0x0002;
+	setRegAH (f);
 }
 
 void
@@ -582,7 +609,12 @@ ExecutionUnit::execOR (OperandList &ops) {
 
 void
 ExecutionUnit::execSAHF (OperandList &ops) {
-	//FIXME setRegFlags (getRegAH
+	//FIXME - make sure this works for high byte of flags
+	unsigned short f = getRegFlags ();
+	f &= (0xFF00 + getRegAH ());
+	f &= 0xFFD7;
+	f |= 0x0002;
+	setRegFlags (f);
 }
 
 void
@@ -602,6 +634,16 @@ ExecutionUnit::execSUB (OperandList &ops) {
 void
 ExecutionUnit::execSTC (OperandList &ops) {
 	setRegFlagsCF (true);
+}
+
+void
+ExecutionUnit::execSTD (OperandList &ops) {
+	setRegFlagsDF (true);
+}
+
+void
+ExecutionUnit::execSTI (OperandList &ops) {
+	setRegFlagsIF (true);
 }
 
 void

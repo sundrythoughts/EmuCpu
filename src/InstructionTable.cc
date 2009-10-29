@@ -178,7 +178,7 @@ const InstructionTableItem InstructionTable::one_byte_opcode_instruction_map[256
 	{"wait", false, GROUP_NONE, &InstructionDecoder::decodeNone, &ExecutionUnit::execNotImplemented},
 	{"pushf", false, GROUP_NONE, &InstructionDecoder::decodeFlags, &ExecutionUnit::execNotImplemented},
 	{"popf", false, GROUP_NONE, &InstructionDecoder::decodeFlags, &ExecutionUnit::execNotImplemented},
-	{"sahf", false, GROUP_NONE, &InstructionDecoder::decodeFlags, &ExecutionUnit::execNotImplemented},
+	{"sahf", false, GROUP_NONE, &InstructionDecoder::decodeFlags, &ExecutionUnit::execSAHF},
 	{"lahf", false, GROUP_NONE, &InstructionDecoder::decodeFlags, &ExecutionUnit::execLAHF},
 
 	/* Ax */
@@ -282,26 +282,15 @@ const InstructionTableItem InstructionTable::one_byte_opcode_instruction_map[256
 	{0, false, GROUP_3, &InstructionDecoder::decodeNotImplemented, &ExecutionUnit::execNotImplemented},
 	{"clc", false, GROUP_NONE, &InstructionDecoder::decodeNone, &ExecutionUnit::execCLC},
 	{"stc", false, GROUP_NONE, &InstructionDecoder::decodeNone, &ExecutionUnit::execSTC},
-	{"cli", false, GROUP_NONE, &InstructionDecoder::decodeNone, &ExecutionUnit::execNotImplemented},
-	{"sti", false, GROUP_NONE, &InstructionDecoder::decodeNone, &ExecutionUnit::execNotImplemented},
-	{"cld", false, GROUP_NONE, &InstructionDecoder::decodeNone, &ExecutionUnit::execNotImplemented},
-	{"std", false, GROUP_NONE, &InstructionDecoder::decodeNone, &ExecutionUnit::execNotImplemented},
+	{"cli", false, GROUP_NONE, &InstructionDecoder::decodeNone, &ExecutionUnit::execCLI},
+	{"sti", false, GROUP_NONE, &InstructionDecoder::decodeNone, &ExecutionUnit::execSTI},
+	{"cld", false, GROUP_NONE, &InstructionDecoder::decodeNone, &ExecutionUnit::execCLD},
+	{"std", false, GROUP_NONE, &InstructionDecoder::decodeNone, &ExecutionUnit::execSTD},
 	{0, false, GROUP_4, &InstructionDecoder::decodeNotImplemented, &ExecutionUnit::execNotImplemented},
 	{0, false, GROUP_5, &InstructionDecoder::decodeNotImplemented, &ExecutionUnit::execNotImplemented}
 };
 
 const InstructionTableItem InstructionTable::one_byte_opcode_instruction_extension_map[11][8] = {
-	{//GROUP 0
-		{},
-		{},
-		{},
-		{},
-		{},
-		{},
-		{},
-		{}
-	},//END GROUP 0
-
 	{//GROUP 1
 		{"add",},
 		{"or",},
@@ -410,7 +399,18 @@ const InstructionTableItem InstructionTable::one_byte_opcode_instruction_extensi
 		{},
 		{},
 		{}
-	}//END GROUP 10
+	},//END GROUP 10
+
+	{//GROUP 11
+		{},
+		{},
+		{},
+		{},
+		{},
+		{},
+		{},
+		{}
+	}//END GROUP 11
 };
 
 //***OPERATION PSEUDOCODE****

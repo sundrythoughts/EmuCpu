@@ -22,12 +22,12 @@ public:
 	void (InstructionDecoder::*decode_func) ();
 	void (ExecutionUnit::*execute_func) (OperandList &ops);
 
-	void decode (InstructionDecoder *id) const {
-		(id->*decode_func) ();
+	void decode (InstructionDecoder &id) const {
+		(id.*decode_func) ();
 	}
 
-	void execute (ExecutionUnit *eu, OperandList &ops) const {
-		(eu->*execute_func) (ops);
+	void execute (ExecutionUnit &eu, OperandList &ops) const {
+		(eu.*execute_func) (ops);
 	}
 }; //end class InstructionTableItem
 
@@ -38,14 +38,16 @@ public:
 class InstructionTable {
 public:
 	enum {
-		GROUP_NONE = 0,
-		GROUP_1,
+		GROUP_1 = 0,
 		GROUP_2,
 		GROUP_3,
 		GROUP_4,
 		GROUP_5,
+		GROUP_NONE,
 		GROUP_RESERVED
 	} InstructionGroups;
+
+	
 
 	static const InstructionTableItem one_byte_opcode_instruction_map[256];
 	static const InstructionTableItem one_byte_opcode_instruction_extension_map[11][8];

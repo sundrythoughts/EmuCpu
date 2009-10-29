@@ -33,6 +33,9 @@ public:
 	/** Create a connection to the Cpu */
 	void connectTo (CpuComponents &cpu);
 
+	/** */
+	void reset ();
+
 	/** Get an 8-bit register given its index */
 	Register<unsigned char>& getReg8 (size_t index);
 
@@ -142,6 +145,9 @@ public:
 	void setRegSP (unsigned short val);
 
 	/** */
+	void resetRegFlags (unsigned short val = 2);
+
+	/** */
 	Register<unsigned short>& getRegFlags ();
 
 	/** */
@@ -238,10 +244,10 @@ public:
 	void execCLC (OperandList &ops);
 
 	/** */
-	void execCLD ();
+	void execCLD (OperandList &ops);
 
 	/** */
-	void execCLI ();
+	void execCLI (OperandList &ops);
 
 	/** */
 	void execCMC ();
@@ -469,10 +475,10 @@ public:
 	void execSTC (OperandList &ops);
 
 	/** */
-	void execSTD ();
+	void execSTD (OperandList &ops);
 
 	/** */
-	void execSTI ();
+	void execSTI (OperandList &ops);
 
 	/** */
 	void execSTOS ();

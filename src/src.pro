@@ -9,7 +9,7 @@ PKGCONFIG += sigc++-2.0
 
 SOURCES += Sim86.cc
 
-HEADERS += InstructionExecuter.hh
+#HEADERS += InstructionExecuter.hh
 
 HEADERS += ProxyLayer.hh
 SOURCES += ProxyLayer.cc
@@ -25,6 +25,9 @@ SOURCES += NumberWrapper.cc
 
 HEADERS += OperandList.hh
 SOURCES += OperandList.cc
+
+HEADERS += Instruction.hh
+SOURCES += Instruction.cc
 
 HEADERS += Defines.hh
 SOURCES += Defines.cc

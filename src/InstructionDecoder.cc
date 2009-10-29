@@ -21,7 +21,6 @@
 #include <sstream>
 #include <iomanip>
 
-using namespace std;
 
 class InstructionDecoderPrivate {
 public:
@@ -64,7 +63,7 @@ InstructionDecoder::getInstruction () {
 void
 InstructionDecoder::nextInstruction () {
 	if (!p->m_instruction_bytes.empty ()) {
-		InstructionTable::one_byte_opcode_instruction_map[p->m_instruction_bytes[0]].execute (p->m_eunit, p->m_operands);
+		InstructionTable::one_byte_opcode_instruction_map[p->m_instruction_bytes[0]].execute (*p->m_eunit, p->m_operands);
 	}
 
 	p->m_disasm.str ("");
@@ -109,7 +108,7 @@ InstructionDecoder::decodeInstruction () {
 		p->m_instruction_bytes.push_back (p->m_biu->getInstructionBytes<unsigned char> ());
 	}
 
-	inst->decode (this);
+	inst->decode (*this);
 
 	//output disassembly
 	p->m_disassembly.setMachineCode (p->m_instruction_bytes);
@@ -147,10 +146,13 @@ InstructionDecoder::decodeRegRM () {
 
 	switch (modrm.mod) {
 	case 0: //
+		std::cout << "decodeRegRM (): mod == 0 is not yet implemented." << std::endl;
 		break;
 	case 1:
+		std::cout << "decodeRegRM (): mod == 1 is not yet implemented." << std::endl;
 		break;
 	case 2: //Sign extende byte mode
+		std::cout << "decodeRegRM (): mod == 2 is not yet implemented." << std::endl;
 		break;
 	case 3: //Register mode
 		if (im.w) { //16 bits
@@ -245,7 +247,7 @@ InstructionDecoder::decodeAccImm () {
 
 void
 InstructionDecoder::decodeSegment () {
-	cout << "decodeSegment ()" << endl;
+	std::cout << "decodeSegment ()" << std::endl;
 }
 
 void
@@ -281,7 +283,7 @@ InstructionDecoder::decodeShort () {
 	const char imm = p->m_biu->getInstructionBytes<char> ();
 	p->m_instruction_bytes.push_back ((unsigned char)imm);
 
-	p->m_disasm << ", " << std::setfill ('0') << std::setw (sizeof(imm) << 1) << std::hex << (unsigned int)imm;
+	p->m_disasm << ", " << std::setfill ('0') << std::setw (sizeof(imm) << 1) << std::hex << (unsigned int)(p->m_biu->getRegIP () + imm);
 
 	p->m_operands.setOperandSize (Jaf::OP_SIZE_8);
 
@@ -290,7 +292,7 @@ InstructionDecoder::decodeShort () {
 
 void
 InstructionDecoder::decodeSegRM () {
-	cout << "decodeSegRM ()" << endl;
+	std::cout << "decodeSegRM ()" << std::endl;
 
 }
 
@@ -426,7 +428,7 @@ InstructionDecoder::decodeIntra () {
 		p->m_instruction_bytes.push_back (bytes[i]);
 	}
 
-	p->m_disasm << std::setfill ('0') << std::setw (sizeof(imm) << 1) << std::hex << (unsigned int)imm;
+	p->m_disasm << std::setfill ('0') << std::setw (sizeof(imm) << 1) << std::hex << (unsigned int)(p->m_biu->getRegIP () + imm);
 
 	p->m_operands.setOperandSize (Jaf::OP_SIZE_16);
 
@@ -435,31 +437,31 @@ InstructionDecoder::decodeIntra () {
 
 void
 InstructionDecoder::decodeInter () {
-	cout << "decodeInter ()" << endl;
+	std::cout << "decodeInter ()" << std::endl;
 
 }
 
 void
 InstructionDecoder::decodeXferInd () {
-	cout << "decodeXferInd ()" << endl;
+	std::cout << "decodeXferInd ()" << std::endl;
 
 }
 
 void
 InstructionDecoder::decodeRMImm () {
-	cout << "decodeRMImm ()" << endl;
+	std::cout << "decodeRMImm ()" << std::endl;
 
 }
 
 void
 InstructionDecoder::decodeAccPort () {
-	cout << "decodeAccPort ()" << endl;
+	std::cout << "decodeAccPort ()" << std::endl;
 
 }
 
 void
 InstructionDecoder::decodeRM () {
-	cout << "decodeRM ()" << endl;
+	std::cout << "decodeRM ()" << std::endl;
 
 }
 
@@ -470,43 +472,43 @@ InstructionDecoder::decodeFlags () {
 
 void
 InstructionDecoder::decodeRetPop () {
-	cout << "decodeRetPop ()" << endl;
+	std::cout << "decodeRetPop ()" << std::endl;
 
 }
 
 void
 InstructionDecoder::decodeType3 () {
-	cout << "decodeType3 ()" << endl;
+	std::cout << "decodeType3 ()" << std::endl;
 
 }
 
 void
 InstructionDecoder::decodeEscNum () {
-	cout << "decodeEscNum ()" << endl;
+	std::cout << "decodeEscNum ()" << std::endl;
 
 }
 
 void
 InstructionDecoder::decodeAccVPort () {
-	cout << "decodeAccVPort ()" << endl;
+	std::cout << "decodeAccVPort ()" << std::endl;
 
 }
 
 void
 InstructionDecoder::decodeAccBase () {
-	cout << "decodeAccBase ()" << endl;
+	std::cout << "decodeAccBase ()" << std::endl;
 
 }
 
 void
 InstructionDecoder::decodeIntNum () {
-	cout << "decodeIntNum ()" << endl;
+	std::cout << "decodeIntNum ()" << std::endl;
 
 }
 
 void
 InstructionDecoder::decodeString () {
-	cout << "decodeString ()" << endl;
+	std::cout << "decodeString ()" << std::endl;
 
 }
 

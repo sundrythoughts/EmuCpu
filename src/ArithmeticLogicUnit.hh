@@ -132,12 +132,6 @@ public:
 	*/
 	void opCmp (unsigned short dest, unsigned short src);
 
-#if 0
-	/** FIXME */
-	template<typename TDest, typename TSrc>
-	void cmps (TDest &dest, TSrc &src, TDest &result);
-#endif
-
 	/**
 	@brief Do an 8-bit dec.
 	*/
@@ -338,14 +332,6 @@ public:
 	*/
 	void opXor (unsigned short dest, unsigned short src, unsigned short &ret);
 }; //end class ArithmeticLogicUnit
-
-#if 0
-//FIXME - fix flags
-template<typename TDest, typename TSrc>
-void
-ArithmeticLogicUnit::cmps (TDest &dest, TSrc &src, TDest &result) {
-}
-#endif
 
 #endif //JAF__ARITHMETIC_LOGIC_UNIT_HH
 

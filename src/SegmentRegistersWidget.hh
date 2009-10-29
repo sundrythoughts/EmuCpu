@@ -21,47 +21,26 @@ class SegmentRegistersWidget : public QDockWidget, protected Ui::SegmentRegister
 
 public:
 	/** */
-	SegmentRegistersWidget (QWidget *parent = 0) : QDockWidget (parent) {
-		setupUi (this);
-	}
+	SegmentRegistersWidget (QWidget *parent = 0);
 
 public slots:
 	/** */
-	void enableDisableToggle (bool b) {
-		if (b) {
-			show ();
-		}
-		else {
-			hide ();
-		}
-
-		emit enableDisable (b);
-	}
+	void enableDisableToggle (bool b);
 
 	/** */
-	void setSegRegCS (unsigned short i) {
-		m_ln_cs->setText (QString::number (i, 16).toUpper ());
-	}
+	void setSegRegCS (unsigned short i);
 
 	/** */
-	void setSegRegDS (unsigned short i) {
-		m_ln_ds->setText (QString::number (i, 16).toUpper ());
-	}
+	void setSegRegDS (unsigned short i);
 
 	/** */
-	void setSegRegES (unsigned short i) {
-		m_ln_es->setText (QString::number (i, 16).toUpper ());
-	}
+	void setSegRegES (unsigned short i);
 
 	/** */
-	void setSegRegSS (unsigned short i) {
-		m_ln_ss->setText (QString::number (i, 16).toUpper ());
-	}
+	void setSegRegSS (unsigned short i);
 
 	/** */
-	void setRegIP (unsigned short i) {
-		m_ln_ip->setText (QString::number (i, 16).toUpper ());
-	}
+	void setRegIP (unsigned short i);
 
 signals:
 	/** */

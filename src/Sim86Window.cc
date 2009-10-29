@@ -4,10 +4,10 @@ Sim86Window::Sim86Window (QWidget *parent) : QMainWindow (parent) {
 	setupUi (this);
 
 	//add widgets
-	addDockWidget (Qt::LeftDockWidgetArea, &m_stack_widget);
 	addDockWidget (Qt::LeftDockWidgetArea, &m_flags_widget);
 	addDockWidget (Qt::LeftDockWidgetArea, &m_general_registers_widget);
 	addDockWidget (Qt::LeftDockWidgetArea, &m_segment_registers_widget);
+	addDockWidget (Qt::RightDockWidgetArea, &m_stack_widget);
 
 	QVBoxLayout *layout_disassembly = new QVBoxLayout ();
 	layout_disassembly->addWidget(&m_disassembly_widget);
@@ -61,3 +61,72 @@ Sim86Window::Sim86Window (QWidget *parent) : QMainWindow (parent) {
 	connect (m_sld_speed, SIGNAL(valueChanged (int)), this, SIGNAL(setSpeed (int)));
 }
 
+
+FlagsWidget&
+Sim86Window::getFlagsWidget () {
+	return m_flags_widget;
+}
+
+
+GeneralRegistersWidget&
+Sim86Window::getGeneralRegistersWidget () {
+	return m_general_registers_widget;
+}
+
+
+SegmentRegistersWidget&
+Sim86Window::getSegmentRegistersWidget () {
+	return m_segment_registers_widget;
+}
+
+
+StackWidget&
+Sim86Window::getStackWidget () {
+	return m_stack_widget;
+}
+
+
+DisassemblyWidget&
+Sim86Window::getDisassemblyWidget () {
+	return m_disassembly_widget;
+}
+
+
+MemoryWidget&
+Sim86Window::getMemoryWidget () {
+	return m_memory_widget;
+}
+
+
+TerminalWidget&
+Sim86Window::getTerminalWidget () {
+	return m_terminal_widget;
+}
+
+
+void
+Sim86Window::enableDisableToggleDisassembly (bool b) {
+	m_tab_widget->setTabEnabled (m_tab_widget->indexOf (m_tab_disassembly), b);
+}
+
+
+void
+Sim86Window::enableDisableToggleMemory (bool b) {
+	m_tab_widget->setTabEnabled (m_tab_widget->indexOf (m_tab_memory), b);
+}
+
+
+void
+Sim86Window::openFile () {
+	QString file_name = QFileDialog::getOpenFileName (this, "Load file...");
+	if (!file_name.isNull ()) {
+		//QFileInfo f_info (filename);
+		//m_file = f_info.fileName ();
+		//std::cout << m_file.toAscii ().constData () << std::endl;
+		//m_lnedit_file_name->setText (filename);
+		emit loadFile (file_name);
+	}
+	else {
+		//FIXME
+	}
+}

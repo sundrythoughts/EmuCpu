@@ -77,7 +77,7 @@ enum SegmentRegisterIndex {
 extern const char* sreg_index_names[SREG_COUNT];
 
 union ModRM {
-	unsigned char modrm;
+	unsigned char byte;
 	struct {
 		unsigned int rm : 3;
 		unsigned int reg : 3;
@@ -86,7 +86,7 @@ union ModRM {
 };
 
 union ScaleIndexBase {
-	unsigned char sib;
+	unsigned char byte;
 	struct {
 		unsigned int base : 3;
 		unsigned int index : 3;

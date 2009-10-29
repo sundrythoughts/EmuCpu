@@ -93,12 +93,12 @@ public:
 
 	/** */
 	template<typename T>
-	void getMemoryAddress (MemoryAddress<T> * &mem_addr, unsigned short seg, unsigned short offset);
+	void getMemoryAddress (MemoryAddress<T> * &mem_addr, unsigned short seg, unsigned short offset, bool override_the_override = false);
 
 	/** */
 	template<typename T>
 	MemoryAddress<T>*
-	getMemoryAddress (unsigned short seg, unsigned short offset);
+	getMemoryAddress (unsigned short seg, unsigned short offset, bool override_the_override = false);
 
 	/** Read sizeof(T) bytes starting at IP and then increment IP sizeof(T) bytes */
 	template<typename T>
@@ -116,8 +116,8 @@ public:
 
 template<typename T>
 void
-BusInterfaceUnit::getMemoryAddress (MemoryAddress<T> * &mem_addr, unsigned short seg, unsigned short offset) {
-	if (m_seg_override != (unsigned short)-1) {
+BusInterfaceUnit::getMemoryAddress (MemoryAddress<T> * &mem_addr, unsigned short seg, unsigned short offset, bool override_the_override) {
+	if (!override_the_override && m_seg_override != (unsigned short)-1) {
 		seg = m_seg_override;
 		m_seg_override = (unsigned short)-1;
 	}
@@ -127,8 +127,8 @@ BusInterfaceUnit::getMemoryAddress (MemoryAddress<T> * &mem_addr, unsigned short
 
 template<typename T>
 MemoryAddress<T>*
-BusInterfaceUnit::getMemoryAddress (unsigned short seg, unsigned short offset) {
-	if (m_seg_override != (unsigned short)-1) {
+BusInterfaceUnit::getMemoryAddress (unsigned short seg, unsigned short offset, bool override_the_override) {
+	if (!override_the_override && m_seg_override != (unsigned short)-1) {
 		seg = m_seg_override;
 		m_seg_override = (unsigned short)-1;
 	}

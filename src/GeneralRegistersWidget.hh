@@ -22,62 +22,35 @@ class GeneralRegistersWidget : public QDockWidget, protected Ui::GeneralRegister
 
 public:
 	/** */
-	GeneralRegistersWidget (QWidget *parent = 0) : QDockWidget (parent) {
-		setupUi (this);
-	}
+	GeneralRegistersWidget (QWidget *parent = 0);
 
 public slots:
 	/** */
-	void enableDisableToggle (bool b) {
-		if (b) {
-			show ();
-		}
-		else {
-			hide ();
-		}
-
-		emit enableDisable (b);
-	}
+	void enableDisableToggle (bool b);
 
 	/** */
-	void setRegAX (unsigned short i) {
-		m_ln_ax->setText (QString::number (i, 16).toUpper ());
-	}
+	void setRegAX (unsigned short i);
 
 	/** */
-	void setRegBX (unsigned short i) {
-		m_ln_bx->setText (QString::number (i, 16).toUpper ());
-	}
+	void setRegBX (unsigned short i);
 
 	/** */
-	void setRegCX (unsigned short i) {
-		m_ln_cx->setText (QString::number (i, 16).toUpper ());
-	}
+	void setRegCX (unsigned short i);
 
 	/** */
-	void setRegDX (unsigned short i) {
-		m_ln_dx->setText (QString::number (i, 16).toUpper ());
-	}
+	void setRegDX (unsigned short i);
 
 	/** */
-	void setRegSI (unsigned short i) {
-		m_ln_si->setText (QString::number (i, 16).toUpper ());
-	}
+	void setRegSI (unsigned short i);
 
 	/** */
-	void setRegDI (unsigned short i) {
-		m_ln_di->setText (QString::number (i, 16).toUpper ());
-	}
+	void setRegDI (unsigned short i);
 
 	/** */
-	void setRegBP (unsigned short i) {
-		m_ln_bp->setText (QString::number (i, 16).toUpper ());
-	}
+	void setRegBP (unsigned short i);
 
 	/** */
-	void setRegSP (unsigned short i) {
-		m_ln_sp->setText (QString::number (i, 16).toUpper ());
-	}
+	void setRegSP (unsigned short i);
 
 signals:
 	/** */

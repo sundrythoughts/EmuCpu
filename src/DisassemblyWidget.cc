@@ -20,6 +20,10 @@ DisassemblyWidget::enableDisableToggle (bool b) {
 
 void
 DisassemblyWidget::addNextInstruction (QString seg_off, QString mcode, QString asm_code, QString addr_mode) {
+	seg_off = seg_off.toUpper ();
+	mcode = mcode.toUpper ();
+	asm_code = asm_code.toUpper ();
+
 	m_txt_disasm->append (seg_off + '\t' + mcode + '\t' + asm_code + '\t' + addr_mode);
 
 	m_tbl_disasm->setItem (0, 0, m_tbl_disasm->takeItem (1, 0));

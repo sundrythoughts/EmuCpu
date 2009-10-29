@@ -36,31 +36,40 @@ class Sim86Window : public QMainWindow, protected Ui::Sim86Window {
 	MemoryWidget m_memory_widget;
 	TerminalWidget m_terminal_widget;
 
+public:
+	/** */
+	Sim86Window (QWidget *parent = 0);
+
+	/** */
+	FlagsWidget& getFlagsWidget ();
+
+	/** */
+	GeneralRegistersWidget& getGeneralRegistersWidget ();
+
+	/** */
+	SegmentRegistersWidget& getSegmentRegistersWidget ();
+
+	/** */
+	StackWidget& getStackWidget ();
+
+	/** */
+	DisassemblyWidget& getDisassemblyWidget ();
+
+	/** */
+	MemoryWidget& getMemoryWidget ();
+
+	/** */
+	TerminalWidget& getTerminalWidget ();
+
 private slots:
 	/** */
-	void enableDisableToggleDisassembly (bool b) {
-		m_tab_widget->setTabEnabled (m_tab_widget->indexOf (m_tab_disassembly), b);
-	}
+	void enableDisableToggleDisassembly (bool b);
 
 	/** */
-	void enableDisableToggleMemory (bool b) {
-		m_tab_widget->setTabEnabled (m_tab_widget->indexOf (m_tab_memory), b);
-	}
+	void enableDisableToggleMemory (bool b);
 
 	/** */
-	void openFile () {
-		QString file_name = QFileDialog::getOpenFileName (this, "Load file...");
-		if (!file_name.isNull ()) {
-			//QFileInfo f_info (filename);
-			//m_file = f_info.fileName ();
-			//std::cout << m_file.toAscii ().constData () << std::endl;
-			//m_lnedit_file_name->setText (filename);
-			emit loadFile (file_name);
-		}
-		else {
-			//FIXME
-		}
-	}
+	void openFile ();
 
 signals:
 	/** */
@@ -81,44 +90,6 @@ signals:
 	/** */
 	void setSpeed (int i);
 
-public:
-	/** */
-	Sim86Window (QWidget *parent = 0);
-
-	/** */
-	FlagsWidget& getFlagsWidget () {
-		return m_flags_widget;
-	}
-
-	/** */
-	GeneralRegistersWidget& getGeneralRegistersWidget () {
-		return m_general_registers_widget;
-	}
-
-	/** */
-	SegmentRegistersWidget& getSegmentRegistersWidget () {
-		return m_segment_registers_widget;
-	}
-
-	/** */
-	StackWidget& getStackWidget () {
-		return m_stack_widget;
-	}
-
-	/** */
-	DisassemblyWidget& getDisassemblyWidget () {
-		return m_disassembly_widget;
-	}
-
-	/** */
-	MemoryWidget& getMemoryWidget () {
-		return m_memory_widget;
-	}
-
-	/** */
-	TerminalWidget& getTerminalWidget () {
-		return m_terminal_widget;
-	}
 }; //end class Sim86Window
 
 #endif //JAF__SIM_86_WINDOW_HH

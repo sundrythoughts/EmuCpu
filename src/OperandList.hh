@@ -14,36 +14,19 @@ class OperandList {
 	NumberWrapper m_ops[2];
 
 public:
-	OperandList () {
-		//m_ops.resize (2);
-	}
+	OperandList ();
 
-	~OperandList () {
-		//m_ops.clear ();
-	}
+	~OperandList ();
 
-	bool operandSize () const {
-		return m_op_size;
-	}
+	bool operandSize () const;
 
-	void setOperandSize (bool s) {
-		m_op_size = s;
-	}
+	void setOperandSize (bool s);
 
-	NumberWrapper& src () {
-		return m_ops[1];
-	}
+	NumberWrapper& src ();
 
-	NumberWrapper& dest () {
-		return m_ops[0];
-	}
+	NumberWrapper& dest ();
 
-	void reset () {
-		//m_ops.clear ();
-		//m_ops.resize (2);
-		m_ops[0].free ();
-		m_ops[1].free ();
-	}
+	void reset ();
 };
 
 #endif //JAF__OPERAND_LIST_HH

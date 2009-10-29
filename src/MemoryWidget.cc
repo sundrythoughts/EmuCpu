@@ -1,5 +1,43 @@
 #include "MemoryWidget.hh"
 
+MemoryWidget::MemoryWidget (QWidget *parent) : QWidget (parent) {
+	setupUi (this);
+
+	//FIXME - temp test
+	//resize (100000);
+}
+
+
+void
+MemoryWidget::enableDisableToggle (bool b) {
+	if (b) {
+		show ();
+	}
+	else {
+		hide ();
+	}
+
+	emit enableDisable (b);
+}
+
+
+void
+MemoryWidget::resize (size_t sz) {
+	int curr_cnt = m_tbl_memory->rowCount ();
+	size_t mod = sz % 16;
+	sz /= 16;
+	if (mod) {
+		++sz;
+	}
+	m_tbl_memory->setRowCount (sz);
+	for (size_t i = curr_cnt; i < sz; ++i) {
+		QTableWidgetItem *item = new QTableWidgetItem (QString::number (i * 16, 16).toUpper ().rightJustified (5, '0'));
+		m_tbl_memory->setVerticalHeaderItem (i, item);
+	}
+	//std::cout << "resize" << std::endl;
+}
+
+
 //FIXME - doesn't check for validity of QTableWidgetItem
 void
 MemoryWidget::setMemoryAddress (int addr, unsigned char val) {
@@ -37,6 +75,7 @@ MemoryWidget::setMemoryAddress (int addr, unsigned char val) {
 	ascii_str[elmt_index] = QChar (val);
 	m_tbl_memory->item (row_index, 1)->setText (ascii_str);
 }
+
 
 void
 MemoryWidget::setAllMemoryAddresses (const unsigned char *arr, size_t sz) {

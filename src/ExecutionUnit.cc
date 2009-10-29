@@ -408,6 +408,20 @@ ExecutionUnit::execNotImplemented (OperandList &ops) {
 }
 
 void
+ExecutionUnit::execADC (OperandList &ops) {
+	if (ops.operandSize () == Jaf::OP_SIZE_16) {
+		unsigned short ret;
+		p->m_alu->opAdc (ops.dest ().get<unsigned short> (), ops.src ().get<unsigned short> (), ret);
+		ops.dest ().get<unsigned short> () = ret;
+	}
+	else {
+		unsigned char ret;
+		p->m_alu->opAdc (ops.dest ().get<unsigned char> (), ops.src ().get<unsigned char> (), ret);
+		ops.dest ().get<unsigned char> () = ret;
+	}
+}
+
+void
 ExecutionUnit::execADD (OperandList &ops) {
 	if (ops.operandSize () == Jaf::OP_SIZE_16) {
 		unsigned short ret;
@@ -432,6 +446,31 @@ ExecutionUnit::execAND (OperandList &ops) {
 		unsigned char ret;
 		p->m_alu->opAnd (ops.dest ().get<unsigned char> (), ops.src ().get<unsigned char> (), ret);
 		ops.dest ().get<unsigned char> () = ret;
+	}
+}
+
+void
+ExecutionUnit::execCBW (OperandList &ops) {
+	if (getRegAL () < 0x80) {
+		setRegAH (0);
+	}
+	else {
+		setRegAH (0xFF);
+	}
+}
+
+void
+ExecutionUnit::execCLC (OperandList &ops) {
+	setRegFlagsCF (false);
+}
+
+void
+ExecutionUnit::execCWD (OperandList &ops) {
+	if (getRegAX () < 0x8000) {
+		setRegDX (0);
+	}
+	else {
+		setRegDX (0xFFFF);
 	}
 }
 
@@ -508,6 +547,11 @@ ExecutionUnit::execJNE (OperandList &ops) {
 }
 
 void
+ExecutionUnit::execLAHF (OperandList &ops) {
+	setRegAH (getRegFlags ());
+}
+
+void
 ExecutionUnit::execMOV (OperandList &ops) {
 	if (ops.operandSize () == Jaf::OP_SIZE_16) {
 		ops.dest ().get<unsigned short> () = ops.src ().get<unsigned short> ();
@@ -537,6 +581,11 @@ ExecutionUnit::execOR (OperandList &ops) {
 }
 
 void
+ExecutionUnit::execSAHF (OperandList &ops) {
+	//FIXME setRegFlags (getRegAH
+}
+
+void
 ExecutionUnit::execSUB (OperandList &ops) {
 	if (ops.operandSize () == Jaf::OP_SIZE_16) {
 		unsigned short ret;
@@ -551,6 +600,11 @@ ExecutionUnit::execSUB (OperandList &ops) {
 }
 
 void
+ExecutionUnit::execSTC (OperandList &ops) {
+	setRegFlagsCF (true);
+}
+
+void
 ExecutionUnit::execXCHG (OperandList &ops) {
 	if (ops.operandSize () == Jaf::OP_SIZE_16) {
 		unsigned short tmp = ops.dest ().get<unsigned short> ();
@@ -561,6 +615,20 @@ ExecutionUnit::execXCHG (OperandList &ops) {
 		unsigned char tmp = ops.dest ().get<unsigned char> ();
 		ops.dest ().get<unsigned char> () = ops.src ().get<unsigned char> ();
 		ops.src ().get<unsigned char> () = tmp;
+	}
+}
+
+void
+ExecutionUnit::execXOR (OperandList &ops) {
+	if (ops.operandSize () == Jaf::OP_SIZE_16) {
+		unsigned short ret;
+		p->m_alu->opXor (ops.dest ().get<unsigned short> (), ops.src ().get<unsigned short> (), ret);
+		ops.dest ().get<unsigned short> () = ret;
+	}
+	else {
+		unsigned char ret;
+		p->m_alu->opXor (ops.dest ().get<unsigned char> (), ops.src ().get<unsigned char> (), ret);
+		ops.dest ().get<unsigned char> () = ret;
 	}
 }
 

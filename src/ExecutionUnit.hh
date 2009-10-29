@@ -217,7 +217,7 @@ public:
 	void execAAS ();
 
 	/** */
-	void execADC ();
+	void execADC (OperandList &ops);
 
 	/** */
 	void execADD (OperandList &ops);
@@ -232,10 +232,10 @@ public:
 	void execCALLFAR ();
 
 	/** */
-	void execCBW ();
+	void execCBW (OperandList &ops);
 
 	/** */
-	void execCLC ();
+	void execCLC (OperandList &ops);
 
 	/** */
 	void execCLD ();
@@ -253,7 +253,7 @@ public:
 	void execCMPS ();
 
 	/** */
-	void execCWD ();
+	void execCWD (OperandList &ops);
 
 	/** */
 	void execDAA ();
@@ -358,7 +358,7 @@ public:
 	void execJS ();
 
 	/** */
-	void execLAHF ();
+	void execLAHF (OperandList &ops);
 
 	/** */
 	void execLDS ();
@@ -445,7 +445,7 @@ public:
 	void execROR ();
 
 	/** */
-	void execSAHF ();
+	void execSAHF (OperandList &ops);
 
 	/** */
 	void execSHL ();
@@ -466,7 +466,7 @@ public:
 	void execSHR ();
 
 	/** */
-	void execSTC ();
+	void execSTC (OperandList &ops);
 
 	/** */
 	void execSTD ();
@@ -493,7 +493,8 @@ public:
 	void execXLAT ();
 
 	/** */
-	void execXOR ();
+	void execXOR (OperandList &ops);
+
 }; //end class ExecutionUnit
 
 #endif //JAF__EXECUTION_UNIT_HH

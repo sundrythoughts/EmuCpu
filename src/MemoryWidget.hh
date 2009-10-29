@@ -22,41 +22,14 @@ class MemoryWidget : public QWidget, protected Ui::MemoryWidget {
 
 public:
 	/** */
-	MemoryWidget (QWidget *parent = 0) : QWidget (parent) {
-		setupUi (this);
-
-		//FIXME - temp test
-		//resize (100000);
-	}
+	MemoryWidget (QWidget *parent = 0);
 
 public slots:
 	/** */
-	void enableDisableToggle (bool b) {
-		if (b) {
-			show ();
-		}
-		else {
-			hide ();
-		}
-
-		emit enableDisable (b);
-	}
+	void enableDisableToggle (bool b);
 
 	/** */
-	void resize (size_t sz) {
-		int curr_cnt = m_tbl_memory->rowCount ();
-		size_t mod = sz % 16;
-		sz /= 16;
-		if (mod) {
-			++sz;
-		}
-		m_tbl_memory->setRowCount (sz);
-		for (size_t i = curr_cnt; i < sz; ++i) {
-			QTableWidgetItem *item = new QTableWidgetItem (QString::number (i * 16, 16).toUpper ().rightJustified (5, '0'));
-			m_tbl_memory->setVerticalHeaderItem (i, item);
-		}
-		//std::cout << "resize" << std::endl;
-	}
+	void resize (size_t sz);
 
 	/** */
 	void setMemoryAddress (int addr, unsigned char val);

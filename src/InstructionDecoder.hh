@@ -19,8 +19,6 @@ class InstructionDecoderPrivate;
 class InstructionDecoder {
 	InstructionDecoderPrivate *p;
 
-	typedef void (InstructionDecoder::*DecodeFunc) ();
-
 public:
 	/** */
 	InstructionDecoder ();

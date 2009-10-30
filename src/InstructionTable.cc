@@ -146,10 +146,10 @@ const InstructionTableItem InstructionTable::one_byte_opcode_instruction_map[256
 	{"jnle/jg", false, GROUP_NONE, &InstructionDecoder::decodeShort, &ExecutionUnit::execNotImplemented},
 
 	/* 8x */
-	{0, false, GROUP_1, &InstructionDecoder::decodeNotImplemented, &ExecutionUnit::execNotImplemented},
-	{0, false, GROUP_1, &InstructionDecoder::decodeNotImplemented, &ExecutionUnit::execNotImplemented},
-	{0, false, GROUP_1, &InstructionDecoder::decodeNotImplemented, &ExecutionUnit::execNotImplemented},
-	{0, false, GROUP_1, &InstructionDecoder::decodeNotImplemented, &ExecutionUnit::execNotImplemented},
+	{0, true, GROUP_0, &InstructionDecoder::decodeNotImplemented, &ExecutionUnit::execNotImplemented},
+	{0, true, GROUP_0, &InstructionDecoder::decodeNotImplemented, &ExecutionUnit::execNotImplemented},
+	{0, true, GROUP_RESERVED, &InstructionDecoder::decodeNotImplemented, &ExecutionUnit::execNotImplemented},
+	{0, true, GROUP_1, &InstructionDecoder::decodeNotImplemented, &ExecutionUnit::execNotImplemented},
 	{"test", true, GROUP_NONE, &InstructionDecoder::decodeRegRM, &ExecutionUnit::execNotImplemented},
 	{"test", true, GROUP_NONE, &InstructionDecoder::decodeRegRM, &ExecutionUnit::execNotImplemented},
 	{"xchg", true, GROUP_NONE, &InstructionDecoder::decodeRegRM, &ExecutionUnit::execXCHG},
@@ -161,7 +161,7 @@ const InstructionTableItem InstructionTable::one_byte_opcode_instruction_map[256
 	{"mov", true, GROUP_NONE, &InstructionDecoder::decodeSegRM, &ExecutionUnit::execNotImplemented},
 	{"lea", true, GROUP_NONE, &InstructionDecoder::decodeRegRM, &ExecutionUnit::execNotImplemented},
 	{"mov", true, GROUP_NONE, &InstructionDecoder::decodeSegRM, &ExecutionUnit::execNotImplemented},
-	{"pop", true, GROUP_NONE, &InstructionDecoder::decodeNotImplemented, &ExecutionUnit::execNotImplemented},
+	{0, true, GROUP_2, &InstructionDecoder::decodeNotImplemented, &ExecutionUnit::execNotImplemented},
 
 	/* 9x */
 	{"nop", false, GROUP_NONE, &InstructionDecoder::decodeAccReg, &ExecutionUnit::execNOP},
@@ -236,13 +236,13 @@ const InstructionTableItem InstructionTable::one_byte_opcode_instruction_map[256
 	{"iret", false, GROUP_NONE, &InstructionDecoder::decodeNone, &ExecutionUnit::execNotImplemented},
 
 	/* Dx */
-	{0, true, GROUP_2, &InstructionDecoder::decodeNotImplemented, &ExecutionUnit::execNotImplemented},
-	{0, true, GROUP_2, &InstructionDecoder::decodeNotImplemented, &ExecutionUnit::execNotImplemented},
-	{0, true, GROUP_2, &InstructionDecoder::decodeNotImplemented, &ExecutionUnit::execNotImplemented},
-	{0, true, GROUP_2, &InstructionDecoder::decodeNotImplemented, &ExecutionUnit::execNotImplemented},
+	{0, true, GROUP_3, &InstructionDecoder::decodeNotImplemented, &ExecutionUnit::execNotImplemented},
+	{0, true, GROUP_3, &InstructionDecoder::decodeNotImplemented, &ExecutionUnit::execNotImplemented},
+	{0, true, GROUP_3, &InstructionDecoder::decodeNotImplemented, &ExecutionUnit::execNotImplemented},
+	{0, true, GROUP_3, &InstructionDecoder::decodeNotImplemented, &ExecutionUnit::execNotImplemented},
 	{"aam", false, GROUP_NONE, &InstructionDecoder::decodeAccBase, &ExecutionUnit::execNotImplemented},
 	{"aad", false, GROUP_NONE, &InstructionDecoder::decodeAccBase, &ExecutionUnit::execNotImplemented},
-	{0, false, GROUP_RESERVED},
+	{0, false, GROUP_RESERVED, &InstructionDecoder::decodeNotImplemented, &ExecutionUnit::execNotImplemented},
 	{"xlat", false, GROUP_NONE, &InstructionDecoder::decodeNone, &ExecutionUnit::execNotImplemented},
 	{"esc 0", false, GROUP_NONE, &InstructionDecoder::decodeEscNum, &ExecutionUnit::execNotImplemented},
 	{"esc 1", false, GROUP_NONE, &InstructionDecoder::decodeEscNum, &ExecutionUnit::execNotImplemented},
@@ -278,139 +278,95 @@ const InstructionTableItem InstructionTable::one_byte_opcode_instruction_map[256
 	{"rep/repe", false, GROUP_NONE, &InstructionDecoder::decodeNone, &ExecutionUnit::execNotImplemented},
 	{"hlt", false, GROUP_NONE, &InstructionDecoder::decodeNone, &ExecutionUnit::execHLT},
 	{"cmc", false, GROUP_NONE, &InstructionDecoder::decodeNone, &ExecutionUnit::execNotImplemented},
-	{0, false, GROUP_3, &InstructionDecoder::decodeNotImplemented, &ExecutionUnit::execNotImplemented},
-	{0, false, GROUP_3, &InstructionDecoder::decodeNotImplemented, &ExecutionUnit::execNotImplemented},
+	{0, true, GROUP_4, &InstructionDecoder::decodeNotImplemented, &ExecutionUnit::execNotImplemented},
+	{0, true, GROUP_4, &InstructionDecoder::decodeNotImplemented, &ExecutionUnit::execNotImplemented},
 	{"clc", false, GROUP_NONE, &InstructionDecoder::decodeNone, &ExecutionUnit::execCLC},
 	{"stc", false, GROUP_NONE, &InstructionDecoder::decodeNone, &ExecutionUnit::execSTC},
 	{"cli", false, GROUP_NONE, &InstructionDecoder::decodeNone, &ExecutionUnit::execCLI},
 	{"sti", false, GROUP_NONE, &InstructionDecoder::decodeNone, &ExecutionUnit::execSTI},
 	{"cld", false, GROUP_NONE, &InstructionDecoder::decodeNone, &ExecutionUnit::execCLD},
 	{"std", false, GROUP_NONE, &InstructionDecoder::decodeNone, &ExecutionUnit::execSTD},
-	{0, false, GROUP_4, &InstructionDecoder::decodeNotImplemented, &ExecutionUnit::execNotImplemented},
-	{0, false, GROUP_5, &InstructionDecoder::decodeNotImplemented, &ExecutionUnit::execNotImplemented}
+	{0, true, GROUP_5, &InstructionDecoder::decodeNotImplemented, &ExecutionUnit::execNotImplemented},
+	{0, true, GROUP_6, &InstructionDecoder::decodeNotImplemented, &ExecutionUnit::execNotImplemented}
 };
 
-const InstructionTableItem InstructionTable::one_byte_opcode_instruction_extension_map[11][8] = {
+const InstructionTableItem InstructionTable::one_byte_opcode_instruction_extension_map[7][8] = {
+	{//GROUP 0
+		{"add", true, GROUP_0, &InstructionDecoder::decodeRMImm, &ExecutionUnit::execNotImplemented},
+		{"or", true, GROUP_0, &InstructionDecoder::decodeRMImm, &ExecutionUnit::execNotImplemented},
+		{"adc", true, GROUP_0, &InstructionDecoder::decodeRMImm, &ExecutionUnit::execNotImplemented},
+		{"sbb", true, GROUP_0, &InstructionDecoder::decodeRMImm, &ExecutionUnit::execNotImplemented},
+		{"and", true, GROUP_0, &InstructionDecoder::decodeRMImm, &ExecutionUnit::execNotImplemented},
+		{"sub", true, GROUP_0, &InstructionDecoder::decodeRMImm, &ExecutionUnit::execNotImplemented},
+		{"xor", true, GROUP_0, &InstructionDecoder::decodeRMImm, &ExecutionUnit::execNotImplemented},
+		{"cmp", true, GROUP_0, &InstructionDecoder::decodeRMImm, &ExecutionUnit::execNotImplemented}
+	},//END GROUP 0
+
 	{//GROUP 1
-		{"add",},
-		{"or",},
-		{"adc",},
-		{"sbb",},
-		{"and",},
-		{"sub",},
-		{"xor",},
-		{"cmp",}
+		{"add", true, GROUP_1, &InstructionDecoder::decodeRMImm, &ExecutionUnit::execNotImplemented},
+		{0, true, GROUP_1, &InstructionDecoder::decodeNotImplemented, &ExecutionUnit::execNotImplemented},
+		{"adc", true, GROUP_1, &InstructionDecoder::decodeRMImm, &ExecutionUnit::execNotImplemented},
+		{"sbb", true, GROUP_1, &InstructionDecoder::decodeRMImm, &ExecutionUnit::execNotImplemented},
+		{0, true, GROUP_1, &InstructionDecoder::decodeNotImplemented, &ExecutionUnit::execNotImplemented},
+		{"sub", true, GROUP_1, &InstructionDecoder::decodeRMImm, &ExecutionUnit::execNotImplemented},
+		{0, true, GROUP_1, &InstructionDecoder::decodeNotImplemented, &ExecutionUnit::execNotImplemented},
+		{"cmp", true, GROUP_1, &InstructionDecoder::decodeRMImm, &ExecutionUnit::execNotImplemented}
 	},//END GROUP 1
 
 	{//GROUP 2
-		{"rol",},
-		{"ror",},
-		{"rcl",},
-		{"rcr",},
-		{"shl/sal",},
-		{"shr",},
-		{},
-		{"sar",}
+		{"pop", true, GROUP_2, &InstructionDecoder::decodeRM, &ExecutionUnit::execNotImplemented},
+		{0, true, GROUP_2, &InstructionDecoder::decodeNotImplemented, &ExecutionUnit::execNotImplemented},
+		{0, true, GROUP_2, &InstructionDecoder::decodeNotImplemented, &ExecutionUnit::execNotImplemented},
+		{0, true, GROUP_2, &InstructionDecoder::decodeNotImplemented, &ExecutionUnit::execNotImplemented},
+		{0, true, GROUP_2, &InstructionDecoder::decodeNotImplemented, &ExecutionUnit::execNotImplemented},
+		{0, true, GROUP_2, &InstructionDecoder::decodeNotImplemented, &ExecutionUnit::execNotImplemented},
+		{0, true, GROUP_2, &InstructionDecoder::decodeNotImplemented, &ExecutionUnit::execNotImplemented},
+		{0, true, GROUP_2, &InstructionDecoder::decodeNotImplemented, &ExecutionUnit::execNotImplemented}
 	},//END GROUP 2
 
 	{//GROUP 3
-		{"test",},
-		{},
-		{"not",},
-		{"neg",},
-		{"mul",},
-		{"imul",},
-		{"div",},
-		{"idiv",}
+		{"rol", true, GROUP_3, &InstructionDecoder::decodeRM, &ExecutionUnit::execNotImplemented},
+		{"ror", true, GROUP_3, &InstructionDecoder::decodeRM, &ExecutionUnit::execNotImplemented},
+		{"rcl", true, GROUP_3, &InstructionDecoder::decodeRM, &ExecutionUnit::execNotImplemented},
+		{"rcr", true, GROUP_3, &InstructionDecoder::decodeRM, &ExecutionUnit::execNotImplemented},
+		{"shl/sal", true, GROUP_3, &InstructionDecoder::decodeRM, &ExecutionUnit::execNotImplemented},
+		{"shr", true, GROUP_3, &InstructionDecoder::decodeRM, &ExecutionUnit::execNotImplemented},
+		{0, true, GROUP_3, &InstructionDecoder::decodeNotImplemented, &ExecutionUnit::execNotImplemented},
+		{"sar", true, GROUP_3, &InstructionDecoder::decodeRM, &ExecutionUnit::execNotImplemented}
 	},//END GROUP 3
 
 	{//GROUP 4
-		{"inc",},
-		{"dec",},
-		{},
-		{},
-		{},
-		{},
-		{},
-		{}
+		{"test", true, GROUP_4, &InstructionDecoder::decodeRMImm, &ExecutionUnit::execNotImplemented},
+		{0, true, GROUP_4, &InstructionDecoder::decodeNotImplemented, &ExecutionUnit::execNotImplemented},
+		{"not", true, GROUP_4, &InstructionDecoder::decodeRM, &ExecutionUnit::execNotImplemented},
+		{"neg", true, GROUP_4, &InstructionDecoder::decodeRM, &ExecutionUnit::execNotImplemented},
+		{"mul", true, GROUP_4, &InstructionDecoder::decodeRM, &ExecutionUnit::execNotImplemented},
+		{"imul", true, GROUP_4, &InstructionDecoder::decodeRM, &ExecutionUnit::execNotImplemented},
+		{"div", true, GROUP_4, &InstructionDecoder::decodeRM, &ExecutionUnit::execNotImplemented},
+		{"idiv", true, GROUP_4, &InstructionDecoder::decodeRM, &ExecutionUnit::execNotImplemented}
 	},//END GROUP 4
 
 	{//GROUP 5
-		{"inc",},
-		{"dec",},
-		{"call",},
-		{"call",},
-		{"jmp",},
-		{"jmp",},
-		{"push",},
-		{}
+		{"inc", true, GROUP_5, &InstructionDecoder::decodeRM, &ExecutionUnit::execNotImplemented},
+		{"dec", true, GROUP_5, &InstructionDecoder::decodeRM, &ExecutionUnit::execNotImplemented},
+		{0, true, GROUP_5, &InstructionDecoder::decodeNotImplemented, &ExecutionUnit::execNotImplemented},
+		{0, true, GROUP_5, &InstructionDecoder::decodeNotImplemented, &ExecutionUnit::execNotImplemented},
+		{0, true, GROUP_5, &InstructionDecoder::decodeNotImplemented, &ExecutionUnit::execNotImplemented},
+		{0, true, GROUP_5, &InstructionDecoder::decodeNotImplemented, &ExecutionUnit::execNotImplemented},
+		{0, true, GROUP_5, &InstructionDecoder::decodeNotImplemented, &ExecutionUnit::execNotImplemented},
+		{0, true, GROUP_5, &InstructionDecoder::decodeNotImplemented, &ExecutionUnit::execNotImplemented}
 	},//END GROUP 5
 
 	{//GROUP 6
-		{},
-		{},
-		{},
-		{},
-		{},
-		{},
-		{},
-		{}
-	},//END GROUP 6
-
-	{//GROUP 7
-		{},
-		{},
-		{},
-		{},
-		{},
-		{},
-		{},
-		{}
-	},//END GROUP 7
-
-	{//GROUP 8
-		{},
-		{},
-		{},
-		{},
-		{},
-		{},
-		{},
-		{}
-	},//END GROUP 8
-
-	{//GROUP 9
-		{},
-		{},
-		{},
-		{},
-		{},
-		{},
-		{},
-		{}
-	},//END GROUP 9
-
-	{//GROUP 10
-		{},
-		{},
-		{},
-		{},
-		{},
-		{},
-		{},
-		{}
-	},//END GROUP 10
-
-	{//GROUP 11
-		{},
-		{},
-		{},
-		{},
-		{},
-		{},
-		{},
-		{}
-	}//END GROUP 11
+		{"inc", true, GROUP_6, &InstructionDecoder::decodeRM, &ExecutionUnit::execNotImplemented},
+		{"dec", true, GROUP_6, &InstructionDecoder::decodeRM, &ExecutionUnit::execNotImplemented},
+		{"call", true, GROUP_6, &InstructionDecoder::decodeXferInd, &ExecutionUnit::execNotImplemented},
+		{"call", true, GROUP_6, &InstructionDecoder::decodeXferInd, &ExecutionUnit::execNotImplemented},
+		{"jmp", true, GROUP_6, &InstructionDecoder::decodeXferInd, &ExecutionUnit::execNotImplemented},
+		{"jmp", true, GROUP_6, &InstructionDecoder::decodeXferInd, &ExecutionUnit::execNotImplemented},
+		{"push", true, GROUP_6, &InstructionDecoder::decodeRM, &ExecutionUnit::execNotImplemented},
+		{0, true, GROUP_6, &InstructionDecoder::decodeNotImplemented, &ExecutionUnit::execNotImplemented}
+	}//END GROUP 6
 };
 
 //***OPERATION PSEUDOCODE****

@@ -5,6 +5,7 @@
 #include "BusInterfaceUnit.hh"
 
 #include "Defines.hh"
+#include "Instruction.hh"
 #include "OperandList.hh"
 #include "NumberWrapper.hh"
 #include "InstructionDisassembly.hh"
@@ -28,12 +29,10 @@ public:
 	ExecutionUnit *m_eunit;
 	BusInterfaceUnit *m_biu;
 
-	std::vector<unsigned char> m_instruction_bytes;
-	unsigned char *m_inst_ptr;
-
 	Jaf::ModRM m_modrm;
 
-	OperandList m_operands;
+	Instruction m_inst;
+
 	InstructionDisassembly m_disassembly;
 	std::ostringstream m_disasm;
 
@@ -53,6 +52,9 @@ InstructionDecoder::connectTo (CpuComponents &cpu) {
 	p->m_cpu = &cpu;
 	p->m_eunit = &cpu.getExecutionUnit ();
 	p->m_biu = &cpu.getBusInterfaceUnit ();
+
+	p->m_inst.connectTo (*this);
+	p->m_inst.connectTo (*p->m_eunit);
 }
 
 void
@@ -62,21 +64,20 @@ InstructionDecoder::getInstruction () {
 
 void
 InstructionDecoder::nextInstruction () {
-	if (!p->m_instruction_bytes.empty ()) {
-		InstructionTable::one_byte_opcode_instruction_map[p->m_instruction_bytes[0]].execute (*p->m_eunit, p->m_operands);
+	if (!p->m_inst.getBytes ().empty ()) {
+		p->m_inst.execute ();
 	}
 
 	p->m_disasm.str ("");
-	p->m_operands.reset ();
+	p->m_inst.reset ();
 	p->m_disasm.clear ();
-	p->m_instruction_bytes.clear ();
 
 	if (p->m_cpu->getHalt ()) {
 		return;
 	}
 
 	p->m_disassembly.setSegmentOffset (p->m_biu->getSegRegCS (), p->m_biu->getRegIP ());
-	p->m_instruction_bytes.push_back (p->m_biu->getInstructionBytes<unsigned char> ());
+	p->m_inst.addBytes (p->m_biu->getInstructionBytes<unsigned char> ());
 
 	decodeInstruction ();
 
@@ -84,8 +85,6 @@ InstructionDecoder::nextInstruction () {
 	                                   p->m_disassembly.getMachineCode (),
 	                                   p->m_disassembly.getAssembly (),
 	                                   p->m_disassembly.getAddressingMode ());
-
-	//cout << p->m_disassembly.toString () << endl;
 }
 
 sigc::signal<void, const std::string&,
@@ -99,19 +98,28 @@ InstructionDecoder::signalNextInstruction ()
 
 void
 InstructionDecoder::decodeInstruction () {
-	const InstructionTableItem *inst = &InstructionTable::one_byte_opcode_instruction_map[p->m_instruction_bytes[0]];
+	p->m_inst.setItem (InstructionTable::one_byte_opcode_instruction_map[p->m_inst.getBytes ()[0]]);
 
-	//get the mnemonic for disassembly
-	p->m_disasm << inst->mnemonic << " ";
+	//decode modrm if instruction has it
+	if (p->m_inst.getItem ().has_modrm) {
+		p->m_inst.addBytes (p->m_biu->getInstructionBytes<unsigned char> ());
 
-	if (inst->has_modrm) { //decode modrm if instruction has it
-		p->m_instruction_bytes.push_back (p->m_biu->getInstructionBytes<unsigned char> ());
+		//check secondary table
+		size_t grp = p->m_inst.getItem ().group;
+		if (grp <= InstructionTable::GROUP_6) {
+			Jaf::ModRM modrm;
+			modrm.byte = p->m_inst.getBytes ()[1];
+			p->m_inst.setItem (InstructionTable::one_byte_opcode_instruction_extension_map[grp][modrm.reg]);
+		}
 	}
 
-	inst->decode (*this);
+	//get the mnemonic for disassembly
+	p->m_disasm << p->m_inst.getItem ().mnemonic << " ";
+
+	p->m_inst.decode ();
 
 	//output disassembly
-	p->m_disassembly.setMachineCode (p->m_instruction_bytes);
+	p->m_disassembly.setMachineCode (p->m_inst.getBytes ());
 	p->m_disassembly.setAssembly (p->m_disasm.str ());
 }
 
@@ -138,11 +146,11 @@ InstructionDecoder::decodeRegRM () {
 	p->m_disassembly.setAddressingMode ("RegRM");
 
 	InstMask im;
-	im.byte = p->m_instruction_bytes[0];
+	im.byte = p->m_inst.getBytes ()[0];
 	Jaf::ModRM modrm;
-	modrm.byte = p->m_instruction_bytes[1];
+	modrm.byte = p->m_inst.getBytes ()[1];
 
-	p->m_operands.setOperandSize (im.w);
+	p->m_inst.operands ().setOperandSize (im.w);
 
 	switch (modrm.mod) {
 	case 0: //
@@ -157,16 +165,16 @@ InstructionDecoder::decodeRegRM () {
 	case 3: //Register mode
 		if (im.w) { //16 bits
 			if (im.d) { //reg is dest
-				p->m_operands.dest ().init<unsigned short> (p->m_eunit->getReg16 (modrm.reg));
-				p->m_operands.src ().init<unsigned short> (p->m_eunit->getReg16 (modrm.rm));
+				p->m_inst.operands ().dest ().init<unsigned short> (p->m_eunit->getReg16 (modrm.reg));
+				p->m_inst.operands ().src ().init<unsigned short> (p->m_eunit->getReg16 (modrm.rm));
 
 				p->m_disasm << Jaf::reg_index_16_names[modrm.reg];
 				p->m_disasm << ", ";
 				p->m_disasm << Jaf::reg_index_16_names[modrm.rm];
 			}
 			else { //reg is src
-				p->m_operands.src ().init<unsigned short> (p->m_eunit->getReg16 (modrm.reg));
-				p->m_operands.dest ().init<unsigned short> (p->m_eunit->getReg16 (modrm.rm));
+				p->m_inst.operands ().src ().init<unsigned short> (p->m_eunit->getReg16 (modrm.reg));
+				p->m_inst.operands ().dest ().init<unsigned short> (p->m_eunit->getReg16 (modrm.rm));
 
 				p->m_disasm << Jaf::reg_index_16_names[modrm.rm];
 				p->m_disasm << ", ";
@@ -175,16 +183,16 @@ InstructionDecoder::decodeRegRM () {
 		}
 		else { //8 bits
 			if (im.d) { //reg is dest
-				p->m_operands.dest ().init<unsigned char> (p->m_eunit->getReg8 (modrm.reg));
-				p->m_operands.src ().init<unsigned char> (p->m_eunit->getReg8 (modrm.rm));
+				p->m_inst.operands ().dest ().init<unsigned char> (p->m_eunit->getReg8 (modrm.reg));
+				p->m_inst.operands ().src ().init<unsigned char> (p->m_eunit->getReg8 (modrm.rm));
 
 				p->m_disasm << Jaf::reg_index_8_names[modrm.reg];
 				p->m_disasm << ", ";
 				p->m_disasm << Jaf::reg_index_8_names[modrm.rm];
 			}
 			else { //reg is src
-				p->m_operands.src ().init<unsigned char> (p->m_eunit->getReg8 (modrm.reg));
-				p->m_operands.dest ().init<unsigned char> (p->m_eunit->getReg8 (modrm.rm));
+				p->m_inst.operands ().src ().init<unsigned char> (p->m_eunit->getReg8 (modrm.reg));
+				p->m_inst.operands ().dest ().init<unsigned char> (p->m_eunit->getReg8 (modrm.rm));
 
 				p->m_disasm << Jaf::reg_index_8_names[modrm.rm];
 				p->m_disasm << ", ";
@@ -208,40 +216,33 @@ InstructionDecoder::decodeAccImm () {
 	p->m_disassembly.setAddressingMode ("AccImm");
 
 	InstMask im;
-	im.byte = p->m_instruction_bytes[0];
+	im.byte = p->m_inst.getBytes ()[0];
 
-	p->m_operands.setOperandSize (im.w);
+	p->m_inst.operands ().setOperandSize (im.w);
 
-	unsigned char *bytes;
 	if (im.w) { //16 bits
 		p->m_disasm << "ax";
 
-		p->m_operands.dest ().init<unsigned short> (p->m_eunit->getRegAX ());
+		p->m_inst.operands ().dest ().init<unsigned short> (p->m_eunit->getRegAX ());
 
 		const unsigned short imm = p->m_biu->getInstructionBytes<unsigned short> ();
-		bytes = (unsigned char*)&imm;
-		for (size_t i = 0; i < sizeof(imm); ++i) {
-			p->m_instruction_bytes.push_back (bytes[i]);
-		}
+		p->m_inst.addBytes (imm);
 
 		p->m_disasm << ", " << std::setfill ('0') << std::setw (sizeof(imm) << 1) << std::hex << (unsigned int)imm;
 
-		p->m_operands.src ().init<unsigned short> (new Immediate<unsigned short> (imm), true);
+		p->m_inst.operands ().src ().init<unsigned short> (new Immediate<unsigned short> (imm), true);
 	}
 	else { //8 bits
 		p->m_disasm << "al";
 
-		p->m_operands.dest ().init<unsigned char> (p->m_eunit->getRegAL ());
+		p->m_inst.operands ().dest ().init<unsigned char> (p->m_eunit->getRegAL ());
 
 		const unsigned char imm = p->m_biu->getInstructionBytes<unsigned char> ();
-		bytes = (unsigned char*)&imm;
-		for (size_t i = 0; i < sizeof(unsigned char); ++i) {
-			p->m_instruction_bytes.push_back (bytes[i]);
-		}
+		p->m_inst.addBytes (imm);
 
 		p->m_disasm << ", " << std::setfill ('0') << std::setw (sizeof(imm) << 1) << std::hex << (unsigned int)imm;
 
-		p->m_operands.src ().init<unsigned char> (new Immediate<unsigned char> (imm), true);
+		p->m_inst.operands ().src ().init<unsigned char> (new Immediate<unsigned char> (imm), true);
 	}
 }
 
@@ -267,13 +268,13 @@ InstructionDecoder::decodeReg () {
 	p->m_disassembly.setAddressingMode ("Reg");
 
 	InstMask im;
-	im.byte = p->m_instruction_bytes[0];
+	im.byte = p->m_inst.getBytes ()[0];
 
-	p->m_operands.setOperandSize (Jaf::OP_SIZE_16);
+	p->m_inst.operands ().setOperandSize (Jaf::OP_SIZE_16);
 
 	p->m_disasm << Jaf::reg_index_16_names[im.reg];
 
-	p->m_operands.dest ().init<unsigned short> (p->m_eunit->getReg16 (im.reg));
+	p->m_inst.operands ().dest ().init<unsigned short> (p->m_eunit->getReg16 (im.reg));
 }
 
 void
@@ -281,13 +282,13 @@ InstructionDecoder::decodeShort () {
 	p->m_disassembly.setAddressingMode ("Short");
 
 	const char imm = p->m_biu->getInstructionBytes<char> ();
-	p->m_instruction_bytes.push_back ((unsigned char)imm);
+	p->m_inst.addBytes ((unsigned char)imm);
 
 	p->m_disasm << ", " << std::setfill ('0') << std::setw (sizeof(imm) << 1) << std::hex << (unsigned int)(p->m_biu->getRegIP () + imm);
 
-	p->m_operands.setOperandSize (Jaf::OP_SIZE_8);
+	p->m_inst.operands ().setOperandSize (Jaf::OP_SIZE_8);
 
-	p->m_operands.dest ().init<char> (new Immediate<char> (imm), true);
+	p->m_inst.operands ().dest ().init<char> (new Immediate<char> (imm), true);
 }
 
 void
@@ -308,15 +309,15 @@ InstructionDecoder::decodeAccReg () {
 	p->m_disassembly.setAddressingMode ("AccReg");
 
 	InstMask im;
-	im.byte = p->m_instruction_bytes[0];
+	im.byte = p->m_inst.getBytes ()[0];
 
-	p->m_operands.setOperandSize (Jaf::OP_SIZE_16);
+	p->m_inst.operands ().setOperandSize (Jaf::OP_SIZE_16);
 
 	p->m_disasm << Jaf::reg_index_16_names[Jaf::REG_AX] << ", ";
-	p->m_operands.dest ().init<unsigned short> (p->m_eunit->getRegAX ());
+	p->m_inst.operands ().dest ().init<unsigned short> (p->m_eunit->getRegAX ());
 
 	p->m_disasm << Jaf::reg_index_16_names[im.reg];
-	p->m_operands.src ().init<unsigned short> (p->m_eunit->getReg16 (im.reg));
+	p->m_inst.operands ().src ().init<unsigned short> (p->m_eunit->getReg16 (im.reg));
 }
 
 void
@@ -332,39 +333,35 @@ InstructionDecoder::decodeAccMem () {
 	p->m_disassembly.setAddressingMode ("AccMem");
 
 	InstMask im;
-	im.byte = p->m_instruction_bytes[0];
+	im.byte = p->m_inst.getBytes ()[0];
 
 	const unsigned short mem = p->m_biu->getInstructionBytes<unsigned short> ();
-	unsigned char *bytes;
-	bytes = (unsigned char*)&mem;
-	for (size_t i = 0; i < sizeof(mem); ++i) {
-		p->m_instruction_bytes.push_back (bytes[i]);
-	}
+	p->m_inst.addBytes (mem);
 
-	p->m_operands.setOperandSize (im.w);
+	p->m_inst.operands ().setOperandSize (im.w);
 
 	if (im.w) { //16 bits
 		if (!im.d == 0) {
 			p->m_disasm << "[" << std::setfill ('0') << std::setw (sizeof(mem) << 1) << std::hex << (unsigned int)mem << "], ax";
-			p->m_operands.dest ().init<unsigned short> (p->m_biu->getMemoryAddress<unsigned short> (p->m_biu->getSegRegDS (), mem), true);
-			p->m_operands.src ().init<unsigned short> (p->m_eunit->getRegAX ());
+			p->m_inst.operands ().dest ().init<unsigned short> (p->m_biu->getMemoryAddress<unsigned short> (p->m_biu->getSegRegDS (), mem), true);
+			p->m_inst.operands ().src ().init<unsigned short> (p->m_eunit->getRegAX ());
 		}
 		else {
 			p->m_disasm << "ax, [" << std::setfill ('0') << std::setw (sizeof(mem) << 1) << std::hex << (unsigned int)mem << "]";
-			p->m_operands.dest ().init<unsigned short> (p->m_eunit->getRegAX ());
-			p->m_operands.src ().init<unsigned short> (p->m_biu->getMemoryAddress<unsigned short> (p->m_biu->getSegRegDS (), mem), true);
+			p->m_inst.operands ().dest ().init<unsigned short> (p->m_eunit->getRegAX ());
+			p->m_inst.operands ().src ().init<unsigned short> (p->m_biu->getMemoryAddress<unsigned short> (p->m_biu->getSegRegDS (), mem), true);
 		}
 	}
 	else { //8 bits
 		if (!im.d == 0) {
 			p->m_disasm << "[" << std::setfill ('0') << std::setw (sizeof(mem) << 1) << std::hex << (unsigned int)mem << "], al";
-			p->m_operands.dest ().init<unsigned char> (p->m_biu->getMemoryAddress<unsigned char> (p->m_biu->getSegRegDS (), mem), true);
-			p->m_operands.src ().init<unsigned char> (p->m_eunit->getRegAL ());
+			p->m_inst.operands ().dest ().init<unsigned char> (p->m_biu->getMemoryAddress<unsigned char> (p->m_biu->getSegRegDS (), mem), true);
+			p->m_inst.operands ().src ().init<unsigned char> (p->m_eunit->getRegAL ());
 		}
 		else {
 			p->m_disasm << "al, [" << std::setfill ('0') << std::setw (sizeof(mem) << 1) << std::hex << (unsigned int)mem << "]";
-			p->m_operands.dest ().init<unsigned char> (p->m_eunit->getRegAL ());
-			p->m_operands.src ().init<unsigned char> (p->m_biu->getMemoryAddress<unsigned char> (p->m_biu->getSegRegDS (), mem), true);
+			p->m_inst.operands ().dest ().init<unsigned char> (p->m_eunit->getRegAL ());
+			p->m_inst.operands ().src ().init<unsigned char> (p->m_biu->getMemoryAddress<unsigned char> (p->m_biu->getSegRegDS (), mem), true);
 		}
 	}
 }
@@ -382,38 +379,32 @@ InstructionDecoder::decodeRegImm () {
 	p->m_disassembly.setAddressingMode ("RegImm");
 
 	InstMask im;
-	im.byte = p->m_instruction_bytes[0];
+	im.byte = p->m_inst.getBytes ()[0];
 
 	p->m_disasm << Jaf::reg_index_16_names[im.reg] << ", ";
 
-	p->m_operands.setOperandSize (im.w);
+	p->m_inst.operands ().setOperandSize (im.w);
 
-	unsigned char *bytes;
+	//unsigned char *bytes;
 	if (im.w) { //16 bits
-		p->m_operands.dest ().init<unsigned short> (p->m_eunit->getReg16 (im.reg));
+		p->m_inst.operands ().dest ().init<unsigned short> (p->m_eunit->getReg16 (im.reg));
 
 		const unsigned short imm = p->m_biu->getInstructionBytes<unsigned short> ();
-		bytes = (unsigned char*)&imm;
-		for (size_t i = 0; i < sizeof(imm); ++i) {
-			p->m_instruction_bytes.push_back (bytes[i]);
-		}
+		p->m_inst.addBytes (imm);
 
 		p->m_disasm << std::setfill ('0') << std::setw (sizeof(imm) << 1) << std::hex << (unsigned int)imm;
 
-		p->m_operands.src ().init<unsigned short> (new Immediate<unsigned short> (imm), true);
+		p->m_inst.operands ().src ().init<unsigned short> (new Immediate<unsigned short> (imm), true);
 	}
 	else { //8 bits
-		p->m_operands.dest ().init<unsigned char> (p->m_eunit->getReg8 (im.reg));
+		p->m_inst.operands ().dest ().init<unsigned char> (p->m_eunit->getReg8 (im.reg));
 
 		const unsigned char imm = p->m_biu->getInstructionBytes<unsigned char> ();
-		bytes = (unsigned char*)&imm;
-		for (size_t i = 0; i < sizeof(imm); ++i) {
-			p->m_instruction_bytes.push_back (bytes[i]);
-		}
+		p->m_inst.addBytes (imm);
 
 		p->m_disasm << std::setfill ('0') << std::setw (sizeof(imm) << 1) << std::hex << (unsigned int)imm;
 
-		p->m_operands.src ().init<unsigned char> (new Immediate<unsigned char> (imm), true);
+		p->m_inst.operands ().src ().init<unsigned char> (new Immediate<unsigned char> (imm), true);
 	}
 }
 
@@ -421,48 +412,39 @@ void
 InstructionDecoder::decodeIntra () {
 	p->m_disassembly.setAddressingMode ("Intra");
 
-	unsigned char *bytes;
 	const short imm = p->m_biu->getInstructionBytes<short> ();
-	bytes = (unsigned char*)&imm;
-	for (size_t i = 0; i < sizeof(imm); ++i) {
-		p->m_instruction_bytes.push_back (bytes[i]);
-	}
+	p->m_inst.addBytes (imm);
 
 	p->m_disasm << std::setfill ('0') << std::setw (sizeof(imm) << 1) << std::hex << (unsigned int)(p->m_biu->getRegIP () + imm);
 
-	p->m_operands.setOperandSize (Jaf::OP_SIZE_16);
+	p->m_inst.operands ().setOperandSize (Jaf::OP_SIZE_16);
 
-	p->m_operands.dest ().init<short> (new Immediate<short> (imm), true);
+	p->m_inst.operands ().dest ().init<short> (new Immediate<short> (imm), true);
 }
 
 void
 InstructionDecoder::decodeInter () {
 	std::cout << "decodeInter ()" << std::endl;
-
 }
 
 void
 InstructionDecoder::decodeXferInd () {
 	std::cout << "decodeXferInd ()" << std::endl;
-
 }
 
 void
 InstructionDecoder::decodeRMImm () {
 	std::cout << "decodeRMImm ()" << std::endl;
-
 }
 
 void
 InstructionDecoder::decodeAccPort () {
 	std::cout << "decodeAccPort ()" << std::endl;
-
 }
 
 void
 InstructionDecoder::decodeRM () {
 	std::cout << "decodeRM ()" << std::endl;
-
 }
 
 void
@@ -473,43 +455,35 @@ InstructionDecoder::decodeFlags () {
 void
 InstructionDecoder::decodeRetPop () {
 	std::cout << "decodeRetPop ()" << std::endl;
-
 }
 
 void
 InstructionDecoder::decodeType3 () {
 	std::cout << "decodeType3 ()" << std::endl;
-
 }
 
 void
 InstructionDecoder::decodeEscNum () {
 	std::cout << "decodeEscNum ()" << std::endl;
-
 }
 
 void
 InstructionDecoder::decodeAccVPort () {
 	std::cout << "decodeAccVPort ()" << std::endl;
-
 }
 
 void
 InstructionDecoder::decodeAccBase () {
 	std::cout << "decodeAccBase ()" << std::endl;
-
 }
 
 void
 InstructionDecoder::decodeIntNum () {
 	std::cout << "decodeIntNum ()" << std::endl;
-
 }
 
 void
 InstructionDecoder::decodeString () {
 	std::cout << "decodeString ()" << std::endl;
-
 }
-
 

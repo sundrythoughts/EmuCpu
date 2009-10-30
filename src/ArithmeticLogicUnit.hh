@@ -331,6 +331,7 @@ public:
 	@brief Do a 16-bit xor.
 	*/
 	void opXor (unsigned short dest, unsigned short src, unsigned short &ret);
+
 }; //end class ArithmeticLogicUnit
 
 #endif //JAF__ARITHMETIC_LOGIC_UNIT_HH

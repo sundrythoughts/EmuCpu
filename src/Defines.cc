@@ -32,4 +32,37 @@ const char* sreg_index_names[SREG_COUNT] = {
 	"ds"
 };
 
+const char*
+getRegIndexName (size_t op_sz, size_t reg_i) {
+	if (op_sz == OP_SIZE_8 && reg_i < REG_COUNT_8) {
+		return reg_index_8_names[reg_i];
+	}
+	else if (op_sz == OP_SIZE_16 && reg_i < REG_COUNT_16) {
+		return reg_index_16_names[reg_i];
+	}
+	else {
+		return "";
+	}
+}
+
+const char*
+getRegIndex8Name (size_t reg_i) {
+	if (reg_i < REG_COUNT_8) {
+		return reg_index_8_names[reg_i];
+	}
+	else {
+		return "";
+	}
+}
+
+const char*
+getRegIndex16Name (size_t reg_i) {
+	if (reg_i < REG_COUNT_16) {
+		return reg_index_16_names[reg_i];
+	}
+	else {
+		return "";
+	}
+}
+
 } //end namespace Jaf

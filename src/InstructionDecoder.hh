@@ -42,6 +42,16 @@ public:
 
 protected:
 
+#if 0
+	template<typename T>
+	T getInstructionBytes () {
+		unsigned short imm = p->m_biu->getInstructionBytes<unsigned short> ();
+		p->m_inst.addBytes (imm);
+
+		return val;
+	}
+#endif
+
 	/** Do the actual decoding of the next instruction */
 	void decodeInstruction ();
 

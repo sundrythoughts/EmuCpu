@@ -93,7 +93,6 @@ NumberWrapper::init (INumberReadableWritable<T> &n, bool del) {
 template<typename T>
 void
 NumberWrapper::init (INumberReadableWritable<T> *n, bool del) {
-	//std::cout << "init ()" << std::endl;
 	m_num = n;
 	m_del = del;
 	m_size = sizeof(T);
@@ -105,6 +104,7 @@ NumberWrapper::init (INumberReadableWritable<T> *n, bool del) {
 template<typename T>
 INumberReadableWritable<T>&
 NumberWrapper::get () throw(std::logic_error) {
+	//std::cout << sizeof(T) << " : " << size () << std::endl;
 	if (sizeof(T) != size ()) {
 		throw std::logic_error ("NumberWrapper::get<T> () => sizeof(T) != this->size ()");
 	}

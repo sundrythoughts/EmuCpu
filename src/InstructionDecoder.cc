@@ -292,9 +292,9 @@ InstructionDecoder::decodeAccImm () {
 
 	p->m_inst.operands ().setOperandSize (im.w);
 
-	if (im.w) { //16 bits
-		p->m_dis_dest << "ax";
+	p->m_dis_dest << Jaf::getRegIndexName (im.w, Jaf::REG_AX);
 
+	if (im.w) { //16 bits
 		p->m_inst.operands ().dest ().init<unsigned short> (p->m_eunit->getRegAX ());
 
 		const unsigned short imm = p->m_biu->getInstructionBytes<unsigned short> ();
@@ -305,8 +305,6 @@ InstructionDecoder::decodeAccImm () {
 		p->m_inst.operands ().src ().init<unsigned short> (new Immediate<unsigned short> (imm), true);
 	}
 	else { //8 bits
-		p->m_dis_dest << "al";
-
 		p->m_inst.operands ().dest ().init<unsigned char> (p->m_eunit->getRegAL ());
 
 		const unsigned char imm = p->m_biu->getInstructionBytes<unsigned char> ();
@@ -344,7 +342,7 @@ InstructionDecoder::decodeReg () {
 
 	p->m_inst.operands ().setOperandSize (Jaf::OP_SIZE_16);
 
-	p->m_dis_dest << Jaf::reg_index_16_names[im.reg];
+	p->m_dis_dest << Jaf::getRegIndex16Name (im.reg);
 
 	p->m_inst.operands ().dest ().init<unsigned short> (p->m_eunit->getReg16 (im.reg));
 }
@@ -385,10 +383,10 @@ InstructionDecoder::decodeAccReg () {
 
 	p->m_inst.operands ().setOperandSize (Jaf::OP_SIZE_16);
 
-	p->m_dis_dest << Jaf::reg_index_16_names[Jaf::REG_AX];
+	p->m_dis_dest << Jaf::getRegIndex16Name (Jaf::REG_AX);
 	p->m_inst.operands ().dest ().init<unsigned short> (p->m_eunit->getRegAX ());
 
-	p->m_dis_src << Jaf::reg_index_16_names[im.reg];
+	p->m_dis_src << Jaf::getRegIndex16Name (im.reg);
 	p->m_inst.operands ().src ().init<unsigned short> (p->m_eunit->getReg16 (im.reg));
 }
 
@@ -452,7 +450,7 @@ InstructionDecoder::decodeRegImm () {
 	InstMask im;
 	im.byte = p->m_inst.getBytes ()[0];
 
-	p->m_dis_dest << Jaf::reg_index_16_names[im.reg];
+	p->m_dis_dest << Jaf::getRegIndex16Name (im.reg);
 
 	p->m_inst.operands ().setOperandSize (im.w);
 

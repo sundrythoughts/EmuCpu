@@ -64,9 +64,6 @@ enum RegisterIndex16 {
 	REG_COUNT_16
 };
 
-extern const char* reg_index_8_names[REG_COUNT_8];
-extern const char* reg_index_16_names[REG_COUNT_16];
-
 const char* getRegIndexName (size_t op_sz, size_t reg_i);
 const char* getRegIndex8Name (size_t reg_i);
 const char* getRegIndex16Name (size_t reg_i);

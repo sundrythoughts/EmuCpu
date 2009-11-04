@@ -23,7 +23,7 @@
 #include "Utility.hh"
 #include "Register.hh"
 #include "ExecutionUnit.hh"
-//#include <iostream>
+#include <iostream>
 
 class ArithmeticLogicUnitPrivate {
 public:
@@ -46,40 +46,53 @@ ArithmeticLogicUnit::connectTo (CpuComponents &cpu) {
 }
 
 void
+ArithmeticLogicUnit::updateFlagAF (unsigned char result8, unsigned short result16) {
+	//FIXME - this is wrong
+	result8 &= 0xF;
+	result16 &= 0x1F;
+	p->m_eunit->setRegFlagsCF (result8 != result16);
+}
+
+void
+ArithmeticLogicUnit::updateFlagAF (unsigned short result16, unsigned int result32) {
+	//FIXME - this is wrong
+	result16 &= 0xF;
+	result32 &= 0x1F;
+	p->m_eunit->setRegFlagsCF (result16 != result32);
+}
+
+void
 ArithmeticLogicUnit::updateFlagCF (unsigned char result8, unsigned short result16) {
-	//p->m_eunit->setRegFlagsCF (result8 == result16);
+	//p->m_eunit->setRegFlagsCF (result8 != result16);
 	p->m_eunit->setRegFlagsCF (result16 > 0xFF);
 }
 
 void
 ArithmeticLogicUnit::updateFlagCF (unsigned short result16, unsigned int result32) {
-	//p->m_eunit->setRegFlagsCF (result16 == result32);
+	//p->m_eunit->setRegFlagsCF (result16 != result32);
 	p->m_eunit->setRegFlagsCF (result32 > 0xFFFF);
 }
 
+#if 0
 void
 ArithmeticLogicUnit::updateFlagOF (bool msb_before, bool msb_after) {
 	p->m_eunit->setRegFlagsOF (msb_before != msb_after);
+}
+#endif
+
+void
+ArithmeticLogicUnit::updateFlagOF (unsigned char result8, unsigned short result16) {
+	//FIXME - p->m_eunit->setRegFlagsOF ((short)result16 < (char)result8);
+}
+
+void
+ArithmeticLogicUnit::updateFlagOF (unsigned short result16, unsigned int result32) {
+	//FIXME - p->m_eunit->setRegFlagsOF ((int)result32 < (short)result16);
 }
 
 void
 ArithmeticLogicUnit::updateFlagPF (unsigned char val) {
 	unsigned int count = 0;
-	//val &= 0xFF;
-	while (val) {
-		if (val & 1) {
-			++count;
-		}
-		val >>= 1;
-	}
-
-	p->m_eunit->setRegFlagsPF (!(count & 1));
-}
-
-void
-ArithmeticLogicUnit::updateFlagPF (unsigned short val) {
-	unsigned int count = 0;
-	//val &= 0xFF;
 	while (val) {
 		if (val & 1) {
 			++count;
@@ -92,12 +105,12 @@ ArithmeticLogicUnit::updateFlagPF (unsigned short val) {
 
 void
 ArithmeticLogicUnit::updateFlagSF (unsigned char val) {
-	p->m_eunit->setRegFlagsSF (Utility::get_bit (val, sizeof(val) - 1));
+	p->m_eunit->setRegFlagsSF (Utility::get_bit (val, (sizeof(val) << 3) - 1));
 }
 
 void
 ArithmeticLogicUnit::updateFlagSF (unsigned short val) {
-	p->m_eunit->setRegFlagsSF (Utility::get_bit (val, sizeof(val) - 1));
+	p->m_eunit->setRegFlagsSF (Utility::get_bit (val, (sizeof(val) << 3) - 1));
 }
 
 void
@@ -113,7 +126,7 @@ ArithmeticLogicUnit::updateFlagZF (unsigned short val) {
 void
 ArithmeticLogicUnit::opAdc (unsigned char dest, unsigned char src, unsigned char &ret) {
 	bool cf = p->m_eunit->getRegFlagsCF ();
-	bool msb_before = Utility::get_bit (dest, sizeof(dest) - 1);
+	bool msb_before = Utility::get_bit (dest, (sizeof(dest) << 3) - 1);
 
 	unsigned short result = dest + src;
 	if (cf) {
@@ -124,7 +137,7 @@ ArithmeticLogicUnit::opAdc (unsigned char dest, unsigned char src, unsigned char
 
 	//FIXME - fix flags
 	updateFlagCF (ret, result);
-	updateFlagOF (msb_before, Utility::get_bit (ret, sizeof(ret) - 1));
+	//updateFlagOF (msb_before, Utility::get_bit (ret, (sizeof(ret) << 3) - 1));
 	updateFlagPF (ret);
 	updateFlagSF (ret);
 	updateFlagZF (ret);
@@ -133,7 +146,7 @@ ArithmeticLogicUnit::opAdc (unsigned char dest, unsigned char src, unsigned char
 void
 ArithmeticLogicUnit::opAdc (unsigned short dest, unsigned short src, unsigned short &ret) {
 	bool cf = p->m_eunit->getRegFlagsCF ();
-	bool msb_before = Utility::get_bit (dest, sizeof(dest) - 1);
+	bool msb_before = Utility::get_bit (dest, (sizeof(dest) << 3) - 1);
 
 	unsigned int result = dest + src;
 	if (cf) {
@@ -144,7 +157,7 @@ ArithmeticLogicUnit::opAdc (unsigned short dest, unsigned short src, unsigned sh
 
 	//FIXME - fix flags
 	updateFlagCF (ret, result);
-	updateFlagOF (msb_before, Utility::get_bit (ret, sizeof(ret) - 1));
+	//updateFlagOF (msb_before, Utility::get_bit (ret, (sizeof(ret) << 3) - 1));
 	updateFlagPF (ret);
 	updateFlagSF (ret);
 	updateFlagZF (ret);
@@ -152,14 +165,15 @@ ArithmeticLogicUnit::opAdc (unsigned short dest, unsigned short src, unsigned sh
 
 void
 ArithmeticLogicUnit::opAdd (unsigned char dest, unsigned char src, unsigned char &ret) {
-	bool msb_before = Utility::get_bit (dest, sizeof(dest) - 1);
+	bool msb_before = Utility::get_bit (dest, (sizeof(dest) << 3) - 1);
 	unsigned short result = dest + src;
 
 	ret = (unsigned char)result;
 
 	//FIXME - fix flags
 	updateFlagCF (ret, result);
-	updateFlagOF (msb_before, Utility::get_bit (ret, sizeof(ret) - 1));
+	//updateFlagOF (msb_before, Utility::get_bit (ret, (sizeof(ret) << 3) - 1));
+	updateFlagOF (ret, result);
 	updateFlagPF (ret);
 	updateFlagSF (ret);
 	updateFlagZF (ret);
@@ -167,14 +181,15 @@ ArithmeticLogicUnit::opAdd (unsigned char dest, unsigned char src, unsigned char
 
 void
 ArithmeticLogicUnit::opAdd (unsigned short dest, unsigned short src, unsigned short &ret) {
-	bool msb_before = Utility::get_bit (dest, sizeof(dest) - 1);
+	bool msb_before = Utility::get_bit (dest, (sizeof(dest) << 3) - 1);
 	unsigned int result = dest + src;
 
 	ret = (unsigned short)result;
 
 	//FIXME - fix flags
 	updateFlagCF (ret, result);
-	updateFlagOF (msb_before, Utility::get_bit (ret, sizeof(ret) - 1));
+	//updateFlagOF (msb_before, Utility::get_bit (ret, (sizeof(ret) << 3) - 1));
+	updateFlagOF (ret, result);
 	updateFlagPF (ret);
 	updateFlagSF (ret);
 	updateFlagZF (ret);
@@ -182,7 +197,7 @@ ArithmeticLogicUnit::opAdd (unsigned short dest, unsigned short src, unsigned sh
 
 void
 ArithmeticLogicUnit::opAnd (unsigned char dest, unsigned char src, unsigned char &ret) {
-	bool msb_before = Utility::get_bit (dest, sizeof(dest) - 1);
+	bool msb_before = Utility::get_bit (dest, (sizeof(dest) << 3) - 1);
 	unsigned short result = dest & src;
 	p->m_eunit->setRegFlagsCF (false);
 	p->m_eunit->setRegFlagsOF (false);
@@ -191,7 +206,7 @@ ArithmeticLogicUnit::opAnd (unsigned char dest, unsigned char src, unsigned char
 
 	//FIXME - fix flags
 	updateFlagCF (ret, result);
-	updateFlagOF (msb_before, Utility::get_bit (ret, sizeof(ret) - 1));
+	//updateFlagOF (msb_before, Utility::get_bit (ret, (sizeof(ret) << 3) - 1));
 	updateFlagPF (ret);
 	updateFlagSF (ret);
 	updateFlagZF (ret);
@@ -199,7 +214,7 @@ ArithmeticLogicUnit::opAnd (unsigned char dest, unsigned char src, unsigned char
 
 void
 ArithmeticLogicUnit::opAnd (unsigned short dest, unsigned short src, unsigned short &ret) {
-	bool msb_before = Utility::get_bit (dest, sizeof(dest) - 1);
+	bool msb_before = Utility::get_bit (dest, (sizeof(dest) << 3) - 1);
 	unsigned int result = dest & src;
 	p->m_eunit->setRegFlagsCF (false);
 	p->m_eunit->setRegFlagsOF (false);
@@ -208,7 +223,7 @@ ArithmeticLogicUnit::opAnd (unsigned short dest, unsigned short src, unsigned sh
 
 	//FIXME - fix flags
 	updateFlagCF (ret, result);
-	updateFlagOF (msb_before, Utility::get_bit (ret, sizeof(ret) - 1));
+	//updateFlagOF (msb_before, Utility::get_bit (ret, (sizeof(ret) << 3) - 1));
 	updateFlagPF (ret);
 	updateFlagSF (ret);
 	updateFlagZF (ret);
@@ -223,13 +238,15 @@ ArithmeticLogicUnit::opCmc () {
 
 void
 ArithmeticLogicUnit::opCmp (unsigned char dest, unsigned char src) {
-	bool msb_before = Utility::get_bit (dest, sizeof(dest) - 1);
+	bool msb_before = Utility::get_bit (dest, (sizeof(dest) << 3) - 1);
 	unsigned short result = dest - src;
-	unsigned char ret = (unsigned short)result;
+	unsigned char ret = (unsigned char)result;
 
 	//FIXME - fix flags
+	updateFlagAF (ret, result);
 	updateFlagCF (ret, result);
-	updateFlagOF (msb_before, Utility::get_bit (ret, sizeof(ret) - 1));
+	//updateFlagOF (msb_before, Utility::get_bit (ret, (sizeof(ret) << 3) - 1));
+	updateFlagOF (ret, result);
 	updateFlagPF (ret);
 	updateFlagSF (ret);
 	updateFlagZF (ret);
@@ -237,13 +254,15 @@ ArithmeticLogicUnit::opCmp (unsigned char dest, unsigned char src) {
 
 void
 ArithmeticLogicUnit::opCmp (unsigned short dest, unsigned short src) {
-	bool msb_before = Utility::get_bit (dest, sizeof(dest) - 1);
+	bool msb_before = Utility::get_bit (dest, (sizeof(dest) << 3) - 1);
 	unsigned int result = dest - src;
 	unsigned short ret = (unsigned short)result;
 
 	//FIXME - fix flags
+	updateFlagAF (ret, result);
 	updateFlagCF (ret, result);
-	updateFlagOF (msb_before, Utility::get_bit (ret, sizeof(ret) - 1));
+	//updateFlagOF (msb_before, Utility::get_bit (ret, (sizeof(ret) << 3) - 1));
+	updateFlagOF (ret, result);
 	updateFlagPF (ret);
 	updateFlagSF (ret);
 	updateFlagZF (ret);
@@ -257,13 +276,13 @@ void cmps (TDest &dest, TSrc &src, TDest &result);
 
 void
 ArithmeticLogicUnit::opDec (unsigned char dest, unsigned char &ret) {
-	bool msb_before = Utility::get_bit (dest, sizeof(dest) - 1);
+	bool msb_before = Utility::get_bit (dest, (sizeof(dest) << 3) - 1);
 	unsigned short result = --dest;
 	ret = (unsigned char)result;
 
 	//FIXME - fix flags
 	updateFlagCF (ret, result);
-	updateFlagOF (msb_before, Utility::get_bit (ret, sizeof(ret) - 1));
+	//updateFlagOF (msb_before, Utility::get_bit (ret, (sizeof(ret) << 3) - 1));
 	updateFlagPF (ret);
 	updateFlagSF (ret);
 	updateFlagZF (ret);
@@ -271,13 +290,13 @@ ArithmeticLogicUnit::opDec (unsigned char dest, unsigned char &ret) {
 
 void
 ArithmeticLogicUnit::opDec (unsigned short dest, unsigned short &ret) {
-	bool msb_before = Utility::get_bit (dest, sizeof(dest) - 1);
+	bool msb_before = Utility::get_bit (dest, (sizeof(dest) << 3) - 1);
 	unsigned int result = --dest;
 	ret = (unsigned short)result;
 
 	//FIXME - fix flags
 	updateFlagCF (ret, result);
-	updateFlagOF (msb_before, Utility::get_bit (ret, sizeof(ret) - 1));
+	//updateFlagOF (msb_before, Utility::get_bit (ret, (sizeof(ret) << 3) - 1));
 	updateFlagPF (ret);
 	updateFlagSF (ret);
 	updateFlagZF (ret);
@@ -378,7 +397,7 @@ ArithmeticLogicUnit::opImul (unsigned char src) {
 	Register<unsigned char> &ah = p->m_eunit->getRegAH ();
 
 	ax = (char)src * (char)al;
-	unsigned char al_sign_ext = (Utility::get_bit (al, sizeof(unsigned char) - 1)) ? 0xFF : 0;
+	unsigned char al_sign_ext = (Utility::get_bit (al, (sizeof(unsigned char) << 3) - 1)) ? 0xFF : 0;
 
 	if (ah == al_sign_ext) {
 		p->m_eunit->setRegFlagsCF (false);
@@ -401,7 +420,7 @@ ArithmeticLogicUnit::opImul (unsigned short src) {
 	dx_ax = (short)src * (short)ax;
 	p->m_eunit->setRegAX (dx_ax_ptr[0]);
 	p->m_eunit->setRegDX (dx_ax_ptr[1]);
-	unsigned short ax_sign_ext = (Utility::get_bit (ax, sizeof(unsigned short) - 1)) ? 0xFFFF : 0;
+	unsigned short ax_sign_ext = (Utility::get_bit (ax, (sizeof(unsigned short) << 3) - 1)) ? 0xFFFF : 0;
 
 	if (dx == ax_sign_ext) {
 		p->m_eunit->setRegFlagsCF (false);
@@ -414,13 +433,13 @@ ArithmeticLogicUnit::opImul (unsigned short src) {
 
 void
 ArithmeticLogicUnit::opInc (unsigned char dest, unsigned char &ret) {
-	bool msb_before = Utility::get_bit (dest, sizeof(dest) - 1);
+	bool msb_before = Utility::get_bit (dest, (sizeof(dest) << 3) - 1);
 	unsigned short result = ++dest;
 	ret = (unsigned char)result;
 
 	//FIXME - fix flags
 	updateFlagCF (ret, result);
-	updateFlagOF (msb_before, Utility::get_bit (ret, sizeof(ret) - 1));
+	//updateFlagOF (msb_before, Utility::get_bit (ret, (sizeof(ret) << 3) - 1));
 	updateFlagPF (ret);
 	updateFlagSF (ret);
 	updateFlagZF (ret);
@@ -428,13 +447,13 @@ ArithmeticLogicUnit::opInc (unsigned char dest, unsigned char &ret) {
 
 void
 ArithmeticLogicUnit::opInc (unsigned short dest, unsigned short &ret) {
-	bool msb_before = Utility::get_bit (dest, sizeof(dest) - 1);
+	bool msb_before = Utility::get_bit (dest, (sizeof(dest) << 3) - 1);
 	unsigned int result = ++dest;
 	ret = (unsigned short)result;
 
 	//FIXME - fix flags
 	updateFlagCF (ret, result);
-	updateFlagOF (msb_before, Utility::get_bit (ret, sizeof(ret) - 1));
+	//updateFlagOF (msb_before, Utility::get_bit (ret, (sizeof(ret) << 3) - 1));
 	updateFlagPF (ret);
 	updateFlagSF (ret);
 	updateFlagZF (ret);
@@ -499,7 +518,7 @@ ArithmeticLogicUnit::opNeg (unsigned short dest, unsigned short &ret) {
 
 void
 ArithmeticLogicUnit::opOr (unsigned char dest, unsigned char src, unsigned char &ret) {
-	bool msb_before = Utility::get_bit (dest, sizeof(dest) - 1);
+	bool msb_before = Utility::get_bit (dest, (sizeof(dest) << 3) - 1);
 	unsigned short result = dest | src;
 	p->m_eunit->setRegFlagsCF (false);
 	p->m_eunit->setRegFlagsOF (false);
@@ -508,7 +527,7 @@ ArithmeticLogicUnit::opOr (unsigned char dest, unsigned char src, unsigned char 
 
 	//FIXME - fix flags
 	updateFlagCF (ret, result);
-	updateFlagOF (msb_before, Utility::get_bit (ret, sizeof(ret) - 1));
+	//updateFlagOF (msb_before, Utility::get_bit (ret, (sizeof(ret) << 3) - 1));
 	updateFlagPF (ret);
 	updateFlagSF (ret);
 	updateFlagZF (ret);
@@ -516,7 +535,7 @@ ArithmeticLogicUnit::opOr (unsigned char dest, unsigned char src, unsigned char 
 
 void
 ArithmeticLogicUnit::opOr (unsigned short dest, unsigned short src, unsigned short &ret) {
-	bool msb_before = Utility::get_bit (dest, sizeof(dest) - 1);
+	bool msb_before = Utility::get_bit (dest, (sizeof(dest) << 3) - 1);
 	unsigned int result = dest | src;
 	p->m_eunit->setRegFlagsCF (false);
 	p->m_eunit->setRegFlagsOF (false);
@@ -525,7 +544,7 @@ ArithmeticLogicUnit::opOr (unsigned short dest, unsigned short src, unsigned sho
 
 	//FIXME - fix flags
 	updateFlagCF (ret, result);
-	updateFlagOF (msb_before, Utility::get_bit (ret, sizeof(ret) - 1));
+	//updateFlagOF (msb_before, Utility::get_bit (ret, (sizeof(ret) << 3) - 1));
 	updateFlagPF (ret);
 	updateFlagSF (ret);
 	updateFlagZF (ret);
@@ -612,8 +631,8 @@ ArithmeticLogicUnit::opRcr (unsigned short dest, unsigned int cnt, unsigned shor
 }
 
 void
-ArithmeticLogicUnit::opRol (unsigned char dest, unsigned int cnt, unsigned char &ret) {
-	unsigned int tmp_cnt = cnt;
+ArithmeticLogicUnit::opRol (unsigned char dest, unsigned char cnt, unsigned char &ret) {
+	unsigned char tmp_cnt = cnt;
 	while (tmp_cnt != 0) {
 		p->m_eunit->setRegFlagsCF (Utility::get_bit (dest, (sizeof(dest) << 3) - 1));
 		dest <<= 1;
@@ -625,8 +644,8 @@ ArithmeticLogicUnit::opRol (unsigned char dest, unsigned int cnt, unsigned char 
 }
 
 void
-ArithmeticLogicUnit::opRol (unsigned short dest, unsigned int cnt, unsigned short &ret) {
-	unsigned int tmp_cnt = cnt;
+ArithmeticLogicUnit::opRol (unsigned short dest, unsigned char cnt, unsigned short &ret) {
+	unsigned char tmp_cnt = cnt;
 	while (tmp_cnt != 0) {
 		p->m_eunit->setRegFlagsCF (Utility::get_bit (dest, (sizeof(dest) << 3) - 1));
 		dest <<= 1;
@@ -638,8 +657,8 @@ ArithmeticLogicUnit::opRol (unsigned short dest, unsigned int cnt, unsigned shor
 }
 
 void
-ArithmeticLogicUnit::opRor (unsigned char dest, unsigned int cnt, unsigned char &ret) {
-	unsigned int tmp_cnt = cnt;
+ArithmeticLogicUnit::opRor (unsigned char dest, unsigned char cnt, unsigned char &ret) {
+	unsigned char tmp_cnt = cnt;
 	while (tmp_cnt != 0) {
 		p->m_eunit->setRegFlagsCF (Utility::get_bit (dest, 0));
 		dest >>= 1;
@@ -651,8 +670,8 @@ ArithmeticLogicUnit::opRor (unsigned char dest, unsigned int cnt, unsigned char 
 }
 
 void
-ArithmeticLogicUnit::opRor (unsigned short dest, unsigned int cnt, unsigned short &ret) {
-	unsigned int tmp_cnt = cnt;
+ArithmeticLogicUnit::opRor (unsigned short dest, unsigned char cnt, unsigned short &ret) {
+	unsigned char tmp_cnt = cnt;
 	while (tmp_cnt != 0) {
 		p->m_eunit->setRegFlagsCF (Utility::get_bit (dest, 0));
 		dest >>= 1;
@@ -737,7 +756,7 @@ ArithmeticLogicUnit::opSar (unsigned short dest, unsigned int cnt, unsigned shor
 
 void
 ArithmeticLogicUnit::opSbb (unsigned char dest, unsigned char src, unsigned char &ret) {
-	bool msb_before = Utility::get_bit (dest, sizeof(dest) - 1);
+	bool msb_before = Utility::get_bit (dest, (sizeof(dest) << 3) - 1);
 	bool cf = p->m_eunit->getRegFlagsCF ();
 
 	unsigned short result = dest - src - cf;
@@ -746,7 +765,7 @@ ArithmeticLogicUnit::opSbb (unsigned char dest, unsigned char src, unsigned char
 
 	//FIXME - fix flags
 	updateFlagCF (ret, result);
-	updateFlagOF (msb_before, Utility::get_bit (ret, sizeof(ret) - 1));
+	//updateFlagOF (msb_before, Utility::get_bit (ret, (sizeof(ret) << 3) - 1));
 	updateFlagPF (ret);
 	updateFlagSF (ret);
 	updateFlagZF (ret);
@@ -754,7 +773,7 @@ ArithmeticLogicUnit::opSbb (unsigned char dest, unsigned char src, unsigned char
 
 void
 ArithmeticLogicUnit::opSbb (unsigned short dest, unsigned short src, unsigned short &ret) {
-	bool msb_before = Utility::get_bit (dest, sizeof(dest) - 1);
+	bool msb_before = Utility::get_bit (dest, (sizeof(dest) << 3) - 1);
 	bool cf = p->m_eunit->getRegFlagsCF ();
 
 	unsigned int result = dest - src - cf;
@@ -763,7 +782,7 @@ ArithmeticLogicUnit::opSbb (unsigned short dest, unsigned short src, unsigned sh
 
 	//FIXME - fix flags
 	updateFlagCF (ret, result);
-	updateFlagOF (msb_before, Utility::get_bit (ret, sizeof(ret) - 1));
+	//updateFlagOF (msb_before, Utility::get_bit (ret, (sizeof(ret) << 3) - 1));
 	updateFlagPF (ret);
 	updateFlagSF (ret);
 	updateFlagZF (ret);
@@ -839,13 +858,13 @@ ArithmeticLogicUnit::opShr (unsigned short dest, unsigned int cnt, unsigned shor
 
 void
 ArithmeticLogicUnit::opSub (unsigned char dest, unsigned char src, unsigned char &ret) {
-	bool msb_before = Utility::get_bit (dest, sizeof(dest) - 1);
+	bool msb_before = Utility::get_bit (dest, (sizeof(dest) << 3) - 1);
 	unsigned short result = dest - src;
 	ret = (unsigned char)result;
 
 	//FIXME - fix flags
 	updateFlagCF (ret, result);
-	updateFlagOF (msb_before, Utility::get_bit (ret, sizeof(ret) - 1));
+	//updateFlagOF (msb_before, Utility::get_bit (ret, (sizeof(ret) << 3) - 1));
 	updateFlagPF (ret);
 	updateFlagSF (ret);
 	updateFlagZF (ret);
@@ -853,13 +872,13 @@ ArithmeticLogicUnit::opSub (unsigned char dest, unsigned char src, unsigned char
 
 void
 ArithmeticLogicUnit::opSub (unsigned short dest, unsigned char src, unsigned short &ret) {
-	bool msb_before = Utility::get_bit (dest, sizeof(dest) - 1);
+	bool msb_before = Utility::get_bit (dest, (sizeof(dest) << 3) - 1);
 	unsigned int result = dest - src;
 	ret = (unsigned short)result;
 
 	//FIXME - fix flags
 	updateFlagCF (ret, result);
-	updateFlagOF (msb_before, Utility::get_bit (ret, sizeof(ret) - 1));
+	//updateFlagOF (msb_before, Utility::get_bit (ret, (sizeof(ret) << 3) - 1));
 	updateFlagPF (ret);
 	updateFlagSF (ret);
 	updateFlagZF (ret);
@@ -867,13 +886,13 @@ ArithmeticLogicUnit::opSub (unsigned short dest, unsigned char src, unsigned sho
 
 void
 ArithmeticLogicUnit::opTest (unsigned char dest, unsigned char src) {
-	bool msb_before = Utility::get_bit (dest, sizeof(dest) - 1);
+	bool msb_before = Utility::get_bit (dest, (sizeof(dest) << 3) - 1);
 	unsigned short result = dest & src;
 	unsigned char ret = (unsigned char)result;
 
 	//FIXME - fix flags
 	updateFlagCF (ret, result);
-	updateFlagOF (msb_before, Utility::get_bit (ret, sizeof(ret) - 1));
+	//updateFlagOF (msb_before, Utility::get_bit (ret, (sizeof(ret) << 3) - 1));
 	updateFlagPF (ret);
 	updateFlagSF (ret);
 	updateFlagZF (ret);
@@ -881,13 +900,13 @@ ArithmeticLogicUnit::opTest (unsigned char dest, unsigned char src) {
 
 void
 ArithmeticLogicUnit::opTest (unsigned short dest, unsigned char src) {
-	bool msb_before = Utility::get_bit (dest, sizeof(dest) - 1);
+	bool msb_before = Utility::get_bit (dest, (sizeof(dest) << 3) - 1);
 	unsigned int result = dest & src;
 	unsigned short ret = (unsigned short)result;
 
 	//FIXME - fix flags
 	updateFlagCF (ret, result);
-	updateFlagOF (msb_before, Utility::get_bit (ret, sizeof(ret) - 1));
+	//updateFlagOF (msb_before, Utility::get_bit (ret, (sizeof(ret) << 3) - 1));
 	updateFlagPF (ret);
 	updateFlagSF (ret);
 	updateFlagZF (ret);
@@ -895,7 +914,7 @@ ArithmeticLogicUnit::opTest (unsigned short dest, unsigned char src) {
 
 void
 ArithmeticLogicUnit::opXor (unsigned char dest, unsigned char src, unsigned char &ret) {
-	bool msb_before = Utility::get_bit (dest, sizeof(dest) - 1);
+	bool msb_before = Utility::get_bit (dest, (sizeof(dest) << 3) - 1);
 	unsigned short result = dest ^ src;
 	p->m_eunit->setRegFlagsCF (false);
 	p->m_eunit->setRegFlagsOF (false);
@@ -904,7 +923,7 @@ ArithmeticLogicUnit::opXor (unsigned char dest, unsigned char src, unsigned char
 
 	//FIXME - fix flags
 	updateFlagCF (ret, result);
-	updateFlagOF (msb_before, Utility::get_bit (ret, sizeof(ret) - 1));
+	//updateFlagOF (msb_before, Utility::get_bit (ret, (sizeof(ret) << 3) - 1));
 	updateFlagPF (ret);
 	updateFlagSF (ret);
 	updateFlagZF (ret);
@@ -912,7 +931,7 @@ ArithmeticLogicUnit::opXor (unsigned char dest, unsigned char src, unsigned char
 
 void
 ArithmeticLogicUnit::opXor (unsigned short dest, unsigned short src, unsigned short &ret) {
-	bool msb_before = Utility::get_bit (dest, sizeof(dest) - 1);
+	bool msb_before = Utility::get_bit (dest, (sizeof(dest) << 3) - 1);
 	unsigned int result = dest ^ src;
 	p->m_eunit->setRegFlagsCF (false);
 	p->m_eunit->setRegFlagsOF (false);
@@ -921,7 +940,7 @@ ArithmeticLogicUnit::opXor (unsigned short dest, unsigned short src, unsigned sh
 
 	//FIXME - fix flags
 	updateFlagCF (ret, result);
-	updateFlagOF (msb_before, Utility::get_bit (ret, sizeof(ret) - 1));
+	//updateFlagOF (msb_before, Utility::get_bit (ret, (sizeof(ret) << 3) - 1));
 	updateFlagPF (ret);
 	updateFlagSF (ret);
 	updateFlagZF (ret);

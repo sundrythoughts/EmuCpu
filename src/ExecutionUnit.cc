@@ -30,7 +30,7 @@
 
 //#include "InstructionExecuter.hh"
 
-//#include <iostream>
+#include <iostream>
 //#include <cstdio>
 #include <vector>
 
@@ -507,6 +507,16 @@ ExecutionUnit::execCLI (OperandList &ops) {
 }
 
 void
+ExecutionUnit::execCMP (OperandList &ops) {
+	if (ops.operandSize () == Jaf::OP_SIZE_16) {
+		p->m_alu->opCmp (ops.dest ().get<unsigned short> (), ops.src ().get<unsigned short> ());
+	}
+	else {
+		p->m_alu->opCmp (ops.dest ().get<unsigned char> (), ops.src ().get<unsigned char> ());
+	}
+}
+
+void
 ExecutionUnit::execCWD (OperandList &ops) {
 	if (getRegAX () < 0x8000) {
 		setRegDX (0);
@@ -622,6 +632,62 @@ ExecutionUnit::execOR (OperandList &ops) {
 	else {
 		unsigned char ret;
 		p->m_alu->opOr (ops.dest ().get<unsigned char> (), ops.src ().get<unsigned char> (), ret);
+		ops.dest ().get<unsigned char> () = ret;
+	}
+}
+
+void
+ExecutionUnit::execRCL (OperandList &ops) {
+	if (ops.operandSize () == Jaf::OP_SIZE_16) {
+		unsigned short ret;
+		p->m_alu->opRcl (ops.dest ().get<unsigned short> (), ops.src ().get<unsigned char> (), ret);
+		ops.dest ().get<unsigned short> () = ret;
+	}
+	else {
+		unsigned char ret;
+		p->m_alu->opRcl (ops.dest ().get<unsigned char> (), ops.src ().get<unsigned char> (), ret);
+		ops.dest ().get<unsigned char> () = ret;
+	}
+}
+
+void
+ExecutionUnit::execRCR (OperandList &ops) {
+	if (ops.operandSize () == Jaf::OP_SIZE_16) {
+		unsigned short ret;
+		p->m_alu->opRcr (ops.dest ().get<unsigned short> (), ops.src ().get<unsigned char> (), ret);
+		ops.dest ().get<unsigned short> () = ret;
+	}
+	else {
+		unsigned char ret;
+		p->m_alu->opRcr (ops.dest ().get<unsigned char> (), ops.src ().get<unsigned char> (), ret);
+		ops.dest ().get<unsigned char> () = ret;
+	}
+}
+
+void
+ExecutionUnit::execROL (OperandList &ops) {
+	if (ops.operandSize () == Jaf::OP_SIZE_16) {
+		unsigned short ret;
+		p->m_alu->opRol (ops.dest ().get<unsigned short> (), ops.src ().get<unsigned char> (), ret);
+		ops.dest ().get<unsigned short> () = ret;
+	}
+	else {
+		unsigned char ret;
+		p->m_alu->opRol (ops.dest ().get<unsigned char> (), ops.src ().get<unsigned char> (), ret);
+		ops.dest ().get<unsigned char> () = ret;
+	}
+}
+
+void
+ExecutionUnit::execROR (OperandList &ops) {
+	if (ops.operandSize () == Jaf::OP_SIZE_16) {
+		unsigned short ret;
+		p->m_alu->opRor (ops.dest ().get<unsigned short> (), ops.src ().get<unsigned char> (), ret);
+		ops.dest ().get<unsigned short> () = ret;
+	}
+	else {
+		unsigned char ret;
+		p->m_alu->opRor (ops.dest ().get<unsigned char> (), ops.src ().get<unsigned char> (), ret);
 		ops.dest ().get<unsigned char> () = ret;
 	}
 }

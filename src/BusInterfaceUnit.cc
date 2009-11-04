@@ -25,12 +25,15 @@ public:
 	CpuComponents *m_cpu;
 };
 
-BusInterfaceUnit::BusInterfaceUnit () : m_cs (0), m_ds (0), m_es (0), m_ss (0), m_ip (0), m_seg_override (-1),
-                                        m_sreg_cs (m_cs), m_sreg_ds (m_ds),
-                                        m_sreg_es (m_es), m_sreg_ss (m_ss),
+BusInterfaceUnit::BusInterfaceUnit () : m_ip (0), m_seg_override (-1),
                                         m_reg_ip (m_ip), m_memory (0)
 {
 	p = new BusInterfaceUnitPrivate ();
+
+	m_seg_regs[Jaf::SREG_CS].reinitialize (m_sregs[Jaf::SREG_CS]);
+	m_seg_regs[Jaf::SREG_DS].reinitialize (m_sregs[Jaf::SREG_DS]);
+	m_seg_regs[Jaf::SREG_ES].reinitialize (m_sregs[Jaf::SREG_ES]);
+	m_seg_regs[Jaf::SREG_SS].reinitialize (m_sregs[Jaf::SREG_SS]);
 }
 
 BusInterfaceUnit::~BusInterfaceUnit () {
@@ -50,53 +53,54 @@ BusInterfaceUnit::connectTo (CpuComponents &cpu) {
 	//FIXME - connect to signals
 }
 
-//Register<unsigned short>&
-//BusInterfaceUnit::getSegReg (size_t index) {
-//	return 
-//}
+Register<unsigned short>&
+BusInterfaceUnit::getSegReg (size_t index) {
+	return m_seg_regs[index];
+}
 
-//void
-//BusInterfaceUnit::setSegReg (size_t index, unsigned short val) {
-//}
+void
+BusInterfaceUnit::setSegReg (size_t index, unsigned short val) {
+	m_seg_regs[index] = val;
+}
 
 Register<unsigned short>&
 BusInterfaceUnit::getSegRegCS () {
-	return m_sreg_cs;
+	return m_seg_regs[Jaf::SREG_CS];
 }
 
 void
 BusInterfaceUnit::setSegRegCS (unsigned short val) {
-	m_sreg_cs = val;
+	m_seg_regs[Jaf::SREG_CS] = val;
 }
 
 Register<unsigned short>&
 BusInterfaceUnit::getSegRegDS () {
-	return m_sreg_ds;
+	return m_seg_regs[Jaf::SREG_DS];
 }
 
 void
 BusInterfaceUnit::setSegRegDS (unsigned short val) {
-	m_sreg_ds = val;
+	m_seg_regs[Jaf::SREG_DS] = val;
 }
 
 Register<unsigned short>&
 BusInterfaceUnit::getSegRegES () {
-	return m_sreg_es;
+	return m_seg_regs[Jaf::SREG_ES];
 }
 
 void
 BusInterfaceUnit::setSegRegES (unsigned short val) {
-	m_sreg_es = val;
+	m_seg_regs[Jaf::SREG_ES] = val;
 }
 
 Register<unsigned short>&
 BusInterfaceUnit::getSegRegSS () {
-	return m_sreg_ss;
+	return m_seg_regs[Jaf::SREG_SS];
 }
 
 void
 BusInterfaceUnit::setSegRegSS (unsigned short val) {
-	m_sreg_ss = val;
+	m_seg_regs[Jaf::SREG_SS] = val;
 }
 
 Register<unsigned short>&

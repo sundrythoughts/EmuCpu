@@ -25,6 +25,7 @@
 #ifndef JAF__BUS_INTERFACE_UNIT_HH
 #define JAF__BUS_INTERFACE_UNIT_HH
 
+#include "Defines.hh"
 #include "Memory.hh"
 #include "Register.hh"
 #include "MemoryAddress.hh"
@@ -41,18 +42,28 @@ class BusInterfaceUnitPrivate;
 class BusInterfaceUnit {
 	BusInterfaceUnitPrivate *p;
 
+	unsigned short m_sregs[Jaf::SREG_COUNT];
+	Register<unsigned short> m_seg_regs[Jaf::SREG_COUNT];
+
+#if 0
 	unsigned short m_cs;
 	unsigned short m_ds;
 	unsigned short m_es;
 	unsigned short m_ss;
+#endif
+
 	unsigned short m_ip;
 	unsigned short m_seg_override;
 
+#if 0
 	Register<unsigned short> m_sreg_cs;
 	Register<unsigned short> m_sreg_ds;
 	Register<unsigned short> m_sreg_es;
 	Register<unsigned short> m_sreg_ss;
+#endif
+
 	Register<unsigned short> m_reg_ip;
+
 	Memory *m_memory;
 
 public:
@@ -72,10 +83,10 @@ public:
 	void connectTo (CpuComponents &cpu);
 
 	/** */
-	//Register<unsigned short>& getSegReg (size_t index);
+	Register<unsigned short>& getSegReg (size_t index);
 
 	/** */
-	//void setSegReg (size_t index, unsigned short val);
+	void setSegReg (size_t index, unsigned short val);
 
 	/** */
 	Register<unsigned short>& getSegRegCS ();
@@ -122,7 +133,7 @@ public:
 	/** Read sizeof(T) bytes starting at IP and then increment IP sizeof(T) bytes */
 	template<typename T>
 	T getInstructionBytes () {
-		size_t m_phys_addr = m_sreg_cs << 4;
+		size_t m_phys_addr = m_seg_regs[Jaf::SREG_CS] << 4;
 		m_phys_addr += m_reg_ip;
 		T val;
 		m_memory->read (m_phys_addr, val);

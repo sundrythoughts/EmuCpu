@@ -272,7 +272,7 @@ public:
 	void execCMC ();
 
 	/** */
-	void execCMP ();
+	void execCMP (OperandList &ops);
 
 	/** */
 	void execCMPS ();
@@ -446,10 +446,10 @@ public:
 	void execPUSHF ();
 
 	/** */
-	void execRCL ();
+	void execRCL (OperandList &ops);
 
 	/** */
-	void execRCR ();
+	void execRCR (OperandList &ops);
 
 	/** */
 	void execREP ();
@@ -464,10 +464,10 @@ public:
 	void execRETFAR ();
 
 	/** */
-	void execROL ();
+	void execROL (OperandList &ops);
 
 	/** */
-	void execROR ();
+	void execROR (OperandList &ops);
 
 	/** */
 	void execSAHF (OperandList &ops);

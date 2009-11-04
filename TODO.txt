@@ -1,2 +1,4 @@
  * Memory widget will not display memory at certain times.
    - If the memory widget is disabled before loading a file and then re-enabled after a file has been loaded, then the widget will not display the new memory.
+
+ * Clear Memory, Registers, and Decoder when new file is loaded or when RESET is pressed

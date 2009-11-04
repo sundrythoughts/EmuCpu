@@ -97,6 +97,8 @@ enum SegmentRegisterIndex {
 
 extern const char* sreg_index_names[SREG_COUNT];
 
+const char* getSegRegIndexName (size_t reg_i);
+
 union ModRM {
 	unsigned char byte;
 	struct {

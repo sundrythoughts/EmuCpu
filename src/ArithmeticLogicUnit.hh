@@ -73,20 +73,27 @@ public:
 	*/
 	void updateFlagCF (unsigned short result16, unsigned int result32);
 
+#if 0
 	/**
 	@brief Update the overflow flag (OF).
 	*/
-	void updateFlagOF (bool msb_before, bool msb_after);
+	//void updateFlagOF (bool msb_before, bool msb_after);
+#endif
+
+	/**
+	@brief Update the overflow flag (OF) for an 8-bit operation.
+	*/
+	void updateFlagOF (unsigned char result8, unsigned short result16);
+
+	/**
+	@brief Update the overflow flag (OF) for a 16-bit operation.
+	*/
+	void updateFlagOF (unsigned short result16, unsigned int result32);
 
 	/**
 	@brief Update the parity flag (PF) for an 8-bit operation.
 	*/
 	void updateFlagPF (unsigned char val);
-
-	/**
-	@brief Update the parity flag (PF) for a 16-bit operation.
-	*/
-	void updateFlagPF (unsigned short val);
 
 	/**
 	@brief Update the sign flag (SF) for an 8-bit operation.
@@ -254,22 +261,22 @@ public:
 	/**
 	@brief Do an 8-bit rol.
 	*/
-	void opRol (unsigned char dest, unsigned int cnt, unsigned char &ret);
+	void opRol (unsigned char dest, unsigned char cnt, unsigned char &ret);
 
 	/**
 	@brief Do a 16-bit rol.
 	*/
-	void opRol (unsigned short dest, unsigned int cnt, unsigned short &ret);
+	void opRol (unsigned short dest, unsigned char cnt, unsigned short &ret);
 
 	/**
 	@brief Do an 8-bit ror.
 	*/
-	void opRor (unsigned char dest, unsigned int cnt, unsigned char &ret);
+	void opRor (unsigned char dest, unsigned char cnt, unsigned char &ret);
 
 	/**
 	@brief Do a 16-bit ror.
 	*/
-	void opRor (unsigned short dest, unsigned int cnt, unsigned short &ret);
+	void opRor (unsigned short dest, unsigned char cnt, unsigned short &ret);
 
 	/**
 	@brief Do an 8-bit sal.

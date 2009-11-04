@@ -485,7 +485,7 @@ public:
 	void execSCAS ();
 
 	/** */
-	void execSEG ();
+	void execSEG (OperandList &ops);
 
 	/** */
 	void execSHR ();

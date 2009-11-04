@@ -703,6 +703,11 @@ ExecutionUnit::execSAHF (OperandList &ops) {
 }
 
 void
+ExecutionUnit::execSEG (OperandList &ops) {
+	p->m_biu->setSegOverride (ops.dest ().get<unsigned short> ());
+}
+
+void
 ExecutionUnit::execSUB (OperandList &ops) {
 	if (ops.operandSize () == Jaf::OP_SIZE_16) {
 		unsigned short ret;

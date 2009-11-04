@@ -160,6 +160,11 @@ InstructionDecoder::decodeNone () {
 }
 
 void
+InstructionDecoder::decodeRm0To7 () {
+	//FIXME - this shoudl help to remove duplicate code  in ModRM stuff
+}
+
+void
 InstructionDecoder::decodeRegRM () {
 	union InstMask {
 		unsigned char byte;
@@ -192,29 +197,6 @@ InstructionDecoder::decodeRegRM () {
 			((im.d) ? p->m_inst.operands ().dest () : p->m_inst.operands ().src ()).init<unsigned char> (p->m_eunit->getReg8 (modrm.reg));
 			((im.d) ? p->m_inst.operands ().src () : p->m_inst.operands ().dest ()).init<unsigned char> (p->m_eunit->getReg8 (modrm.rm));
 		}
-#if 0
-	FIXME - This is much longer than above
-		if (im.d) { //reg is dest
-			if (im.w) { //16 bits
-				p->m_inst.operands ().dest ().init<unsigned short> (p->m_eunit->getReg16 (modrm.reg));
-				p->m_inst.operands ().src ().init<unsigned short> (p->m_eunit->getReg16 (modrm.rm));
-			}
-			else { //8 bits
-				p->m_inst.operands ().dest ().init<unsigned char> (p->m_eunit->getReg8 (modrm.reg));
-				p->m_inst.operands ().src ().init<unsigned char> (p->m_eunit->getReg8 (modrm.rm));
-			}
-		}
-		else { //reg is src
-			if (im.w) { //16 bits
-				p->m_inst.operands ().src ().init<unsigned short> (p->m_eunit->getReg16 (modrm.reg));
-				p->m_inst.operands ().dest ().init<unsigned short> (p->m_eunit->getReg16 (modrm.rm));
-			}
-			else { //8 bits
-				p->m_inst.operands ().src ().init<unsigned char> (p->m_eunit->getReg8 (modrm.reg));
-				p->m_inst.operands ().dest ().init<unsigned char> (p->m_eunit->getReg8 (modrm.rm));
-			}
-		}
-#endif
 	}
 	else {
 		((im.d) ? p->m_dis_dest : p->m_dis_src) << Jaf::getRegIndexName (im.w, modrm.reg);
@@ -294,31 +276,6 @@ InstructionDecoder::decodeRegRM () {
 			((im.d) ? p->m_inst.operands ().dest () : p->m_inst.operands ().src ()).init<unsigned char> (p->m_eunit->getReg8 (modrm.reg));
 			((im.d) ? p->m_inst.operands ().src () : p->m_inst.operands ().dest ()).init<unsigned char> (p->m_biu->getMemoryAddress<unsigned char> (p->m_biu->getSegRegDS (), mem), true);
 		}
-
-#if 0
-		FIXME - This is much longer than above
-		if (im.d) { //reg is dest
-			if (im.w) { //16 bits
-
-				p->m_inst.operands ().dest ().init<unsigned short> (p->m_eunit->getReg16 (modrm.reg));
-				p->m_inst.operands ().src ().init<unsigned short> (p->m_biu->getMemoryAddress<unsigned short> (p->m_biu->getSegRegDS (), mem), true);
-			}
-			else { //8 bits
-				p->m_inst.operands ().dest ().init<unsigned char> (p->m_eunit->getReg8 (modrm.reg));
-				p->m_inst.operands ().src ().init<unsigned char> (p->m_biu->getMemoryAddress<unsigned char> (p->m_biu->getSegRegDS (), mem), true);
-			}
-		}
-		else { //reg is src
-			if (im.w) { //16 bits
-				p->m_inst.operands ().src ().init<unsigned short> (p->m_eunit->getReg16 (modrm.reg));
-				p->m_inst.operands ().dest ().init<unsigned short> (p->m_biu->getMemoryAddress<unsigned short> (p->m_biu->getSegRegDS (), mem), true);
-			}
-			else { //8 bits
-				p->m_inst.operands ().src ().init<unsigned char> (p->m_eunit->getReg8 (modrm.reg));
-				p->m_inst.operands ().dest ().init<unsigned char> (p->m_biu->getMemoryAddress<unsigned char> (p->m_biu->getSegRegDS (), mem), true);
-			}
-		}
-#endif
 	}
 }
 
@@ -364,7 +321,24 @@ InstructionDecoder::decodeAccImm () {
 
 void
 InstructionDecoder::decodeSegment () {
-	std::cout << "decodeSegment ()" << std::endl;
+	union InstMask {
+		unsigned char byte;
+		struct {
+			unsigned int _padding : 3;
+			unsigned int sreg : 2;
+		};
+	};
+
+	p->m_disassembly.setAddressingMode ("Segment");
+
+	InstMask im;
+	im.byte = p->m_inst.getBytes ()[0];
+
+	p->m_inst.operands ().setOperandSize (Jaf::OP_SIZE_16);
+
+	p->m_dis_dest << Jaf::getSegRegIndexName (im.sreg);
+
+	p->m_inst.operands ().dest ().init<unsigned short> (p->m_biu->getSegReg (im.sreg));
 }
 
 void
@@ -441,7 +415,6 @@ InstructionDecoder::decodeSegRM () {
 			p->m_inst.operands ().dest ().init<unsigned short> (p->m_eunit->getReg16 (modrm.rm));
 		}
 	}
-//#if 0
 	else {
 		((im.d) ? p->m_dis_dest : p->m_dis_src) << Jaf::getSegRegIndexName (modrm.reg & 3);
 
@@ -520,7 +493,6 @@ InstructionDecoder::decodeSegRM () {
 			p->m_inst.operands ().dest ().init<unsigned short> (p->m_biu->getMemoryAddress<unsigned short> (p->m_biu->getSegRegDS (), mem), true);
 		}
 	}
-//#endif
 }
 
 void
@@ -578,30 +550,6 @@ InstructionDecoder::decodeAccMem () {
 		((im.d) ? p->m_inst.operands ().dest () : p->m_inst.operands ().src ()).init<unsigned char> (p->m_biu->getMemoryAddress<unsigned char> (p->m_biu->getSegRegDS (), mem), true);
 		((im.d) ? p->m_inst.operands ().src () : p->m_inst.operands ().dest ()).init<unsigned char> (p->m_eunit->getRegAL ());
 	}
-
-#if 0
-	FIXME - this is much longer than the above
-	if (im.w) { //16 bits
-		if (!im.d == 0) {
-			p->m_inst.operands ().dest ().init<unsigned short> (p->m_biu->getMemoryAddress<unsigned short> (p->m_biu->getSegRegDS (), mem), true);
-			p->m_inst.operands ().src ().init<unsigned short> (p->m_eunit->getRegAX ());
-		}
-		else {
-			p->m_inst.operands ().dest ().init<unsigned short> (p->m_eunit->getRegAX ());
-			p->m_inst.operands ().src ().init<unsigned short> (p->m_biu->getMemoryAddress<unsigned short> (p->m_biu->getSegRegDS (), mem), true);
-		}
-	}
-	else { //8 bits
-		if (!im.d == 0) {
-			p->m_inst.operands ().dest ().init<unsigned char> (p->m_biu->getMemoryAddress<unsigned char> (p->m_biu->getSegRegDS (), mem), true);
-			p->m_inst.operands ().src ().init<unsigned char> (p->m_eunit->getRegAL ());
-		}
-		else {
-			p->m_inst.operands ().dest ().init<unsigned char> (p->m_eunit->getRegAL ());
-			p->m_inst.operands ().src ().init<unsigned char> (p->m_biu->getMemoryAddress<unsigned char> (p->m_biu->getSegRegDS (), mem), true);
-		}
-	}
-#endif
 }
 
 void

@@ -74,6 +74,8 @@ protected:
 	/** Do the actual decoding of the next instruction */
 	void decodeInstruction ();
 
+	void decodeRm0To7 ();
+
 public:
 	/** */
 	void decodeNotImplemented ();

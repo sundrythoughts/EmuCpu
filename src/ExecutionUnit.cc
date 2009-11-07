@@ -517,6 +517,25 @@ ExecutionUnit::execCMP (OperandList &ops) {
 }
 
 void
+ExecutionUnit::execCMPS (OperandList &ops) {
+	if (ops.operandSize () == Jaf::OP_SIZE_16) {
+		p->m_alu->opCmp (ops.dest ().get<unsigned short> (), ops.src ().get<unsigned short> ());
+	}
+	else {
+		p->m_alu->opCmp (ops.dest ().get<unsigned char> (), ops.src ().get<unsigned char> ());
+	}
+
+	if (getRegFlagsDF ()) {
+		getRegSI () -= ops.src ().size ();
+		getRegDI () -= ops.dest ().size ();
+	}
+	else {
+		getRegSI () += ops.src ().size ();
+		getRegDI () += ops.dest ().size ();
+	}
+}
+
+void
 ExecutionUnit::execCWD (OperandList &ops) {
 	if (getRegAX () < 0x8000) {
 		setRegDX (0);
@@ -561,20 +580,6 @@ ExecutionUnit::execINC (OperandList &ops) {
 }
 
 void
-ExecutionUnit::execJE (OperandList &ops) {
-	if (getRegFlagsZF () == false) {
-		return;
-	}
-
-	if (ops.operandSize () == Jaf::OP_SIZE_16) {
-		p->m_biu->getRegIP () += ops.dest ().get<short> ();
-	}
-	else {
-		p->m_biu->getRegIP () += ops.dest ().get<char> ();
-	}
-}
-
-void
 ExecutionUnit::execJMP (OperandList &ops) {
 	if (ops.operandSize () == Jaf::OP_SIZE_16) {
 		p->m_biu->getRegIP () += ops.dest ().get<short> ();
@@ -585,17 +590,174 @@ ExecutionUnit::execJMP (OperandList &ops) {
 }
 
 void
+ExecutionUnit::execJNA (OperandList &ops) {
+	if (getRegFlagsCF () != true && getRegFlagsZF () != true) {
+		return;
+	}
+
+	execJMP (ops);
+}
+
+void
+ExecutionUnit::execJNAE (OperandList &ops) {
+	if (getRegFlagsCF () != true) {
+		return;
+	}
+
+	execJMP (ops);
+}
+
+void
+ExecutionUnit::execJNB (OperandList &ops) {
+	if (getRegFlagsCF () != false) {
+		return;
+	}
+
+	execJMP (ops);
+}
+
+void
+ExecutionUnit::execJNBE (OperandList &ops) {
+	if (getRegFlagsCF () != false && getRegFlagsZF () != false) {
+		return;
+	}
+
+	execJMP (ops);
+}
+
+void
+ExecutionUnit::execJC (OperandList &ops) {
+	if (getRegFlagsCF () != true) {
+		return;
+	}
+
+	execJMP (ops);
+}
+
+void
+ExecutionUnit::execJCXZ (OperandList &ops) {
+	if (getRegFlagsCF () != false) {
+		return;
+	}
+
+	execJMP (ops);
+}
+
+void
+ExecutionUnit::execJE (OperandList &ops) {
+	if (getRegFlagsZF () == false) {
+		return;
+	}
+
+	execJMP (ops);
+}
+
+void
+ExecutionUnit::execJG (OperandList &ops) {
+	if (getRegFlagsSF () != getRegFlagsOF () || getRegFlagsZF () != false) {
+		return;
+	}
+
+	execJMP (ops);
+}
+
+void
+ExecutionUnit::execJGE (OperandList &ops) {
+	if (getRegFlagsSF () != getRegFlagsOF ()) {
+		return;
+	}
+
+	execJMP (ops);
+}
+
+void
+ExecutionUnit::execJL (OperandList &ops) {
+	if (getRegFlagsSF () == getRegFlagsOF ()) {
+		return;
+	}
+
+	execJMP (ops);
+}
+
+void
+ExecutionUnit::execJLE (OperandList &ops) {
+	if (getRegFlagsSF () == getRegFlagsOF () && getRegFlagsZF () != true) {
+		return;
+	}
+
+	execJMP (ops);
+}
+
+void
+ExecutionUnit::execJNC (OperandList &ops) {
+	if (getRegFlagsCF () == false) {
+		return;
+	}
+
+	execJMP (ops);
+}
+
+void
 ExecutionUnit::execJNE (OperandList &ops) {
 	if (getRegFlagsZF () == true) {
 		return;
 	}
 
-	if (ops.operandSize () == Jaf::OP_SIZE_16) {
-		p->m_biu->getRegIP () += ops.dest ().get<short> ();
+	execJMP (ops);
+}
+
+void
+ExecutionUnit::execJNO (OperandList &ops) {
+	if (getRegFlagsOF () != false) {
+		return;
 	}
-	else {
-		p->m_biu->getRegIP () += ops.dest ().get<char> ();
+
+	execJMP (ops);
+}
+
+void
+ExecutionUnit::execJNS (OperandList &ops) {
+	if (getRegFlagsSF () != false) {
+		return;
 	}
+
+	execJMP (ops);
+}
+
+void
+ExecutionUnit::execJNP (OperandList &ops) {
+	if (getRegFlagsPF () != false) {
+		return;
+	}
+
+	execJMP (ops);
+}
+
+void
+ExecutionUnit::execJO (OperandList &ops) {
+	if (getRegFlagsOF () != true) {
+		return;
+	}
+
+	execJMP (ops);
+}
+
+void
+ExecutionUnit::execJPE (OperandList &ops) {
+	if (getRegFlagsPF () != true) {
+		return;
+	}
+
+	execJMP (ops);
+}
+
+void
+ExecutionUnit::execJS (OperandList &ops) {
+	if (getRegFlagsSF () != true) {
+		return;
+	}
+
+	execJMP (ops);
 }
 
 void
@@ -614,6 +776,25 @@ ExecutionUnit::execMOV (OperandList &ops) {
 	}
 	else {
 		ops.dest ().get<unsigned char> () = ops.src ().get<unsigned char> ();
+	}
+}
+
+void
+ExecutionUnit::execMOVS (OperandList &ops) {
+	if (ops.operandSize () == Jaf::OP_SIZE_16) {
+		ops.dest ().get<unsigned short> () = ops.src ().get<unsigned short> ();
+	}
+	else {
+		ops.dest ().get<unsigned char> () = ops.src ().get<unsigned char> ();
+	}
+
+	if (getRegFlagsDF ()) {
+		getRegSI () -= ops.src ().size ();
+		getRegDI () -= ops.dest ().size ();
+	}
+	else {
+		getRegSI () += ops.src ().size ();
+		getRegDI () += ops.dest ().size ();
 	}
 }
 
@@ -700,6 +881,20 @@ ExecutionUnit::execSAHF (OperandList &ops) {
 	f &= 0xFFD7;
 	f |= 0x0002;
 	setRegFlags (f);
+}
+
+void
+ExecutionUnit::execSBB (OperandList &ops) {
+	if (ops.operandSize () == Jaf::OP_SIZE_16) {
+		unsigned short ret;
+		p->m_alu->opSbb (ops.dest ().get<unsigned short> (), ops.src ().get<unsigned short> (), ret);
+		ops.dest ().get<unsigned short> () = ret;
+	}
+	else {
+		unsigned char ret;
+		p->m_alu->opSbb (ops.dest ().get<unsigned char> (), ops.src ().get<unsigned char> (), ret);
+		ops.dest ().get<unsigned char> () = ret;
+	}
 }
 
 void

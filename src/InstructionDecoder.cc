@@ -161,7 +161,7 @@ InstructionDecoder::decodeNone () {
 
 void
 InstructionDecoder::decodeRm0To7 () {
-	//FIXME - this shoudl help to remove duplicate code  in ModRM stuff
+	//FIXME - this should help to remove duplicate code in ModRM stuff
 }
 
 void
@@ -901,6 +901,27 @@ InstructionDecoder::decodeIntNum () {
 
 void
 InstructionDecoder::decodeString () {
-	std::cout << "decodeString ()" << std::endl;
+	union InstMask {
+		unsigned char byte;
+		struct {
+			unsigned int w : 1;
+		};
+	};
+
+	p->m_disassembly.setAddressingMode ("String");
+
+	InstMask im;
+	im.byte = p->m_inst.getBytes ()[0];
+
+	p->m_inst.operands ().setOperandSize (im.w);
+
+	if (im.w) { //16 bits
+		p->m_inst.operands ().dest ().init<short> (p->m_biu->getMemoryAddress<short> (p->m_biu->getSegRegDS (), p->m_eunit->getRegDI ()), true);
+		p->m_inst.operands ().src ().init<short> (p->m_biu->getMemoryAddress<short> (p->m_biu->getSegRegDS (), p->m_eunit->getRegSI ()), true);
+	}
+	else { //8 bits
+		p->m_inst.operands ().dest ().init<unsigned char> (p->m_biu->getMemoryAddress<unsigned char> (p->m_biu->getSegRegDS (), p->m_eunit->getRegDI ()), true);
+		p->m_inst.operands ().src ().init<unsigned char> (p->m_biu->getMemoryAddress<unsigned char> (p->m_biu->getSegRegDS (), p->m_eunit->getRegSI ()), true);
+	}
 }
 

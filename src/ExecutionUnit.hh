@@ -275,7 +275,7 @@ public:
 	void execCMP (OperandList &ops);
 
 	/** */
-	void execCMPS ();
+	void execCMPS (OperandList &ops);
 
 	/** */
 	void execCWD (OperandList &ops);
@@ -320,37 +320,37 @@ public:
 	void execIRET ();
 
 	/** */
-	void execJNBE ();
+	void execJNA (OperandList &ops);
 
 	/** */
-	void execJNB ();
+	void execJNAE (OperandList &ops);
 
 	/** */
-	void execJNAE ();
+	void execJNB (OperandList &ops);
 
 	/** */
-	void execJNA ();
+	void execJNBE (OperandList &ops);
 
 	/** */
-	void execJC ();
+	void execJC (OperandList &ops);
 
 	/** */
-	void execJCXZ ();
+	void execJCXZ (OperandList &ops);
 
 	/** */
 	void execJE (OperandList &ops);
 
 	/** */
-	void execJG ();
+	void execJG (OperandList &ops);
 
 	/** */
-	void execJGE ();
+	void execJGE (OperandList &ops);
 
 	/** */
-	void execJL ();
+	void execJL (OperandList &ops);
 
 	/** */
-	void execJLE ();
+	void execJLE (OperandList &ops);
 
 	/** */
 	void execJMP (OperandList &ops);
@@ -359,28 +359,28 @@ public:
 	void execJMPFAR ();
 
 	/** */
-	void execJNC ();
+	void execJNC (OperandList &ops);
 
 	/** */
 	void execJNE (OperandList &ops);
 
 	/** */
-	void execJNO ();
+	void execJNO (OperandList &ops);
 
 	/** */
-	void execJNS ();
+	void execJNS (OperandList &ops);
 
 	/** */
-	void execJNP ();
+	void execJNP (OperandList &ops);
 
 	/** */
-	void execJO ();
+	void execJO (OperandList &ops);
 
 	/** */
-	void execJPE ();
+	void execJPE (OperandList &ops);
 
 	/** */
-	void execJS ();
+	void execJS (OperandList &ops);
 
 	/** */
 	void execLAHF (OperandList &ops);
@@ -413,7 +413,7 @@ public:
 	void execMOV (OperandList &ops);
 
 	/** */
-	void execMOVS ();
+	void execMOVS (OperandList &ops);
 
 	/** */
 	void execMUL ();
@@ -479,7 +479,7 @@ public:
 	void execSAR ();
 
 	/** */
-	void execSBB ();
+	void execSBB (OperandList &ops);
 
 	/** */
 	void execSCAS ();

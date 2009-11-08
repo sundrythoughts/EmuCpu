@@ -434,16 +434,16 @@ public:
 	void execOUT ();
 
 	/** */
-	void execPOP ();
+	void execPOP (OperandList &ops);
 
 	/** */
-	void execPOPF ();
+	void execPOPF (OperandList &ops);
 
 	/** */
-	void execPUSH ();
+	void execPUSH (OperandList &ops);
 
 	/** */
-	void execPUSHF ();
+	void execPUSHF (OperandList &ops);
 
 	/** */
 	void execRCL (OperandList &ops);

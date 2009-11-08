@@ -847,6 +847,42 @@ ExecutionUnit::execOR (OperandList &ops) {
 }
 
 void
+ExecutionUnit::execPOP (OperandList &ops) {
+	//FIXME - needs to produce some kind of signal
+	NumberWrapper mem;
+	mem.init<unsigned short> (p->m_biu->getMemoryAddress<unsigned short> (p->m_biu->getSegRegSS (), getRegSP ()), true);
+	(!ops.src ().isNull () ? ops.src () : ops.dest ()).get<unsigned short> () = mem.get<unsigned short> ();
+	getRegSP () += sizeof(unsigned short);
+}
+
+void
+ExecutionUnit::execPOPF (OperandList &ops) {
+	//FIXME - needs to produce some kind of signal
+	NumberWrapper mem;
+	mem.init<unsigned short> (p->m_biu->getMemoryAddress<unsigned short> (p->m_biu->getSegRegSS (), getRegSP ()), true);
+	getRegFlags () = mem.get<unsigned short> ();
+	getRegSP () += sizeof(unsigned short);
+}
+
+void
+ExecutionUnit::execPUSH (OperandList &ops) {
+	//FIXME - needs to produce some kind of signal
+	getRegSP () -= sizeof(unsigned short);
+	NumberWrapper mem;
+	mem.init<unsigned short> (p->m_biu->getMemoryAddress<unsigned short> (p->m_biu->getSegRegSS (), getRegSP ()), true);
+	mem.get<unsigned short> () = (!ops.src ().isNull () ? ops.src () : ops.dest ()).get<unsigned short> ();
+}
+
+void
+ExecutionUnit::execPUSHF (OperandList &ops) {
+	//FIXME - needs to produce some kind of signal
+	getRegSP () -= sizeof(unsigned short);
+	NumberWrapper mem;
+	mem.init<unsigned short> (p->m_biu->getMemoryAddress<unsigned short> (p->m_biu->getSegRegSS (), getRegSP ()), true);
+	mem.get<unsigned short> () = getRegFlags ();
+}
+
+void
 ExecutionUnit::execRCL (OperandList &ops) {
 	if (ops.operandSize () == Jaf::OP_SIZE_16) {
 		unsigned short ret;

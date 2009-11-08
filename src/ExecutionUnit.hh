@@ -269,7 +269,7 @@ public:
 	void execCLI (OperandList &ops);
 
 	/** */
-	void execCMC ();
+	void execCMC (OperandList &ops);
 
 	/** */
 	void execCMP (OperandList &ops);
@@ -419,13 +419,13 @@ public:
 	void execMUL ();
 
 	/** */
-	void execNEG ();
+	void execNEG (OperandList &ops);
 
 	/** */
 	void execNOP (OperandList &ops);
 
 	/** */
-	void execNOT ();
+	void execNOT (OperandList &ops);
 
 	/** */
 	void execOR (OperandList &ops);
@@ -473,10 +473,10 @@ public:
 	void execSAHF (OperandList &ops);
 
 	/** */
-	void execSHL ();
+	void execSHL (OperandList &ops);
 
 	/** */
-	void execSAR ();
+	void execSAR (OperandList &ops);
 
 	/** */
 	void execSBB (OperandList &ops);
@@ -488,7 +488,7 @@ public:
 	void execSEG (OperandList &ops);
 
 	/** */
-	void execSHR ();
+	void execSHR (OperandList &ops);
 
 	/** */
 	void execSTC (OperandList &ops);
@@ -506,7 +506,7 @@ public:
 	void execSUB (OperandList &ops);
 
 	/** */
-	void execTEST ();
+	void execTEST (OperandList &ops);
 
 	/** */
 	void execWAIT ();

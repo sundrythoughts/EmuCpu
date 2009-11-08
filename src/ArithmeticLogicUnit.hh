@@ -66,29 +66,32 @@ public:
 	/**
 	@brief Update the carry flag (CF) for an 8-bit operation.
 	*/
-	void updateFlagCF (unsigned char result8, unsigned short result16);
+	void updateFlagAddCF (unsigned char result8, unsigned short result16);
 
 	/**
 	@brief Update the carry flag (CF) for a 16-bit operation.
 	*/
-	void updateFlagCF (unsigned short result16, unsigned int result32);
+	void updateFlagAddCF (unsigned short result16, unsigned int result32);
 
-#if 0
 	/**
-	@brief Update the overflow flag (OF).
+	@brief Update the carry flag (CF) for an 8-bit operation.
 	*/
-	//void updateFlagOF (bool msb_before, bool msb_after);
-#endif
+	void updateFlagSubCF (unsigned char result8, unsigned short result16);
+
+	/**
+	@brief Update the carry flag (CF) for a 16-bit operation.
+	*/
+	void updateFlagSubCF (unsigned short result16, unsigned int result32);
 
 	/**
 	@brief Update the overflow flag (OF) for an 8-bit operation.
 	*/
-	void updateFlagOF (unsigned char result8, unsigned short result16);
+	void updateFlagOF (unsigned char orig_dest, unsigned char src, unsigned char result);
 
 	/**
 	@brief Update the overflow flag (OF) for a 16-bit operation.
 	*/
-	void updateFlagOF (unsigned short result16, unsigned int result32);
+	void updateFlagOF (unsigned short orig_dest, unsigned short src, unsigned short result);
 
 	/**
 	@brief Update the parity flag (PF) for an 8-bit operation.
@@ -336,7 +339,7 @@ public:
 	/**
 	@brief Do a 16-bit sub.
 	*/
-	void opSub (unsigned short dest, unsigned char src, unsigned short &ret);
+	void opSub (unsigned short dest, unsigned short src, unsigned short &ret);
 
 	/**
 	@brief Do an 8-bit test.
@@ -346,7 +349,7 @@ public:
 	/**
 	@brief Do a 16-bit test
 	*/
-	void opTest (unsigned short dest, unsigned char src);
+	void opTest (unsigned short dest, unsigned short src);
 
 	/**
 	@brief Do an 8-bit xor.

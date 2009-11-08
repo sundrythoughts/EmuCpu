@@ -854,13 +854,15 @@ InstructionDecoder::decodeRM () {
 		}
 	}
 
-	if (im.v) { //16 bits
-		p->m_inst.operands ().src ().init<unsigned char> (new Immediate<unsigned char> (p->m_eunit->getRegCL ()), true);
-		p->m_dis_src << "cl";
-	}
-	else { // 8 bits
-		p->m_inst.operands ().src ().init<unsigned char> (new Immediate<unsigned char> (1), true);
-		p->m_dis_src << "1";
+	if (im.byte >= 0xD0 && im.byte <= 0xD3) {
+		if (im.v) { //16 bits
+			p->m_inst.operands ().src ().init<unsigned char> (new Immediate<unsigned char> (p->m_eunit->getRegCL ()), true);
+			p->m_dis_src << "cl";
+		}
+		else { // 8 bits
+			p->m_inst.operands ().src ().init<unsigned char> (new Immediate<unsigned char> (1), true);
+			p->m_dis_src << "1";
+		}
 	}
 }
 

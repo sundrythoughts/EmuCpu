@@ -37,7 +37,19 @@ public:
 	@param n The bit index to get where 0 is the LSB.
 	*/
 	template<typename T>
-	static bool get_bit (const T &val, unsigned int n);
+	static bool getBit (const T &val, unsigned int n);
+
+	/**
+	@brief Get the LSB
+	*/
+	template<typename T>
+	static bool getLsb (const T &val);
+
+	/**
+	@brief Get the LSB
+	*/
+	template<typename T>
+	static bool getMsb (const T &val);
 
 	/**
 	@brief Set a bit
@@ -45,26 +57,26 @@ public:
 	@param b The new value of bit n.
 	*/
 	template<typename T>
-	static void set_bit (T &val, unsigned int n, bool b);
+	static void setBit (T &val, unsigned int n, bool b);
 
 	/**
 	@brief Set a bit
 	@param n The bit index to set where 0 is the LSB.
 	*/
 	template<typename T>
-	static void set_bit (T &val, unsigned int n);
+	static void setBit (T &val, unsigned int n);
 
 	/**
 	@brief Clear a bit
 	@param n The bit index to clear where 0 is the LSB.
 	*/
 	template<typename T>
-	static void clear_bit (T &val, unsigned int n);
+	static void clearBit (T &val, unsigned int n);
 }; //end class Utility
 
 template<typename T>
 bool
-Utility::get_bit (const T &val, unsigned int n) {
+Utility::getBit (const T &val, unsigned int n) {
 	T mask = 1;
 	mask <<= n;
 	T ret = val & mask;
@@ -72,19 +84,31 @@ Utility::get_bit (const T &val, unsigned int n) {
 }
 
 template<typename T>
+bool
+Utility::getLsb (const T &val) {
+	return getBit (val, 0);
+}
+
+template<typename T>
+bool
+Utility::getMsb (const T &val) {
+	return getBit (val, (sizeof(T) << 3) - 1);
+}
+
+template<typename T>
 void
-Utility::set_bit (T &val, unsigned int n, bool b) {
+Utility::setBit (T &val, unsigned int n, bool b) {
 	if (b) {
-		Utility::set_bit (val, n);
+		Utility::setBit (val, n);
 	}
 	else {
-		Utility::clear_bit (val, n);
+		Utility::clearBit (val, n);
 	}
 }
 
 template<typename T>
 void
-Utility::set_bit (T &val, unsigned int n) {
+Utility::setBit (T &val, unsigned int n) {
 	T mask = 1;
 	mask <<= n;
 	val |= mask;
@@ -92,7 +116,7 @@ Utility::set_bit (T &val, unsigned int n) {
 
 template<typename T>
 void
-Utility::clear_bit (T &val, unsigned int n) {
+Utility::clearBit (T &val, unsigned int n) {
 	T mask = 1;
 	mask <<= n;
 	mask = ~mask;

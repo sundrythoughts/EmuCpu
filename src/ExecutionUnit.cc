@@ -301,136 +301,136 @@ ExecutionUnit::setRegFlags (unsigned short val) {
 
 bool
 ExecutionUnit::getRegFlagsAF () const {
-	return Utility::get_bit (p->m_regs16[Jaf::REG_FLAGS], 4);
+	return Utility::getBit (p->m_regs16[Jaf::REG_FLAGS], 4);
 }
 
 void
 ExecutionUnit::setRegFlagsAF (bool val) {
 	if (val) {
-		Utility::set_bit (p->m_regs16[Jaf::REG_FLAGS], 4);
+		Utility::setBit (p->m_regs16[Jaf::REG_FLAGS], 4);
 	}
 	else {
-		Utility::clear_bit (p->m_regs16[Jaf::REG_FLAGS], 4);
+		Utility::clearBit (p->m_regs16[Jaf::REG_FLAGS], 4);
 	}
 }
 
 bool
 ExecutionUnit::getRegFlagsCF () const {
-	return Utility::get_bit (p->m_regs16[Jaf::REG_FLAGS], 0);
+	return Utility::getBit (p->m_regs16[Jaf::REG_FLAGS], 0);
 }
 
 void
 ExecutionUnit::setRegFlagsCF (bool val) {
 	if (val) {
-		Utility::set_bit (p->m_regs16[Jaf::REG_FLAGS], 0);
+		Utility::setBit (p->m_regs16[Jaf::REG_FLAGS], 0);
 	}
 	else {
-		Utility::clear_bit (p->m_regs16[Jaf::REG_FLAGS], 0);
+		Utility::clearBit (p->m_regs16[Jaf::REG_FLAGS], 0);
 	}
 }
 
 bool
 ExecutionUnit::getRegFlagsDF () const {
-	return Utility::get_bit (p->m_regs16[Jaf::REG_FLAGS], 10);
+	return Utility::getBit (p->m_regs16[Jaf::REG_FLAGS], 10);
 }
 
 void
 ExecutionUnit::setRegFlagsDF (bool val) {
 	if (val) {
-		Utility::set_bit (p->m_regs16[Jaf::REG_FLAGS], 10);
+		Utility::setBit (p->m_regs16[Jaf::REG_FLAGS], 10);
 	}
 	else {
-		Utility::clear_bit (p->m_regs16[Jaf::REG_FLAGS], 10);
+		Utility::clearBit (p->m_regs16[Jaf::REG_FLAGS], 10);
 	}
 }
 
 bool
 ExecutionUnit::getRegFlagsIF () const {
-	return Utility::get_bit (p->m_regs16[Jaf::REG_FLAGS], 9);
+	return Utility::getBit (p->m_regs16[Jaf::REG_FLAGS], 9);
 }
 
 void
 ExecutionUnit::setRegFlagsIF (bool val) {
 	if (val) {
-		Utility::set_bit (p->m_regs16[Jaf::REG_FLAGS], 9);
+		Utility::setBit (p->m_regs16[Jaf::REG_FLAGS], 9);
 	}
 	else {
-		Utility::clear_bit (p->m_regs16[Jaf::REG_FLAGS], 9);
+		Utility::clearBit (p->m_regs16[Jaf::REG_FLAGS], 9);
 	}
 }
 
 bool
 ExecutionUnit::getRegFlagsOF () const {
-	return Utility::get_bit (p->m_regs16[Jaf::REG_FLAGS], 11);
+	return Utility::getBit (p->m_regs16[Jaf::REG_FLAGS], 11);
 }
 
 void
 ExecutionUnit::setRegFlagsOF (bool val) {
 	if (val) {
-		Utility::set_bit (p->m_regs16[Jaf::REG_FLAGS], 11);
+		Utility::setBit (p->m_regs16[Jaf::REG_FLAGS], 11);
 	}
 	else {
-		Utility::clear_bit (p->m_regs16[Jaf::REG_FLAGS], 11);
+		Utility::clearBit (p->m_regs16[Jaf::REG_FLAGS], 11);
 	}
 }
 
 bool
 ExecutionUnit::getRegFlagsPF () const {
-	return Utility::get_bit (p->m_regs16[Jaf::REG_FLAGS], 2);
+	return Utility::getBit (p->m_regs16[Jaf::REG_FLAGS], 2);
 }
 
 void
 ExecutionUnit::setRegFlagsPF (bool val) {
 	if (val) {
-		Utility::set_bit (p->m_regs16[Jaf::REG_FLAGS], 2);
+		Utility::setBit (p->m_regs16[Jaf::REG_FLAGS], 2);
 	}
 	else {
-		Utility::clear_bit (p->m_regs16[Jaf::REG_FLAGS], 2);
+		Utility::clearBit (p->m_regs16[Jaf::REG_FLAGS], 2);
 	}
 }
 
 bool
 ExecutionUnit::getRegFlagsSF () const {
-	return Utility::get_bit (p->m_regs16[Jaf::REG_FLAGS], 7);
+	return Utility::getBit (p->m_regs16[Jaf::REG_FLAGS], 7);
 }
 
 void
 ExecutionUnit::setRegFlagsSF (bool val) {
 	if (val) {
-		Utility::set_bit (p->m_regs16[Jaf::REG_FLAGS], 7);
+		Utility::setBit (p->m_regs16[Jaf::REG_FLAGS], 7);
 	}
 	else {
-		Utility::clear_bit (p->m_regs16[Jaf::REG_FLAGS], 7);
+		Utility::clearBit (p->m_regs16[Jaf::REG_FLAGS], 7);
 	}
 }
 
 bool
 ExecutionUnit::getRegFlagsTF () const {
-	return Utility::get_bit (p->m_regs16[Jaf::REG_FLAGS], 8);
+	return Utility::getBit (p->m_regs16[Jaf::REG_FLAGS], 8);
 }
 
 void
 ExecutionUnit::setRegFlagsTF (bool val) {
 	if (val) {
-		Utility::set_bit (p->m_regs16[Jaf::REG_FLAGS], 8);
+		Utility::setBit (p->m_regs16[Jaf::REG_FLAGS], 8);
 	}
 	else {
-		Utility::clear_bit (p->m_regs16[Jaf::REG_FLAGS], 8);
+		Utility::clearBit (p->m_regs16[Jaf::REG_FLAGS], 8);
 	}
 }
 
 bool
 ExecutionUnit::getRegFlagsZF () const {
-	return Utility::get_bit (p->m_regs16[Jaf::REG_FLAGS], 6);
+	return Utility::getBit (p->m_regs16[Jaf::REG_FLAGS], 6);
 }
 
 void
 ExecutionUnit::setRegFlagsZF (bool val) {
 	if (val) {
-		Utility::set_bit (p->m_regs16[Jaf::REG_FLAGS], 6);
+		Utility::setBit (p->m_regs16[Jaf::REG_FLAGS], 6);
 	}
 	else {
-		Utility::clear_bit (p->m_regs16[Jaf::REG_FLAGS], 6);
+		Utility::clearBit (p->m_regs16[Jaf::REG_FLAGS], 6);
 	}
 }
 
@@ -504,6 +504,11 @@ ExecutionUnit::execCLD (OperandList &ops) {
 void
 ExecutionUnit::execCLI (OperandList &ops) {
 	setRegFlagsIF (false);
+}
+
+void
+ExecutionUnit::execCMC (OperandList &ops) {
+	p->m_alu->opCmc ();
 }
 
 void
@@ -799,8 +804,32 @@ ExecutionUnit::execMOVS (OperandList &ops) {
 }
 
 void
+ExecutionUnit::execNEG (OperandList &ops) {
+	if (ops.operandSize () == Jaf::OP_SIZE_16) {
+		unsigned short ret;
+		p->m_alu->opNeg (ops.dest ().get<unsigned short> (), ret);
+		ops.dest ().get<unsigned short> () = ret;
+	}
+	else {
+		unsigned char ret;
+		p->m_alu->opNeg (ops.dest ().get<unsigned char> (), ret);
+		ops.dest ().get<unsigned char> () = ret;
+	}
+}
+
+void
 ExecutionUnit::execNOP (OperandList &ops) {
 	//does nothing
+}
+
+void
+ExecutionUnit::execNOT (OperandList &ops) {
+	if (ops.operandSize () == Jaf::OP_SIZE_16) {
+		ops.dest ().get<unsigned short> () = 0xFF - ops.dest ().get<unsigned short> ();
+	}
+	else {
+		ops.dest ().get<unsigned char> () = 0xFFFF - ops.dest ().get<unsigned char> ();
+	}
 }
 
 void
@@ -884,6 +913,20 @@ ExecutionUnit::execSAHF (OperandList &ops) {
 }
 
 void
+ExecutionUnit::execSAR (OperandList &ops) {
+	if (ops.operandSize () == Jaf::OP_SIZE_16) {
+		unsigned short ret;
+		p->m_alu->opSar (ops.dest ().get<unsigned short> (), ops.src ().get<unsigned char> (), ret);
+		ops.dest ().get<unsigned short> () = ret;
+	}
+	else {
+		unsigned char ret;
+		p->m_alu->opSar (ops.dest ().get<unsigned char> (), ops.src ().get<unsigned char> (), ret);
+		ops.dest ().get<unsigned char> () = ret;
+	}
+}
+
+void
 ExecutionUnit::execSBB (OperandList &ops) {
 	if (ops.operandSize () == Jaf::OP_SIZE_16) {
 		unsigned short ret;
@@ -893,6 +936,34 @@ ExecutionUnit::execSBB (OperandList &ops) {
 	else {
 		unsigned char ret;
 		p->m_alu->opSbb (ops.dest ().get<unsigned char> (), ops.src ().get<unsigned char> (), ret);
+		ops.dest ().get<unsigned char> () = ret;
+	}
+}
+
+void
+ExecutionUnit::execSHL (OperandList &ops) {
+	if (ops.operandSize () == Jaf::OP_SIZE_16) {
+		unsigned short ret;
+		p->m_alu->opShl (ops.dest ().get<unsigned short> (), ops.src ().get<unsigned char> (), ret);
+		ops.dest ().get<unsigned short> () = ret;
+	}
+	else {
+		unsigned char ret;
+		p->m_alu->opShl (ops.dest ().get<unsigned char> (), ops.src ().get<unsigned char> (), ret);
+		ops.dest ().get<unsigned char> () = ret;
+	}
+}
+
+void
+ExecutionUnit::execSHR (OperandList &ops) {
+	if (ops.operandSize () == Jaf::OP_SIZE_16) {
+		unsigned short ret;
+		p->m_alu->opShr (ops.dest ().get<unsigned short> (), ops.src ().get<unsigned char> (), ret);
+		ops.dest ().get<unsigned short> () = ret;
+	}
+	else {
+		unsigned char ret;
+		p->m_alu->opShr (ops.dest ().get<unsigned char> (), ops.src ().get<unsigned char> (), ret);
 		ops.dest ().get<unsigned char> () = ret;
 	}
 }
@@ -929,6 +1000,16 @@ ExecutionUnit::execSTD (OperandList &ops) {
 void
 ExecutionUnit::execSTI (OperandList &ops) {
 	setRegFlagsIF (true);
+}
+
+void
+ExecutionUnit::execTEST (OperandList &ops) {
+	if (ops.operandSize () == Jaf::OP_SIZE_16) {
+		p->m_alu->opTest (ops.dest ().get<unsigned short> (), ops.src ().get<unsigned short> ());
+	}
+	else {
+		p->m_alu->opTest (ops.dest ().get<unsigned char> (), ops.src ().get<unsigned char> ());
+	}
 }
 
 void

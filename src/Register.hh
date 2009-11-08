@@ -28,6 +28,8 @@
 #include "INumberReadableWritable.hh"
 #include <sigc++/sigc++.h>
 
+#include <iostream>
+
 /**
 @class Register
 @brief Implementation of INumberReadableWritable for register values.
@@ -286,6 +288,13 @@ public:
 		m_signal_emit_signal_value_changed.emit ();
 		return *this;
 	}
+
+private:
+	virtual unsigned short getOffset () const {
+		std::cerr << "Debug: class Immediate has no offset" << std::endl;
+		return 0;
+	}
+
 }; //end class Register
 
 #endif //JAF__REGISTER_HH

@@ -45,6 +45,9 @@ public:
 	virtual const T& getValue () const = 0;
 
 	/** */
+	virtual unsigned short getOffset () const = 0;
+
+	/** */
 	virtual const INumberReadableWritable<T>& operator++ () = 0;
 
 	/** */

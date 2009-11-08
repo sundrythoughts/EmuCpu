@@ -183,12 +183,14 @@ InstructionDecoder::decodeRegRM () {
 
 	p->m_inst.operands ().setOperandSize (im.w);
 
+	if (im.byte == 0x8D) { //LEA is special because it's D bit is inverted
+		im.d = 1;
+	}
+
 	if (modrm.mod == 3) {
 		((im.d) ? p->m_dis_dest : p->m_dis_src) << Jaf::getRegIndexName (im.w, modrm.reg);
 		((im.d) ? p->m_dis_src : p->m_dis_dest) << Jaf::getRegIndexName (im.w, modrm.rm);
 
-
-		//FIXME - make sure this works before deleting the previous version
 		if (im.w) { //16 bits
 			((im.d) ? p->m_inst.operands ().dest () : p->m_inst.operands ().src ()).init<unsigned short> (p->m_eunit->getReg16 (modrm.reg));
 			((im.d) ? p->m_inst.operands ().src () : p->m_inst.operands ().dest ()).init<unsigned short> (p->m_eunit->getReg16 (modrm.rm));
@@ -241,7 +243,7 @@ InstructionDecoder::decodeRegRM () {
 					mem = p->m_biu->getInstructionBytes<unsigned short> ();
 					p->m_inst.addBytes (mem);
 					((im.d) ? p->m_dis_src : p->m_dis_dest).str ("");
-					((im.d) ? p->m_dis_src : p->m_dis_dest) << "[" << (unsigned int)mem << "]";
+					((im.d) ? p->m_dis_src : p->m_dis_dest) << "[" << (unsigned int)mem;
 				}
 			} break;
 
@@ -252,6 +254,9 @@ InstructionDecoder::decodeRegRM () {
 		}
 
 		switch (modrm.mod) {
+			case 0: {
+				((im.d) ? p->m_dis_src : p->m_dis_dest) << "]";
+			}break;
 			case 1: { //sign extend next byte
 				unsigned char udis = p->m_biu->getInstructionBytes<unsigned char> ();
 				p->m_inst.addBytes (udis);
@@ -266,8 +271,6 @@ InstructionDecoder::decodeRegRM () {
 			} break;
 		}
 
-
-		//FIXME - make sure this works before deleting the previous version
 		if (im.w) { //16 bits
 			((im.d) ? p->m_inst.operands ().dest () : p->m_inst.operands ().src ()).init<unsigned short> (p->m_eunit->getReg16 (modrm.reg));
 			((im.d) ? p->m_inst.operands ().src () : p->m_inst.operands ().dest ()).init<unsigned short> (p->m_biu->getMemoryAddress<unsigned short> (p->m_biu->getSegRegDS (), mem), true);
@@ -541,7 +544,6 @@ InstructionDecoder::decodeAccMem () {
 	((!im.d) ? p->m_dis_dest : p->m_dis_src) << Jaf::getRegIndexName (im.w, Jaf::REG_AX);
 	((!im.d) ? p->m_dis_src : p->m_dis_dest) << "[" << std::setfill ('0') << std::setw (sizeof(mem) << 1) << std::hex << (unsigned int)mem << "]";
 
-	//FIXME - make sure this works before deleting the previous version
 	if (im.w) { //16 bits
 		((im.d) ? p->m_inst.operands ().dest () : p->m_inst.operands ().src ()).init<unsigned short> (p->m_biu->getMemoryAddress<unsigned short> (p->m_biu->getSegRegDS (), mem), true);
 		((im.d) ? p->m_inst.operands ().src () : p->m_inst.operands ().dest ()).init<unsigned short> (p->m_eunit->getRegAX ());

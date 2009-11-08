@@ -564,6 +564,15 @@ ExecutionUnit::execDEC (OperandList &ops) {
 	}
 }
 
+void
+ExecutionUnit::execDIV (OperandList &ops) {
+	if (ops.operandSize () == Jaf::OP_SIZE_16) {
+		p->m_alu->opDiv (ops.dest ().get<unsigned short> ());
+	}
+	else {
+		p->m_alu->opDiv (ops.dest ().get<unsigned char> ());
+	}
+}
 
 void
 ExecutionUnit::execHLT (OperandList &ops) {
@@ -775,6 +784,11 @@ ExecutionUnit::execLAHF (OperandList &ops) {
 }
 
 void
+ExecutionUnit::execLEA (OperandList &ops) {
+	ops.dest ().get<unsigned short> () = ops.src ().get<unsigned short> ().getOffset ();
+}
+
+void
 ExecutionUnit::execMOV (OperandList &ops) {
 	if (ops.operandSize () == Jaf::OP_SIZE_16) {
 		ops.dest ().get<unsigned short> () = ops.src ().get<unsigned short> ();
@@ -800,6 +814,16 @@ ExecutionUnit::execMOVS (OperandList &ops) {
 	else {
 		getRegSI () += ops.src ().size ();
 		getRegDI () += ops.dest ().size ();
+	}
+}
+
+void
+ExecutionUnit::execMUL (OperandList &ops) {
+	if (ops.operandSize () == Jaf::OP_SIZE_16) {
+		p->m_alu->opMul (ops.dest ().get<unsigned short> ());
+	}
+	else {
+		p->m_alu->opMul (ops.dest ().get<unsigned char> ());
 	}
 }
 

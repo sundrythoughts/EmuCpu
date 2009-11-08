@@ -107,6 +107,11 @@ public:
 	}
 
 private:
+	virtual unsigned short getOffset () const {
+		std::cerr << "Debug: class Immediate has no offset" << std::endl;
+		return 0;
+	}
+
 	virtual const INumberReadableWritable<T>& operator++ () {
 		std::cerr << "Debug: class Immediate is read-only" << std::endl;
 		return *this;

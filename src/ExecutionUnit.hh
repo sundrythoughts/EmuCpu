@@ -290,7 +290,7 @@ public:
 	void execDEC (OperandList &ops);
 
 	/** */
-	void execDIV ();
+	void execDIV (OperandList &ops);
 
 	/** */
 	void execESC ();
@@ -389,7 +389,7 @@ public:
 	void execLDS ();
 
 	/** */
-	void execLEA ();
+	void execLEA (OperandList &ops);
 
 	/** */
 	void execLES ();
@@ -416,7 +416,7 @@ public:
 	void execMOVS (OperandList &ops);
 
 	/** */
-	void execMUL ();
+	void execMUL (OperandList &ops);
 
 	/** */
 	void execNEG (OperandList &ops);

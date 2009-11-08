@@ -36,11 +36,15 @@ template<typename T>
 class MemoryAddress : public INumberReadableWritable<T> {
 	Memory *m_memory;
 	size_t m_phys_addr;
+	unsigned short m_seg;
+	unsigned short m_offset;
 	mutable T m_num;
 
 public:
 	/** */
 	MemoryAddress (Memory *mem, unsigned short seg, unsigned short offset) : m_memory (mem) {
+		m_seg = seg;
+		m_offset = offset;
 		m_phys_addr = seg << 4;
 		m_phys_addr += offset;
 	}
@@ -55,6 +59,11 @@ public:
 	virtual const T& getValue () const {
 		read ();
 		return m_num;
+	}
+
+	/** Get offset */
+	virtual unsigned short getOffset () const {
+		return m_offset;
 	}
 
 	/** */

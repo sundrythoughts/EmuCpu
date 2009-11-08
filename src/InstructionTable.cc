@@ -178,7 +178,7 @@ const InstructionTableItem InstructionTable::one_byte_opcode_instruction_map[256
 	{"mov", true, GROUP_NONE, &InstructionDecoder::decodeRegRM, &ExecutionUnit::execMOV},
 	{"mov", true, GROUP_NONE, &InstructionDecoder::decodeRegRM, &ExecutionUnit::execMOV},
 	{"mov", true, GROUP_NONE, &InstructionDecoder::decodeSegRM, &ExecutionUnit::execMOV},
-	{"lea", true, GROUP_NONE, &InstructionDecoder::decodeRegRM, &ExecutionUnit::execNotImplemented},
+	{"lea", true, GROUP_NONE, &InstructionDecoder::decodeRegRM, &ExecutionUnit::execLEA}, //has an inverted D bit
 	{"mov", true, GROUP_NONE, &InstructionDecoder::decodeSegRM, &ExecutionUnit::execMOV},
 	{0, true, GROUP_2, &InstructionDecoder::decodeNotImplemented, &ExecutionUnit::execNotImplemented},
 
@@ -359,9 +359,9 @@ const InstructionTableItem InstructionTable::one_byte_opcode_instruction_extensi
 		{0, false, GROUP_RESERVED, &InstructionDecoder::decodeNotImplemented, &ExecutionUnit::execNotImplemented},
 		{"not", true, GROUP_4, &InstructionDecoder::decodeRM, &ExecutionUnit::execNOT},
 		{"neg", true, GROUP_4, &InstructionDecoder::decodeRM, &ExecutionUnit::execNEG},
-		{"mul", true, GROUP_4, &InstructionDecoder::decodeRM, &ExecutionUnit::execNotImplemented},
+		{"mul", true, GROUP_4, &InstructionDecoder::decodeRM, &ExecutionUnit::execMUL},
 		{"imul", true, GROUP_4, &InstructionDecoder::decodeRM, &ExecutionUnit::execNotImplemented},
-		{"div", true, GROUP_4, &InstructionDecoder::decodeRM, &ExecutionUnit::execNotImplemented},
+		{"div", true, GROUP_4, &InstructionDecoder::decodeRM, &ExecutionUnit::execDIV},
 		{"idiv", true, GROUP_4, &InstructionDecoder::decodeRM, &ExecutionUnit::execNotImplemented}
 	},//END GROUP 4
 

@@ -67,6 +67,7 @@ public:
 	/** */
 	void clear ();
 
+	/** */
 	std::string toString () const;
 
 }; //end class InstructionDisassembly

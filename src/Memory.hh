@@ -74,6 +74,7 @@ public:
 	/** Emit signalValueChanged () for each memory location */
 	void emitValueChangedForAll () const;
 
+	/** */
 	void emitSignalReloaded ();
 
 	/**

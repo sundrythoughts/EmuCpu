@@ -19,53 +19,99 @@
 
 #include "Instruction.hh"
 
-Instruction::Instruction () : m_decoder (0), m_eunit (0), m_inst_item (0) {
+#include "CpuComponents.hh"
+#include "InstructionDecoder.hh"
+#include "ExecutionUnit.hh"
+#include "OperandList.hh"
+
+class InstructionPrivate {
+public:
+	CpuComponents *m_cpu;
+	InstructionDecoder *m_decoder;
+	ExecutionUnit *m_eunit;
+	OperandList m_operands;
+	const InstructionTableItem *m_inst_item;
+	std::vector<unsigned char> m_inst_bytes;
+	InstructionDisassembly m_disasm;
+};
+
+Instruction::Instruction () {
+	p = new InstructionPrivate ();
+	p->m_decoder = 0;
+	p->m_eunit = 0;
+	p->m_inst_item = 0;
+}
+
+void
+Instruction::connectTo (CpuComponents &cpu) {
+	p->m_decoder = &cpu.getInstructionDecoder ();
+	p->m_eunit = &cpu.getExecutionUnit ();
 }
 
 void
 Instruction::connectTo (InstructionDecoder &dec) {
-	m_decoder = &dec;
+	p->m_decoder = &dec;
 }
 
 void
 Instruction::connectTo (ExecutionUnit &eu) {
-	m_eunit = &eu;
+	p->m_eunit = &eu;
 }
 
 OperandList&
 Instruction::operands () {
-	return m_operands;
+	return p->m_operands;
+}
+
+InstructionDisassembly&
+Instruction::disassembly () {
+	return p->m_disasm;
 }
 
 void
 Instruction::decode () {
-	m_inst_item->decode (*m_decoder);
+	p->m_inst_item->decode (*p->m_decoder);
 }
 
 void
 Instruction::execute () {
-	m_inst_item->execute (*m_eunit, m_operands);
+	p->m_inst_item->execute (*p->m_eunit);
 }
 
 void
 Instruction::setItem (const InstructionTableItem &item) {
-	m_inst_item = &item;
+	p->m_inst_item = &item;
 }
 
 const InstructionTableItem&
 Instruction::getItem () {
-	return *m_inst_item;
+	return *p->m_inst_item;
 }
 
 void
 Instruction::reset () {
-	m_operands.reset ();
-	m_inst_item = 0;
-	m_inst_bytes.clear ();
+	p->m_operands.reset ();
+	p->m_inst_item = 0;
+	p->m_inst_bytes.clear ();
+}
+
+bool
+Instruction::isNull () const {
+	return p->m_inst_item == 0;
 }
 
 const std::vector<unsigned char>&
 Instruction::getBytes () const {
-	return m_inst_bytes;
+	return p->m_inst_bytes;
+}
+
+std::vector<unsigned char>&
+Instruction::getBytes () {
+	return p->m_inst_bytes;
+}
+
+unsigned char
+Instruction::getByte (size_t i) const {
+	return p->m_inst_bytes[i];
 }
 

@@ -33,18 +33,25 @@ class OperandList {
 	NumberWrapper m_ops[2];
 
 public:
+	/** */
 	OperandList ();
 
+	/** */
 	~OperandList ();
 
+	/** */
 	bool operandSize () const;
 
+	/** */
 	void setOperandSize (bool s);
 
+	/** */
 	NumberWrapper& src ();
 
+	/** */
 	NumberWrapper& dest ();
 
+	/** */
 	void reset ();
 };
 

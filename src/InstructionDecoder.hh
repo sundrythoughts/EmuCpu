@@ -54,6 +54,7 @@ public:
 	/** Decode the next instruction */
 	void nextInstruction ();
 
+	/** */
 	sigc::signal<void, const std::string&,
 	                   const std::string&,
 	                   const std::string&,

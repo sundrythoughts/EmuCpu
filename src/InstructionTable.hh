@@ -39,14 +39,16 @@ public:
 	bool has_modrm;
 	unsigned int group;
 	void (InstructionDecoder::*decode_func) ();
-	void (ExecutionUnit::*execute_func) (OperandList &ops);
+	void (ExecutionUnit::*execute_func) ();
 
+	/** */
 	void decode (InstructionDecoder &id) const {
 		(id.*decode_func) ();
 	}
 
-	void execute (ExecutionUnit &eu, OperandList &ops) const {
-		(eu.*execute_func) (ops);
+	/** */
+	void execute (ExecutionUnit &eu) const {
+		(eu.*execute_func) ();
 	}
 
 }; //end class InstructionTableItem
@@ -69,9 +71,16 @@ public:
 		GROUP_RESERVED
 	} InstructionGroups;
 
-	
+	/** */
+	static const InstructionTableItem& getOneByteOpcodeInstruction (size_t i);
 
+	/** */
 	static const InstructionTableItem one_byte_opcode_instruction_map[256];
+
+	/** */
+	static const InstructionTableItem& getOneByteOpcodeInstructionExtension (size_t row, size_t col);
+
+	/** */
 	static const InstructionTableItem one_byte_opcode_instruction_extension_map[7][8];
 
 }; //end class InstructionTable

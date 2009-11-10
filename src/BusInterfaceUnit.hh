@@ -45,22 +45,8 @@ class BusInterfaceUnit {
 	unsigned short m_sregs[Jaf::SREG_COUNT];
 	Register<unsigned short> m_seg_regs[Jaf::SREG_COUNT];
 
-#if 0
-	unsigned short m_cs;
-	unsigned short m_ds;
-	unsigned short m_es;
-	unsigned short m_ss;
-#endif
-
 	unsigned short m_ip;
 	unsigned short m_seg_override;
-
-#if 0
-	Register<unsigned short> m_sreg_cs;
-	Register<unsigned short> m_sreg_ds;
-	Register<unsigned short> m_sreg_es;
-	Register<unsigned short> m_sreg_ss;
-#endif
 
 	Register<unsigned short> m_reg_ip;
 
@@ -142,6 +128,7 @@ public:
 
 		return val;
 	}
+
 }; //end class BusInterfaceUnit
 
 template<typename T>

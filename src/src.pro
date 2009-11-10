@@ -7,33 +7,9 @@ CONFIG += qt thread
 CONFIG += link_pkgconfig
 PKGCONFIG += sigc++-2.0
 
+LIBS += -lsybdb
+
 SOURCES += Sim86.cc
-
-#HEADERS += InstructionExecuter.hh
-
-HEADERS += ProxyLayer.hh
-SOURCES += ProxyLayer.cc
-
-HEADERS += Cpu.hh
-SOURCES += Cpu.cc
-
-HEADERS += CpuComponents.hh
-SOURCES += CpuComponents.cc
-
-HEADERS += NumberWrapper.hh
-SOURCES += NumberWrapper.cc
-
-HEADERS += OperandList.hh
-SOURCES += OperandList.cc
-
-HEADERS += Instruction.hh
-SOURCES += Instruction.cc
-
-HEADERS += Defines.hh
-SOURCES += Defines.cc
-
-HEADERS += ExecutionUnit.hh
-SOURCES += ExecutionUnit.cc
 
 HEADERS += ArithmeticLogicUnit.hh
 SOURCES += ArithmeticLogicUnit.cc
@@ -41,14 +17,46 @@ SOURCES += ArithmeticLogicUnit.cc
 HEADERS += BusInterfaceUnit.hh
 SOURCES += BusInterfaceUnit.cc
 
-HEADERS += Memory.hh
-SOURCES += Memory.cc
+HEADERS += Cpu.hh
+SOURCES += Cpu.cc
 
-HEADERS += Loader.hh
-SOURCES += Loader.cc
+HEADERS += CpuComponents.hh
+SOURCES += CpuComponents.cc
 
-HEADERS += InstructionTable.hh
-SOURCES += InstructionTable.cc
+HEADERS += DatabaseTester.hh
+SOURCES += DatabaseTester.cc
+
+HEADERS += Defines.hh
+SOURCES += Defines.cc
+
+HEADERS += DisassemblySignalsAndSlots.hh
+SOURCES += DisassemblySignalsAndSlots.cc
+
+FORMS += DisassemblyWidget.ui
+HEADERS += DisassemblyWidget.hh
+SOURCES += DisassemblyWidget.cc
+
+HEADERS += ExecutionUnit.hh
+SOURCES += ExecutionUnit.cc
+
+HEADERS += FlagRegisterSignalsAndSlots.hh
+SOURCES += FlagRegisterSignalsAndSlots.cc
+
+FORMS += FlagsWidget.ui
+HEADERS += FlagsWidget.hh
+SOURCES += FlagsWidget.cc
+
+HEADERS += GeneralRegisterSignalsAndSlots.hh
+SOURCES += GeneralRegisterSignalsAndSlots.cc
+
+FORMS += GeneralRegistersWidget.ui
+HEADERS += GeneralRegistersWidget.hh
+SOURCES += GeneralRegistersWidget.cc
+
+HEADERS += Immediate.hh
+
+HEADERS += Instruction.hh
+SOURCES += Instruction.cc
 
 HEADERS += InstructionDecoder.hh
 SOURCES += InstructionDecoder.cc
@@ -56,49 +64,56 @@ SOURCES += InstructionDecoder.cc
 HEADERS += InstructionDisassembly.hh
 SOURCES += InstructionDisassembly.cc
 
-HEADERS += FlagRegisterSignalsAndSlots.hh
-SOURCES += FlagRegisterSignalsAndSlots.cc
+#HEADERS += InstructionExecuter.hh
 
-HEADERS += GeneralRegisterSignalsAndSlots.hh
-SOURCES += GeneralRegisterSignalsAndSlots.cc
+HEADERS += InstructionTable.hh
+SOURCES += InstructionTable.cc
 
-HEADERS += SegmentRegisterSignalsAndSlots.hh
-SOURCES += SegmentRegisterSignalsAndSlots.cc
+HEADERS += INumberReadableWritable.hh
+
+HEADERS += Loader.hh
+SOURCES += Loader.cc
+
+HEADERS += Memory.hh
+SOURCES += Memory.cc
+
+HEADERS += MemoryAddress.hh
 
 HEADERS += MemorySignalsAndSlots.hh
 SOURCES += MemorySignalsAndSlots.cc
-
-HEADERS += DisassemblySignalsAndSlots.hh
-SOURCES += DisassemblySignalsAndSlots.cc
-
-FORMS += FlagsWidget.ui
-HEADERS += FlagsWidget.hh
-SOURCES += FlagsWidget.cc
-
-FORMS += GeneralRegistersWidget.ui
-HEADERS += GeneralRegistersWidget.hh
-SOURCES += GeneralRegistersWidget.cc
-
-FORMS += SegmentRegistersWidget.ui
-HEADERS += SegmentRegistersWidget.hh
-SOURCES += SegmentRegistersWidget.cc
-
-FORMS += StackWidget.ui
-HEADERS += StackWidget.hh
-SOURCES += StackWidget.cc
-
-FORMS += DisassemblyWidget.ui
-HEADERS += DisassemblyWidget.hh
-SOURCES += DisassemblyWidget.cc
 
 FORMS += MemoryWidget.ui
 HEADERS += MemoryWidget.hh
 SOURCES += MemoryWidget.cc
 
-FORMS += TerminalWidget.ui
-HEADERS += TerminalWidget.hh
-SOURCES += TerminalWidget.cc
+HEADERS += NumberWrapper.hh
+SOURCES += NumberWrapper.cc
+
+HEADERS += OperandList.hh
+SOURCES += OperandList.cc
+
+HEADERS += ProxyLayer.hh
+SOURCES += ProxyLayer.cc
+
+HEADERS += SegmentRegisterSignalsAndSlots.hh
+SOURCES += SegmentRegisterSignalsAndSlots.cc
+
+FORMS += SegmentRegistersWidget.ui
+HEADERS += SegmentRegistersWidget.hh
+SOURCES += SegmentRegistersWidget.cc
 
 FORMS += Sim86Window.ui
 HEADERS += Sim86Window.hh
 SOURCES += Sim86Window.cc
+
+FORMS += StackWidget.ui
+HEADERS += StackWidget.hh
+SOURCES += StackWidget.cc
+
+FORMS += TerminalWidget.ui
+HEADERS += TerminalWidget.hh
+SOURCES += TerminalWidget.cc
+
+HEADERS += Utility.hh
+SOURCES += Utility.cc
+

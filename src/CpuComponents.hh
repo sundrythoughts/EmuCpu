@@ -16,6 +16,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/**
+@file CpuComponents.hh
+@brief Packages together all of the parts of the cpu like the EU, BIU, etc.
+*/
 
 #ifndef JAF__CPU_COMPONENTS_HH
 #define JAF__CPU_COMPONENTS_HH
@@ -25,8 +29,10 @@
 #include "BusInterfaceUnit.hh"
 #include "Memory.hh"
 #include "InstructionDecoder.hh"
+#include "Instruction.hh"
 #include "Loader.hh"
 
+class Instruction;
 class InstructionDecoder;
 class ExecutionUnit;
 class BusInterfaceUnit;
@@ -61,6 +67,9 @@ public:
 
 	/** */
 	InstructionDecoder& getInstructionDecoder ();
+
+	/** */
+	Instruction& getInstruction ();
 
 	/** */
 	Loader& getLoader ();

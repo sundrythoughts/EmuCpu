@@ -6,27 +6,27 @@
 #ifndef JAF__INSTRUCTION_HH
 #define JAF__INSTRUCTION_HH
 
-#include "InstructionDecoder.hh"
-#include "ExecutionUnit.hh"
-#include "OperandList.hh"
+#include "InstructionDisassembly.hh"
 #include "InstructionTable.hh"
-
 #include <vector>
+
+class CpuComponents;
+class InstructionPrivate;
 
 /**
 @class Instruction
 @brief Store the information and function pointers for decoding and executing instructions.
 */
 class Instruction {
-	InstructionDecoder *m_decoder;
-	ExecutionUnit *m_eunit;
-	OperandList m_operands;
-	const InstructionTableItem *m_inst_item;
-	std::vector<unsigned char> m_inst_bytes;
+
+	InstructionPrivate *p;
 
 public:
 	/** */
 	Instruction ();
+
+	/** */
+	void connectTo (CpuComponents &cpu);
 
 	/** */
 	void connectTo (InstructionDecoder &dec);
@@ -36,6 +36,9 @@ public:
 
 	/** */
 	OperandList& operands ();
+
+	/** */
+	InstructionDisassembly& disassembly ();
 
 	/** */
 	void decode ();
@@ -53,7 +56,16 @@ public:
 	void reset ();
 
 	/** */
+	bool isNull () const;
+
+	/** */
 	const std::vector<unsigned char>& getBytes () const;
+
+	/** */
+	std::vector<unsigned char>& getBytes ();
+
+	/** */
+	unsigned char getByte (size_t i) const;
 
 	/** */
 	template<typename T>
@@ -66,7 +78,7 @@ void
 Instruction::addBytes (const T &val) {
 	unsigned char *b = (unsigned char*)&val;
 	for (size_t i = 0; i < sizeof(T); ++i) {
-		m_inst_bytes.push_back (*b);
+		getBytes ().push_back (*b);
 		++b;
 	}
 }

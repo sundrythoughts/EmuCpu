@@ -36,6 +36,7 @@ class DisassemblySignalsAndSlots : public QObject {
 	Q_OBJECT
 
 public:
+	/** */
 	void sigcSlotNextInstruction (const std::string&, const std::string&, const std::string&, const std::string&);
 
 public slots:
@@ -43,6 +44,7 @@ public slots:
 	void enableDisable (bool b);
 
 signals:
+	/** */
 	void nextInstruction (QString seg_off, QString mcode, QString asm_code, QString addr_mode);
 
 }; //end class DisassemblySignalsAndSlots

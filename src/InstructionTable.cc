@@ -19,6 +19,16 @@
 
 #include "InstructionTable.hh"
 
+const InstructionTableItem&
+InstructionTable::getOneByteOpcodeInstruction (size_t i) {
+	return one_byte_opcode_instruction_map[i];
+}
+
+const InstructionTableItem&
+InstructionTable::getOneByteOpcodeInstructionExtension (size_t row, size_t col) {
+	return one_byte_opcode_instruction_extension_map[row][col];
+}
+
 const InstructionTableItem InstructionTable::one_byte_opcode_instruction_map[256] = {
 	/* 0x */
 	{"add", true, GROUP_NONE, &InstructionDecoder::decodeRegRM, &ExecutionUnit::execADD},

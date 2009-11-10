@@ -16,6 +16,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/**
+@file Defines.hh
+@brief Definitions and declarations for global data.
+*/
+
 
 #ifndef JAF__DEFINES_HH
 #define JAF__DEFINES_HH
@@ -24,6 +29,7 @@
 
 namespace Jaf {
 
+/** */
 enum AddressMode {
 	ADDR_MODE_NONE = 0,
 	ADDR_MODE_REG_RM,
@@ -52,12 +58,14 @@ enum AddressMode {
 	ADDR_MODE_STRING
 };
 
+/** */
 enum OperandSize {
 	OP_SIZE_8 = 0,
 	OP_SIZE_16,
 	OP_SIZE_NONE
 };
 
+/** */
 enum RegisterIndex8 {
 	REG_AL = 0,
 	REG_CL,
@@ -70,6 +78,7 @@ enum RegisterIndex8 {
 	REG_COUNT_8
 };
 
+/** */
 enum RegisterIndex16 {
 	REG_AX = 0,
 	REG_CX,
@@ -83,10 +92,16 @@ enum RegisterIndex16 {
 	REG_COUNT_16
 };
 
+/** */
 const char* getRegIndexName (size_t op_sz, size_t reg_i);
+
+/** */
 const char* getRegIndex8Name (size_t reg_i);
+
+/** */
 const char* getRegIndex16Name (size_t reg_i);
 
+/** */
 enum SegmentRegisterIndex {
 	SREG_ES = 0,
 	SREG_CS,
@@ -95,10 +110,12 @@ enum SegmentRegisterIndex {
 	SREG_COUNT
 };
 
-extern const char* sreg_index_names[SREG_COUNT];
+//extern const char* sreg_index_names[SREG_COUNT];
 
+/** */
 const char* getSegRegIndexName (size_t reg_i);
 
+/** */
 union ModRM {
 	unsigned char byte;
 	struct {
@@ -108,6 +125,7 @@ union ModRM {
 	};
 };
 
+/** */
 union ScaleIndexBase {
 	unsigned char byte;
 	struct {

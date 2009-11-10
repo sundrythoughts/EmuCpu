@@ -64,22 +64,22 @@ public:
 	void updateFlagAF (unsigned short result16, unsigned int result32);
 
 	/**
-	@brief Update the carry flag (CF) for an 8-bit operation.
+	@brief Update the carry flag (CF) for an 8-bit addition operation.
 	*/
 	void updateFlagAddCF (unsigned char result8, unsigned short result16);
 
 	/**
-	@brief Update the carry flag (CF) for a 16-bit operation.
+	@brief Update the carry flag (CF) for a 16-bit addition operation.
 	*/
 	void updateFlagAddCF (unsigned short result16, unsigned int result32);
 
 	/**
-	@brief Update the carry flag (CF) for an 8-bit operation.
+	@brief Update the carry flag (CF) for an 8-bit subtraction operation.
 	*/
 	void updateFlagSubCF (unsigned char result8, unsigned short result16);
 
 	/**
-	@brief Update the carry flag (CF) for a 16-bit operation.
+	@brief Update the carry flag (CF) for a 16-bit subtraction operation.
 	*/
 	void updateFlagSubCF (unsigned short result16, unsigned int result32);
 

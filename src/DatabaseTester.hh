@@ -20,18 +20,24 @@
 #ifndef JAF__DATABASE_TESTER_HH
 #define JAF__DATABASE_TESTER_HH
 
-#include <QObject>
+#include <QThread>
 
 namespace syb {
 #include <sybdb.h>
 }
 
-class DatabaseTester : public Runnable {
+class DatabaseTester : public QThread {
 	Q_OBJECT
 
 	syb::LOGINREC *m_login;
 	syb::DBPROCESS *m_dbproc;
 	syb::RETCODE m_ret;
+
+protected:
+	//override
+	virtual void run () {
+		//FIXME - implement this
+	}
 
 public:
 	DatabaseTester () : m_login (0), m_dbproc (0) {
@@ -43,18 +49,29 @@ public:
 	}
 
 public slots:
+	/** */
 	void connect (const QString &server, const QString &db, const QString &uid, const QString &pwd);
+
+	/** */
 	void disconnect ();
 
+	/** */
 	void spChecksumsInsert (const QString &userid, const QString &testid, int regcksum, int ramcksum);
 
 signals:
+	/** */
 	void error (QString err);
 
+	/** */
 	void connecting ();
+
+	/** */
 	void connected ();
 
+	/** */
 	void disconnecting ();
+
+	/** */
 	void disconnected ();
 };
 

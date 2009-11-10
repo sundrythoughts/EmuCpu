@@ -81,6 +81,7 @@ public:
 	template<typename T>
 	INumberReadableWritable<T>& get () throw(std::logic_error);
 
+	/** */
 	void free ();
 
 private:

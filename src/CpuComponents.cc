@@ -26,6 +26,7 @@ public:
 	ArithmeticLogicUnit m_alu;
 	BusInterfaceUnit m_biu;
 	InstructionDecoder m_decoder;
+	Instruction m_inst;
 	Loader m_loader;
 
 	bool m_halt;
@@ -34,11 +35,11 @@ public:
 CpuComponents::CpuComponents () {
 	p = new CpuComponentsPrivate ();
 
-	//p->m_mem.connectTo (*this);
 	p->m_eunit.connectTo (*this);
 	p->m_alu.connectTo (*this);
 	p->m_biu.connectTo (*this);
 	p->m_decoder.connectTo (*this);
+	p->m_inst.connectTo (*this);
 	p->m_loader.connectTo (*this);
 }
 
@@ -69,6 +70,11 @@ CpuComponents::getArithmeticLogicUnit () {
 InstructionDecoder&
 CpuComponents::getInstructionDecoder () {
 	return p->m_decoder;
+}
+
+Instruction&
+CpuComponents::getInstruction () {
+	return p->m_inst;
 }
 
 Loader&

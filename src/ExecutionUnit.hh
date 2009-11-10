@@ -227,7 +227,7 @@ public:
 	void setRegFlagsZF (bool val);
 
 	/** */
-	void execNotImplemented (OperandList &ops);
+	void execNotImplemented ();
 
 	/** */
 	void execAAA ();
@@ -242,13 +242,13 @@ public:
 	void execAAS ();
 
 	/** */
-	void execADC (OperandList &ops);
+	void execADC ();
 
 	/** */
-	void execADD (OperandList &ops);
+	void execADD ();
 
 	/** */
-	void execAND (OperandList &ops);
+	void execAND ();
 
 	/** */
 	void execCALL ();
@@ -257,28 +257,28 @@ public:
 	void execCALLFAR ();
 
 	/** */
-	void execCBW (OperandList &ops);
+	void execCBW ();
 
 	/** */
-	void execCLC (OperandList &ops);
+	void execCLC ();
 
 	/** */
-	void execCLD (OperandList &ops);
+	void execCLD ();
 
 	/** */
-	void execCLI (OperandList &ops);
+	void execCLI ();
 
 	/** */
-	void execCMC (OperandList &ops);
+	void execCMC ();
 
 	/** */
-	void execCMP (OperandList &ops);
+	void execCMP ();
 
 	/** */
-	void execCMPS (OperandList &ops);
+	void execCMPS ();
 
 	/** */
-	void execCWD (OperandList &ops);
+	void execCWD ();
 
 	/** */
 	void execDAA ();
@@ -287,16 +287,16 @@ public:
 	void execDAS ();
 
 	/** */
-	void execDEC (OperandList &ops);
+	void execDEC ();
 
 	/** */
-	void execDIV (OperandList &ops);
+	void execDIV ();
 
 	/** */
 	void execESC ();
 
 	/** */
-	void execHLT (OperandList &ops);
+	void execHLT ();
 
 	/** */
 	void execIDIV ();
@@ -308,7 +308,7 @@ public:
 	void execIN ();
 
 	/** */
-	void execINC (OperandList &ops);
+	void execINC ();
 
 	/** */
 	void execINT ();
@@ -320,76 +320,76 @@ public:
 	void execIRET ();
 
 	/** */
-	void execJNA (OperandList &ops);
+	void execJNA ();
 
 	/** */
-	void execJNAE (OperandList &ops);
+	void execJNAE ();
 
 	/** */
-	void execJNB (OperandList &ops);
+	void execJNB ();
 
 	/** */
-	void execJNBE (OperandList &ops);
+	void execJNBE ();
 
 	/** */
-	void execJC (OperandList &ops);
+	void execJC ();
 
 	/** */
-	void execJCXZ (OperandList &ops);
+	void execJCXZ ();
 
 	/** */
-	void execJE (OperandList &ops);
+	void execJE ();
 
 	/** */
-	void execJG (OperandList &ops);
+	void execJG ();
 
 	/** */
-	void execJGE (OperandList &ops);
+	void execJGE ();
 
 	/** */
-	void execJL (OperandList &ops);
+	void execJL ();
 
 	/** */
-	void execJLE (OperandList &ops);
+	void execJLE ();
 
 	/** */
-	void execJMP (OperandList &ops);
+	void execJMP ();
 
 	/** */
 	void execJMPFAR ();
 
 	/** */
-	void execJNC (OperandList &ops);
+	void execJNC ();
 
 	/** */
-	void execJNE (OperandList &ops);
+	void execJNE ();
 
 	/** */
-	void execJNO (OperandList &ops);
+	void execJNO ();
 
 	/** */
-	void execJNS (OperandList &ops);
+	void execJNS ();
 
 	/** */
-	void execJNP (OperandList &ops);
+	void execJNP ();
 
 	/** */
-	void execJO (OperandList &ops);
+	void execJO ();
 
 	/** */
-	void execJPE (OperandList &ops);
+	void execJPE ();
 
 	/** */
-	void execJS (OperandList &ops);
+	void execJS ();
 
 	/** */
-	void execLAHF (OperandList &ops);
+	void execLAHF ();
 
 	/** */
 	void execLDS ();
 
 	/** */
-	void execLEA (OperandList &ops);
+	void execLEA ();
 
 	/** */
 	void execLES ();
@@ -410,46 +410,46 @@ public:
 	void execLOOPNE ();
 
 	/** */
-	void execMOV (OperandList &ops);
+	void execMOV ();
 
 	/** */
-	void execMOVS (OperandList &ops);
+	void execMOVS ();
 
 	/** */
-	void execMUL (OperandList &ops);
+	void execMUL ();
 
 	/** */
-	void execNEG (OperandList &ops);
+	void execNEG ();
 
 	/** */
-	void execNOP (OperandList &ops);
+	void execNOP ();
 
 	/** */
-	void execNOT (OperandList &ops);
+	void execNOT ();
 
 	/** */
-	void execOR (OperandList &ops);
+	void execOR ();
 
 	/** */
 	void execOUT ();
 
 	/** */
-	void execPOP (OperandList &ops);
+	void execPOP ();
 
 	/** */
-	void execPOPF (OperandList &ops);
+	void execPOPF ();
 
 	/** */
-	void execPUSH (OperandList &ops);
+	void execPUSH ();
 
 	/** */
-	void execPUSHF (OperandList &ops);
+	void execPUSHF ();
 
 	/** */
-	void execRCL (OperandList &ops);
+	void execRCL ();
 
 	/** */
-	void execRCR (OperandList &ops);
+	void execRCR ();
 
 	/** */
 	void execREP ();
@@ -464,61 +464,61 @@ public:
 	void execRETFAR ();
 
 	/** */
-	void execROL (OperandList &ops);
+	void execROL ();
 
 	/** */
-	void execROR (OperandList &ops);
+	void execROR ();
 
 	/** */
-	void execSAHF (OperandList &ops);
+	void execSAHF ();
 
 	/** */
-	void execSHL (OperandList &ops);
+	void execSHL ();
 
 	/** */
-	void execSAR (OperandList &ops);
+	void execSAR ();
 
 	/** */
-	void execSBB (OperandList &ops);
+	void execSBB ();
 
 	/** */
 	void execSCAS ();
 
 	/** */
-	void execSEG (OperandList &ops);
+	void execSEG ();
 
 	/** */
-	void execSHR (OperandList &ops);
+	void execSHR ();
 
 	/** */
-	void execSTC (OperandList &ops);
+	void execSTC ();
 
 	/** */
-	void execSTD (OperandList &ops);
+	void execSTD ();
 
 	/** */
-	void execSTI (OperandList &ops);
+	void execSTI ();
 
 	/** */
 	void execSTOS ();
 
 	/** */
-	void execSUB (OperandList &ops);
+	void execSUB ();
 
 	/** */
-	void execTEST (OperandList &ops);
+	void execTEST ();
 
 	/** */
 	void execWAIT ();
 
 	/** */
-	void execXCHG (OperandList &ops);
+	void execXCHG ();
 
 	/** */
 	void execXLAT ();
 
 	/** */
-	void execXOR (OperandList &ops);
+	void execXOR ();
 
 }; //end class ExecutionUnit
 

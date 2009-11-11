@@ -24,6 +24,15 @@ SegmentRegistersWidget::SegmentRegistersWidget (QWidget *parent) : QDockWidget (
 	setupUi (this);
 }
 
+void
+SegmentRegistersWidget::reset () {
+	setSegRegCS (0);
+	setSegRegDS (0);
+	setSegRegES (0);
+	setSegRegSS (0);
+	setRegIP (0);
+}
+
 
 void
 SegmentRegistersWidget::enableDisableToggle (bool b) {

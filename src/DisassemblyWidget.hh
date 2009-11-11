@@ -41,6 +41,9 @@ public:
 	/** */
 	DisassemblyWidget (QWidget *parent = 0);
 
+	/** */
+	void reset ();
+
 public slots:
 	/** */
 	void enableDisableToggle (bool b);

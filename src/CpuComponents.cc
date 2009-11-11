@@ -18,6 +18,7 @@
 
 
 #include "CpuComponents.hh"
+#include <iostream>
 
 class CpuComponentsPrivate {
 public:
@@ -90,5 +91,15 @@ CpuComponents::getHalt () {
 void
 CpuComponents::setHalt (bool b) {
 	p->m_halt = b;
+}
+
+void
+CpuComponents::reset () {
+	p->m_mem.reset ();
+	p->m_eunit.reset ();
+	p->m_biu.reset ();
+	p->m_decoder.reset ();
+	p->m_inst.reset ();
+	//p->m_loader.reset ();
 }
 

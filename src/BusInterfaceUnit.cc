@@ -41,6 +41,12 @@ BusInterfaceUnit::~BusInterfaceUnit () {
 }
 
 void
+BusInterfaceUnit::reset () {
+	m_ip = 0;
+	m_seg_override = -1;
+}
+
+void
 BusInterfaceUnit::initialize () {
 	//FIXME
 }

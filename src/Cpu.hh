@@ -50,9 +50,6 @@ class Cpu : public QThread {
 	};
 
 	CpuStateEnum m_cpu_state;
-	QMutex m_mutex;
-	bool m_thread_run;
-	unsigned long int m_thread_delay;
 
 public:
 	/** */

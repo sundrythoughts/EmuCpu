@@ -39,22 +39,20 @@ class StackWidget : public QDockWidget, protected Ui::StackWidget {
 
 public:
 	/** */
-	StackWidget (QWidget *parent = 0) : QDockWidget (parent) {
-		setupUi (this);
-	}
+	StackWidget (QWidget *parent = 0);
+
+	/** */
+	void reset ();
 
 public slots:
 	/** */
-	void enableDisableToggle (bool b) {
-		if (b) {
-			show ();
-		}
-		else {
-			hide ();
-		}
+	void enableDisableToggle (bool b);
 
-		emit enableDisable (b);
-	}
+	/** */
+	void push (unsigned short seg, unsigned short off, unsigned short val);
+
+	/** */
+	void pop ();
 
 signals:
 	/** */

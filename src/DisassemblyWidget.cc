@@ -25,6 +25,12 @@ DisassemblyWidget::DisassemblyWidget (QWidget *parent) : QWidget (parent) {
 }
 
 void
+DisassemblyWidget::reset () {
+	m_tbl_disasm->clearContents ();
+	m_txt_disasm->clear ();
+}
+
+void
 DisassemblyWidget::enableDisableToggle (bool b) {
 	if (b) {
 		show ();

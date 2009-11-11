@@ -96,7 +96,7 @@ Loader::loadFile (std::string filename, bool clear) {
 		m_header_mask.module_offset = *((unsigned short*)&m_header[1]);
 		m_header_mask.module_size = *((unsigned short*)&m_header[3]);
 
-		unsigned short seg_reg;
+		unsigned short seg_reg = 0;
 		switch (m_header_mask.segment_register) {
 		case 0: //cs
 			seg_reg = p->m_regs[m_CS];

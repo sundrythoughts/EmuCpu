@@ -74,6 +74,7 @@ Sim86Window::Sim86Window (QWidget *parent) : QMainWindow (parent) {
 	connect (m_act_run_single_step, SIGNAL(triggered ()), this, SIGNAL(singleStepCpu ()));
 
 	connect (m_act_debug_reset, SIGNAL(triggered ()), this, SIGNAL(resetCpu ()));
+	connect (this, SIGNAL(resetCpu ()), this, SLOT(resetUi ()));
 
 	connect (m_act_file_open, SIGNAL(triggered ()), this, SLOT(openFile ()));
 
@@ -143,9 +144,21 @@ Sim86Window::openFile () {
 		//m_file = f_info.fileName ();
 		//std::cout << m_file.toAscii ().constData () << std::endl;
 		//m_lnedit_file_name->setText (filename);
+		emit resetCpu ();
 		emit loadFile (file_name);
 	}
 	else {
-		//FIXME
+		//FIXME - can't open file
 	}
 }
+
+void
+Sim86Window::resetUi () {
+	getFlagsWidget ().reset ();
+	getGeneralRegistersWidget ().reset ();
+	getSegmentRegistersWidget ().reset ();
+	getStackWidget ().reset ();
+	getDisassemblyWidget ().reset ();
+	getTerminalWidget ().reset ();
+}
+

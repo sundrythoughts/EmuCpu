@@ -21,9 +21,25 @@
 #include <sstream>
 #include <iomanip>
 
+class InstructionDisassemblyPrivate {
+public:
+	std::string m_seg_off;
+	std::string m_machine_code;
+	std::string m_addr_mode;
+	std::string m_assembly;
+};
+
+InstructionDisassembly::InstructionDisassembly () {
+	p = new InstructionDisassemblyPrivate ();
+}
+
+InstructionDisassembly::~InstructionDisassembly () {
+	delete p;
+}
+
 const std::string&
 InstructionDisassembly::getSegmentOffset () const {
-	return m_seg_off;
+	return p->m_seg_off;
 }
 
 void
@@ -33,12 +49,12 @@ InstructionDisassembly::setSegmentOffset (unsigned short seg, unsigned short off
 	oss << ":";
 	oss << std::setfill ('0') << std::setw (4) << std::hex << off;
 
-	m_seg_off = oss.str ();
+	p->m_seg_off = oss.str ();
 }
 
 const std::string&
 InstructionDisassembly::getMachineCode () const {
-	return m_machine_code;
+	return p->m_machine_code;
 }
 
 void
@@ -48,39 +64,39 @@ InstructionDisassembly::setMachineCode (const std::vector<unsigned char> &code) 
 		oss << std::setfill ('0') << std::setw (2) << std::hex << (size_t)code[i];
 	}
 
-	m_machine_code = oss.str ();
+	p->m_machine_code = oss.str ();
 }
 
 const std::string&
 InstructionDisassembly::getAddressingMode () const {
-	return m_addr_mode;
+	return p->m_addr_mode;
 }
 
 void
 InstructionDisassembly::setAddressingMode (const std::string &s) {
-	m_addr_mode = s;
+	p->m_addr_mode = s;
 }
 
 const std::string&
 InstructionDisassembly::getAssembly () const {
-	return m_assembly;
+	return p->m_assembly;
 }
 
 void
 InstructionDisassembly::setAssembly (const std::string s) {
-	m_assembly = s;
+	p->m_assembly = s;
 }
 
 void
 InstructionDisassembly::clear () {
-	m_seg_off.clear ();
-	m_machine_code.clear ();
-	m_addr_mode.clear ();
-	m_assembly.clear ();
+	p->m_seg_off.clear ();
+	p->m_machine_code.clear ();
+	p->m_addr_mode.clear ();
+	p->m_assembly.clear ();
 }
 
 std::string
 InstructionDisassembly::toString () const {
-	return m_seg_off + "\t" + m_machine_code + "\t" + m_assembly + "\t" + m_addr_mode;
+	return p->m_seg_off + "\t" + p->m_machine_code + "\t" + p->m_assembly + "\t" + p->m_addr_mode;
 }
 

@@ -48,6 +48,9 @@ public:
 	/** Create a connection to the CpuComponents */
 	void connectTo (CpuComponents &cpu);
 
+	/** */
+	void reset ();
+
 	/** Re-decode the current instruction */
 	void getInstruction ();
 

@@ -46,6 +46,11 @@ FlagsWidget::FlagsWidget (QWidget *parent) : QDockWidget (parent) {
 }
 
 void
+FlagsWidget::reset () {
+	setFlags (0);
+}
+
+void
 FlagsWidget::enableDisableToggle (bool b) {
 	if (b) {
 		show ();

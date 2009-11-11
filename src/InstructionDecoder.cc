@@ -74,6 +74,10 @@ InstructionDecoder::connectTo (CpuComponents &cpu) {
 }
 
 void
+InstructionDecoder::reset () {
+}
+
+void
 InstructionDecoder::getInstruction () {
 	decodeInstruction ();
 }

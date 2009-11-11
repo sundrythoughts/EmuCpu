@@ -90,6 +90,9 @@ private slots:
 	/** */
 	void openFile ();
 
+	/** */
+	void resetUi ();
+
 signals:
 	/** */
 	void startCpu ();

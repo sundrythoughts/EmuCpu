@@ -63,6 +63,9 @@ public:
 	~BusInterfaceUnit ();
 
 	/** */
+	void reset ();
+
+	/** */
 	void initialize ();
 
 	/** Create a connection to the CpuComponents */
@@ -118,16 +121,7 @@ public:
 
 	/** Read sizeof(T) bytes starting at IP and then increment IP sizeof(T) bytes */
 	template<typename T>
-	T getInstructionBytes () {
-		size_t m_phys_addr = m_seg_regs[Jaf::SREG_CS] << 4;
-		m_phys_addr += m_reg_ip;
-		T val;
-		m_memory->read (m_phys_addr, val);
-
-		m_reg_ip += sizeof(T);
-
-		return val;
-	}
+	T getInstructionBytes ();
 
 }; //end class BusInterfaceUnit
 
@@ -151,6 +145,19 @@ BusInterfaceUnit::getMemoryAddress (unsigned short seg, unsigned short offset, b
 	}
 
 	return new MemoryAddress<T> (m_memory, seg, offset);
+}
+
+template<typename T>
+T
+BusInterfaceUnit::getInstructionBytes () {
+	size_t m_phys_addr = m_seg_regs[Jaf::SREG_CS] << 4;
+	m_phys_addr += m_reg_ip;
+	T val;
+	m_memory->read (m_phys_addr, val);
+
+	m_reg_ip += sizeof(T);
+
+	return val;
 }
 
 #endif //JAF__BUS_INTERFACE_UNIT_HH

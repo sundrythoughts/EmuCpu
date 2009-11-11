@@ -34,7 +34,23 @@
 class StackSignalsAndSlots : public QObject {
 	Q_OBJECT
 
+public:
+	/** */
+	void sigcSlotStackPush (unsigned short seg, unsigned short off, unsigned short val);
+
+	/** */
+	void sigcSlotStackPop ();
+
+public slots:
+	/** */
+	void enableDisable (bool b);
+
 signals:
+	/** */
+	void stackPush (unsigned short seg, unsigned short off, unsigned short val);
+
+	/** */
+	void stackPop ();
 
 }; //end class StackSignalsAndSlots
 

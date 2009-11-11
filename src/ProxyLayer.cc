@@ -54,6 +54,9 @@ ProxyLayer::connectCpuSignalsToUiSlots (Cpu &cpu, Sim86Window &win) {
 
 	cpu.getInstructionDecoder ().signalNextInstruction ().connect (sigc::mem_fun (m_disasm_s_s, &DisassemblySignalsAndSlots::sigcSlotNextInstruction));
 
+	cpu.getExecutionUnit ().signalStackPush ().connect (sigc::mem_fun (m_stack_s_s, &StackSignalsAndSlots::sigcSlotStackPush));
+	cpu.getExecutionUnit ().signalStackPop ().connect (sigc::mem_fun (m_stack_s_s, &StackSignalsAndSlots::sigcSlotStackPop));
+
 	//connect ProxyLayer Qt signals to Sim86Window Qt slots
 
 	//Flag Register Widget Signals and Slots
@@ -99,12 +102,14 @@ ProxyLayer::connectCpuSignalsToUiSlots (Cpu &cpu, Sim86Window &win) {
 		          &win.getMemoryWidget (), SLOT(setAllMemoryAddresses (const unsigned char*, size_t)));
 
 	//Disassembly Widget Signals and Slots
-	//FIXME
 	QObject::connect (&m_disasm_s_s, SIGNAL(nextInstruction (QString, QString, QString, QString)),
 		          &win.getDisassemblyWidget (), SLOT(addNextInstruction (QString, QString, QString, QString)));
 
 	//Stack Widget Signals and Slots
-	//FIXME
+	QObject::connect (&m_stack_s_s, SIGNAL(stackPush (unsigned short, unsigned short, unsigned short)),
+		          &win.getStackWidget (), SLOT(push (unsigned short, unsigned short, unsigned short)));
+	QObject::connect (&m_stack_s_s, SIGNAL(stackPop ()),
+		          &win.getStackWidget (), SLOT(pop ()));
 }
 
 void
@@ -132,5 +137,7 @@ ProxyLayer::connectUiSignalsToCpuSlots (Sim86Window &win, Cpu &cpu) {
 	                  &m_gen_reg_s_s, SLOT(enableDisable (bool)));
 	QObject::connect (&win.getSegmentRegistersWidget (), SIGNAL(enableDisable (bool)),
 	                  &m_sreg_s_s, SLOT(enableDisable (bool)));
+	QObject::connect (&win.getStackWidget (), SIGNAL(enableDisable (bool)),
+	                  &m_stack_s_s, SLOT(enableDisable (bool)));
 }
 

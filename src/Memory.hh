@@ -44,6 +44,9 @@ public:
 	/** */
 	Memory ();
 
+	/** */
+	void reset ();
+
 	/**
 	@brief Resize the memory.
 	@param sz The new size of the memory.

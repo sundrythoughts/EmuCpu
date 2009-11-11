@@ -46,6 +46,9 @@ public:
 	BusInterfaceUnit *m_biu;
 	ArithmeticLogicUnit *m_alu;
 	Instruction *m_inst;
+
+	sigc::signal<void, unsigned short, unsigned short, unsigned short> m_signal_stack_push;
+	sigc::signal<void> m_signal_stack_pop;
 };
 
 /** */
@@ -79,6 +82,7 @@ ExecutionUnit::ExecutionUnit () {
 	//initialize registers values
 	reset ();
 
+	//connect 8-bit register signals to their 16-bit parents
 	p->m_regs8[Jaf::REG_AL].signalEmitSignalValueChanged ().connect (sigc::mem_fun (p->m_regs16[Jaf::REG_AX], &Register<unsigned short>::emitSignalValueChanged));
 	p->m_regs8[Jaf::REG_AH].signalEmitSignalValueChanged ().connect (sigc::mem_fun (p->m_regs16[Jaf::REG_AX], &Register<unsigned short>::emitSignalValueChanged));
 	p->m_regs8[Jaf::REG_BL].signalEmitSignalValueChanged ().connect (sigc::mem_fun (p->m_regs16[Jaf::REG_BX], &Register<unsigned short>::emitSignalValueChanged));
@@ -93,13 +97,22 @@ ExecutionUnit::~ExecutionUnit () {
 	delete p;
 }
 
-/** */
 void
 ExecutionUnit::connectTo (CpuComponents &cpu) {
 	p->m_cpu = &cpu;
 	p->m_biu = &cpu.getBusInterfaceUnit ();
 	p->m_alu = &cpu.getArithmeticLogicUnit ();
 	p->m_inst = &cpu.getInstruction ();
+}
+
+sigc::signal<void, unsigned short, unsigned short, unsigned short>&
+ExecutionUnit::signalStackPush () {
+	return p->m_signal_stack_push;
+}
+
+sigc::signal<void>&
+ExecutionUnit::signalStackPop () {
+	return p->m_signal_stack_pop;
 }
 
 void
@@ -812,6 +825,42 @@ ExecutionUnit::execLEA () {
 }
 
 void
+ExecutionUnit::execLOOP () {
+	OperandList &ops = p->m_inst->operands ();
+
+	getRegCX () -= 1;
+
+	if (getRegCX () ==0) {
+		return;
+	}
+
+	if (ops.operandSize () == Jaf::OP_SIZE_16) {
+		p->m_biu->getRegIP () += ops.dest ().get<short> ();
+	}
+	else {
+		p->m_biu->getRegIP () += ops.dest ().get<char> ();
+	}
+}
+
+void
+ExecutionUnit::execLOOPE () {
+	if (getRegFlagsZF () != true) {
+		return;
+	}
+
+	execLOOP ();
+}
+
+void
+ExecutionUnit::execLOOPNE () {
+	if (getRegFlagsZF () != false) {
+		return;
+	}
+
+	execLOOP ();
+}
+
+void
 ExecutionUnit::execMOV () {
 	OperandList &ops = p->m_inst->operands ();
 
@@ -909,40 +958,24 @@ void
 ExecutionUnit::execPOP () {
 	OperandList &ops = p->m_inst->operands ();
 
-	//FIXME - needs to produce some kind of signal
-	NumberWrapper mem;
-	mem.init<unsigned short> (p->m_biu->getMemoryAddress<unsigned short> (p->m_biu->getSegRegSS (), getRegSP ()), true);
-	(!ops.src ().isNull () ? ops.src () : ops.dest ()).get<unsigned short> () = mem.get<unsigned short> ();
-	getRegSP () += sizeof(unsigned short);
+	realPop ( (!ops.src ().isNull () ? ops.src () : ops.dest ()).get<unsigned short> () );
 }
 
 void
 ExecutionUnit::execPOPF () {
-	//FIXME - needs to produce some kind of signal
-	NumberWrapper mem;
-	mem.init<unsigned short> (p->m_biu->getMemoryAddress<unsigned short> (p->m_biu->getSegRegSS (), getRegSP ()), true);
-	getRegFlags () = mem.get<unsigned short> ();
-	getRegSP () += sizeof(unsigned short);
+	realPop ( getRegFlags () );
 }
 
 void
 ExecutionUnit::execPUSH () {
 	OperandList &ops = p->m_inst->operands ();
 
-	//FIXME - needs to produce some kind of signal
-	getRegSP () -= sizeof(unsigned short);
-	NumberWrapper mem;
-	mem.init<unsigned short> (p->m_biu->getMemoryAddress<unsigned short> (p->m_biu->getSegRegSS (), getRegSP ()), true);
-	mem.get<unsigned short> () = (!ops.src ().isNull () ? ops.src () : ops.dest ()).get<unsigned short> ();
+	realPush ( (!ops.src ().isNull () ? ops.src () : ops.dest ()).get<unsigned short> () );
 }
 
 void
 ExecutionUnit::execPUSHF () {
-	//FIXME - needs to produce some kind of signal
-	getRegSP () -= sizeof(unsigned short);
-	NumberWrapper mem;
-	mem.init<unsigned short> (p->m_biu->getMemoryAddress<unsigned short> (p->m_biu->getSegRegSS (), getRegSP ()), true);
-	mem.get<unsigned short> () = getRegFlags ();
+	realPush ( getRegFlags () );
 }
 
 void
@@ -1163,5 +1196,32 @@ ExecutionUnit::execXOR () {
 		p->m_alu->opXor (ops.dest ().get<unsigned char> (), ops.src ().get<unsigned char> (), ret);
 		ops.dest ().get<unsigned char> () = ret;
 	}
+}
+
+void
+ExecutionUnit::realPush (unsigned short num) {
+	getRegSP () -= sizeof(unsigned short);
+	NumberWrapper mem;
+	mem.init<unsigned short> (p->m_biu->getMemoryAddress<unsigned short> (p->m_biu->getSegRegSS (), getRegSP ()), true);
+	mem.get<unsigned short> () = num;
+
+	p->m_signal_stack_push.emit (p->m_biu->getSegRegSS (), getRegSP (), num);
+}
+
+void
+ExecutionUnit::realPop () {
+	getRegSP () += sizeof(unsigned short);
+
+	p->m_signal_stack_pop.emit ();
+}
+
+void
+ExecutionUnit::realPop (INumberReadableWritable<unsigned short> &num) {
+	NumberWrapper mem;
+	mem.init<unsigned short> (p->m_biu->getMemoryAddress<unsigned short> (p->m_biu->getSegRegSS (), getRegSP ()), true);
+	num = mem.get<unsigned short> ();
+	getRegSP () += sizeof(unsigned short);
+
+	p->m_signal_stack_pop.emit ();
 }
 

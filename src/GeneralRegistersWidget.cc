@@ -23,6 +23,18 @@ GeneralRegistersWidget::GeneralRegistersWidget (QWidget *parent) : QDockWidget (
 	setupUi (this);
 }
 
+void
+GeneralRegistersWidget::reset () {
+	setRegAX (0);
+	setRegBX (0);
+	setRegCX (0);
+	setRegDX (0);
+	setRegSI (0);
+	setRegDI (0);
+	setRegBP (0);
+	setRegSP (0);
+}
+
 
 void
 GeneralRegistersWidget::enableDisableToggle (bool b) {

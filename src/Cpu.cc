@@ -23,13 +23,17 @@
 class CpuPrivate {
 public:
 	CpuComponents m_cpu_comps;
+
+	QMutex m_mutex;
+	bool m_thread_run;
+	unsigned long int m_thread_delay;
 };
 
 Cpu::Cpu (QObject *parent) : QThread (parent) {
 	p = new CpuPrivate ();
 
 	m_cpu_state = CPU_STATE_PAUSE;
-	m_thread_delay = 5000;
+	p->m_thread_delay = 5000;
 }
 
 Cpu::~Cpu () {
@@ -69,21 +73,21 @@ Cpu::getLoader () {
 //override
 void
 Cpu::run () {
-	m_thread_run = true;
+	p->m_thread_run = true;
 
-	while (m_thread_run) {
+	while (p->m_thread_run) {
 		switch (m_cpu_state) {
 		case CPU_STATE_RUN:
 			//std::cout << "cpu_state_run" << std::endl;
 			getInstructionDecoder ().nextInstruction ();
-			QThread::usleep (m_thread_delay);
+			QThread::usleep (p->m_thread_delay);
 			break;
 		case CPU_STATE_SINGLE_STEP:
 			//std::cout << "cpu_state_single_step" << std::endl;
 			getInstructionDecoder ().nextInstruction ();
-			m_mutex.lock ();
+			p->m_mutex.lock ();
 				m_cpu_state = CPU_STATE_PAUSE;
-			m_mutex.unlock ();
+			p->m_mutex.unlock ();
 			break;
 		case CPU_STATE_PAUSE:
 			//std::cout << "cpu_state_pause" << std::endl;
@@ -93,9 +97,9 @@ Cpu::run () {
 		}
 
 		if (p->m_cpu_comps.getHalt ()) {
-			m_mutex.lock ();
+			p->m_mutex.lock ();
 				m_cpu_state = CPU_STATE_PAUSE;
-			m_mutex.unlock ();
+			p->m_mutex.unlock ();
 			p->m_cpu_comps.setHalt (false);
 		}
 	}
@@ -107,33 +111,34 @@ Cpu::startCpu () {
 		return;
 	}
 
-	m_mutex.lock ();
-	m_cpu_state = CPU_STATE_RUN;
-	m_mutex.unlock ();
+	p->m_mutex.lock ();
+		m_cpu_state = CPU_STATE_RUN;
+	p->m_mutex.unlock ();
 }
 
 void
 Cpu::pauseCpu () {
-	m_mutex.lock ();
-	m_cpu_state = CPU_STATE_PAUSE;
-	m_mutex.unlock ();
+	p->m_mutex.lock ();
+		m_cpu_state = CPU_STATE_PAUSE;
+	p->m_mutex.unlock ();
 }
 
 void
 Cpu::resetCpu () {
 	pauseCpu ();
+	p->m_cpu_comps.reset ();
 }
 
 void
 Cpu::singleStepCpu () {
-	m_mutex.lock ();
-	m_cpu_state = CPU_STATE_SINGLE_STEP;
-	m_mutex.unlock ();
+	p->m_mutex.lock ();
+		m_cpu_state = CPU_STATE_SINGLE_STEP;
+	p->m_mutex.unlock ();
 }
 
 void
 Cpu::shutdownCpu () {
-	m_thread_run = false;
+	p->m_thread_run = false;
 	wait ();
 }
 
@@ -146,6 +151,6 @@ Cpu::loadFile (QString file_name) {
 
 void
 Cpu::setSpeed (int i) {
-	m_thread_delay = i;
+	p->m_thread_delay = i;
 }
 

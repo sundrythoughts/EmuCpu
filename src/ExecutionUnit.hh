@@ -53,6 +53,12 @@ public:
 	void connectTo (CpuComponents &cpu);
 
 	/** */
+	sigc::signal<void, unsigned short, unsigned short, unsigned short>& signalStackPush ();
+
+	/** */
+	sigc::signal<void>& signalStackPop ();
+
+	/** */
 	void reset ();
 
 	/** Get an 8-bit register given its index */
@@ -229,16 +235,16 @@ public:
 	/** */
 	void execNotImplemented ();
 
-	/** */
+	/** UNIMPLEMENTED */
 	void execAAA ();
 
-	/** */
+	/** UNIMPLEMENTED */
 	void execAAD ();
 
-	/** */
+	/** UNIMPLEMENTED */
 	void execAAM ();
 
-	/** */
+	/** UNIMPLEMENTED */
 	void execAAS ();
 
 	/** */
@@ -250,10 +256,10 @@ public:
 	/** */
 	void execAND ();
 
-	/** */
+	/** UNIMPLEMENTED */
 	void execCALL ();
 
-	/** */
+	/** UNIMPLEMENTED */
 	void execCALLFAR ();
 
 	/** */
@@ -274,16 +280,16 @@ public:
 	/** */
 	void execCMP ();
 
-	/** */
+	/** UNIMPLEMENTED */
 	void execCMPS ();
 
 	/** */
 	void execCWD ();
 
-	/** */
+	/** UNIMPLEMENTED */
 	void execDAA ();
 
-	/** */
+	/** UNIMPLEMENTED */
 	void execDAS ();
 
 	/** */
@@ -292,31 +298,31 @@ public:
 	/** */
 	void execDIV ();
 
-	/** */
+	/** UNIMPLEMENTED */
 	void execESC ();
 
 	/** */
 	void execHLT ();
 
-	/** */
+	/** UNIMPLEMENTED */
 	void execIDIV ();
 
-	/** */
+	/** UNIMPLEMENTED */
 	void execIMUL ();
 
-	/** */
+	/** UNIMPLEMENTED */
 	void execIN ();
 
 	/** */
 	void execINC ();
 
-	/** */
+	/** UNIMPLEMENTED */
 	void execINT ();
 
-	/** */
+	/** UNIMPLEMENTED */
 	void execINTO ();
 
-	/** */
+	/** UNIMPLEMENTED */
 	void execIRET ();
 
 	/** */
@@ -355,7 +361,7 @@ public:
 	/** */
 	void execJMP ();
 
-	/** */
+	/** UNIMPLEMENTED */
 	void execJMPFAR ();
 
 	/** */
@@ -385,19 +391,19 @@ public:
 	/** */
 	void execLAHF ();
 
-	/** */
+	/** UNIMPLEMENTED */
 	void execLDS ();
 
 	/** */
 	void execLEA ();
 
-	/** */
+	/** UNIMPLEMENTED */
 	void execLES ();
 
-	/** */
+	/** UNIMPLEMENTED */
 	void execLOCK ();
 
-	/** */
+	/** UNIMPLEMENTED */
 	void execLODS ();
 
 	/** */
@@ -412,7 +418,7 @@ public:
 	/** */
 	void execMOV ();
 
-	/** */
+	/** UNIMPLEMENTED */
 	void execMOVS ();
 
 	/** */
@@ -430,7 +436,7 @@ public:
 	/** */
 	void execOR ();
 
-	/** */
+	/** UNIMPLEMENTED */
 	void execOUT ();
 
 	/** */
@@ -451,16 +457,16 @@ public:
 	/** */
 	void execRCR ();
 
-	/** */
+	/** UNIMPLEMENTED */
 	void execREP ();
 
-	/** */
+	/** UNIMPLEMENTED */
 	void execREPNE ();
 
-	/** */
+	/** UNIMPLEMENTED */
 	void execRET ();
 
-	/** */
+	/** UNIMPLEMENTED */
 	void execRETFAR ();
 
 	/** */
@@ -481,10 +487,10 @@ public:
 	/** */
 	void execSBB ();
 
-	/** */
+	/** UNIMPLEMENTED */
 	void execSCAS ();
 
-	/** */
+	/** UNIMPLEMENTED */
 	void execSEG ();
 
 	/** */
@@ -499,7 +505,7 @@ public:
 	/** */
 	void execSTI ();
 
-	/** */
+	/** UNIMPLEMENTED */
 	void execSTOS ();
 
 	/** */
@@ -508,17 +514,24 @@ public:
 	/** */
 	void execTEST ();
 
-	/** */
+	/** UNIMPLEMENTED */
 	void execWAIT ();
 
 	/** */
 	void execXCHG ();
 
-	/** */
+	/** UNIMPLEMENTED */
 	void execXLAT ();
 
 	/** */
 	void execXOR ();
+
+private:
+	void realPush (unsigned short num);
+
+	void realPop ();
+
+	void realPop (INumberReadableWritable<unsigned short> &num);
 
 }; //end class ExecutionUnit
 

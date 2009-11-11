@@ -43,6 +43,9 @@ public:
 		setupUi (this);
 	}
 
+	/** */
+	void reset ();
+
 public slots:
 	/** */
 	void enableDisableToggle (bool b) {

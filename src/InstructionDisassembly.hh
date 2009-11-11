@@ -29,17 +29,20 @@
 #include <vector>
 //#include <iostream>
 
+class InstructionDisassemblyPrivate;
+
 /**
 @class InstructionDisassembly
 @brief Store the disassembly of the instruction.
 */
 class InstructionDisassembly {
-	std::string m_seg_off;
-	std::string m_machine_code;
-	std::string m_addr_mode;
-	std::string m_assembly;
+	InstructionDisassemblyPrivate *p;
 
 public:
+	InstructionDisassembly ();
+
+	~InstructionDisassembly ();
+
 	/** */
 	const std::string& getSegmentOffset () const;
 

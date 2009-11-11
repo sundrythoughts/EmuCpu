@@ -18,3 +18,19 @@
 
 
 #include "StackSignalsAndSlots.hh"
+
+void
+StackSignalsAndSlots::sigcSlotStackPush (unsigned short seg, unsigned short off, unsigned short val) {
+	emit stackPush (seg, off, val);
+}
+
+void
+StackSignalsAndSlots::sigcSlotStackPop () {
+	emit stackPop ();
+}
+
+void
+StackSignalsAndSlots::enableDisable (bool b) {
+	blockSignals (!b);
+}
+

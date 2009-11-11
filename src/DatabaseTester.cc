@@ -19,32 +19,51 @@
 
 #include "DatabaseTester.hh"
 
+class DatabaseTesterPrivate {
+public:
+	syb::LOGINREC *m_login;
+	syb::DBPROCESS *m_dbproc;
+	syb::RETCODE m_ret;
+
+	DatabaseTesterPrivate () : m_login (0), m_dbproc (0) {
+	}
+};
+
+DatabaseTester::DatabaseTester () {
+	p = new DatabaseTesterPrivate ();
+	syb::dbinit ();
+}
+
+DatabaseTester::~DatabaseTester () {
+	syb::dbexit ();
+}
+
 void
 DatabaseTester::connect (const QString &server, const QString &db, const QString &uid, const QString &pwd) {
 	emit connecting ();
 
-	if (m_login || m_dbproc) {
+	if (p->m_login || p->m_dbproc) {
 		//FIXME - already connected
 		emit connected ();
 		return;
 	}
 
-	if ((m_login = syb::dblogin ()) == 0) {
+	if ((p->m_login = syb::dblogin ()) == 0) {
 		//FIXME - no memory
 		emit error ("Out of memory");
 		return;
 	}
 
-	syb::DBSETLUSER(m_login, uid.toAscii ().data ());
-	syb::DBSETLPWD(m_login, pwd.toAscii ().data ());
+	syb::DBSETLUSER(p->m_login, uid.toAscii ().data ());
+	syb::DBSETLPWD(p->m_login, pwd.toAscii ().data ());
 
-	if ((m_dbproc = syb::dbopen (m_login, server.toAscii ().data ())) == 0) {
+	if ((p->m_dbproc = syb::dbopen (p->m_login, server.toAscii ().data ())) == 0) {
 		//FIXME - unable to open database server
 		emit error ("Unable to open database server");
 		return;
 	}
 
-	if ((m_ret = syb::dbuse (m_dbproc, db.toAscii ().data ())) == FAIL) {
+	if ((p->m_ret = syb::dbuse (p->m_dbproc, db.toAscii ().data ())) == FAIL) {
 		//FIXME - database name doesn't exist on server
 		emit error ("Database name does not exist");
 		return;
@@ -55,20 +74,25 @@ DatabaseTester::connect (const QString &server, const QString &db, const QString
 
 void
 DatabaseTester::disconnect () {
-	if (m_dbproc) {
-		syb::dbclose (m_dbproc);
-		m_dbproc = 0;
+	if (p->m_dbproc) {
+		syb::dbclose (p->m_dbproc);
+		p->m_dbproc = 0;
 	}
 
-	if (m_login) {
-		syb::dbloginfree (m_login);
-		m_login = 0;
+	if (p->m_login) {
+		syb::dbloginfree (p->m_login);
+		p->m_login = 0;
 	}
 }
 
 void
 DatabaseTester::spChecksumsInsert (const QString &userid, const QString &testid, int regcksum, int ramcksum) {
-	syb::dbfcmd (m_dbproc, "exec ChecksumsInsert \"%s\", \"%s\", %d, %d", userid.toAscii ().data (), testid.toAscii ().data (), regcksum, ramcksum);
-	m_ret = syb::dbsqlexec (m_dbproc);
+	syb::dbfcmd (p->m_dbproc, "exec ChecksumsInsert \"%s\", \"%s\", %d, %d", userid.toAscii ().data (), testid.toAscii ().data (), regcksum, ramcksum);
+	p->m_ret = syb::dbsqlexec (p->m_dbproc);
+}
+
+void
+DatabaseTester::run () {
+	//FIXME - implement this
 }
 

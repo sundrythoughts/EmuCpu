@@ -23,6 +23,14 @@
 Memory::Memory () {
 }
 
+void
+Memory::reset () {
+	for (size_t i = 0; i < m_memory.size (); ++i) {
+		m_memory[i] = 0;
+	}
+
+	m_signal_reloaded (m_memory.data (), m_memory.size ());
+}
 
 void
 Memory::resize (size_t sz, bool clr) {
@@ -92,3 +100,4 @@ Memory::printMemoryDump (size_t start, size_t end) {
 		++start;
 	}
 }
+

@@ -18,3 +18,52 @@
 
 
 #include "StackWidget.hh"
+#include <iostream>
+
+StackWidget::StackWidget (QWidget *parent) : QDockWidget (parent) {
+	setupUi (this);
+}
+
+void
+StackWidget::reset () {
+	m_txt_stack->clear ();
+}
+
+void
+StackWidget::enableDisableToggle (bool b) {
+	if (b) {
+		show ();
+	}
+	else {
+		hide ();
+	}
+
+	emit enableDisable (b);
+}
+
+void
+StackWidget::push (unsigned short seg, unsigned short off, unsigned short val) {
+	QString s;
+	s = QString::number (seg, 16).rightJustified (4, '0').toUpper ();
+	s += ":";
+	s += QString::number (off, 16).rightJustified (4, '0').toUpper ();
+	s += "    ";
+	s += QString::number (val, 16).rightJustified (4, '0').toUpper ();
+	s += "\n";
+
+	QTextCursor cur = m_txt_stack->textCursor ();
+	cur.movePosition (QTextCursor::Start);
+	cur.insertText (s);
+	m_txt_stack->setTextCursor (cur);
+}
+
+void
+StackWidget::pop () {
+	QTextCursor cur = m_txt_stack->textCursor ();
+	cur.movePosition (QTextCursor::Start);
+	cur.select (QTextCursor::LineUnderCursor);
+	cur.removeSelectedText ();
+	cur.deleteChar ();
+	m_txt_stack->setTextCursor (cur);
+}
+

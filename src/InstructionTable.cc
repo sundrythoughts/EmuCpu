@@ -283,9 +283,9 @@ const InstructionTableItem InstructionTable::one_byte_opcode_instruction_map[256
 	{"esc 7", false, GROUP_NONE, &InstructionDecoder::decodeEscNum, &ExecutionUnit::execNotImplemented},
 
 	/* Ex */
-	{"loopne/loopnz", false, GROUP_NONE, &InstructionDecoder::decodeShort, &ExecutionUnit::execNotImplemented},
-	{"loope/loopz", false, GROUP_NONE, &InstructionDecoder::decodeShort, &ExecutionUnit::execNotImplemented},
-	{"loop", false, GROUP_NONE, &InstructionDecoder::decodeShort, &ExecutionUnit::execNotImplemented},
+	{"loopne/loopnz", false, GROUP_NONE, &InstructionDecoder::decodeShort, &ExecutionUnit::execLOOPNE},
+	{"loope/loopz", false, GROUP_NONE, &InstructionDecoder::decodeShort, &ExecutionUnit::execLOOPE},
+	{"loop", false, GROUP_NONE, &InstructionDecoder::decodeShort, &ExecutionUnit::execLOOP},
 	{"jcxz", false, GROUP_NONE, &InstructionDecoder::decodeShort, &ExecutionUnit::execJCXZ},
 	{"in", false, GROUP_NONE, &InstructionDecoder::decodeAccPort, &ExecutionUnit::execNotImplemented},
 	{"in", false, GROUP_NONE, &InstructionDecoder::decodeAccPort, &ExecutionUnit::execNotImplemented},

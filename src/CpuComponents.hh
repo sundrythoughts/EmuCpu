@@ -80,6 +80,9 @@ public:
 	/** */
 	void setHalt (bool b);
 
+	/** */
+	void reset ();
+
 }; //end class CpuComponents
 
 #endif //JAF__CPU_COMPONENTS_HH

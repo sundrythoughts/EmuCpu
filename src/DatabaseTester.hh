@@ -26,27 +26,19 @@ namespace syb {
 #include <sybdb.h>
 }
 
+class DatabaseTesterPrivate;
+
 class DatabaseTester : public QThread {
 	Q_OBJECT
 
-	syb::LOGINREC *m_login;
-	syb::DBPROCESS *m_dbproc;
-	syb::RETCODE m_ret;
-
-protected:
-	//override
-	virtual void run () {
-		//FIXME - implement this
-	}
+	DatabaseTesterPrivate *p;
 
 public:
-	DatabaseTester () : m_login (0), m_dbproc (0) {
-		syb::dbinit ();
-	}
+	/** */
+	DatabaseTester ();
 
-	virtual ~DatabaseTester () {
-		syb::dbexit ();
-	}
+	/** */
+	virtual ~DatabaseTester ();
 
 public slots:
 	/** */
@@ -73,6 +65,10 @@ signals:
 
 	/** */
 	void disconnected ();
+
+protected:
+	//override
+	virtual void run ();
 };
 
 #endif //JAF__DATABASE_TESTER_HH

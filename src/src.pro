@@ -106,6 +106,9 @@ FORMS += Sim86Window.ui
 HEADERS += Sim86Window.hh
 SOURCES += Sim86Window.cc
 
+HEADERS += StackSignalsAndSlots.hh
+SOURCES += StackSignalsAndSlots.cc
+
 FORMS += StackWidget.ui
 HEADERS += StackWidget.hh
 SOURCES += StackWidget.cc

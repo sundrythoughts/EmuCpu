@@ -18,3 +18,9 @@
 
 
 #include "TerminalWidget.hh"
+
+void
+TerminalWidget::reset () {
+	//FIXME
+}
+

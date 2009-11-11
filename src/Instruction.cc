@@ -42,6 +42,10 @@ Instruction::Instruction () {
 	p->m_inst_item = 0;
 }
 
+Instruction::~Instruction () {
+	delete p;
+}
+
 void
 Instruction::connectTo (CpuComponents &cpu) {
 	p->m_decoder = &cpu.getInstructionDecoder ();

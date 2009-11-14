@@ -361,7 +361,10 @@ public:
 	/** */
 	void execJMP ();
 
-	/** UNIMPLEMENTED */
+	/** */
+	void execJMPSHORT ();
+
+	/** */
 	void execJMPFAR ();
 
 	/** */

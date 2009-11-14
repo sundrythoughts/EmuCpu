@@ -608,12 +608,120 @@ InstructionDecoder::decodeIntra () {
 
 void
 InstructionDecoder::decodeInter () {
-	std::cout << "decodeInter ()" << std::endl;
+	p->m_inst->disassembly ().setAddressingMode ("Inter");
+
+	const unsigned short off = p->m_biu->getInstructionBytes<unsigned short> ();
+	p->m_inst->addBytes (off);
+	const unsigned short seg = p->m_biu->getInstructionBytes<unsigned short> ();
+	p->m_inst->addBytes (seg);
+
+	p->m_dis_dest << std::setfill ('0') << std::setw (sizeof(seg) << 1) << std::hex << seg;
+	p->m_dis_dest << ":";
+	p->m_dis_dest << std::setfill ('0') << std::setw (sizeof(off) << 1) << std::hex << off;
+
+	p->m_inst->operands ().setOperandSize (Jaf::OP_SIZE_16);
+
+	p->m_inst->operands ().dest ().init<unsigned short> (p->m_biu->getMemoryAddress<unsigned short> (seg, off), true);
 }
 
 void
 InstructionDecoder::decodeXferInd () {
-	std::cout << "decodeXferInd ()" << std::endl;
+	union InstMask {
+		unsigned char byte;
+	};
+
+	p->m_inst->disassembly ().setAddressingMode ("RM");
+
+	InstMask im;
+	im.byte = p->m_inst->getByte (0);
+	Jaf::ModRM modrm;
+	modrm.byte = p->m_inst->getByte (1);
+
+	p->m_inst->operands ().setOperandSize (Jaf::OP_SIZE_16);
+
+	if (modrm.mod == 3) {
+		p->m_dis_dest << Jaf::getRegIndex16Name (modrm.rm);
+
+		p->m_inst->operands ().dest ().init<unsigned short> (p->m_eunit->getReg16 (modrm.rm));
+	}
+#if 0 //FIXME
+	else {
+		unsigned short mem;
+		switch (modrm.rm) {
+			case 0: { //[bx + si {+ d8}{+ d16}]
+				p->m_dis_dest << "[" << Jaf::getRegIndex16Name (Jaf::REG_BX) << " + " << Jaf::getRegIndex16Name (Jaf::REG_SI);
+				mem = p->m_eunit->getRegBX () + p->m_eunit->getRegSI (); //zero displacement
+			} break;
+
+			case 1: { //[bx + di {+ d8}{+ d16}]
+				p->m_dis_dest << "[" << Jaf::getRegIndex16Name (Jaf::REG_BX) << " + " << Jaf::getRegIndex16Name (Jaf::REG_DI);
+				mem = p->m_eunit->getRegBX () + p->m_eunit->getRegDI (); //zero displacement
+			} break;
+
+			case 2: { //[bp + si {+ d8}{+ d16}]
+				p->m_dis_dest << "[" << Jaf::getRegIndex16Name (Jaf::REG_BP) << " + " << Jaf::getRegIndex16Name (Jaf::REG_SI);
+				mem = p->m_eunit->getRegBP () + p->m_eunit->getRegSI (); //zero displacement
+			} break;
+
+			case 3: { //[bp + di {+ d8}{+ d16}]
+				p->m_dis_dest << "[" << Jaf::getRegIndex16Name (Jaf::REG_BP) << " + " << Jaf::getRegIndex16Name (Jaf::REG_DI);
+				mem = p->m_eunit->getRegBP () + p->m_eunit->getRegDI (); //zero displacement
+			} break;
+
+			case 4: { //[si {+ d8}{+ d16}]
+				p->m_dis_dest << "[" << Jaf::getRegIndex16Name (Jaf::REG_SI);
+				mem = p->m_eunit->getRegSI (); //zero displacement
+			} break;
+
+			case 5: { //[di {+ d8}{+ d16}]
+				p->m_dis_dest << "[" << Jaf::getRegIndex16Name (Jaf::REG_DI);
+				mem = p->m_eunit->getRegDI (); //zero displacement
+			} break;
+
+			case 6: { //[DIRECT ADDRESS] or [bp {+ d8}{+ d16}]
+				p->m_dis_dest << "[" << Jaf::getRegIndex16Name (Jaf::REG_BP);
+				mem = p->m_eunit->getRegBP ();
+
+				if (modrm.mod == 0) { //zero displacement SPECIAL CASE
+					mem = p->m_biu->getInstructionBytes<unsigned short> ();
+					p->m_inst->addBytes (mem);
+					p->m_dis_dest.str ("");
+					p->m_dis_dest << "[" << (unsigned int)mem;
+				}
+			} break;
+
+			case 7: { //[bx {+ d8}{+ d16}]
+				p->m_dis_dest << "[" << Jaf::getRegIndex16Name (Jaf::REG_BX);
+				mem = p->m_eunit->getRegBX (); //zero displacement
+			} break;
+		}
+
+		switch (modrm.mod) {
+			case 0: {
+				p->m_dis_dest << "]";
+			} break;
+			case 1: { //sign extend next byte
+				unsigned char udis = p->m_biu->getInstructionBytes<unsigned char> ();
+				p->m_inst->addBytes (udis);
+				mem += (short)udis;
+				p->m_dis_dest << " + " << (unsigned int)udis << "]";
+			} break;
+			case 2: { //next two bytes
+				unsigned short udis = p->m_biu->getInstructionBytes<unsigned short> ();
+				p->m_inst->addBytes (udis);
+				mem += udis;
+				p->m_dis_dest << " + " << (unsigned int)udis << "]";
+			} break;
+		}
+
+		if (im.w) { //16 bits
+			p->m_inst->operands ().dest ().init<unsigned short> (p->m_biu->getMemoryAddress<unsigned short> (p->m_biu->getSegRegDS (), mem), true);
+		}
+		else { //8 bits
+			p->m_inst->operands ().dest ().init<unsigned char> (p->m_biu->getMemoryAddress<unsigned char> (p->m_biu->getSegRegDS (), mem), true);
+		}
+	}
+#endif
 }
 
 void

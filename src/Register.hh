@@ -290,6 +290,11 @@ public:
 	}
 
 private:
+	virtual unsigned short getSegment () const {
+		std::cerr << "Debug: class Immediate has no segment" << std::endl;
+		return 0;
+	}
+
 	virtual unsigned short getOffset () const {
 		std::cerr << "Debug: class Immediate has no offset" << std::endl;
 		return 0;

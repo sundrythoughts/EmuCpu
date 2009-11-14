@@ -630,6 +630,18 @@ ExecutionUnit::execJMP () {
 	OperandList &ops = p->m_inst->operands ();
 
 	if (ops.operandSize () == Jaf::OP_SIZE_16) {
+		p->m_biu->getRegIP () = ops.dest ().get<unsigned short> ();
+	}
+	else {
+		p->m_biu->getRegIP () = ops.dest ().get<unsigned char> ();
+	}
+}
+
+void
+ExecutionUnit::execJMPSHORT () {
+	OperandList &ops = p->m_inst->operands ();
+
+	if (ops.operandSize () == Jaf::OP_SIZE_16) {
 		p->m_biu->getRegIP () += ops.dest ().get<short> ();
 	}
 	else {
@@ -638,12 +650,20 @@ ExecutionUnit::execJMP () {
 }
 
 void
+ExecutionUnit::execJMPFAR () {
+	OperandList &ops = p->m_inst->operands ();
+
+	p->m_biu->getSegRegCS () = ops.dest ().get<unsigned short> ().getSegment ();
+	p->m_biu->getRegIP () = ops.dest ().get<unsigned short> ().getOffset ();
+}
+
+void
 ExecutionUnit::execJNA () {
 	if (getRegFlagsCF () != true && getRegFlagsZF () != true) {
 		return;
 	}
 
-	execJMP ();
+	execJMPSHORT ();
 }
 
 void
@@ -652,7 +672,7 @@ ExecutionUnit::execJNAE () {
 		return;
 	}
 
-	execJMP ();
+	execJMPSHORT ();
 }
 
 void
@@ -661,7 +681,7 @@ ExecutionUnit::execJNB () {
 		return;
 	}
 
-	execJMP ();
+	execJMPSHORT ();
 }
 
 void
@@ -670,7 +690,7 @@ ExecutionUnit::execJNBE () {
 		return;
 	}
 
-	execJMP ();
+	execJMPSHORT ();
 }
 
 void
@@ -679,7 +699,7 @@ ExecutionUnit::execJC () {
 		return;
 	}
 
-	execJMP ();
+	execJMPSHORT ();
 }
 
 void
@@ -688,7 +708,7 @@ ExecutionUnit::execJCXZ () {
 		return;
 	}
 
-	execJMP ();
+	execJMPSHORT ();
 }
 
 void
@@ -697,7 +717,7 @@ ExecutionUnit::execJE () {
 		return;
 	}
 
-	execJMP ();
+	execJMPSHORT ();
 }
 
 void
@@ -706,7 +726,7 @@ ExecutionUnit::execJG () {
 		return;
 	}
 
-	execJMP ();
+	execJMPSHORT ();
 }
 
 void
@@ -715,7 +735,7 @@ ExecutionUnit::execJGE () {
 		return;
 	}
 
-	execJMP ();
+	execJMPSHORT ();
 }
 
 void
@@ -724,7 +744,7 @@ ExecutionUnit::execJL () {
 		return;
 	}
 
-	execJMP ();
+	execJMPSHORT ();
 }
 
 void
@@ -733,7 +753,7 @@ ExecutionUnit::execJLE () {
 		return;
 	}
 
-	execJMP ();
+	execJMPSHORT ();
 }
 
 void
@@ -742,7 +762,7 @@ ExecutionUnit::execJNC () {
 		return;
 	}
 
-	execJMP ();
+	execJMPSHORT ();
 }
 
 void
@@ -751,7 +771,7 @@ ExecutionUnit::execJNE () {
 		return;
 	}
 
-	execJMP ();
+	execJMPSHORT ();
 }
 
 void
@@ -760,7 +780,7 @@ ExecutionUnit::execJNO () {
 		return;
 	}
 
-	execJMP ();
+	execJMPSHORT ();
 }
 
 void
@@ -769,7 +789,7 @@ ExecutionUnit::execJNS () {
 		return;
 	}
 
-	execJMP ();
+	execJMPSHORT ();
 }
 
 void
@@ -778,7 +798,7 @@ ExecutionUnit::execJNP () {
 		return;
 	}
 
-	execJMP ();
+	execJMPSHORT ();
 }
 
 void
@@ -787,7 +807,7 @@ ExecutionUnit::execJO () {
 		return;
 	}
 
-	execJMP ();
+	execJMPSHORT ();
 }
 
 void
@@ -796,7 +816,7 @@ ExecutionUnit::execJPE () {
 		return;
 	}
 
-	execJMP ();
+	execJMPSHORT ();
 }
 
 void
@@ -805,7 +825,7 @@ ExecutionUnit::execJS () {
 		return;
 	}
 
-	execJMP ();
+	execJMPSHORT ();
 }
 
 void

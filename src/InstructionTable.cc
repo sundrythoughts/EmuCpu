@@ -292,9 +292,9 @@ const InstructionTableItem InstructionTable::one_byte_opcode_instruction_map[256
 	{"out", false, GROUP_NONE, &InstructionDecoder::decodeAccPort, &ExecutionUnit::execNotImplemented},
 	{"out", false, GROUP_NONE, &InstructionDecoder::decodeAccPort, &ExecutionUnit::execNotImplemented},
 	{"call", false, GROUP_NONE, &InstructionDecoder::decodeIntra, &ExecutionUnit::execNotImplemented},
-	{"jmp", false, GROUP_NONE, &InstructionDecoder::decodeIntra,  &ExecutionUnit::execJMP},
-	{"jmp", false, GROUP_NONE, &InstructionDecoder::decodeInter, &ExecutionUnit::execNotImplemented},
-	{"jmp", false, GROUP_NONE, &InstructionDecoder::decodeShort, &ExecutionUnit::execJMP},
+	{"jmp", false, GROUP_NONE, &InstructionDecoder::decodeIntra,  &ExecutionUnit::execJMPSHORT},
+	{"jmpfar", false, GROUP_NONE, &InstructionDecoder::decodeInter, &ExecutionUnit::execJMPFAR},
+	{"jmp", false, GROUP_NONE, &InstructionDecoder::decodeShort, &ExecutionUnit::execJMPSHORT},
 	{"in", false, GROUP_NONE, &InstructionDecoder::decodeAccVPort, &ExecutionUnit::execNotImplemented},
 	{"in", false, GROUP_NONE, &InstructionDecoder::decodeAccVPort, &ExecutionUnit::execNotImplemented},
 	{"out", false, GROUP_NONE, &InstructionDecoder::decodeAccVPort, &ExecutionUnit::execNotImplemented},
@@ -391,8 +391,8 @@ const InstructionTableItem InstructionTable::one_byte_opcode_instruction_extensi
 		{"dec", true, GROUP_6, &InstructionDecoder::decodeRM, &ExecutionUnit::execDEC},
 		{"call", true, GROUP_6, &InstructionDecoder::decodeXferInd, &ExecutionUnit::execNotImplemented},
 		{"call", true, GROUP_6, &InstructionDecoder::decodeXferInd, &ExecutionUnit::execNotImplemented},
-		{"jmp", true, GROUP_6, &InstructionDecoder::decodeXferInd, &ExecutionUnit::execNotImplemented},
-		{"jmp", true, GROUP_6, &InstructionDecoder::decodeXferInd, &ExecutionUnit::execNotImplemented},
+		{"jmp", true, GROUP_6, &InstructionDecoder::decodeXferInd, &ExecutionUnit::execJMP},
+		{"jmpfar", true, GROUP_6, &InstructionDecoder::decodeXferInd, &ExecutionUnit::execNotImplemented},
 		{"push", true, GROUP_6, &InstructionDecoder::decodeRM, &ExecutionUnit::execPUSH},
 		{0, false, GROUP_RESERVED, &InstructionDecoder::decodeNotImplemented, &ExecutionUnit::execNotImplemented}
 	}//END GROUP 6

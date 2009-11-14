@@ -61,6 +61,11 @@ public:
 		return m_num;
 	}
 
+	/** Get segment */
+	virtual unsigned short getSegment () const {
+		return m_seg;
+	}
+
 	/** Get offset */
 	virtual unsigned short getOffset () const {
 		return m_offset;

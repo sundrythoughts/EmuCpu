@@ -504,6 +504,19 @@ ExecutionUnit::execAND () {
 }
 
 void
+ExecutionUnit::execCALL () {
+	realPush (p->m_biu->getRegIP ());
+	execJMP ();
+}
+
+void
+ExecutionUnit::execCALLFAR () {
+	realPush (p->m_biu->getSegRegCS ());
+	realPush (p->m_biu->getRegIP ());
+	execJMPFAR ();
+}
+
+void
 ExecutionUnit::execCBW () {
 	if (getRegAL () < 0x80) {
 		setRegAH (0);
@@ -1027,6 +1040,29 @@ ExecutionUnit::execRCR () {
 		unsigned char ret;
 		p->m_alu->opRcr (ops.dest ().get<unsigned char> (), ops.src ().get<unsigned char> (), ret);
 		ops.dest ().get<unsigned char> () = ret;
+	}
+}
+
+void
+ExecutionUnit::execRET () {
+	OperandList &ops = p->m_inst->operands ();
+
+	realPop (p->m_biu->getRegIP ());
+	realPop (p->m_biu->getSegRegCS ());
+
+	if (!ops.src ().isNull ()) {
+		getRegSP () += ops.src ().get<unsigned short> ();
+	}
+}
+
+void
+ExecutionUnit::execRETFAR () {
+	OperandList &ops = p->m_inst->operands ();
+
+	realPop (p->m_biu->getRegIP ());
+
+	if (!ops.src ().isNull ()) {
+		getRegSP () += ops.src ().get<unsigned short> ();
 	}
 }
 

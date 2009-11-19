@@ -644,7 +644,7 @@ InstructionDecoder::decodeXferInd () {
 
 		p->m_inst->operands ().dest ().init<unsigned short> (p->m_eunit->getReg16 (modrm.rm));
 	}
-#if 0 //FIXME
+//#if 0 //FIXME
 	else {
 		unsigned short mem;
 		switch (modrm.rm) {
@@ -714,14 +714,21 @@ InstructionDecoder::decodeXferInd () {
 			} break;
 		}
 
+		unsigned short segment = p->m_biu->getMemoryData<unsigned short> (p->m_biu->getSegRegDS (), mem);
+		unsigned short offset = p->m_biu->getMemoryData<unsigned short> (p->m_biu->getSegRegDS (), mem + 2);
+		p->m_inst->operands ().dest ().init<unsigned short> (p->m_biu->getMemoryAddress<unsigned short> (segment, offset), true);
+
+		//FIXME - GRAB THE IP AND CS FROM MEMEMORY
+		/*
 		if (im.w) { //16 bits
-			p->m_inst->operands ().dest ().init<unsigned short> (p->m_biu->getMemoryAddress<unsigned short> (p->m_biu->getSegRegDS (), mem), true);
+
 		}
 		else { //8 bits
 			p->m_inst->operands ().dest ().init<unsigned char> (p->m_biu->getMemoryAddress<unsigned char> (p->m_biu->getSegRegDS (), mem), true);
 		}
+		*/
 	}
-#endif
+//#endif
 }
 
 void
@@ -980,7 +987,14 @@ InstructionDecoder::decodeFlags () {
 
 void
 InstructionDecoder::decodeRetPop () {
-	std::cout << "decodeRetPop ()" << std::endl;
+	p->m_inst->disassembly ().setAddressingMode ("RetPop");
+
+	p->m_inst->operands ().setOperandSize (Jaf::OP_SIZE_16);
+
+	const unsigned short imm = p->m_biu->getInstructionBytes<unsigned short> ();
+	p->m_inst->addBytes (imm);
+	p->m_inst->operands ().src ().init<unsigned short> (new Immediate<unsigned short> (imm), true);
+	p->m_dis_src << std::setfill ('0') << std::setw (sizeof(imm) << 1) << std::hex << imm;
 }
 
 void

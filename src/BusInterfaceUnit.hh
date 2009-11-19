@@ -112,6 +112,10 @@ public:
 
 	/** */
 	template<typename T>
+	T getMemoryData (unsigned short seg, unsigned offset);
+
+	/** */
+	template<typename T>
 	void getMemoryAddress (MemoryAddress<T> * &mem_addr, unsigned short seg, unsigned short offset, bool override_the_override = false);
 
 	/** */
@@ -124,6 +128,15 @@ public:
 	T getInstructionBytes ();
 
 }; //end class BusInterfaceUnit
+
+template<typename T>
+T
+BusInterfaceUnit::getMemoryData (unsigned short seg, unsigned offset) {
+	size_t addr = (seg << 4) + offset;
+	T val;
+	m_memory->read (addr, val);
+	return val;
+}
 
 template<typename T>
 void

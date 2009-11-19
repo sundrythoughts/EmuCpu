@@ -256,10 +256,10 @@ public:
 	/** */
 	void execAND ();
 
-	/** UNIMPLEMENTED */
+	/** */
 	void execCALL ();
 
-	/** UNIMPLEMENTED */
+	/** */
 	void execCALLFAR ();
 
 	/** */
@@ -466,10 +466,10 @@ public:
 	/** UNIMPLEMENTED */
 	void execREPNE ();
 
-	/** UNIMPLEMENTED */
+	/** */
 	void execRET ();
 
-	/** UNIMPLEMENTED */
+	/** */
 	void execRETFAR ();
 
 	/** */

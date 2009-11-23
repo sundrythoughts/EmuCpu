@@ -506,7 +506,7 @@ ExecutionUnit::execAND () {
 void
 ExecutionUnit::execCALL () {
 	realPush (p->m_biu->getRegIP ());
-	execJMP ();
+	execJMPSHORT ();
 }
 
 void
@@ -717,7 +717,7 @@ ExecutionUnit::execJC () {
 
 void
 ExecutionUnit::execJCXZ () {
-	if (getRegFlagsCF () != false) {
+	if (getRegCX () != 0) {
 		return;
 	}
 
@@ -1048,7 +1048,6 @@ ExecutionUnit::execRET () {
 	OperandList &ops = p->m_inst->operands ();
 
 	realPop (p->m_biu->getRegIP ());
-	realPop (p->m_biu->getSegRegCS ());
 
 	if (!ops.src ().isNull ()) {
 		getRegSP () += ops.src ().get<unsigned short> ();
@@ -1060,6 +1059,7 @@ ExecutionUnit::execRETFAR () {
 	OperandList &ops = p->m_inst->operands ();
 
 	realPop (p->m_biu->getRegIP ());
+	realPop (p->m_biu->getSegRegCS ());
 
 	if (!ops.src ().isNull ()) {
 		getRegSP () += ops.src ().get<unsigned short> ();

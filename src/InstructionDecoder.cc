@@ -644,7 +644,6 @@ InstructionDecoder::decodeXferInd () {
 
 		p->m_inst->operands ().dest ().init<unsigned short> (p->m_eunit->getReg16 (modrm.rm));
 	}
-//#if 0 //FIXME
 	else {
 		unsigned short mem;
 		switch (modrm.rm) {
@@ -717,18 +716,7 @@ InstructionDecoder::decodeXferInd () {
 		unsigned short segment = p->m_biu->getMemoryData<unsigned short> (p->m_biu->getSegRegDS (), mem);
 		unsigned short offset = p->m_biu->getMemoryData<unsigned short> (p->m_biu->getSegRegDS (), mem + 2);
 		p->m_inst->operands ().dest ().init<unsigned short> (p->m_biu->getMemoryAddress<unsigned short> (segment, offset), true);
-
-		//FIXME - GRAB THE IP AND CS FROM MEMEMORY
-		/*
-		if (im.w) { //16 bits
-
-		}
-		else { //8 bits
-			p->m_inst->operands ().dest ().init<unsigned char> (p->m_biu->getMemoryAddress<unsigned char> (p->m_biu->getSegRegDS (), mem), true);
-		}
-		*/
 	}
-//#endif
 }
 
 void

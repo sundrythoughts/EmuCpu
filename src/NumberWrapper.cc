@@ -46,11 +46,11 @@ NumberWrapper::toString () {
 
 void
 NumberWrapper::free () {
-	if (!m_del || !m_num) {
-		return;
+	if (m_del && m_num) {
+		(this->*free_func_ptr) ();
 	}
 
-	(this->*free_func_ptr) ();
+	//(this->*free_func_ptr) ();
 	m_size = 0;
 	m_num = 0;
 }

@@ -43,6 +43,10 @@ class Loader;
 
 class CpuComponentsPrivate;
 
+/**
+@class CpuComponents
+@brief Packages together all of the parts of the cpu like the EU, BIU, etc.
+*/
 class CpuComponents {
 	CpuComponentsPrivate *p;
 

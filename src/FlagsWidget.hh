@@ -44,14 +44,14 @@ public:
 	/** */
 	void reset ();
 
-public slots:
+public Q_SLOTS:
 	/** */
 	void enableDisableToggle (bool b);
 
 	/** */
 	void setFlags (unsigned short i);
 
-signals:
+Q_SIGNALS:
 	/** */
 	void enableDisable (bool b);
 

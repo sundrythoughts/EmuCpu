@@ -50,11 +50,11 @@ public:
 	/** */
 	void sigcSlotValueChangedRegIP (unsigned short i);
 
-public slots:
+public Q_SLOTS:
 	/** */
 	void enableDisable (bool b);
 
-signals:
+Q_SIGNALS:
 	//segment register signals
 
 	/** */

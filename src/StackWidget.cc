@@ -38,7 +38,7 @@ StackWidget::enableDisableToggle (bool b) {
 		hide ();
 	}
 
-	emit enableDisable (b);
+	Q_EMIT enableDisable (b);
 }
 
 void

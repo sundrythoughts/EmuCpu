@@ -44,14 +44,14 @@ public:
 	/** */
 	void reset ();
 
-public slots:
+public Q_SLOTS:
 	/** */
 	void enableDisableToggle (bool b);
 
 	/** */
 	void addNextInstruction (QString seg_off, QString mcode, QString asm_code, QString addr_mode);
 
-signals:
+Q_SIGNALS:
 	/** */
 	void enableDisable (bool b);
 

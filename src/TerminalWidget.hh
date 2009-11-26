@@ -46,7 +46,7 @@ public:
 	/** */
 	void reset ();
 
-public slots:
+public Q_SLOTS:
 	/** */
 	void enableDisableToggle (bool b) {
 		if (b) {

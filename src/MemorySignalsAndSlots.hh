@@ -50,14 +50,14 @@ public:
 	/** */
 	sigc::signal<void, size_t>& sigcSignalResize ();
 
-public slots:
+public Q_SLOTS:
 	/** */
 	void enableDisable (bool b);
 
 	/** */
 	void resize (size_t sz);
 
-signals:
+Q_SIGNALS:
 	/** */
 	void valueChanged (int addr, unsigned char val);
 

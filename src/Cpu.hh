@@ -81,7 +81,7 @@ protected:
 	/** */
 	virtual void run ();
 
-public slots:
+public Q_SLOTS:
 	/** */
 	void startCpu ();
 

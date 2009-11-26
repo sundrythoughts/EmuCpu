@@ -39,11 +39,11 @@ public:
 	/** */
 	void sigcSlotNextInstruction (const std::string&, const std::string&, const std::string&, const std::string&);
 
-public slots:
+public Q_SLOTS:
 	/** */
 	void enableDisable (bool b);
 
-signals:
+Q_SIGNALS:
 	/** */
 	void nextInstruction (QString seg_off, QString mcode, QString asm_code, QString addr_mode);
 

@@ -39,7 +39,7 @@ DisassemblyWidget::enableDisableToggle (bool b) {
 		hide ();
 	}
 
-	emit enableDisable (b);
+	Q_EMIT enableDisable (b);
 }
 
 
@@ -49,8 +49,40 @@ DisassemblyWidget::addNextInstruction (QString seg_off, QString mcode, QString a
 	mcode = mcode.toUpper ();
 	asm_code = asm_code.toUpper ();
 
-	m_txt_disasm->append (seg_off + '\t' + mcode + '\t' + asm_code + '\t' + addr_mode);
+	m_txt_disasm->append (seg_off + '\t' + mcode + '\t' + asm_code + "\t\t" + addr_mode);
 
+
+#if 0 //FIXME - table looks good but is very slow
+	//FIXME - this may not work in 8.04
+	QTextCursor cur (m_txt_disasm->textCursor());
+	QTextTable *txt_tbl = cur.currentTable ();
+	if (!txt_tbl) {
+		txt_tbl = cur.insertTable (1, 4);
+	}
+	else {
+		txt_tbl->appendRows (1);
+	}
+
+	QTextTableCell cell = txt_tbl->cellAt (txt_tbl->rows () - 1, 0);
+	QTextCursor cell_cur = cell.firstCursorPosition ();
+	cell_cur.insertText (seg_off);
+
+	cell = txt_tbl->cellAt (txt_tbl->rows () - 1, 1);
+	cell_cur = cell.firstCursorPosition ();
+	cell_cur.insertText (mcode);
+
+	cell = txt_tbl->cellAt (txt_tbl->rows () - 1, 2);
+	cell_cur = cell.firstCursorPosition ();
+	cell_cur.insertText (asm_code);
+
+	cell = txt_tbl->cellAt (txt_tbl->rows () - 1, 3);
+	cell_cur = cell.firstCursorPosition ();
+	cell_cur.insertText (addr_mode);
+
+	m_txt_disasm->setTextCursor (cur);
+#endif
+
+	//FIXME - it would be nice to have this in an HTML table
 	m_tbl_disasm->setItem (0, 0, m_tbl_disasm->takeItem (1, 0));
 	m_tbl_disasm->setItem (0, 1, m_tbl_disasm->takeItem (1, 1));
 	m_tbl_disasm->setItem (0, 2, m_tbl_disasm->takeItem (1, 2));
@@ -65,5 +97,7 @@ DisassemblyWidget::addNextInstruction (QString seg_off, QString mcode, QString a
 	m_tbl_disasm->setItem (1, 1, mcode_item);
 	m_tbl_disasm->setItem (1, 2, asm_code_item);
 	m_tbl_disasm->setItem (1, 3, addr_mode_item);
+
+	m_tbl_disasm->resizeColumnsToContents ();
 }
 

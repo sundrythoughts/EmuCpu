@@ -21,12 +21,12 @@
 
 void
 StackSignalsAndSlots::sigcSlotStackPush (unsigned short seg, unsigned short off, unsigned short val) {
-	emit stackPush (seg, off, val);
+	Q_EMIT stackPush (seg, off, val);
 }
 
 void
 StackSignalsAndSlots::sigcSlotStackPop () {
-	emit stackPop ();
+	Q_EMIT stackPop ();
 }
 
 void

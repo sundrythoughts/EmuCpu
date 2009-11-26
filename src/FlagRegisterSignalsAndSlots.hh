@@ -38,11 +38,11 @@ public:
 	/** */
 	void sigcSlotValueChangedFlags (unsigned short i);
 
-public slots:
+public Q_SLOTS:
 	/** */
 	void enableDisable (bool b);
 
-signals:
+Q_SIGNALS:
 	/** */
 	void valueChangedFlags (unsigned short i);
 

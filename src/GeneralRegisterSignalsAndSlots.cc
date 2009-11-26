@@ -22,42 +22,42 @@
 /* SIGC++ SLOTS */
 void
 GeneralRegisterSignalsAndSlots::sigcSlotValueChangedRegAX (unsigned short i) {
-	emit valueChangedRegAX (i);
+	Q_EMIT valueChangedRegAX (i);
 }
 
 void
 GeneralRegisterSignalsAndSlots::sigcSlotValueChangedRegBX (unsigned short i) {
-	emit valueChangedRegBX (i);
+	Q_EMIT valueChangedRegBX (i);
 }
 
 void
 GeneralRegisterSignalsAndSlots::sigcSlotValueChangedRegCX (unsigned short i) {
-	emit valueChangedRegCX (i);
+	Q_EMIT valueChangedRegCX (i);
 }
 
 void
 GeneralRegisterSignalsAndSlots::sigcSlotValueChangedRegDX (unsigned short i) {
-	emit valueChangedRegDX (i);
+	Q_EMIT valueChangedRegDX (i);
 }
 
 void
 GeneralRegisterSignalsAndSlots::sigcSlotValueChangedRegSI (unsigned short i) {
-	emit valueChangedRegSI (i);
+	Q_EMIT valueChangedRegSI (i);
 }
 
 void
 GeneralRegisterSignalsAndSlots::sigcSlotValueChangedRegDI (unsigned short i) {
-	emit valueChangedRegDI (i);
+	Q_EMIT valueChangedRegDI (i);
 }
 
 void
 GeneralRegisterSignalsAndSlots::sigcSlotValueChangedRegBP (unsigned short i) {
-	emit valueChangedRegBP (i);
+	Q_EMIT valueChangedRegBP (i);
 }
 
 void
 GeneralRegisterSignalsAndSlots::sigcSlotValueChangedRegSP (unsigned short i) {
-	emit valueChangedRegSP (i);
+	Q_EMIT valueChangedRegSP (i);
 }
 
 /* QT SLOTS */

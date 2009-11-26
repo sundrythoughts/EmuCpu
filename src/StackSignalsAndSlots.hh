@@ -41,11 +41,11 @@ public:
 	/** */
 	void sigcSlotStackPop ();
 
-public slots:
+public Q_SLOTS:
 	/** */
 	void enableDisable (bool b);
 
-signals:
+Q_SIGNALS:
 	/** */
 	void stackPush (unsigned short seg, unsigned short off, unsigned short val);
 

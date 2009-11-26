@@ -1,6 +1,8 @@
 DESTDIR = ..
 TARGET = sim86
 
+CONFIG += no_keywords
+
 #CONFIG += qt thread debug
 CONFIG += qt thread
 
@@ -112,6 +114,9 @@ SOURCES += StackSignalsAndSlots.cc
 FORMS += StackWidget.ui
 HEADERS += StackWidget.hh
 SOURCES += StackWidget.cc
+
+HEADERS += TerminalSignalsAndSlots.hh
+SOURCES += TerminalSignalsAndSlots.cc
 
 FORMS += TerminalWidget.ui
 HEADERS += TerminalWidget.hh

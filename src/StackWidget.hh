@@ -44,7 +44,7 @@ public:
 	/** */
 	void reset ();
 
-public slots:
+public Q_SLOTS:
 	/** */
 	void enableDisableToggle (bool b);
 
@@ -54,7 +54,7 @@ public slots:
 	/** */
 	void pop ();
 
-signals:
+Q_SIGNALS:
 	/** */
 	void enableDisable (bool b);
 

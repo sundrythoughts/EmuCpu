@@ -25,7 +25,7 @@ void
 LoadFileThread::run () {
 	m_loader.initialize ();
 	m_loader.load (m_file_name.toAscii ().data ());
-	emit checksum_values (m_loader.checksum_registers (), m_loader.checksum_memory ());
+	Q_EMIT checksum_values (m_loader.checksum_registers (), m_loader.checksum_memory ());
 }
 
 void
@@ -49,7 +49,7 @@ LoadDatabaseThread::run () {
 		qDebug () << "Error: " << m_db.lastError ().text ();
 	}
 	else {
-		emit test_results ("Test", "Correct");
+		Q_EMIT test_results ("Test", "Correct");
 	}
 }
 

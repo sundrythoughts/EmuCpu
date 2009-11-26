@@ -23,17 +23,17 @@
 /* SIGC++ SLOTS */
 void
 MemorySignalsAndSlots::sigcSlotValueChanged (int addr, unsigned char val) {
-	emit valueChanged (addr, val);
+	Q_EMIT valueChanged (addr, val);
 }
 
 void
 MemorySignalsAndSlots::sigcSlotResized (size_t sz) {
-	emit resized (sz);
+	Q_EMIT resized (sz);
 }
 
 void
 MemorySignalsAndSlots::sigcSlotReloaded (const unsigned char *arr, size_t sz) {
-	emit reloaded (arr, sz);
+	Q_EMIT reloaded (arr, sz);
 }
 
 /* SIGC++ SIGNALS */

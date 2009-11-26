@@ -40,17 +40,17 @@ DatabaseTester::~DatabaseTester () {
 
 void
 DatabaseTester::connect (const QString &server, const QString &db, const QString &uid, const QString &pwd) {
-	emit connecting ();
+	Q_EMIT connecting ();
 
 	if (p->m_login || p->m_dbproc) {
 		//FIXME - already connected
-		emit connected ();
+		Q_EMIT connected ();
 		return;
 	}
 
 	if ((p->m_login = syb::dblogin ()) == 0) {
 		//FIXME - no memory
-		emit error ("Out of memory");
+		Q_EMIT error ("Out of memory");
 		return;
 	}
 
@@ -59,17 +59,17 @@ DatabaseTester::connect (const QString &server, const QString &db, const QString
 
 	if ((p->m_dbproc = syb::dbopen (p->m_login, server.toAscii ().data ())) == 0) {
 		//FIXME - unable to open database server
-		emit error ("Unable to open database server");
+		Q_EMIT error ("Unable to open database server");
 		return;
 	}
 
 	if ((p->m_ret = syb::dbuse (p->m_dbproc, db.toAscii ().data ())) == FAIL) {
 		//FIXME - database name doesn't exist on server
-		emit error ("Database name does not exist");
+		Q_EMIT error ("Database name does not exist");
 		return;
 	}
 
-	emit connected ();
+	Q_EMIT connected ();
 }
 
 void

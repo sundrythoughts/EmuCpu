@@ -22,7 +22,7 @@
 /* SIGC++ SLOTS */
 void
 FlagRegisterSignalsAndSlots::sigcSlotValueChangedFlags (unsigned short i) {
-	emit valueChangedFlags (i);
+	Q_EMIT valueChangedFlags (i);
 }
 
 /* QT SLOTS */

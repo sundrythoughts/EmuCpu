@@ -49,10 +49,10 @@ public:
 	LoadFileThread (QObject *parent = 0) : QThread (parent) {
 	}
 
-public slots:
+public Q_SLOTS:
 	void open_file (const QString &filename);
 
-signals:
+Q_SIGNALS:
 	void checksum_values (int reg, int mem);
 };
 
@@ -72,10 +72,10 @@ public:
 		m_db = QSqlDatabase::addDatabase ("QTDS");
 	}
 
-public slots:
+public Q_SLOTS:
 	void open_database ();
 
-signals:
+Q_SIGNALS:
 	void test_results (QString num, QString res);
 };
 
@@ -88,7 +88,7 @@ class LoaderWidget : public QWidget, protected Ui::LoaderWidget {
 	LoadFileThread m_load_file_thread;
 	LoadDatabaseThread m_load_database_thread;
 
-private slots:
+private Q_SLOTS:
 	void file_checksum_values (int reg, int mem);
 
 	void choose_file ();

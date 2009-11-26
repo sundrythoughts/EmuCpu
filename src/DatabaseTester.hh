@@ -40,7 +40,7 @@ public:
 	/** */
 	virtual ~DatabaseTester ();
 
-public slots:
+public Q_SLOTS:
 	/** */
 	void connect (const QString &server, const QString &db, const QString &uid, const QString &pwd);
 
@@ -50,7 +50,7 @@ public slots:
 	/** */
 	void spChecksumsInsert (const QString &userid, const QString &testid, int regcksum, int ramcksum);
 
-signals:
+Q_SIGNALS:
 	/** */
 	void error (QString err);
 

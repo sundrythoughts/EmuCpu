@@ -21,27 +21,27 @@
 
 void
 SegmentRegisterSignalsAndSlots::sigcSlotValueChangedSRegCS (unsigned short i) {
-	emit valueChangedSegRegCS (i);
+	Q_EMIT valueChangedSegRegCS (i);
 }
 
 void
 SegmentRegisterSignalsAndSlots::sigcSlotValueChangedSRegDS (unsigned short i) {
-	emit valueChangedSegRegDS (i);
+	Q_EMIT valueChangedSegRegDS (i);
 }
 
 void
 SegmentRegisterSignalsAndSlots::sigcSlotValueChangedSRegES (unsigned short i) {
-	emit valueChangedSegRegES (i);
+	Q_EMIT valueChangedSegRegES (i);
 }
 
 void
 SegmentRegisterSignalsAndSlots::sigcSlotValueChangedSRegSS (unsigned short i) {
-	emit valueChangedSegRegSS (i);
+	Q_EMIT valueChangedSegRegSS (i);
 }
 
 void
 SegmentRegisterSignalsAndSlots::sigcSlotValueChangedRegIP (unsigned short i) {
-	emit valueChangedRegIP (i);
+	Q_EMIT valueChangedRegIP (i);
 }
 
 void

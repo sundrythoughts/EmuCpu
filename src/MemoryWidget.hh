@@ -43,7 +43,7 @@ public:
 	/** */
 	MemoryWidget (QWidget *parent = 0);
 
-public slots:
+public Q_SLOTS:
 	/** */
 	void enableDisableToggle (bool b);
 
@@ -56,7 +56,7 @@ public slots:
 	/** */
 	void setAllMemoryAddresses (const unsigned char *arr, size_t sz);
 
-signals:
+Q_SIGNALS:
 	/** */
 	void enableDisable (bool b);
 

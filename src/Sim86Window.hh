@@ -80,7 +80,7 @@ public:
 	/** */
 	TerminalWidget& getTerminalWidget ();
 
-private slots:
+private Q_SLOTS:
 	/** */
 	void enableDisableToggleDisassembly (bool b);
 
@@ -93,7 +93,7 @@ private slots:
 	/** */
 	void resetUi ();
 
-signals:
+Q_SIGNALS:
 	/** */
 	void startCpu ();
 

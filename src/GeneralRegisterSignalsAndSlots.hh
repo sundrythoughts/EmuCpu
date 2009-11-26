@@ -59,11 +59,11 @@ public:
 	/** */
 	void sigcSlotValueChangedRegSP (unsigned short i);
 
-public slots:
+public Q_SLOTS:
 	/** */
 	void enableDisable (bool b);
 
-signals:
+Q_SIGNALS:
 	/** */
 	void valueChangedRegAX (unsigned short i);
 

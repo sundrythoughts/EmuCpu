@@ -41,33 +41,46 @@ public:
 	virtual ~DatabaseTester ();
 
 public Q_SLOTS:
-	/** */
+	/**
+	@brief Connect to the database.
+	@param server Server name.
+	@param db Database name.
+	@param uid User name.
+	@param pwd Password.
+	*/
 	void connect (const QString &server, const QString &db, const QString &uid, const QString &pwd);
 
-	/** */
+	/** Disconnect from the database. */
 	void disconnect ();
 
-	/** */
+	/**
+	@brief Execute the ChecksumsInsert stored procedure.
+	@param userid User ID of to use.
+	@param testid Name of the file being executed.
+	@param regcksum Checksum of the registers.
+	@param ramcksum Checksum of the Memory.
+	*/
 	void spChecksumsInsert (const QString &userid, const QString &testid, int regcksum, int ramcksum);
 
 Q_SIGNALS:
-	/** */
+	/** An error has occured. */
 	void error (QString err);
 
-	/** */
+	/** Connecting to database. */
 	void connecting ();
 
-	/** */
+	/** Connection to database has been achieved. */
 	void connected ();
 
-	/** */
+	/** Disconnecting from database. */
 	void disconnecting ();
 
-	/** */
+	/** Connection to database has been terminated. */
 	void disconnected ();
 
 protected:
 	//override
+	/** Run the DatabaseTester thread. */
 	virtual void run ();
 };
 

@@ -62,68 +62,91 @@ public:
 	/** */
 	~BusInterfaceUnit ();
 
-	/** */
+	/** Reverts to original state. */
 	void reset ();
 
-	/** */
+	/** FIXME */
 	void initialize ();
 
-	/** Create a connection to the CpuComponents */
+	/** Create a connection to the CpuComponents. */
 	void connectTo (CpuComponents &cpu);
 
-	/** */
+	/**
+	@brief Get reference to a segment register.
+	@param index Index of a segment register (possible values are the same as Intel's).
+	*/
 	Register<unsigned short>& getSegReg (size_t index);
 
-	/** */
+	/**
+	@brief Set a segment register value.
+	@param index Index of a segment register (possible values are the same as Intel's).
+	@param val Value to use.
+	*/
 	void setSegReg (size_t index, unsigned short val);
 
-	/** */
+	/** Get the CS segment register. */
 	Register<unsigned short>& getSegRegCS ();
 
-	/** */
+	/** Set the CS segment register. */
 	void setSegRegCS (unsigned short val);
 
-	/** */
+	/** Get the DS segment register. */
 	Register<unsigned short>& getSegRegDS ();
 
-	/** */
+	/** Set the DS segment register. */
 	void setSegRegDS (unsigned short val);
 
-	/** */
+	/** Get the ES segment register. */
 	Register<unsigned short>& getSegRegES ();
 
-	/** */
+	/** Set the ES segment register. */
 	void setSegRegES (unsigned short val);
 
-	/** */
+	/** Get the SS segment register. */
 	Register<unsigned short>& getSegRegSS ();
 
-	/** */
+	/** Set the SS segment register. */
 	void setSegRegSS (unsigned short val);
 
-	/** */
+	/** Get the IP register. */
 	Register<unsigned short>& getRegIP ();
 
-	/** */
+	/** Set the IP register. */
 	void setRegIP (unsigned short val);
 
-	/** */
+	/** Set the segment override value. */
 	void setSegOverride (unsigned short val);
 
-	/** */
+	/**
+	@brief Get a copy of data in memory.
+	@param seg Segment of memory location.
+	@param offset Offset of memory location.
+	*/
 	template<typename T>
 	T getMemoryData (unsigned short seg, unsigned offset);
 
-	/** */
+	/**
+	@brief Get a MemoryAddress pointer to a memory location.
+	@param mem_addr Reference in which to store the pointer.
+	@param seg Segment of memory location.
+	@param offset Offset of memory location.
+	@param override_the_override If true, then use seg for the segment value even if the instruction has a segment override.
+	*/
 	template<typename T>
 	void getMemoryAddress (MemoryAddress<T> * &mem_addr, unsigned short seg, unsigned short offset, bool override_the_override = false);
 
-	/** */
+	/**
+	@brief Get a MemoryAddress pointer to a memory location.
+	@param seg Segment of memory location.
+	@param offset Offset of memory location.
+	@param override_the_override If true, then use seg for the segment value even if the instruction has a segment override.
+	@return MemoryAddress pointer to memory location.
+	*/
 	template<typename T>
 	MemoryAddress<T>*
 	getMemoryAddress (unsigned short seg, unsigned short offset, bool override_the_override = false);
 
-	/** Read sizeof(T) bytes starting at IP and then increment IP sizeof(T) bytes */
+	/** Read sizeof(T) bytes starting at IP and then increment IP sizeof(T) bytes. */
 	template<typename T>
 	T getInstructionBytes ();
 

@@ -57,34 +57,37 @@ public:
 	/** */
 	~CpuComponents ();
 
-	/** */
+	/** Get a reference to the ExecutionUnit. */
 	ExecutionUnit& getExecutionUnit ();
 
-	/** */
+	/** Get a reference to the BusInterfaceUnit. */
 	BusInterfaceUnit& getBusInterfaceUnit ();
 
-	/** */
+	/** Get a reference to the Memory. */
 	Memory& getMemory ();
 
-	/** */
+	/** Get a reference to the ArithmeticLogicUnit. */
 	ArithmeticLogicUnit& getArithmeticLogicUnit ();
 
-	/** */
+	/** Get a reference to the InstructionDecoder. */
 	InstructionDecoder& getInstructionDecoder ();
 
-	/** */
+	/** Get a reference to the Instruction. */
 	Instruction& getInstruction ();
 
-	/** */
+	/** Get a reference to the Loader. */
 	Loader& getLoader ();
 
-	/** */
+	/** Get whether the Cpu is halted or not. */
 	bool getHalt ();
 
-	/** */
+	/**
+	@brief Set the Cpu to a halted or unhalted state.
+	@param b Halt Cpu if true, unhalt Cpu if false.
+	*/
 	void setHalt (bool b);
 
-	/** */
+	/** FIXME */
 	void reset ();
 
 }; //end class CpuComponents

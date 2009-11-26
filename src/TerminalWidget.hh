@@ -39,23 +39,14 @@ class TerminalWidget : public QWidget, protected Ui::TerminalWidget {
 
 public:
 	/** */
-	TerminalWidget (QWidget *parent = 0) : QWidget (parent) {
-		setupUi (this);
-	}
+	TerminalWidget (QWidget *parent = 0);
 
-	/** */
+	/** FIXME */
 	void reset ();
 
 public Q_SLOTS:
-	/** */
-	void enableDisableToggle (bool b) {
-		if (b) {
-			show ();
-		}
-		else {
-			hide ();
-		}
-	}
+	/** Enable or disable the widget */
+	void enableDisableToggle (bool b);
 
 }; //end class TerminalWidget
 

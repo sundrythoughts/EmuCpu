@@ -58,49 +58,52 @@ public:
 	/** */
 	~Cpu ();
 
-	/** */
+	/** Get a reference to the ExecutionUnit. */
 	ExecutionUnit& getExecutionUnit ();
 
-	/** */
+	/** Get a reference to the BusInterfaceUnit. */
 	BusInterfaceUnit& getBusInterfaceUnit ();
 
-	/** */
+	/** Get a reference to the Memory. */
 	Memory& getMemory ();
 
-	/** */
+	/** Get a reference to the ArithmeticLogicUnit. */
 	ArithmeticLogicUnit& getArithmeticLogicUnit ();
 
-	/** */
+	/** Get a reference to the InstructionDecoder. */
 	InstructionDecoder& getInstructionDecoder ();
 
-	/** */
+	/** Get a reference to the Instruction. */
+	Instruction& getInstruction ();
+
+	/** Get a reference to the Loader. */
 	Loader& getLoader ();
 
 protected:
-	//override
-	/** */
+	//virtual override
+	/** Run the Cpu thread. */
 	virtual void run ();
 
 public Q_SLOTS:
-	/** */
+	/** Run the Cpu. */
 	void startCpu ();
 
-	/** */
+	/** Pause the Cpu. */
 	void pauseCpu ();
 
-	/** */
+	/** Reset the Cpu. */
 	void resetCpu ();
 
-	/** */
+	/** Single-step the Cpu. */
 	void singleStepCpu ();
 
-	/** */
+	/** Shutdown the Cpu. */
 	void shutdownCpu ();
 
-	/** */
+	/** Load a new file to execute. */
 	void loadFile (QString file_name);
 
-	/** */
+	/** Change the delay between execution of instructions. */
 	void setSpeed (int);
 
 }; //end class Cpu

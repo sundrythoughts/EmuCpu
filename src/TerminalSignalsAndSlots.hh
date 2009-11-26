@@ -34,19 +34,20 @@
 class TerminalSignalsAndSlots : public QObject {
 	Q_OBJECT
 
-	sigc::signal<void, char> m_sigc_signal_cpu_input;
+	sigc::signal<void, char> m_sigc_signal_terminal_output;
 
 public:
-	/** */
-	void sigcSlotCpuOutput (char c);
+	/** Sigc++ slot for terminal input */
+	void sigcSlotTerminalInput (char c);
 
-	sigc::signal<void, char>& sigcSignalCpuInput ();
+	/** Sigc++ signal for terminal output */
+	sigc::signal<void, char>& sigcSignalTerminalOutput ();
 
 public Q_SLOTS:
-	/** */
-	void enableDisable (bool b);
+	/** Enable or disable the widget */
+	void enableDisableToggle (bool b);
 
-	/** */
+	/** Qt slot for terminal output */
 	void terminalOutput (char c);
 
 Q_SIGNALS:

@@ -19,8 +19,21 @@
 
 #include "TerminalWidget.hh"
 
+TerminalWidget::TerminalWidget (QWidget *parent) : QWidget (parent) {
+	setupUi (this);
+}
+
 void
 TerminalWidget::reset () {
 	//FIXME
 }
 
+void
+TerminalWidget::enableDisableToggle (bool b) {
+	if (b) {
+		show ();
+	}
+	else {
+		hide ();
+	}
+}

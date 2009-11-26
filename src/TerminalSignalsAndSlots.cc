@@ -3,24 +3,24 @@
 
 /* SIGC++ SLOTS */
 void
-TerminalSignalsAndSlots::sigcSlotCpuOutput (char c) {
+TerminalSignalsAndSlots::sigcSlotTerminalInput (char c) {
 	Q_EMIT terminalInput (c);
 }
 
 void
 TerminalSignalsAndSlots::terminalOutput (char c) {
-	m_sigc_signal_cpu_input.emit (c); //FIXME emit in sigc++ is conflicting with emit in QT
+	m_sigc_signal_terminal_output.emit (c);
 }
 
 /* SIGC++ SIGNALS */
 sigc::signal<void, char>&
-TerminalSignalsAndSlots::sigcSignalCpuInput () {
-	return m_sigc_signal_cpu_input;
+TerminalSignalsAndSlots::sigcSignalTerminalOutput () {
+	return m_sigc_signal_terminal_output;
 }
 
 /* QT SLOTS */
 void
-TerminalSignalsAndSlots::enableDisable (bool b) {
+TerminalSignalsAndSlots::enableDisableToggle (bool b) {
 	blockSignals (!b);
 }
 

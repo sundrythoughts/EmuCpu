@@ -29,7 +29,7 @@
 
 namespace Jaf {
 
-/** */
+/** Addressing modes. */
 enum AddressMode {
 	ADDR_MODE_NONE = 0,
 	ADDR_MODE_REG_RM,
@@ -58,14 +58,14 @@ enum AddressMode {
 	ADDR_MODE_STRING
 };
 
-/** */
+/** Operand size. */
 enum OperandSize {
 	OP_SIZE_8 = 0,
 	OP_SIZE_16,
 	OP_SIZE_NONE
 };
 
-/** */
+/** Register indexes for 8-bit registers. */
 enum RegisterIndex8 {
 	REG_AL = 0,
 	REG_CL,
@@ -75,10 +75,10 @@ enum RegisterIndex8 {
 	REG_CH,
 	REG_DH,
 	REG_BH,
-	REG_COUNT_8
+	REG_COUNT_8 //number of indexes
 };
 
-/** */
+/** Register indexes for 16-bit registers. */
 enum RegisterIndex16 {
 	REG_AX = 0,
 	REG_CX,
@@ -89,19 +89,29 @@ enum RegisterIndex16 {
 	REG_SI,
 	REG_DI,
 	REG_FLAGS,
-	REG_COUNT_16
+	REG_COUNT_16 //number of indexes
 };
 
-/** */
+/**
+@brief Get a register name.
+@param op_sz The OperandSize of register.
+@param reg_i The register index listed in RegisterIndex8 or RegisterIndex16.
+*/
 const char* getRegIndexName (size_t op_sz, size_t reg_i);
 
-/** */
+/**
+@brief Get a register name for an 8-bit register.
+@param reg_i The register index listed in RegisterIndex8.
+*/
 const char* getRegIndex8Name (size_t reg_i);
 
-/** */
+/**
+@brief Get a register name for an 16-bit register.
+@param reg_i The register index listed in RegisterIndex16.
+*/
 const char* getRegIndex16Name (size_t reg_i);
 
-/** */
+/** Register indexes of segment registers. */
 enum SegmentRegisterIndex {
 	SREG_ES = 0,
 	SREG_CS,
@@ -110,12 +120,13 @@ enum SegmentRegisterIndex {
 	SREG_COUNT
 };
 
-//extern const char* sreg_index_names[SREG_COUNT];
-
-/** */
+/**
+@brief Get a segment register name.
+@param reg_i The segment register index listed in SegmentRegisterIndex.
+*/
 const char* getSegRegIndexName (size_t reg_i);
 
-/** */
+/** ModRM */
 union ModRM {
 	unsigned char byte;
 	struct {
@@ -125,7 +136,7 @@ union ModRM {
 	};
 };
 
-/** */
+/** Scale, index, and base */
 union ScaleIndexBase {
 	unsigned char byte;
 	struct {

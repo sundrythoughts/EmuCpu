@@ -65,6 +65,11 @@ Cpu::getInstructionDecoder () {
 	return p->m_cpu_comps.getInstructionDecoder ();
 }
 
+Instruction&
+Cpu::getInstruction () {
+	return p->m_cpu_comps.getInstruction ();
+}
+
 Loader&
 Cpu::getLoader () {
 	return p->m_cpu_comps.getLoader ();

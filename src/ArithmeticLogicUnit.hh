@@ -32,7 +32,7 @@ class ArithmeticLogicUnitPrivate;
 
 /**
 @class ArithmeticLogicUnit
-@brief Does all the arithmetic and logical operations of the 8086. It also updates certain flags like ZF and CF.
+@brief Does all the arithmetic and logical operations of the 8086. It also updates flags after arithmetic operations.
 */
 class ArithmeticLogicUnit {
 	ArithmeticLogicUnitPrivate *p;
@@ -51,15 +51,13 @@ public:
 	void
 	connectTo (CpuComponents &cpu);
 
-	//FIXME
 	/**
-	@brief Update the auxilliary flag (AF) for an 8-bit operation.
+	@brief FIXME - Update the auxilliary flag (AF) for an 8-bit operation.
 	*/
 	void updateFlagAF (unsigned char result8, unsigned short result16);
 
-	//FIXME
 	/**
-	@brief Update the auxilliary flag (AF) for a 16-bit operation.
+	@brief FIXME - Update the auxilliary flag (AF) for a 16-bit operation.
 	*/
 	void updateFlagAF (unsigned short result16, unsigned int result32);
 

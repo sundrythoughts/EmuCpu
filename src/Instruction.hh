@@ -45,49 +45,49 @@ public:
 	/** */
 	~Instruction ();
 
-	/** */
+	/** Connect to CpuComponents. */
 	void connectTo (CpuComponents &cpu);
 
-	/** */
+	/** Connect to InstructionDecoder. */
 	void connectTo (InstructionDecoder &dec);
 
-	/** */
+	/** Connect to ExecutionUnit. */
 	void connectTo (ExecutionUnit &eu);
 
-	/** */
+	/** Get the OperandList. */
 	OperandList& operands ();
 
-	/** */
+	/** Get the InstructionDisassembly. */
 	InstructionDisassembly& disassembly ();
 
-	/** */
+	/** Decode Instruction. */
 	void decode ();
 
-	/** */
+	/** Execute Instruction. */
 	void execute ();
 
-	/** */
+	/** Set the value of the InstructionTableItem. */
 	void setItem (const InstructionTableItem &item);
 
-	/** */
+	/** Get the value of the InstructionTableItem. */
 	const InstructionTableItem& getItem ();
 
-	/** */
+	/** Reset the Instruction to the default value. */
 	void reset ();
 
-	/** */
+	/** Is this instruction valid or not. */
 	bool isNull () const;
 
-	/** */
+	/** Get the raw bytes for the Instruction. */
 	const std::vector<unsigned char>& getBytes () const;
 
-	/** */
+	/** Get the raw bytes for the Instruction. */
 	std::vector<unsigned char>& getBytes ();
 
-	/** */
+	/** Get raw byte of Instruction at index. */
 	unsigned char getByte (size_t i) const;
 
-	/** */
+	/** Add bytes to the raw bytes of the Instruction. */
 	template<typename T>
 	void addBytes (const T &val);
 

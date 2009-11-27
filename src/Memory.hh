@@ -59,22 +59,22 @@ public:
 	*/
 	unsigned char operator[] (size_t index) const;
 
-	/** Get the size of the memory */
+	/** Get the size of the memory. */
 	size_t size () const;
 
-	/** Get an unchecked pointer to the memory */
+	/** Get an unchecked pointer to the memory. */
 	unsigned char* data ();
 
-	/** Signal activated when a memory location is changed */
+	/** Signal activated when a memory location is changed. */
 	sigc::signal<void, int, unsigned char>& signalValueChanged ();
 
-	/** Signal activated when memory is resized */
+	/** Signal activated when memory is resized. */
 	sigc::signal<void, size_t>& signalResized ();
 
-	/** Signal activated when memory is reloaded */
+	/** Signal activated when memory is reloaded. */
 	sigc::signal<void, const unsigned char*, size_t>& signalReloaded ();
 
-	/** Emit signalValueChanged () for each memory location */
+	/** Emit signalValueChanged () for each memory location. */
 	void emitValueChangedForAll () const;
 
 	/** */
@@ -116,7 +116,7 @@ public:
 	template<typename T>
 	bool write (size_t addr, const INumberReadableWritable<T> &src);
 
-	/** Print the memory to std::cout starting at index start and ending at index end */
+	/** Print the memory to std::cout starting at index start and ending at index end. */
 	void printMemoryDump (size_t start, size_t end);
 };
 

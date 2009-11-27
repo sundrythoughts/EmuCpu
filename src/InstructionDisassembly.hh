@@ -43,34 +43,34 @@ public:
 
 	~InstructionDisassembly ();
 
-	/** */
+	/** Get the segment and offset. */
 	const std::string& getSegmentOffset () const;
 
-	/** */
+	/** Set the segment and offset. */
 	void setSegmentOffset (unsigned short seg, unsigned short off);
 
-	/** */
+	/** Get the machine code. */
 	const std::string& getMachineCode () const;
 
-	/** */
+	/** Set the machine code. */
 	void setMachineCode (const std::vector<unsigned char> &code);
 
-	/** */
+	/** Get the addressing mode. */
 	const std::string& getAddressingMode () const;
 
-	/** */
+	/** Set the addressing mode. */
 	void setAddressingMode (const std::string &s);
 
-	/** */
+	/** Get the assembly. */
 	const std::string& getAssembly () const;
 
-	/** */
+	/** Set the assembly. */
 	void setAssembly (const std::string s);
 
-	/** */
+	/** Clear the current disassembly. */
 	void clear ();
 
-	/** */
+	/** Convert everything to a single std::string. */
 	std::string toString () const;
 
 }; //end class InstructionDisassembly

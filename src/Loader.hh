@@ -70,21 +70,21 @@ public:
 	/** */
 	~Loader ();
 
-	/** Create a connection to the Cpu */
+	/** Create a connection to the CpuComponents. */
 	void connectTo (CpuComponents &cpu);
 
 	/**
-	@brief Load a file into memory
+	@brief Load a file into memory.
 	@param filename The file to load.
 	@brief If true, then clear the memory before loading.
-	@return true if successful, false if unsuccessful
+	@return true if successful, false if unsuccessful.
 	*/
 	bool loadFile (std::string filename, bool clear = false);
 
-	/** Return the checksum of the memory */
+	/** Return the checksum of the memory. */
 	int checksumMemory ();
 
-	/** Return the checksum of the registers */
+	/** Return the checksum of the registers. */
 	int checksumRegisters ();
 
 }; //end class Loader

@@ -96,12 +96,12 @@ private:
 	}
 
 public:
-	/** Implicit cast to stored value */
+	/** Implicit cast to stored value. */
 	virtual operator const T& () const {
 		return *m_num;
 	}
 
-	/** Get the stored value */
+	/** Get the stored value. */
 	virtual const T& getValue () const {
 		return *m_num;
 	}
@@ -201,6 +201,7 @@ private:
 		std::cerr << "Debug: class Immediate is read-only" << std::endl;
 		return *this;
 	}
+
 }; //end class Immediate
 
 #endif //JAF__IMMEDIATE_HH

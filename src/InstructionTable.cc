@@ -398,10 +398,3 @@ const InstructionTableItem InstructionTable::one_byte_opcode_instruction_extensi
 	}//END GROUP 6
 };
 
-//***OPERATION PSEUDOCODE****
-//get opcode from memory
-//decode the opcode by getting the element from opcode array
-//decode each operand and store the values Operation[[{Value<int>(0), 0x7} {pointer to opcode instruction map element}]]
-//store Operation in the Queue (if 8086 has pipelining???)
-//Operation->instruction->execute (maching, Operation->operands)
-

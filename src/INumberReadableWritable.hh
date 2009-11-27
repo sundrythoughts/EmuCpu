@@ -44,10 +44,10 @@ public:
 	/** Get the stored value */
 	virtual const T& getValue () const = 0;
 
-	/** */
+	/** Get the segment. */
 	virtual unsigned short getSegment () const = 0;
 
-	/** */
+	/** Get the offset. */
 	virtual unsigned short getOffset () const = 0;
 
 	/** */

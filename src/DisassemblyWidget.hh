@@ -41,14 +41,14 @@ public:
 	/** */
 	DisassemblyWidget (QWidget *parent = 0);
 
-	/** */
+	/** Clear the widget. */
 	void reset ();
 
 public Q_SLOTS:
-	/** */
+	/** Enable/disable widget. */
 	void enableDisableToggle (bool b);
 
-	/** */
+	/** Add dissassembly to widget. */
 	void addNextInstruction (QString seg_off, QString mcode, QString asm_code, QString addr_mode);
 
 Q_SIGNALS:

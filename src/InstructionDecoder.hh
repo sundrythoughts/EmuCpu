@@ -45,7 +45,7 @@ public:
 	/** */
 	~InstructionDecoder ();
 
-	/** Create a connection to the CpuComponents */
+	/** Create a connection to the CpuComponents. */
 	void connectTo (CpuComponents &cpu);
 
 	/** */

@@ -48,7 +48,7 @@ public Q_SLOTS:
 	/** */
 	void enableDisableToggle (bool b);
 
-	/** */
+	/** Set the flags to a new value. */
 	void setFlags (unsigned short i);
 
 Q_SIGNALS:

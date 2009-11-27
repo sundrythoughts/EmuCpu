@@ -35,18 +35,27 @@
 */
 class InstructionTableItem {
 public:
+	/** Human readable instruction name. */
 	const char *mnemonic;
+
+	/** Does the instruction have a ModRM byte or not. */
 	bool has_modrm;
+
+	/** The InstructionGroups index of the instruction. */
 	unsigned int group;
+
+	/** Function pointer to the decode function. */
 	void (InstructionDecoder::*decode_func) ();
+
+	/** Function pointer to the execute function. */
 	void (ExecutionUnit::*execute_func) ();
 
-	/** */
+	/** Decode instruction. */
 	void decode (InstructionDecoder &id) const {
 		(id.*decode_func) ();
 	}
 
-	/** */
+	/** Execute instruction. */
 	void execute (ExecutionUnit &eu) const {
 		(eu.*execute_func) ();
 	}
@@ -58,7 +67,12 @@ public:
 @brief Holds the primary and secondary opcode tables.
 */
 class InstructionTable {
+	static const InstructionTableItem one_byte_opcode_instruction_extension_map[7][8];
+
+	static const InstructionTableItem one_byte_opcode_instruction_map[256];
+
 public:
+	/** Indexes for the row of the secondary opcode table. */
 	enum {
 		GROUP_0 = 0,
 		GROUP_1,
@@ -71,17 +85,18 @@ public:
 		GROUP_RESERVED
 	} InstructionGroups;
 
-	/** */
+	/**
+	@brief Get a reference to an element of the primary opcode table.
+	@param i An opcode.
+	*/
 	static const InstructionTableItem& getOneByteOpcodeInstruction (size_t i);
 
-	/** */
-	static const InstructionTableItem one_byte_opcode_instruction_map[256];
-
-	/** */
+	/**
+	@brief Get a reference to an element of the secondary opcode table.
+	@param row An InstructionGroups value.
+	@param col REG field of the ModRM byte.
+	*/
 	static const InstructionTableItem& getOneByteOpcodeInstructionExtension (size_t row, size_t col);
-
-	/** */
-	static const InstructionTableItem one_byte_opcode_instruction_extension_map[7][8];
 
 }; //end class InstructionTable
 

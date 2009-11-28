@@ -23,6 +23,7 @@
 #include "BusInterfaceUnit.hh"
 #include "ArithmeticLogicUnit.hh"
 #include "Instruction.hh"
+#include "IOPorts.hh"
 
 #include "Defines.hh"
 #include "OperandList.hh"
@@ -46,6 +47,7 @@ public:
 	BusInterfaceUnit *m_biu;
 	ArithmeticLogicUnit *m_alu;
 	Instruction *m_inst;
+	IOPorts *m_io_ports;
 
 	sigc::signal<void, unsigned short, unsigned short, unsigned short> m_signal_stack_push;
 	sigc::signal<void> m_signal_stack_pop;
@@ -103,6 +105,7 @@ ExecutionUnit::connectTo (CpuComponents &cpu) {
 	p->m_biu = &cpu.getBusInterfaceUnit ();
 	p->m_alu = &cpu.getArithmeticLogicUnit ();
 	p->m_inst = &cpu.getInstruction ();
+	p->m_io_ports = &cpu.getIOPorts ();
 }
 
 sigc::signal<void, unsigned short, unsigned short, unsigned short>&
@@ -623,6 +626,27 @@ ExecutionUnit::execHLT () {
 }
 
 void
+ExecutionUnit::execIN () {
+	OperandList &ops = p->m_inst->operands ();
+
+	unsigned short port = ops.src ().get<unsigned short> ();
+	if (port != 1 || ops.operandSize () != Jaf::OP_SIZE_8) {
+		return;
+	}
+
+	while (p->m_io_ports->charInputQueue ().empty () && !p->m_cpu->getHalt ()) {
+		//FIXME this is very ineffecient
+	}
+
+	if (p->m_cpu->getHalt () && p->m_io_ports->charInputQueue ().empty ()) {
+		return;
+	}
+
+	ops.dest ().get<unsigned char> () =  p->m_io_ports->charInputQueue ().front ();
+	p->m_io_ports->charInputQueue ().pop ();
+}
+
+void
 ExecutionUnit::execINC () {
 	OperandList &ops = p->m_inst->operands ();
 
@@ -984,6 +1008,25 @@ ExecutionUnit::execOR () {
 		unsigned char ret;
 		p->m_alu->opOr (ops.dest ().get<unsigned char> (), ops.src ().get<unsigned char> (), ret);
 		ops.dest ().get<unsigned char> () = ret;
+	}
+}
+
+void
+ExecutionUnit::execOUT () {
+	OperandList &ops = p->m_inst->operands ();
+
+	//FIXME - this is only for 310
+	unsigned short port = ops.dest ().get<unsigned short> ();
+	if (port == 2) { //terminal output
+		if (ops.operandSize () == Jaf::OP_SIZE_8) {
+			p->m_io_ports->signalCharOutput ().emit (ops.src ().get<unsigned char> ());
+		}
+	}
+	else if (port == 3) { //sound output
+		if (ops.operandSize () == Jaf::OP_SIZE_16) {
+			unsigned short cx_div_bx = getRegCX () / getRegBX ();
+			p->m_io_ports->signalSoundOutput ().emit (ops.src ().get<unsigned short> (), cx_div_bx);
+		}
 	}
 }
 

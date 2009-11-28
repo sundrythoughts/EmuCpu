@@ -18,6 +18,7 @@
 
 
 #include "TerminalWidget.hh"
+#include <iostream>
 
 TerminalWidget::TerminalWidget (QWidget *parent) : QWidget (parent) {
 	setupUi (this);
@@ -36,4 +37,29 @@ TerminalWidget::enableDisableToggle (bool b) {
 	else {
 		hide ();
 	}
+
+	Q_EMIT enableDisable (b);
 }
+
+void
+TerminalWidget::terminalInput (char c) {
+	m_txt_terminal->insertPlainText (QChar (c));
+}
+
+void
+TerminalWidget::keyPressEvent (QKeyEvent *event) {
+	QChar ch = event->text ().toAscii ().at (0);
+	if (!ch.isPrint ()) {
+		QWidget::keyPressEvent (event);
+		return;
+	}
+	m_txt_terminal->insertPlainText (ch);
+	Q_EMIT terminalOutput (ch.toAscii ());
+}
+
+void
+TerminalWidget::mousePressEvent (QMouseEvent *event) {
+	//FIXME - this should be more intuitive for the user
+	setFocus ();
+}
+

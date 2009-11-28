@@ -1,4 +1,5 @@
 #include "TerminalSignalsAndSlots.hh"
+#include <iostream>
 
 
 /* SIGC++ SLOTS */
@@ -20,7 +21,7 @@ TerminalSignalsAndSlots::sigcSignalTerminalOutput () {
 
 /* QT SLOTS */
 void
-TerminalSignalsAndSlots::enableDisableToggle (bool b) {
+TerminalSignalsAndSlots::enableDisable (bool b) {
 	blockSignals (!b);
 }
 

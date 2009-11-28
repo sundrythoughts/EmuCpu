@@ -847,7 +847,36 @@ InstructionDecoder::decodeRMImm () {
 
 void
 InstructionDecoder::decodeAccPort () {
-	std::cout << "decodeAccPort ()" << std::endl;
+	union InstMask {
+		unsigned char byte;
+		struct {
+			unsigned int w : 1;
+			unsigned int d : 1;
+		};
+	};
+
+	p->m_inst->disassembly ().setAddressingMode ("AccPort");
+
+	InstMask im;
+	im.byte = p->m_inst->getByte (0);
+
+	p->m_inst->operands ().setOperandSize (im.w);
+
+	((!im.d) ? p->m_dis_dest : p->m_dis_src) << Jaf::getRegIndexName (im.w, Jaf::REG_AX);
+
+	const unsigned char imm = p->m_biu->getInstructionBytes<unsigned char> ();
+	p->m_inst->addBytes (imm);
+
+	((!im.d) ? p->m_dis_src : p->m_dis_dest) << std::setfill ('0') << std::setw (sizeof(imm) << 1) << std::hex << (unsigned int)imm;
+
+	((!im.d) ? p->m_inst->operands ().src () : p->m_inst->operands ().dest ()).init<unsigned short> (new Immediate<unsigned short> (imm), true);
+
+	if (im.w) { //16 bits
+		((!im.d) ? p->m_inst->operands ().dest () : p->m_inst->operands ().src ()).init<unsigned short> (p->m_eunit->getRegAX ());
+	}
+	else { //8 bits
+		((!im.d) ? p->m_inst->operands ().dest () : p->m_inst->operands ().src ()).init<unsigned char> (p->m_eunit->getRegAL ());
+	}
 }
 
 void
@@ -987,7 +1016,18 @@ InstructionDecoder::decodeRetPop () {
 
 void
 InstructionDecoder::decodeType3 () {
-	std::cout << "decodeType3 ()" << std::endl;
+	union InstMask {
+		unsigned char byte;
+	};
+
+	p->m_inst->disassembly ().setAddressingMode ("Type3");
+
+	InstMask im;
+	im.byte = p->m_inst->getByte (0);
+
+	p->m_inst->operands ().setOperandSize (Jaf::OP_SIZE_8);
+
+	p->m_inst->operands ().src ().init<unsigned char> (new Immediate<unsigned char> (3), true);
 }
 
 void
@@ -997,7 +1037,33 @@ InstructionDecoder::decodeEscNum () {
 
 void
 InstructionDecoder::decodeAccVPort () {
-	std::cout << "decodeAccVPort ()" << std::endl;
+	union InstMask {
+		unsigned char byte;
+		struct {
+			unsigned int w : 1;
+			unsigned int d : 1;
+		};
+	};
+
+	p->m_inst->disassembly ().setAddressingMode ("AccVPort");
+
+	InstMask im;
+	im.byte = p->m_inst->getByte (0);
+
+	p->m_inst->operands ().setOperandSize (im.w);
+
+	((!im.d) ? p->m_dis_dest : p->m_dis_src) << Jaf::getRegIndexName (im.w, Jaf::REG_AX);
+
+	((!im.d) ? p->m_dis_src : p->m_dis_dest) << Jaf::getRegIndex16Name (Jaf::REG_DX);
+
+	((!im.d) ? p->m_inst->operands ().src () : p->m_inst->operands ().dest ()).init<unsigned short> (p->m_eunit->getRegDX ());
+
+	if (im.w) { //16 bits
+		((!im.d) ? p->m_inst->operands ().dest () : p->m_inst->operands ().src ()).init<unsigned short> (p->m_eunit->getRegAX ());
+	}
+	else { //8 bits
+		((!im.d) ? p->m_inst->operands ().dest () : p->m_inst->operands ().src ()).init<unsigned char> (p->m_eunit->getRegAL ());
+	}
 }
 
 void
@@ -1007,7 +1073,23 @@ InstructionDecoder::decodeAccBase () {
 
 void
 InstructionDecoder::decodeIntNum () {
-	std::cout << "decodeIntNum ()" << std::endl;
+	union InstMask {
+		unsigned char byte;
+	};
+
+	p->m_inst->disassembly ().setAddressingMode ("IntNum");
+
+	InstMask im;
+	im.byte = p->m_inst->getByte (0);
+
+	p->m_inst->operands ().setOperandSize (Jaf::OP_SIZE_8);
+
+	const unsigned char imm = p->m_biu->getInstructionBytes<unsigned char> ();
+	p->m_inst->addBytes (imm);
+
+	p->m_dis_src << std::setfill ('0') << std::setw (sizeof(imm) << 1) << std::hex << (unsigned int)imm;
+
+	p->m_inst->operands ().src ().init<unsigned char> (new Immediate<unsigned char> (imm), true);
 }
 
 void

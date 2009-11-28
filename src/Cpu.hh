@@ -79,6 +79,9 @@ public:
 	/** Get a reference to the Loader. */
 	Loader& getLoader ();
 
+	/** Get a reference to the IOPorts. */
+	IOPorts& getIOPorts ();
+
 protected:
 	//virtual override
 	/** Run the Cpu thread. */

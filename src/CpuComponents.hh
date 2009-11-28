@@ -31,6 +31,7 @@
 #include "InstructionDecoder.hh"
 #include "Instruction.hh"
 #include "Loader.hh"
+#include "IOPorts.hh"
 
 class Instruction;
 class InstructionDecoder;
@@ -40,6 +41,7 @@ class ArithmeticLogicUnit;
 class BusInterfaceUnit;
 class Memory;
 class Loader;
+class IOPorts;
 
 class CpuComponentsPrivate;
 
@@ -77,6 +79,9 @@ public:
 
 	/** Get a reference to the Loader. */
 	Loader& getLoader ();
+
+	/** Get a reference to the IOPorts. */
+	IOPorts& getIOPorts ();
 
 	/** Get whether the Cpu is halted or not. */
 	bool getHalt ();

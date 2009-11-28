@@ -310,7 +310,7 @@ public:
 	/** UNIMPLEMENTED */
 	void execIMUL ();
 
-	/** UNIMPLEMENTED */
+	/** Input a byte/word from a port. */
 	void execIN ();
 
 	/** Increment. */
@@ -439,7 +439,7 @@ public:
 	/** Logical or. */
 	void execOR ();
 
-	/** UNIMPLEMENTED */
+	/** Output a byte/word to a port. */
 	void execOUT ();
 
 	/** Pop from stack. */
@@ -493,7 +493,7 @@ public:
 	/** UNIMPLEMENTED */
 	void execSCAS ();
 
-	/** UNIMPLEMENTED */
+	/** Do a segment override. */
 	void execSEG ();
 
 	/** Shift right. */

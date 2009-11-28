@@ -75,6 +75,12 @@ Cpu::getLoader () {
 	return p->m_cpu_comps.getLoader ();
 }
 
+/** Get a reference to the IOPorts. */
+IOPorts&
+Cpu::getIOPorts () {
+	return p->m_cpu_comps.getIOPorts ();
+}
+
 //override
 void
 Cpu::run () {
@@ -126,6 +132,8 @@ Cpu::pauseCpu () {
 	p->m_mutex.lock ();
 		m_cpu_state = CPU_STATE_PAUSE;
 	p->m_mutex.unlock ();
+
+	p->m_cpu_comps.setHalt (true);
 }
 
 void
@@ -144,6 +152,7 @@ Cpu::singleStepCpu () {
 void
 Cpu::shutdownCpu () {
 	p->m_thread_run = false;
+	pauseCpu ();
 	wait ();
 }
 

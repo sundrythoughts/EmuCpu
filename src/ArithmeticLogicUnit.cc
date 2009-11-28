@@ -305,6 +305,7 @@ ArithmeticLogicUnit::opDiv (unsigned char src) {
 
 	if (src == 0) {
 		//FIXME - interrupt 0
+		return;
 	}
 
 	Register<unsigned char> tmp = ax / src;
@@ -329,6 +330,7 @@ ArithmeticLogicUnit::opDiv (unsigned short src) {
 
 	if (src == 0) {
 		//FIXME - interrupt 0
+		return;
 	}
 
 	Register<unsigned short> tmp = dx_ax / src;

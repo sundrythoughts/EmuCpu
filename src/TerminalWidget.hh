@@ -48,6 +48,25 @@ public Q_SLOTS:
 	/** Enable or disable the widget */
 	void enableDisableToggle (bool b);
 
+	/** */
+	void terminalInput (char c);
+
+Q_SIGNALS:
+	/** */
+	void enableDisable (bool b);
+
+	/** */
+	void terminalOutput (char c);
+
+protected:
+	//virtual override
+	/** */
+	virtual void keyPressEvent (QKeyEvent *event);
+
+	//virtual override
+	/** */
+	virtual void mousePressEvent (QMouseEvent *event);
+
 }; //end class TerminalWidget
 
 #endif //JAF__TERMINAL_WIDGET_HH

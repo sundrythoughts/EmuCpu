@@ -45,7 +45,7 @@ public:
 
 public Q_SLOTS:
 	/** Enable or disable the widget */
-	void enableDisableToggle (bool b);
+	void enableDisable (bool b);
 
 	/** Qt slot for terminal output */
 	void terminalOutput (char c);

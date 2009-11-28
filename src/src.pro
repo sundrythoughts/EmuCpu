@@ -73,6 +73,9 @@ SOURCES += InstructionTable.cc
 
 HEADERS += INumberReadableWritable.hh
 
+HEADERS += IOPorts.hh
+SOURCES += IOPorts.cc
+
 HEADERS += Loader.hh
 SOURCES += Loader.cc
 

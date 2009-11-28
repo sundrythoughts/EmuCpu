@@ -29,16 +29,17 @@ Sim86Window::Sim86Window (QWidget *parent) : QMainWindow (parent) {
 	addDockWidget (Qt::RightDockWidgetArea, &m_stack_widget);
 
 	QVBoxLayout *layout_disassembly = new QVBoxLayout ();
-	layout_disassembly->addWidget(&m_disassembly_widget);
-	m_tab_disassembly->setLayout(layout_disassembly);
+	layout_disassembly->addWidget (&m_disassembly_widget);
+	m_tab_disassembly->setLayout (layout_disassembly);
 
 	QVBoxLayout *layout_memory = new QVBoxLayout ();
-	layout_memory->addWidget(&m_memory_widget);
-	m_tab_memory->setLayout(layout_memory);
+	layout_memory->addWidget (&m_memory_widget);
+	m_tab_memory->setLayout (layout_memory);
 
 	QVBoxLayout *layout_terminal = new QVBoxLayout ();
-	layout_terminal->addWidget(&m_terminal_widget);
-	m_tab_terminal->setLayout(layout_terminal);
+	layout_terminal->addWidget (&m_terminal_widget);
+	//m_tab_terminal->setLayout(layout_terminal);
+	m_frame_terminal->setLayout (layout_terminal);
 
 	//add actions
 	addAction (m_act_file_new);

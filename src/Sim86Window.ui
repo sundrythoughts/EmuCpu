@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>750</width>
-    <height>642</height>
+    <width>653</width>
+    <height>697</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -31,27 +31,50 @@
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
-     <widget class="QTabWidget" name="m_tab_widget">
-      <property name="currentIndex">
-       <number>0</number>
+     <widget class="QSplitter" name="splitter">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
       </property>
-      <widget class="QWidget" name="m_tab_disassembly">
-       <property name="enabled">
-        <bool>true</bool>
+      <property name="childrenCollapsible">
+       <bool>false</bool>
+      </property>
+      <widget class="QTabWidget" name="m_tab_widget">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
        </property>
-       <attribute name="title">
-        <string>Disassembly</string>
-       </attribute>
+       <property name="currentIndex">
+        <number>0</number>
+       </property>
+       <widget class="QWidget" name="m_tab_disassembly">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
+        <attribute name="title">
+         <string>Disassembly</string>
+        </attribute>
+       </widget>
+       <widget class="QWidget" name="m_tab_memory">
+        <attribute name="title">
+         <string>Memory</string>
+        </attribute>
+       </widget>
       </widget>
-      <widget class="QWidget" name="m_tab_memory">
-       <attribute name="title">
-        <string>Memory</string>
-       </attribute>
-      </widget>
-      <widget class="QWidget" name="m_tab_terminal">
-       <attribute name="title">
-        <string>Terminal</string>
-       </attribute>
+      <widget class="QFrame" name="m_frame_terminal">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::StyledPanel</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Raised</enum>
+       </property>
       </widget>
      </widget>
     </item>
@@ -128,7 +151,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>750</width>
+     <width>653</width>
      <height>25</height>
     </rect>
    </property>

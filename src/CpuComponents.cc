@@ -29,6 +29,7 @@ public:
 	InstructionDecoder m_decoder;
 	Instruction m_inst;
 	Loader m_loader;
+	IOPorts m_io_ports;
 
 	bool m_halt;
 };
@@ -81,6 +82,11 @@ CpuComponents::getInstruction () {
 Loader&
 CpuComponents::getLoader () {
 	return p->m_loader;
+}
+
+IOPorts&
+CpuComponents::getIOPorts () {
+	return p->m_io_ports;
 }
 
 bool

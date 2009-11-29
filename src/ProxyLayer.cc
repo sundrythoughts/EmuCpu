@@ -128,8 +128,8 @@ ProxyLayer::connectUiSignalsToCpuSlots (Sim86Window &win, Cpu &cpu) {
 	                  &cpu, SLOT(singleStepCpu ()));
 	QObject::connect (&win, SIGNAL(resetCpu ()),
 	                  &cpu, SLOT(resetCpu ()));
-	QObject::connect (&win, SIGNAL(loadFile (QString)),
-	                  &cpu, SLOT(loadFile (QString)));
+	QObject::connect (&win, SIGNAL(loadFile (QString, bool)),
+	                  &cpu, SLOT(loadFile (QString, bool)));
 	QObject::connect (&win, SIGNAL(setSpeed (int)),
 	                  &cpu, SLOT(setSpeed (int)));
 

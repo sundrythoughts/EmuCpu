@@ -316,13 +316,13 @@ public:
 	/** Increment. */
 	void execINC ();
 
-	/** UNIMPLEMENTED */
+	/** */
 	void execINT ();
 
 	/** UNIMPLEMENTED */
 	void execINTO ();
 
-	/** UNIMPLEMENTED */
+	/** */
 	void execIRET ();
 
 	/** Jump on not above. */

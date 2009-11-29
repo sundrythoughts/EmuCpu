@@ -107,5 +107,6 @@ CpuComponents::reset () {
 	p->m_decoder.reset ();
 	p->m_inst.reset ();
 	//p->m_loader.reset ();
+	p->m_io_ports.reset ();
 }
 

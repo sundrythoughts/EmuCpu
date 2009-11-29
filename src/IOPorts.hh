@@ -16,37 +16,46 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/** */
 
-#include "TerminalWidget.hh"
-#include <iostream>
+#ifndef JAF__IO_PORTS_HH
+#define JAF__IO_PORTS_HH
 
-TerminalWidget::TerminalWidget (QWidget *parent) : QWidget (parent) {
-	setupUi (this);
-	//m_txt_terminal = new TerminalTextEdit (this);
-	m_vertical_layout->insertWidget (0, &m_txt_terminal);
-	connect (&m_txt_terminal, SIGNAL(charTyped (char)), this, SIGNAL(terminalOutput (char)));
-	connect (m_btn_clear, SIGNAL(clicked ()), &m_txt_terminal, SLOT(clear ()));
-}
+#include <sigc++/sigc++.h>
+#include <queue>
 
-void
-TerminalWidget::reset () {
-	//FIXME
-}
+class CpuComponents;
+class IOPortsPrivate;
 
-void
-TerminalWidget::enableDisableToggle (bool b) {
-	if (b) {
-		show ();
-	}
-	else {
-		hide ();
-	}
+/** */
+class IOPorts {
+	IOPortsPrivate *p;
 
-	Q_EMIT enableDisable (b);
-}
+public:
+	/** */
+	IOPorts ();
 
-void
-TerminalWidget::terminalInput (char c) {
-	m_txt_terminal.insertPlainText (QChar (c));
-}
+	/** */
+	~IOPorts ();
+
+	/** Create a connection to the CpuComponents. */
+	void connectTo (CpuComponents &cpu);
+
+	/** */
+	sigc::signal<void, char>& signalCharOutput ();
+
+	/** */
+	sigc::signal<void, unsigned short, unsigned short> signalSoundOutput ();
+
+	/** */
+	void charInput (char c);
+
+	/** */
+	std::queue<char>& charInputQueue ();
+
+	/** */
+	void reset ();
+};
+
+#endif //JAF__IO_PORTS_HH
 

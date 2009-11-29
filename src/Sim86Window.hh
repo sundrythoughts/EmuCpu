@@ -107,7 +107,7 @@ Q_SIGNALS:
 	void singleStepCpu ();
 
 	/** */
-	void loadFile (QString file_name);
+	void loadFile (QString file_name, bool load_sim86os);
 
 	/** */
 	void setSpeed (int i);

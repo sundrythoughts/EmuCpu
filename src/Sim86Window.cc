@@ -146,7 +146,7 @@ Sim86Window::openFile () {
 		//std::cout << m_file.toAscii ().constData () << std::endl;
 		//m_lnedit_file_name->setText (filename);
 		Q_EMIT resetCpu ();
-		Q_EMIT loadFile (file_name);
+		Q_EMIT loadFile (file_name, m_act_load_sim86os->isChecked ());
 	}
 	else {
 		//FIXME - can't open file

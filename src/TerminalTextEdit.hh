@@ -17,36 +17,35 @@
  */
 
 
-#include "TerminalWidget.hh"
-#include <iostream>
+/**
+@file TerminalTextEdit.hh
+@brief FIXME.
+*/
 
-TerminalWidget::TerminalWidget (QWidget *parent) : QWidget (parent) {
-	setupUi (this);
-	//m_txt_terminal = new TerminalTextEdit (this);
-	m_vertical_layout->insertWidget (0, &m_txt_terminal);
-	connect (&m_txt_terminal, SIGNAL(charTyped (char)), this, SIGNAL(terminalOutput (char)));
-	connect (m_btn_clear, SIGNAL(clicked ()), &m_txt_terminal, SLOT(clear ()));
-}
+#ifndef JAF__TERMINAL_TEXT_EDIT_HH
+#define JAF__TERMINAL_TEXT_EDIT_HH
 
-void
-TerminalWidget::reset () {
-	//FIXME
-}
+#include <QtCore>
+#include <QtGui>
 
-void
-TerminalWidget::enableDisableToggle (bool b) {
-	if (b) {
-		show ();
-	}
-	else {
-		hide ();
-	}
+class TerminalTextEdit : public QTextEdit {
+	Q_OBJECT
 
-	Q_EMIT enableDisable (b);
-}
+public:
+	/** */
+	TerminalTextEdit (QWidget *parent = 0);
 
-void
-TerminalWidget::terminalInput (char c) {
-	m_txt_terminal.insertPlainText (QChar (c));
-}
+	//override
+	/** */
+	virtual void keyPressEvent (QKeyEvent *event);
+
+private Q_SLOTS:
+	void scrollToCursor ();
+
+Q_SIGNALS:
+	void charTyped (char c);
+
+}; //class TerminalTextEdit
+
+#endif //JAF__TERMINAL_TEXT_EDIT_HH
 

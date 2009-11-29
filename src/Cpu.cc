@@ -157,8 +157,11 @@ Cpu::shutdownCpu () {
 }
 
 void
-Cpu::loadFile (QString file_name) {
+Cpu::loadFile (QString file_name, bool load_sim86os) {
 	pauseCpu ();
+	if (load_sim86os) {
+		getLoader ().loadFile ("Sim86OS.obj");
+	}
 	getLoader ().loadFile (file_name.toStdString ());
 	start ();
 }

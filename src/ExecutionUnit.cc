@@ -663,6 +663,31 @@ ExecutionUnit::execINC () {
 }
 
 void
+ExecutionUnit::execINT () {
+	OperandList &ops = p->m_inst->operands ();
+
+	unsigned short vect_offset = 4 * ops.src ().get<unsigned char> ();
+	unsigned short int_off = p->m_biu->getMemoryData<unsigned short> (0, vect_offset);
+	unsigned short int_seg = p->m_biu->getMemoryData<unsigned short> (0, vect_offset + 2);
+
+	realPush (getRegFlags ());
+	setRegFlagsIF (false);
+	setRegFlagsTF (false);
+	realPush (p->m_biu->getSegRegCS ());
+	realPush (p->m_biu->getRegIP ());
+
+	p->m_biu->getSegRegCS () = int_seg;
+	p->m_biu->getRegIP () = int_off;
+}
+
+void
+ExecutionUnit::execIRET () {
+	realPop (p->m_biu->getRegIP ());
+	realPop (p->m_biu->getSegRegCS ());
+	realPop (getRegFlags ());
+}
+
+void
 ExecutionUnit::execJMP () {
 	OperandList &ops = p->m_inst->operands ();
 

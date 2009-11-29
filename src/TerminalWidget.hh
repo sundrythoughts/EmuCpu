@@ -27,6 +27,7 @@
 
 #include <QtCore>
 #include <QtGui>
+#include "TerminalTextEdit.hh"
 
 #include "ui_TerminalWidget.h"
 
@@ -36,6 +37,7 @@
 */
 class TerminalWidget : public QWidget, protected Ui::TerminalWidget {
 	Q_OBJECT
+	TerminalTextEdit m_txt_terminal;
 
 public:
 	/** */
@@ -57,15 +59,6 @@ Q_SIGNALS:
 
 	/** */
 	void terminalOutput (char c);
-
-protected:
-	//virtual override
-	/** */
-	virtual void keyPressEvent (QKeyEvent *event);
-
-	//virtual override
-	/** */
-	virtual void mousePressEvent (QMouseEvent *event);
 
 }; //end class TerminalWidget
 

@@ -162,6 +162,8 @@
     <addaction name="m_act_file_new"/>
     <addaction name="m_act_file_open"/>
     <addaction name="separator"/>
+    <addaction name="m_act_load_sim86os"/>
+    <addaction name="separator"/>
     <addaction name="m_act_file_quit"/>
    </widget>
    <widget class="QMenu" name="menuSettings">
@@ -369,6 +371,17 @@
    </property>
    <property name="text">
     <string>Enable Database</string>
+   </property>
+  </action>
+  <action name="m_act_load_sim86os">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Load Sim86OS</string>
    </property>
   </action>
  </widget>

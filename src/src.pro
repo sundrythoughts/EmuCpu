@@ -121,6 +121,9 @@ SOURCES += StackWidget.cc
 HEADERS += TerminalSignalsAndSlots.hh
 SOURCES += TerminalSignalsAndSlots.cc
 
+HEADERS += TerminalTextEdit.hh
+SOURCES += TerminalTextEdit.cc
+
 FORMS += TerminalWidget.ui
 HEADERS += TerminalWidget.hh
 SOURCES += TerminalWidget.cc

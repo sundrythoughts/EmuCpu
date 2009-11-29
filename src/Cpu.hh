@@ -104,7 +104,7 @@ public Q_SLOTS:
 	void shutdownCpu ();
 
 	/** Load a new file to execute. */
-	void loadFile (QString file_name);
+	void loadFile (QString file_name, bool load_sim86os);
 
 	/** Change the delay between execution of instructions. */
 	void setSpeed (int);

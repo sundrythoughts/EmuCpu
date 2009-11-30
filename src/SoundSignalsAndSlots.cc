@@ -16,37 +16,17 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
-#include "TerminalWidget.hh"
+#include "SoundSignalsAndSlots.hh"
 #include <iostream>
 
-TerminalWidget::TerminalWidget (QWidget *parent) : QWidget (parent) {
-	setupUi (this);
-	//m_txt_terminal = new TerminalTextEdit (this);
-	m_vertical_layout->insertWidget (0, &m_txt_terminal);
-	connect (&m_txt_terminal, SIGNAL(charTyped (char)), this, SIGNAL(terminalOutput (char)));
-	connect (m_btn_clear, SIGNAL(clicked ()), &m_txt_terminal, SLOT(clear ()));
+void
+SoundSignalsAndSlots::sigcSlotPlaySound (unsigned short freq, unsigned short duration) {
+	Q_EMIT playSound (freq, duration);
+	//std::cout << "here" << std::endl;
 }
 
 void
-TerminalWidget::reset () {
-	m_txt_terminal.clear ();
-}
-
-void
-TerminalWidget::enableDisableToggle (bool b) {
-	if (b) {
-		show ();
-	}
-	else {
-		hide ();
-	}
-
-	Q_EMIT enableDisable (b);
-}
-
-void
-TerminalWidget::terminalInput (char c) {
-	m_txt_terminal.insertPlainText (QChar (c));
+SoundSignalsAndSlots::enableDisable (bool b) {
+	blockSignals (!b);
 }
 

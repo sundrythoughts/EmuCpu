@@ -16,25 +16,21 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
-#include "TerminalWidget.hh"
+#include "SoundWidget.hh"
 #include <iostream>
 
-TerminalWidget::TerminalWidget (QWidget *parent) : QWidget (parent) {
+SoundWidget::SoundWidget (QWidget *parent) : QWidget (parent) {
 	setupUi (this);
-	//m_txt_terminal = new TerminalTextEdit (this);
-	m_vertical_layout->insertWidget (0, &m_txt_terminal);
-	connect (&m_txt_terminal, SIGNAL(charTyped (char)), this, SIGNAL(terminalOutput (char)));
-	connect (m_btn_clear, SIGNAL(clicked ()), &m_txt_terminal, SLOT(clear ()));
 }
 
 void
-TerminalWidget::reset () {
-	m_txt_terminal.clear ();
+SoundWidget::reset () {
+	m_lcd_frequency->display (0);
+	m_lcd_duration->display (0);
 }
 
 void
-TerminalWidget::enableDisableToggle (bool b) {
+SoundWidget::enableDisableToggle (bool b) {
 	if (b) {
 		show ();
 	}
@@ -46,7 +42,8 @@ TerminalWidget::enableDisableToggle (bool b) {
 }
 
 void
-TerminalWidget::terminalInput (char c) {
-	m_txt_terminal.insertPlainText (QChar (c));
+SoundWidget::playSound (unsigned short freq, unsigned short duration) {
+	m_lcd_frequency->display (freq);
+	m_lcd_duration->display (duration);
 }
 

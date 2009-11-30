@@ -35,6 +35,7 @@
 #include "DisassemblySignalsAndSlots.hh"
 #include "StackSignalsAndSlots.hh"
 #include "TerminalSignalsAndSlots.hh"
+#include "SoundSignalsAndSlots.hh"
 
 #include <sigc++/sigc++.h>
 #include <QtCore>
@@ -53,6 +54,7 @@ class ProxyLayer : public QObject {
 	DisassemblySignalsAndSlots m_disasm_s_s;
 	StackSignalsAndSlots m_stack_s_s;
 	TerminalSignalsAndSlots m_terminal_s_s;
+	SoundSignalsAndSlots m_sound_s_s;
 
 public:
 	/** */

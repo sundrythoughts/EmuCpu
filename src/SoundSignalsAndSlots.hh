@@ -17,36 +17,36 @@
  */
 
 
-#include "TerminalWidget.hh"
-#include <iostream>
+/**
+@file SoundSignalsAndSlots.hh
+@brief Sound signal translation layer between Sigc++ and Qt.
+*/
 
-TerminalWidget::TerminalWidget (QWidget *parent) : QWidget (parent) {
-	setupUi (this);
-	//m_txt_terminal = new TerminalTextEdit (this);
-	m_vertical_layout->insertWidget (0, &m_txt_terminal);
-	connect (&m_txt_terminal, SIGNAL(charTyped (char)), this, SIGNAL(terminalOutput (char)));
-	connect (m_btn_clear, SIGNAL(clicked ()), &m_txt_terminal, SLOT(clear ()));
-}
+#ifndef JAF__SOUND_SIGNALS_AND_SLOTS_HH
+#define JAF__SOUND_SIGNALS_AND_SLOTS_HH
 
-void
-TerminalWidget::reset () {
-	m_txt_terminal.clear ();
-}
+#include <QObject>
 
-void
-TerminalWidget::enableDisableToggle (bool b) {
-	if (b) {
-		show ();
-	}
-	else {
-		hide ();
-	}
+/**
+@class SoundSignalsAndSlots
+@brief Sound signal translation layer between Sigc++ and Qt.
+*/
+class SoundSignalsAndSlots : public QObject {
+	Q_OBJECT
 
-	Q_EMIT enableDisable (b);
-}
+public:
+	/** */
+	void sigcSlotPlaySound (unsigned short freq, unsigned short duration);
 
-void
-TerminalWidget::terminalInput (char c) {
-	m_txt_terminal.insertPlainText (QChar (c));
-}
+public Q_SLOTS:
+	/** */
+	void enableDisable (bool b);
+
+Q_SIGNALS:
+	/** */
+	void playSound (unsigned short freq, unsigned short duration);
+
+}; //end class SoundSignalsAndSlots
+
+#endif //JAF__SOUND_SIGNALS_AND_SLOTS_HH
 

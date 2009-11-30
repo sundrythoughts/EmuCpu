@@ -37,6 +37,7 @@
 #include "DisassemblyWidget.hh"
 #include "MemoryWidget.hh"
 #include "TerminalWidget.hh"
+#include "SoundWidget.hh"
 
 #include <iostream>
 
@@ -54,6 +55,7 @@ class Sim86Window : public QMainWindow, protected Ui::Sim86Window {
 	DisassemblyWidget m_disassembly_widget;
 	MemoryWidget m_memory_widget;
 	TerminalWidget m_terminal_widget;
+	SoundWidget m_sound_widget;
 
 public:
 	/** */
@@ -79,6 +81,9 @@ public:
 
 	/** */
 	TerminalWidget& getTerminalWidget ();
+
+	/** */
+	SoundWidget& getSoundWidget ();
 
 private Q_SLOTS:
 	/** */

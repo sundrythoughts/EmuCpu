@@ -17,36 +17,45 @@
  */
 
 
-#include "TerminalWidget.hh"
-#include <iostream>
+/**
+@file SoundWidget.hh
+@brief Widget for displaying the sound.
+*/
 
-TerminalWidget::TerminalWidget (QWidget *parent) : QWidget (parent) {
-	setupUi (this);
-	//m_txt_terminal = new TerminalTextEdit (this);
-	m_vertical_layout->insertWidget (0, &m_txt_terminal);
-	connect (&m_txt_terminal, SIGNAL(charTyped (char)), this, SIGNAL(terminalOutput (char)));
-	connect (m_btn_clear, SIGNAL(clicked ()), &m_txt_terminal, SLOT(clear ()));
-}
+#ifndef JAF__SOUND_WIDGET_HH
+#define JAF__SOUND_WIDGET_HH
 
-void
-TerminalWidget::reset () {
-	m_txt_terminal.clear ();
-}
+#include <QtCore>
+#include <QtGui>
 
-void
-TerminalWidget::enableDisableToggle (bool b) {
-	if (b) {
-		show ();
-	}
-	else {
-		hide ();
-	}
+#include "ui_SoundWidget.h"
 
-	Q_EMIT enableDisable (b);
-}
+/**
+@class SoundWidget
+@brief Widget for displaying the sound.
+*/
+class SoundWidget : public QWidget, protected Ui::SoundWidget {
+	Q_OBJECT
 
-void
-TerminalWidget::terminalInput (char c) {
-	m_txt_terminal.insertPlainText (QChar (c));
-}
+public:
+	/** */
+	SoundWidget (QWidget *parent = 0);
+
+	/** */
+	void reset ();
+
+public Q_SLOTS:
+	/** */
+	void enableDisableToggle (bool b);
+
+	/** */
+	void playSound (unsigned short freq, unsigned short duration);
+
+Q_SIGNALS:
+	/** */
+	void enableDisable (bool b);
+
+}; //end class SoundWidget
+
+#endif //JAF__SOUND_WIDGET_HH
 

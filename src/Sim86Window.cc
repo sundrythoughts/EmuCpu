@@ -36,10 +36,8 @@ Sim86Window::Sim86Window (QWidget *parent) : QMainWindow (parent) {
 	layout_memory->addWidget (&m_memory_widget);
 	m_tab_memory->setLayout (layout_memory);
 
-	QVBoxLayout *layout_terminal = new QVBoxLayout ();
-	layout_terminal->addWidget (&m_terminal_widget);
-	//m_tab_terminal->setLayout(layout_terminal);
-	m_frame_terminal->setLayout (layout_terminal);
+	m_hbox_devices->addWidget (&m_terminal_widget);
+	m_hbox_devices->addWidget (&m_sound_widget);
 
 	//add actions
 	addAction (m_act_file_new);
@@ -124,6 +122,11 @@ Sim86Window::getTerminalWidget () {
 	return m_terminal_widget;
 }
 
+SoundWidget&
+Sim86Window::getSoundWidget () {
+	return m_sound_widget;
+}
+
 
 void
 Sim86Window::enableDisableToggleDisassembly (bool b) {
@@ -161,5 +164,6 @@ Sim86Window::resetUi () {
 	getStackWidget ().reset ();
 	getDisassemblyWidget ().reset ();
 	getTerminalWidget ().reset ();
+	getSoundWidget ().reset ();
 }
 

@@ -59,6 +59,8 @@ ProxyLayer::connectCpuSignalsToUiSlots (Cpu &cpu, Sim86Window &win) {
 
 	cpu.getIOPorts ().signalCharOutput ().connect (sigc::mem_fun (m_terminal_s_s, &TerminalSignalsAndSlots::sigcSlotTerminalInput));
 
+	cpu.getIOPorts ().signalSoundOutput ().connect (sigc::mem_fun (m_sound_s_s, &SoundSignalsAndSlots::sigcSlotPlaySound));
+
 	//connect ProxyLayer Qt signals to Sim86Window Qt slots
 
 	//Flag Register Widget Signals and Slots
@@ -116,6 +118,10 @@ ProxyLayer::connectCpuSignalsToUiSlots (Cpu &cpu, Sim86Window &win) {
 	//Terminal Widget Signals and Slots
 	QObject::connect (&m_terminal_s_s, SIGNAL(terminalInput (char)),
 	                  &win.getTerminalWidget (), SLOT(terminalInput (char)));
+
+	//Sound Widget Signals and Slots
+	QObject::connect (&m_sound_s_s, SIGNAL(playSound (unsigned short, unsigned short)),
+	                  &win.getSoundWidget (), SLOT(playSound (unsigned short, unsigned short)));
 }
 
 void

@@ -111,6 +111,13 @@ FORMS += Sim86Window.ui
 HEADERS += Sim86Window.hh
 SOURCES += Sim86Window.cc
 
+HEADERS += SoundSignalsAndSlots.hh
+SOURCES += SoundSignalsAndSlots.cc
+
+FORMS += SoundWidget.ui
+HEADERS += SoundWidget.hh
+SOURCES += SoundWidget.cc
+
 HEADERS += StackSignalsAndSlots.hh
 SOURCES += StackSignalsAndSlots.cc
 

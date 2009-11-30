@@ -84,12 +84,14 @@ public:
 	/**
 	@brief Update the overflow flag (OF) for an 8-bit operation.
 	*/
-	void updateFlagOF (unsigned char orig_dest, unsigned char src, unsigned char result);
+	//void updateFlagOF (unsigned char orig_dest, unsigned char src, unsigned char result);
+	void updateFlagOF (unsigned char result);
 
 	/**
 	@brief Update the overflow flag (OF) for a 16-bit operation.
 	*/
-	void updateFlagOF (unsigned short orig_dest, unsigned short src, unsigned short result);
+	//void updateFlagOF (unsigned short orig_dest, unsigned short src, unsigned short result);
+	void updateFlagOF (unsigned short result);
 
 	/**
 	@brief Update the parity flag (PF) for an 8-bit operation.

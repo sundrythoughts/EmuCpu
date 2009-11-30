@@ -82,19 +82,15 @@ ArithmeticLogicUnit::updateFlagSubCF (unsigned short result16, unsigned int resu
 }
 
 void
-ArithmeticLogicUnit::updateFlagOF (unsigned char orig_dest, unsigned char src, unsigned char result) {
-	bool a = Utility::getMsb (orig_dest);
-	bool b = Utility::getMsb (src);
+ArithmeticLogicUnit::updateFlagOF (unsigned char result) {
 	bool c = Utility::getMsb (result);
-	p->m_eunit->setRegFlagsOF ((a == b) && (a != c));
+	p->m_eunit->setRegFlagsOF (c ^ p->m_eunit->getRegFlagsCF ());
 }
 
 void
-ArithmeticLogicUnit::updateFlagOF (unsigned short orig_dest, unsigned short src, unsigned short result) {
-	bool a = Utility::getMsb (orig_dest);
-	bool b = Utility::getMsb (src);
+ArithmeticLogicUnit::updateFlagOF (unsigned short result) {
 	bool c = Utility::getMsb (result);
-	p->m_eunit->setRegFlagsOF ((a == b) && (a != c));
+	p->m_eunit->setRegFlagsOF (c ^ p->m_eunit->getRegFlagsCF ());
 }
 
 void
@@ -144,7 +140,7 @@ ArithmeticLogicUnit::opAdc (unsigned char dest, unsigned char src, unsigned char
 
 	//FIXME - fix flags
 	updateFlagAddCF (ret, result);
-	updateFlagOF (orig_dest, src, ret);
+	updateFlagOF (ret);
 	updateFlagPF (ret);
 	updateFlagSF (ret);
 	updateFlagZF (ret);
@@ -164,7 +160,7 @@ ArithmeticLogicUnit::opAdc (unsigned short dest, unsigned short src, unsigned sh
 
 	//FIXME - fix flags
 	updateFlagAddCF (ret, result);
-	updateFlagOF (orig_dest, src, ret);
+	updateFlagOF (ret);
 	updateFlagPF (ret);
 	updateFlagSF (ret);
 	updateFlagZF (ret);
@@ -179,7 +175,7 @@ ArithmeticLogicUnit::opAdd (unsigned char dest, unsigned char src, unsigned char
 
 	//FIXME - fix flags
 	updateFlagAddCF (ret, result);
-	updateFlagOF (orig_dest, src, ret);
+	updateFlagOF (ret);
 	updateFlagPF (ret);
 	updateFlagSF (ret);
 	updateFlagZF (ret);
@@ -194,7 +190,7 @@ ArithmeticLogicUnit::opAdd (unsigned short dest, unsigned short src, unsigned sh
 
 	//FIXME - fix flags
 	updateFlagAddCF (ret, result);
-	updateFlagOF (orig_dest, src, ret);
+	updateFlagOF (ret);
 	updateFlagPF (ret);
 	updateFlagSF (ret);
 	updateFlagZF (ret);
@@ -244,7 +240,7 @@ ArithmeticLogicUnit::opCmp (unsigned char dest, unsigned char src) {
 	//FIXME - fix flags
 	updateFlagAF (ret, result);
 	updateFlagSubCF (ret, result);
-	updateFlagOF (orig_dest, src, ret);
+	updateFlagOF (ret);
 	updateFlagPF (ret);
 	updateFlagSF (ret);
 	updateFlagZF (ret);
@@ -259,7 +255,7 @@ ArithmeticLogicUnit::opCmp (unsigned short dest, unsigned short src) {
 	//FIXME - fix flags
 	updateFlagAF (ret, result);
 	updateFlagSubCF (ret, result);
-	updateFlagOF (orig_dest, src, ret);
+	updateFlagOF (ret);
 	updateFlagPF (ret);
 	updateFlagSF (ret);
 	updateFlagZF (ret);
@@ -278,7 +274,7 @@ ArithmeticLogicUnit::opDec (unsigned char dest, unsigned char &ret) {
 	ret = (unsigned char)result;
 
 	//FIXME - fix flags
-	updateFlagOF (orig_dest, 1, ret);
+	updateFlagOF (ret);
 	updateFlagPF (ret);
 	updateFlagSF (ret);
 	updateFlagZF (ret);
@@ -291,7 +287,7 @@ ArithmeticLogicUnit::opDec (unsigned short dest, unsigned short &ret) {
 	ret = (unsigned short)result;
 
 	//FIXME - fix flags
-	updateFlagOF (orig_dest, 1, ret);
+	updateFlagOF (ret);
 	updateFlagPF (ret);
 	updateFlagSF (ret);
 	updateFlagZF (ret);
@@ -435,7 +431,7 @@ ArithmeticLogicUnit::opInc (unsigned char dest, unsigned char &ret) {
 	ret = (unsigned char)result;
 
 	//FIXME - fix flags
-	updateFlagOF (orig_dest, 1, ret);
+	updateFlagOF (ret);
 	updateFlagPF (ret);
 	updateFlagSF (ret);
 	updateFlagZF (ret);
@@ -448,7 +444,7 @@ ArithmeticLogicUnit::opInc (unsigned short dest, unsigned short &ret) {
 	ret = (unsigned short)result;
 
 	//FIXME - fix flags
-	updateFlagOF (orig_dest, 1, ret);
+	updateFlagOF (ret);
 	updateFlagPF (ret);
 	updateFlagSF (ret);
 	updateFlagZF (ret);
@@ -754,7 +750,7 @@ ArithmeticLogicUnit::opSbb (unsigned char dest, unsigned char src, unsigned char
 
 	//FIXME - fix flags
 	updateFlagSubCF (ret, result);
-	updateFlagOF (orig_dest, src, ret);
+	updateFlagOF (ret);
 	updateFlagPF (ret);
 	updateFlagSF (ret);
 	updateFlagZF (ret);
@@ -771,7 +767,7 @@ ArithmeticLogicUnit::opSbb (unsigned short dest, unsigned short src, unsigned sh
 
 	//FIXME - fix flags
 	updateFlagSubCF (ret, result);
-	updateFlagOF (orig_dest, src, ret);
+	updateFlagOF (ret);
 	updateFlagPF (ret);
 	updateFlagSF (ret);
 	updateFlagZF (ret);
@@ -853,7 +849,7 @@ ArithmeticLogicUnit::opSub (unsigned char dest, unsigned char src, unsigned char
 
 	//FIXME - fix flags
 	updateFlagSubCF (ret, result);
-	updateFlagOF (orig_dest, src, ret);
+	updateFlagOF (ret);
 	updateFlagPF (ret);
 	updateFlagSF (ret);
 	updateFlagZF (ret);
@@ -867,7 +863,7 @@ ArithmeticLogicUnit::opSub (unsigned short dest, unsigned short src, unsigned sh
 
 	//FIXME - fix flags
 	updateFlagSubCF (ret, result);
-	updateFlagOF (orig_dest, src, ret);
+	updateFlagOF (ret);
 	updateFlagPF (ret);
 	updateFlagSF (ret);
 	updateFlagZF (ret);

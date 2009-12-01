@@ -39,6 +39,9 @@ Sim86Window::Sim86Window (QWidget *parent) : QMainWindow (parent) {
 	m_hbox_devices->addWidget (&m_terminal_widget);
 	m_hbox_devices->addWidget (&m_sound_widget);
 
+	m_file_widget = new QFileDialog (this, tr("Load executable..."), "", tr("Executables(*.obj);;All Files(*.*)"));
+	m_file_widget->setFileMode (QFileDialog::ExistingFile);
+
 	//add actions
 	addAction (m_act_file_new);
 	addAction (m_act_file_open);
@@ -55,8 +58,6 @@ Sim86Window::Sim86Window (QWidget *parent) : QMainWindow (parent) {
 	addAction (m_act_run_start);
 	addAction (m_act_run_halt);
 	addAction (m_act_run_single_step);
-
-	//std::cout << actions ().size () << std::endl;
 
 	//connect signals
 	connect (m_act_view_regs, SIGNAL(toggled (bool)), &m_general_registers_widget, SLOT(enableDisableToggle (bool)));
@@ -76,6 +77,8 @@ Sim86Window::Sim86Window (QWidget *parent) : QMainWindow (parent) {
 	connect (this, SIGNAL(resetCpu ()), this, SLOT(resetUi ()));
 
 	connect (m_act_file_open, SIGNAL(triggered ()), this, SLOT(openFile ()));
+
+	connect (m_act_file_quit, SIGNAL(triggered ()), qApp, SLOT(quit ()));
 
 	connect (m_sld_speed, SIGNAL(valueChanged (int)), this, SIGNAL(setSpeed (int)));
 }
@@ -142,14 +145,17 @@ Sim86Window::enableDisableToggleMemory (bool b) {
 
 void
 Sim86Window::openFile () {
-	QString file_name = QFileDialog::getOpenFileName (this, "Load file...");
-	if (!file_name.isNull ()) {
+	QStringList file_name;
+	if (m_file_widget->exec ()) {
+		file_name = m_file_widget->selectedFiles ();
+	}
+	if (!file_name.empty ()) {
 		//QFileInfo f_info (filename);
 		//m_file = f_info.fileName ();
 		//std::cout << m_file.toAscii ().constData () << std::endl;
 		//m_lnedit_file_name->setText (filename);
 		Q_EMIT resetCpu ();
-		Q_EMIT loadFile (file_name, m_act_load_sim86os->isChecked ());
+		Q_EMIT loadFile (file_name[0], m_act_load_sim86os->isChecked ());
 	}
 	else {
 		//FIXME - can't open file

@@ -8,6 +8,7 @@ CONFIG += qt thread
 
 CONFIG += link_pkgconfig
 PKGCONFIG += sigc++-2.0
+PKGCONFIG += gstreamer-0.10
 
 LIBS += -lsybdb
 
@@ -134,6 +135,9 @@ SOURCES += TerminalTextEdit.cc
 FORMS += TerminalWidget.ui
 HEADERS += TerminalWidget.hh
 SOURCES += TerminalWidget.cc
+
+HEADERS += ToneGenerator.hh
+SOURCES += ToneGenerator.cc
 
 HEADERS += Utility.hh
 SOURCES += Utility.cc

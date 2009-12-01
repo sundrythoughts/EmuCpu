@@ -39,10 +39,15 @@ public:
 	/** */
 	virtual void keyPressEvent (QKeyEvent *event);
 
+	//override
+	/** */
+	virtual void mousePressEvent (QMouseEvent *event);
+
 private Q_SLOTS:
 	void scrollToCursor ();
 
 Q_SIGNALS:
+	/** */
 	void charTyped (char c);
 
 }; //class TerminalTextEdit

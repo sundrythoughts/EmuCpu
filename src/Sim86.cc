@@ -21,11 +21,13 @@
 #include "Sim86Window.hh"
 #include "ProxyLayer.hh"
 
+#include <gst/gst.h>
 #include <QApplication>
 
 #include <iostream>
 
 int main (int argc, char **argv) {
+	gst_init (&argc, &argv);
 	QApplication app (argc, argv);
 
 	Sim86Window sim;

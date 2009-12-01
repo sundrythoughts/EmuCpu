@@ -57,6 +57,8 @@ class Sim86Window : public QMainWindow, protected Ui::Sim86Window {
 	TerminalWidget m_terminal_widget;
 	SoundWidget m_sound_widget;
 
+	QFileDialog *m_file_widget;
+
 public:
 	/** */
 	Sim86Window (QWidget *parent = 0);

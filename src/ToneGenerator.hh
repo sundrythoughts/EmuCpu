@@ -17,51 +17,39 @@
  */
 
 
-/**
-@file SoundWidget.hh
-@brief Widget for displaying the sound.
-*/
+#ifndef JAF__TONE_GENERATOR_HH
+#define JAF__TONE_GENERATOR_HH
 
-#ifndef JAF__SOUND_WIDGET_HH
-#define JAF__SOUND_WIDGET_HH
-
-#include "ToneGenerator.hh"
-
+#include <QObject>
 #include <QtCore>
-#include <QtGui>
+#include <iostream>
+#include <gst/gst.h>
 
-#include "ui_SoundWidget.h"
-
-/**
-@class SoundWidget
-@brief Widget for displaying the sound.
-*/
-class SoundWidget : public QWidget, protected Ui::SoundWidget {
+class ToneGenerator : public QThread {
 	Q_OBJECT
-	ToneGenerator m_tones;
 
+	GstElement *m_audio_pipe;
+	GstElement *m_tone_src;
+	GstElement *m_audio_sink;
+	bool m_state;
 public:
 	/** */
-	SoundWidget (QWidget *parent = 0);
+	ToneGenerator (QThread *parent = 0);
 
 	/** */
-	~SoundWidget ();
-
-	/** */
-	void reset ();
+	~ToneGenerator ();
 
 public Q_SLOTS:
 	/** */
-	void enableDisableToggle (bool b);
+	void play (float freq, size_t duration);
 
 	/** */
-	void playSound (unsigned short freq, unsigned short duration);
+	void stop ();
 
-Q_SIGNALS:
+protected:
 	/** */
-	void enableDisable (bool b);
+	virtual void run ();
+};
 
-}; //end class SoundWidget
-
-#endif //JAF__SOUND_WIDGET_HH
+#endif //JAF__TONE_GENERATOR_HH
 

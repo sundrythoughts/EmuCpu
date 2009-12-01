@@ -18,50 +18,31 @@
 
 #include "ToneGenerator.hh"
 
-ToneGenerator::ToneGenerator (QThread *parent) : QThread (parent) {
+ToneGenerator::ToneGenerator () {
 	m_audio_pipe = gst_pipeline_new ("audio-pip");
 	m_tone_src = gst_element_factory_make ("audiotestsrc", "tone-src");
 	m_audio_sink = gst_element_factory_make ("autoaudiosink", "audio-sink");
 	gst_bin_add_many (GST_BIN(m_audio_pipe), m_tone_src, m_audio_sink, NULL);
 	gst_element_link_many (m_tone_src, m_audio_sink, NULL);
-	g_object_set (G_OBJECT(m_tone_src), "volume", 0.0, NULL);
+	g_object_set (G_OBJECT(m_tone_src),
+	              "freq", 0.0,
+	              NULL);
 	gst_element_set_state (m_audio_pipe, GST_STATE_PLAYING);
 }
 
 ToneGenerator::~ToneGenerator () {
-	stop ();
-	wait ();
 	gst_object_unref (GST_OBJECT (m_audio_pipe));
-	//FIXME delete m_timer;
 }
 
 void
 ToneGenerator::play (float freq, size_t duration) {
-	if (!isRunning ()) {
-		start ();
-	}
-
-	g_object_set (G_OBJECT(m_tone_src), "freq", freq, "volume", 0.8, NULL);
-	msleep (1);
-	g_object_set (G_OBJECT(m_tone_src), "volume", 0.0, NULL);
+	g_object_set (G_OBJECT(m_tone_src), "freq", freq, NULL);
+	g_usleep (duration * 1000);
+	g_object_set (G_OBJECT(m_tone_src), "freq", 0.0, NULL);
 }
 
 void
 ToneGenerator::stop () {
 	gst_element_set_state (m_audio_pipe, GST_STATE_NULL);
-	m_state = false;
-	quit ();
-}
-
-void
-ToneGenerator::run () {
-	while (true) {
-		if (m_state == 1) { //playing
-			msleep (1);
-		}
-		else {
-			break;
-		}
-	}
 }
 

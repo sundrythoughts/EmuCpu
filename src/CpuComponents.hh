@@ -32,6 +32,7 @@
 #include "Instruction.hh"
 #include "Loader.hh"
 #include "IOPorts.hh"
+#include "ToneGenerator.hh"
 
 class Instruction;
 class InstructionDecoder;
@@ -42,6 +43,7 @@ class BusInterfaceUnit;
 class Memory;
 class Loader;
 class IOPorts;
+class ToneGenerator;
 
 class CpuComponentsPrivate;
 
@@ -82,6 +84,8 @@ public:
 
 	/** Get a reference to the IOPorts. */
 	IOPorts& getIOPorts ();
+
+	ToneGenerator& getToneGenerator ();
 
 	/** Get whether the Cpu is halted or not. */
 	bool getHalt ();

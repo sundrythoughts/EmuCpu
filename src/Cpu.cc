@@ -92,6 +92,7 @@ Cpu::run () {
 			//std::cout << "cpu_state_run" << std::endl;
 			getInstructionDecoder ().nextInstruction ();
 			QThread::usleep (p->m_thread_delay);
+			//QThread::yieldCurrentThread ();
 			break;
 		case CPU_STATE_SINGLE_STEP:
 			//std::cout << "cpu_state_single_step" << std::endl;

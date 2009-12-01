@@ -18,6 +18,7 @@
 
 
 #include "GeneralRegisterSignalsAndSlots.hh"
+#include <iostream>
 
 /* SIGC++ SLOTS */
 void

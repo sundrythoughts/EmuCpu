@@ -30,6 +30,7 @@ public:
 	Instruction m_inst;
 	Loader m_loader;
 	IOPorts m_io_ports;
+	ToneGenerator m_tone_gen;
 
 	bool m_halt;
 };
@@ -87,6 +88,11 @@ CpuComponents::getLoader () {
 IOPorts&
 CpuComponents::getIOPorts () {
 	return p->m_io_ports;
+}
+
+ToneGenerator&
+CpuComponents::getToneGenerator () {
+	return p->m_tone_gen;
 }
 
 bool

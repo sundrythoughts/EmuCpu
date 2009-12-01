@@ -24,7 +24,6 @@ SoundWidget::SoundWidget (QWidget *parent) : QWidget (parent) {
 }
 
 SoundWidget::~SoundWidget () {
-	m_tones.stop ();
 }
 
 void
@@ -49,6 +48,5 @@ void
 SoundWidget::playSound (unsigned short freq, unsigned short duration) {
 	m_lcd_frequency->display (freq);
 	m_lcd_duration->display (duration);
-	m_tones.play ((float)freq, duration);
 }
 

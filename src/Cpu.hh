@@ -29,6 +29,7 @@
 
 #include <iostream>
 
+#include <QtCore>
 #include <QThread>
 #include <QMutex>
 

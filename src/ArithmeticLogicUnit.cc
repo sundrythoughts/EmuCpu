@@ -301,6 +301,7 @@ ArithmeticLogicUnit::opDiv (unsigned char src) {
 
 	if (src == 0) {
 		//FIXME - interrupt 0
+		std::cerr << "FIXME: ALU::opDiv (): interrupt 0" << std::endl;
 		return;
 	}
 
@@ -308,6 +309,7 @@ ArithmeticLogicUnit::opDiv (unsigned char src) {
 
 	if (tmp > 0xFF) {
 		//FIXME - interrupt 0
+		std::cerr << "FIXME: ALU::opDiv (): interrupt 0" << std::endl;
 	}
 	else {
 		al = tmp; //FIXME - this has a problem
@@ -326,6 +328,7 @@ ArithmeticLogicUnit::opDiv (unsigned short src) {
 
 	if (src == 0) {
 		//FIXME - interrupt 0
+		std::cerr << "FIXME: ALU::opDiv (): interrupt 0" << std::endl;
 		return;
 	}
 
@@ -333,6 +336,7 @@ ArithmeticLogicUnit::opDiv (unsigned short src) {
 
 	if (tmp > (unsigned short)0xFFFF) {
 		//FIXME - interrupt 0
+		std::cerr << "FIXME: ALU::opDiv (): interrupt 0" << std::endl;
 	}
 
 	else {
@@ -349,6 +353,8 @@ ArithmeticLogicUnit::opIdiv (unsigned char src) {
 
 	if (src == 0) {
 		//FIXME - interrupt 0
+		std::cerr << "FIXME: ALU::opDiv (): interrupt 0" << std::endl;
+		return;
 	}
 
 	char tmp = (short)ax / (char)src;
@@ -371,6 +377,8 @@ ArithmeticLogicUnit::opIdiv (unsigned short src) {
 
 	if (src == 0) {
 		//FIXME - interrupt 0
+		std::cerr << "FIXME: ALU::opDiv (): interrupt 0" << std::endl;
+		return;
 	}
 
 	short tmp = (int)dx_ax / (short)src;

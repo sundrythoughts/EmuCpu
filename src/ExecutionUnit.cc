@@ -811,7 +811,7 @@ ExecutionUnit::execJL () {
 
 void
 ExecutionUnit::execJLE () {
-	if (getRegFlagsSF () == getRegFlagsOF () && getRegFlagsZF () != true) {
+	if (getRegFlagsSF () == getRegFlagsOF () || getRegFlagsZF () != true) {
 		return;
 	}
 
@@ -1048,10 +1048,8 @@ ExecutionUnit::execOUT () {
 		}
 	}
 	else if (port == 3) { //sound output
-		if (ops.operandSize () == Jaf::OP_SIZE_16) {
-			unsigned short cx_div_bx = getRegCX () / getRegBX ();
-			p->m_io_ports->signalSoundOutput ().emit (ops.src ().get<unsigned short> (), cx_div_bx);
-		}
+		unsigned short cx_div_bx = getRegCX () / getRegBX ();
+		p->m_io_ports->signalSoundOutput ().emit (getRegAX (), cx_div_bx);
 	}
 }
 

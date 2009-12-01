@@ -55,6 +55,9 @@ public:
 
 	/** */
 	void reset ();
+
+private:
+	void playSound (unsigned short freq, unsigned short duration);
 };
 
 #endif //JAF__IO_PORTS_HH

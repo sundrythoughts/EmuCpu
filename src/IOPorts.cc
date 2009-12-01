@@ -18,6 +18,7 @@
 
 #include "IOPorts.hh"
 #include "CpuComponents.hh"
+#include "ToneGenerator.hh"
 #include <iostream>
 
 class IOPortsPrivate {
@@ -28,10 +29,13 @@ public:
 	sigc::signal<void, unsigned short, unsigned short> m_signal_sound_out;
 
 	std::queue<char> m_char_input_q;
+
+	ToneGenerator m_tone_gen;
 };
 
 IOPorts::IOPorts () {
 	p = new IOPortsPrivate ();
+	p->m_signal_sound_out.connect (sigc::mem_fun(*this, &IOPorts::playSound));
 }
 
 IOPorts::~IOPorts () {
@@ -70,5 +74,10 @@ IOPorts::reset () {
 	while (!p->m_char_input_q.empty ()) {
 		p->m_char_input_q.pop ();
 	}
+}
+
+void
+IOPorts::playSound (unsigned short freq, unsigned short duration) {
+	p->m_tone_gen.play ((float)freq, duration);
 }
 

@@ -25,8 +25,6 @@
 #ifndef JAF__SOUND_WIDGET_HH
 #define JAF__SOUND_WIDGET_HH
 
-#include "ToneGenerator.hh"
-
 #include <QtCore>
 #include <QtGui>
 
@@ -38,7 +36,6 @@
 */
 class SoundWidget : public QWidget, protected Ui::SoundWidget {
 	Q_OBJECT
-	ToneGenerator m_tones;
 
 public:
 	/** */

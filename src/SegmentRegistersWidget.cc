@@ -18,6 +18,7 @@
 
 
 #include "SegmentRegistersWidget.hh"
+#include <iostream>
 
 
 SegmentRegistersWidget::SegmentRegistersWidget (QWidget *parent) : QDockWidget (parent) {

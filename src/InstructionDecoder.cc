@@ -150,7 +150,8 @@ InstructionDecoder::decodeInstruction () {
 
 void
 InstructionDecoder::decodeNotImplemented () {
-	std::cerr << "decodeNotImplemented (): this addressing mode is not implemented or doesn't exist" << std::endl;
+	std::cerr << "decodeNotImplemented (" << (unsigned int)p->m_inst->getByte (0);
+	std::cerr << "): this addressing mode is not implemented or doesn't exist" << std::endl;
 }
 
 void
@@ -566,7 +567,7 @@ InstructionDecoder::decodeRegImm () {
 	InstMask im;
 	im.byte = p->m_inst->getByte (0);
 
-	p->m_dis_dest << Jaf::getRegIndex16Name (im.reg);
+	p->m_dis_dest << Jaf::getRegIndexName (im.w, im.reg);
 
 	p->m_inst->operands ().setOperandSize (im.w);
 

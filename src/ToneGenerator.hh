@@ -20,35 +20,26 @@
 #ifndef JAF__TONE_GENERATOR_HH
 #define JAF__TONE_GENERATOR_HH
 
-#include <QObject>
-#include <QtCore>
 #include <iostream>
 #include <gst/gst.h>
 
-class ToneGenerator : public QThread {
-	Q_OBJECT
-
+class ToneGenerator {
 	GstElement *m_audio_pipe;
 	GstElement *m_tone_src;
 	GstElement *m_audio_sink;
-	bool m_state;
+
 public:
 	/** */
-	ToneGenerator (QThread *parent = 0);
+	ToneGenerator ();
 
 	/** */
 	~ToneGenerator ();
 
-public Q_SLOTS:
 	/** */
 	void play (float freq, size_t duration);
 
 	/** */
 	void stop ();
-
-protected:
-	/** */
-	virtual void run ();
 };
 
 #endif //JAF__TONE_GENERATOR_HH

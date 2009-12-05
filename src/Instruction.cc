@@ -33,6 +33,7 @@ public:
 	const InstructionTableItem *m_inst_item;
 	std::vector<unsigned char> m_inst_bytes;
 	InstructionDisassembly m_disasm;
+	int m_addr_mode;
 };
 
 Instruction::Instruction () {
@@ -117,5 +118,15 @@ Instruction::getBytes () {
 unsigned char
 Instruction::getByte (size_t i) const {
 	return p->m_inst_bytes[i];
+}
+
+int
+Instruction::setAddrMode (int am) {
+	p->m_addr_mode = am;
+}
+
+int
+Instruction::getAddrMode () const {
+	return p->m_addr_mode;
 }
 

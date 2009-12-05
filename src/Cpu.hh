@@ -110,6 +110,9 @@ public Q_SLOTS:
 	/** Change the delay between execution of instructions. */
 	void setSpeed (int);
 
+	/** */
+	void enableDatabase (bool b);
+
 }; //end class Cpu
 
 #endif //JAF__CPU_HH

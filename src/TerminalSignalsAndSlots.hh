@@ -44,14 +44,11 @@ public:
 	sigc::signal<void, char>& sigcSignalTerminalOutput ();
 
 public Q_SLOTS:
-	/** Enable or disable the widget */
-	void enableDisable (bool b);
-
 	/** Qt slot for terminal output */
 	void terminalOutput (char c);
 
 Q_SIGNALS:
-	/** */
+	/** Qt signal for terminal input */
 	void terminalInput (char c);
 
 }; //end class TerminalSignalsAndSlots

@@ -22,7 +22,6 @@
 void
 SoundSignalsAndSlots::sigcSlotPlaySound (unsigned short freq, unsigned short duration) {
 	Q_EMIT playSound (freq, duration);
-	//std::cout << "here" << std::endl;
 }
 
 void

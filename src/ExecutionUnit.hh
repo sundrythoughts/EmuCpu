@@ -319,7 +319,7 @@ public:
 	/** */
 	void execINT ();
 
-	/** UNIMPLEMENTED */
+	/** */
 	void execINTO ();
 
 	/** */

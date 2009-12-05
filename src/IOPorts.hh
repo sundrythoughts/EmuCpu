@@ -16,7 +16,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/** */
+/**
+@file IOPorts.hh
+@brief Control the input and output ports of the Cpu.
+*/
 
 #ifndef JAF__IO_PORTS_HH
 #define JAF__IO_PORTS_HH
@@ -27,7 +30,10 @@
 class CpuComponents;
 class IOPortsPrivate;
 
-/** */
+/**
+@class IOPorts
+@brief Control the input and output ports of the Cpu.
+*/
 class IOPorts {
 	IOPortsPrivate *p;
 
@@ -41,22 +47,23 @@ public:
 	/** Create a connection to the CpuComponents. */
 	void connectTo (CpuComponents &cpu);
 
-	/** */
+	/** Get the signalCharOutput signal. */
 	sigc::signal<void, char>& signalCharOutput ();
 
-	/** */
+	/** Get the signalSoundOutput signal. */
 	sigc::signal<void, unsigned short, unsigned short> signalSoundOutput ();
 
-	/** */
+	/** Queue a character from the terminal. */
 	void charInput (char c);
 
-	/** */
+	/** Get the character queue. */
 	std::queue<char>& charInputQueue ();
 
-	/** */
+	/** Set everything back to its default state. */
 	void reset ();
 
 private:
+	//play a sound through the ToneGenerator
 	void playSound (unsigned short freq, unsigned short duration);
 };
 

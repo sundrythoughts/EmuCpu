@@ -19,6 +19,7 @@
 
 #include "CpuComponents.hh"
 #include <iostream>
+#include <string>
 
 class CpuComponentsPrivate {
 public:
@@ -31,7 +32,10 @@ public:
 	Loader m_loader;
 	IOPorts m_io_ports;
 	ToneGenerator m_tone_gen;
+	DatabaseTester m_db_tester;
 
+	std::string m_testid;
+	int m_inst_counter;
 	bool m_halt;
 };
 
@@ -44,6 +48,9 @@ CpuComponents::CpuComponents () {
 	p->m_decoder.connectTo (*this);
 	p->m_inst.connectTo (*this);
 	p->m_loader.connectTo (*this);
+	p->m_db_tester.connectTo (*this);
+
+	resetInstCounter ();
 }
 
 CpuComponents::~CpuComponents () {
@@ -95,6 +102,36 @@ CpuComponents::getToneGenerator () {
 	return p->m_tone_gen;
 }
 
+DatabaseTester&
+CpuComponents::getDatabaseTester () {
+	return p->m_db_tester;
+}
+
+void
+CpuComponents::setTestID (const std::string &t) {
+	p->m_testid = t;
+}
+
+const std::string&
+CpuComponents::getTestID () const {
+	return p->m_testid;
+}
+
+int
+CpuComponents::getInstCounter () const {
+	return p->m_inst_counter;
+}
+
+void
+CpuComponents::incInstCounter () {
+	++p->m_inst_counter;
+}
+
+void
+CpuComponents::resetInstCounter () {
+	p->m_inst_counter = 0;
+}
+
 bool
 CpuComponents::getHalt () {
 	return p->m_halt;
@@ -103,6 +140,7 @@ CpuComponents::getHalt () {
 void
 CpuComponents::setHalt (bool b) {
 	p->m_halt = b;
+	//std::cout << getInstCounter () << std::endl;
 }
 
 void
@@ -114,5 +152,6 @@ CpuComponents::reset () {
 	p->m_inst.reset ();
 	//p->m_loader.reset ();
 	p->m_io_ports.reset ();
+	resetInstCounter ();
 }
 

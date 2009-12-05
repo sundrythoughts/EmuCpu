@@ -91,6 +91,12 @@ public:
 	template<typename T>
 	void addBytes (const T &val);
 
+	/** */
+	int setAddrMode (int am);
+
+	/** */
+	int getAddrMode () const;
+
 }; //end class Instruction
 
 template<typename T>

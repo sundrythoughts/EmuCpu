@@ -63,61 +63,64 @@ public:
 	/** */
 	Sim86Window (QWidget *parent = 0);
 
-	/** */
+	/** Get the FlagsWidget. */
 	FlagsWidget& getFlagsWidget ();
 
-	/** */
+	/** Get the GeneralRegistersWidget. */
 	GeneralRegistersWidget& getGeneralRegistersWidget ();
 
-	/** */
+	/** Get the SegmentRegisterWidget. */
 	SegmentRegistersWidget& getSegmentRegistersWidget ();
 
-	/** */
+	/** Get the StackWidget. */
 	StackWidget& getStackWidget ();
 
-	/** */
+	/** Get the DisassemblyWidget. */
 	DisassemblyWidget& getDisassemblyWidget ();
 
-	/** */
+	/** Get the MemoryWidget. */
 	MemoryWidget& getMemoryWidget ();
 
-	/** */
+	/** Get the TerminalWidget. */
 	TerminalWidget& getTerminalWidget ();
 
-	/** */
+	/** Get the SoundWidget. */
 	SoundWidget& getSoundWidget ();
 
 private Q_SLOTS:
-	/** */
+	//Enable/disable the dissassembly output
 	void enableDisableToggleDisassembly (bool b);
 
-	/** */
+	//Enable/disable the memory output
 	void enableDisableToggleMemory (bool b);
 
-	/** */
+	//Open an executable file
 	void openFile ();
 
-	/** */
+	//Reset the Ui to its default state
 	void resetUi ();
 
 Q_SIGNALS:
-	/** */
+	/** Run the Cpu. */
 	void startCpu ();
 
-	/** */
+	/** Reset the Cpu. */
 	void resetCpu ();
 
-	/** */
+	/** Pause the Cpu. */
 	void pauseCpu ();
 
-	/** */
+	/** Single-step the Cpu. */
 	void singleStepCpu ();
 
-	/** */
+	/** Load a new executable and maybe load Sim86OS. */
 	void loadFile (QString file_name, bool load_sim86os);
 
-	/** */
+	/** Set the execution speed of the Cpu. */
 	void setSpeed (int i);
+
+	/** Enable/disable the database testing. */
+	void enableDatabase (bool b);
 
 }; //end class Sim86Window
 

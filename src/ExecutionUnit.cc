@@ -30,6 +30,8 @@
 #include "NumberWrapper.hh"
 #include "Utility.hh"
 
+#include "Immediate.hh"
+
 //#include "InstructionExecuter.hh"
 
 #include <iostream>
@@ -612,11 +614,18 @@ void
 ExecutionUnit::execDIV () {
 	OperandList &ops = p->m_inst->operands ();
 
+	bool inter;
 	if (ops.operandSize () == Jaf::OP_SIZE_16) {
-		p->m_alu->opDiv (ops.dest ().get<unsigned short> ());
+		inter = p->m_alu->opDiv (ops.dest ().get<unsigned short> ());
 	}
 	else {
-		p->m_alu->opDiv (ops.dest ().get<unsigned char> ());
+		inter = p->m_alu->opDiv (ops.dest ().get<unsigned char> ());
+	}
+
+	if (!inter) {
+		ops.src ().free ();
+		ops.src ().init<unsigned char> (new Immediate<unsigned char> (0), true);
+		execINT ();
 	}
 }
 
@@ -681,6 +690,18 @@ ExecutionUnit::execINT () {
 }
 
 void
+ExecutionUnit::execINTO () {
+	OperandList &ops = p->m_inst->operands ();
+
+	if (!getRegFlagsOF ()) {
+		return;
+	}
+
+	ops.src ().init<unsigned char> (new Immediate<unsigned char> (4), true);
+	execINT ();
+}
+
+void
 ExecutionUnit::execIRET () {
 	realPop (p->m_biu->getRegIP ());
 	realPop (p->m_biu->getSegRegCS ());
@@ -721,173 +742,135 @@ ExecutionUnit::execJMPFAR () {
 
 void
 ExecutionUnit::execJNA () {
-	if (getRegFlagsCF () != true && getRegFlagsZF () != true) {
-		return;
+	if (getRegFlagsCF () == true || getRegFlagsZF () == true) {
+		execJMPSHORT ();
 	}
-
-	execJMPSHORT ();
 }
 
 void
 ExecutionUnit::execJNAE () {
-	if (getRegFlagsCF () != true) {
-		return;
+	if (getRegFlagsCF () == true) {
+		execJMPSHORT ();
 	}
-
-	execJMPSHORT ();
 }
 
 void
 ExecutionUnit::execJNB () {
-	if (getRegFlagsCF () != false) {
-		return;
+	if (getRegFlagsCF () == false) {
+		execJMPSHORT ();
 	}
-
-	execJMPSHORT ();
 }
 
 void
 ExecutionUnit::execJNBE () {
-	if (getRegFlagsCF () != false && getRegFlagsZF () != false) {
-		return;
+	if (getRegFlagsCF () == false && getRegFlagsZF () == false) {
+		execJMPSHORT ();
 	}
-
-	execJMPSHORT ();
 }
 
 void
 ExecutionUnit::execJC () {
-	if (getRegFlagsCF () != true) {
-		return;
+	if (getRegFlagsCF () == true) {
+		execJMPSHORT ();
 	}
-
-	execJMPSHORT ();
 }
 
 void
 ExecutionUnit::execJCXZ () {
-	if (getRegCX () != 0) {
-		return;
+	if (getRegCX () == 0) {
+		execJMPSHORT ();
 	}
-
-	execJMPSHORT ();
 }
 
 void
 ExecutionUnit::execJE () {
-	if (getRegFlagsZF () == false) {
-		return;
+	if (getRegFlagsZF () == true) {
+		execJMPSHORT ();
 	}
-
-	execJMPSHORT ();
 }
 
 void
 ExecutionUnit::execJG () {
-	if (getRegFlagsSF () != getRegFlagsOF () || getRegFlagsZF () != false) {
-		return;
+	if (getRegFlagsSF () == getRegFlagsOF () && getRegFlagsZF () == false) {
+		execJMPSHORT ();
 	}
-
-	execJMPSHORT ();
 }
 
 void
 ExecutionUnit::execJGE () {
-	if (getRegFlagsSF () != getRegFlagsOF ()) {
-		return;
+	if (getRegFlagsSF () == getRegFlagsOF ()) {
+		execJMPSHORT ();
 	}
-
-	execJMPSHORT ();
 }
 
 void
 ExecutionUnit::execJL () {
-	if (getRegFlagsSF () == getRegFlagsOF ()) {
-		return;
+	if (getRegFlagsSF () != getRegFlagsOF ()) {
+		execJMPSHORT ();
 	}
-
-	execJMPSHORT ();
 }
 
 void
 ExecutionUnit::execJLE () {
-	if (getRegFlagsSF () == getRegFlagsOF () || getRegFlagsZF () != true) {
-		return;
+	if (getRegFlagsSF () != getRegFlagsOF () || getRegFlagsZF () == true) {
+		execJMPSHORT ();
 	}
-
-	execJMPSHORT ();
 }
 
 void
 ExecutionUnit::execJNC () {
 	if (getRegFlagsCF () == false) {
-		return;
+		execJMPSHORT ();
 	}
-
-	execJMPSHORT ();
 }
 
 void
 ExecutionUnit::execJNE () {
-	if (getRegFlagsZF () == true) {
-		return;
+	if (getRegFlagsZF () == false) {
+		execJMPSHORT ();
 	}
-
-	execJMPSHORT ();
 }
 
 void
 ExecutionUnit::execJNO () {
-	if (getRegFlagsOF () != false) {
-		return;
+	if (getRegFlagsOF () == false) {
+		execJMPSHORT ();
 	}
-
-	execJMPSHORT ();
 }
 
 void
 ExecutionUnit::execJNS () {
-	if (getRegFlagsSF () != false) {
-		return;
+	if (getRegFlagsSF () == false) {
+		execJMPSHORT ();
 	}
-
-	execJMPSHORT ();
 }
 
 void
 ExecutionUnit::execJNP () {
-	if (getRegFlagsPF () != false) {
-		return;
+	if (getRegFlagsPF () == false) {
+		execJMPSHORT ();
 	}
-
-	execJMPSHORT ();
 }
 
 void
 ExecutionUnit::execJO () {
-	if (getRegFlagsOF () != true) {
-		return;
+	if (getRegFlagsOF () == true) {
+		execJMPSHORT ();
 	}
-
-	execJMPSHORT ();
 }
 
 void
 ExecutionUnit::execJPE () {
-	if (getRegFlagsPF () != true) {
-		return;
+	if (getRegFlagsPF () == true) {
+		execJMPSHORT ();
 	}
-
-	execJMPSHORT ();
 }
 
 void
 ExecutionUnit::execJS () {
-	if (getRegFlagsSF () != true) {
-		return;
+	if (getRegFlagsSF () == true) {
+		execJMPSHORT ();
 	}
-
-	execJMPSHORT ();
 }
 
 void

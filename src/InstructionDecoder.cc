@@ -86,6 +86,11 @@ void
 InstructionDecoder::nextInstruction () {
 	if (!p->m_inst->isNull ()) {
 		p->m_inst->execute ();
+		p->m_cpu->incInstCounter ();
+
+		if (p->m_cpu->getDatabaseTester ().isConnected ()) {
+			p->m_cpu->getDatabaseTester ().spExecInsert ("jfree143", p->m_cpu->getTestID ());
+		}
 	}
 
 	p->m_disasm.str ("");
@@ -175,6 +180,7 @@ InstructionDecoder::decodeRegRM () {
 	};
 
 	p->m_inst->disassembly ().setAddressingMode ("RegRM");
+	p->m_inst->setAddrMode (1);
 
 	InstMask im;
 	im.byte = p->m_inst->getByte (0);
@@ -292,6 +298,7 @@ InstructionDecoder::decodeAccImm () {
 	};
 
 	p->m_inst->disassembly ().setAddressingMode ("AccImm");
+	p->m_inst->setAddrMode (2);
 
 	InstMask im;
 	im.byte = p->m_inst->getByte (0);
@@ -333,6 +340,7 @@ InstructionDecoder::decodeSegment () {
 	};
 
 	p->m_inst->disassembly ().setAddressingMode ("Segment");
+	p->m_inst->setAddrMode (3);
 
 	InstMask im;
 	im.byte = p->m_inst->getByte (0);
@@ -347,6 +355,7 @@ InstructionDecoder::decodeSegment () {
 void
 InstructionDecoder::decodeAcc () {
 	p->m_inst->disassembly ().setAddressingMode ("Acc");
+	p->m_inst->setAddrMode (4);
 }
 
 void
@@ -359,6 +368,7 @@ InstructionDecoder::decodeReg () {
 	};
 
 	p->m_inst->disassembly ().setAddressingMode ("Reg");
+	p->m_inst->setAddrMode (5);
 
 	InstMask im;
 	im.byte = p->m_inst->getByte (0);
@@ -373,6 +383,7 @@ InstructionDecoder::decodeReg () {
 void
 InstructionDecoder::decodeShort () {
 	p->m_inst->disassembly ().setAddressingMode ("Short");
+	p->m_inst->setAddrMode (6);
 
 	const char imm = p->m_biu->getInstructionBytes<char> ();
 	p->m_inst->addBytes ((unsigned char)imm);
@@ -395,6 +406,7 @@ InstructionDecoder::decodeSegRM () {
 	};
 
 	p->m_inst->disassembly ().setAddressingMode ("SegRM");
+	p->m_inst->setAddrMode (7);
 
 	InstMask im;
 	im.byte = p->m_inst->getByte (0);
@@ -506,6 +518,7 @@ InstructionDecoder::decodeAccReg () {
 	};
 
 	p->m_inst->disassembly ().setAddressingMode ("AccReg");
+	p->m_inst->setAddrMode (8);
 
 	InstMask im;
 	im.byte = p->m_inst->getByte (0);
@@ -530,6 +543,7 @@ InstructionDecoder::decodeAccMem () {
 	};
 
 	p->m_inst->disassembly ().setAddressingMode ("AccMem");
+	p->m_inst->setAddrMode (9);
 
 	InstMask im;
 	im.byte = p->m_inst->getByte (0);
@@ -563,6 +577,7 @@ InstructionDecoder::decodeRegImm () {
 	};
 
 	p->m_inst->disassembly ().setAddressingMode ("RegImm");
+	p->m_inst->setAddrMode (10);
 
 	InstMask im;
 	im.byte = p->m_inst->getByte (0);
@@ -596,6 +611,7 @@ InstructionDecoder::decodeRegImm () {
 void
 InstructionDecoder::decodeIntra () {
 	p->m_inst->disassembly ().setAddressingMode ("Intra");
+	p->m_inst->setAddrMode (11);
 
 	const short imm = p->m_biu->getInstructionBytes<short> ();
 	p->m_inst->addBytes (imm);
@@ -610,6 +626,7 @@ InstructionDecoder::decodeIntra () {
 void
 InstructionDecoder::decodeInter () {
 	p->m_inst->disassembly ().setAddressingMode ("Inter");
+	p->m_inst->setAddrMode (12);
 
 	const unsigned short off = p->m_biu->getInstructionBytes<unsigned short> ();
 	p->m_inst->addBytes (off);
@@ -631,7 +648,8 @@ InstructionDecoder::decodeXferInd () {
 		unsigned char byte;
 	};
 
-	p->m_inst->disassembly ().setAddressingMode ("RM");
+	p->m_inst->disassembly ().setAddressingMode ("XferInd");
+	p->m_inst->setAddrMode (13);
 
 	InstMask im;
 	im.byte = p->m_inst->getByte (0);
@@ -730,6 +748,7 @@ InstructionDecoder::decodeRMImm () {
 	};
 
 	p->m_inst->disassembly ().setAddressingMode ("RMImm");
+	p->m_inst->setAddrMode (15);
 
 	InstMask im;
 	im.byte = p->m_inst->getByte (0);
@@ -857,6 +876,7 @@ InstructionDecoder::decodeAccPort () {
 	};
 
 	p->m_inst->disassembly ().setAddressingMode ("AccPort");
+	p->m_inst->setAddrMode (16);
 
 	InstMask im;
 	im.byte = p->m_inst->getByte (0);
@@ -891,6 +911,7 @@ InstructionDecoder::decodeRM () {
 	};
 
 	p->m_inst->disassembly ().setAddressingMode ("RM");
+	p->m_inst->setAddrMode (17);
 
 	InstMask im;
 	im.byte = p->m_inst->getByte (0);
@@ -1001,11 +1022,13 @@ InstructionDecoder::decodeRM () {
 void
 InstructionDecoder::decodeFlags () {
 	p->m_inst->disassembly ().setAddressingMode ("Flags");
+	p->m_inst->setAddrMode (18);
 }
 
 void
 InstructionDecoder::decodeRetPop () {
 	p->m_inst->disassembly ().setAddressingMode ("RetPop");
+	p->m_inst->setAddrMode (19);
 
 	p->m_inst->operands ().setOperandSize (Jaf::OP_SIZE_16);
 
@@ -1022,6 +1045,7 @@ InstructionDecoder::decodeType3 () {
 	};
 
 	p->m_inst->disassembly ().setAddressingMode ("Type3");
+	p->m_inst->setAddrMode (21);
 
 	InstMask im;
 	im.byte = p->m_inst->getByte (0);
@@ -1034,6 +1058,7 @@ InstructionDecoder::decodeType3 () {
 void
 InstructionDecoder::decodeEscNum () {
 	std::cout << "decodeEscNum ()" << std::endl;
+	p->m_inst->setAddrMode (22);
 }
 
 void
@@ -1047,6 +1072,7 @@ InstructionDecoder::decodeAccVPort () {
 	};
 
 	p->m_inst->disassembly ().setAddressingMode ("AccVPort");
+	p->m_inst->setAddrMode (24);
 
 	InstMask im;
 	im.byte = p->m_inst->getByte (0);
@@ -1070,6 +1096,7 @@ InstructionDecoder::decodeAccVPort () {
 void
 InstructionDecoder::decodeAccBase () {
 	std::cout << "decodeAccBase ()" << std::endl;
+	p->m_inst->setAddrMode (25);
 }
 
 void
@@ -1079,6 +1106,7 @@ InstructionDecoder::decodeIntNum () {
 	};
 
 	p->m_inst->disassembly ().setAddressingMode ("IntNum");
+	p->m_inst->setAddrMode (26);
 
 	InstMask im;
 	im.byte = p->m_inst->getByte (0);
@@ -1103,6 +1131,7 @@ InstructionDecoder::decodeString () {
 	};
 
 	p->m_inst->disassembly ().setAddressingMode ("String");
+	p->m_inst->setAddrMode (27);
 
 	InstMask im;
 	im.byte = p->m_inst->getByte (0);

@@ -31,6 +31,7 @@ ToneGenerator::ToneGenerator () {
 }
 
 ToneGenerator::~ToneGenerator () {
+	stop ();
 	gst_object_unref (GST_OBJECT (m_audio_pipe));
 }
 

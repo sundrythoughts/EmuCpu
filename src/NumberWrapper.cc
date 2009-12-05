@@ -50,7 +50,6 @@ NumberWrapper::free () {
 		(this->*free_func_ptr) ();
 	}
 
-	//(this->*free_func_ptr) ();
 	m_size = 0;
 	m_num = 0;
 }

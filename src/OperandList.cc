@@ -20,12 +20,10 @@
 #include "OperandList.hh"
 
 OperandList::OperandList () {
-	//m_ops.resize (2);
 }
 
 
 OperandList::~OperandList () {
-	//m_ops.clear ();
 }
 
 
@@ -53,8 +51,6 @@ OperandList::dest () {
 
 void
 OperandList::reset () {
-	//m_ops.clear ();
-	//m_ops.resize (2);
 	m_ops[0].free ();
 	m_ops[1].free ();
 }

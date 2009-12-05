@@ -22,7 +22,7 @@
 
 TerminalWidget::TerminalWidget (QWidget *parent) : QWidget (parent) {
 	setupUi (this);
-	//m_txt_terminal = new TerminalTextEdit (this);
+
 	m_vertical_layout->insertWidget (0, &m_txt_terminal);
 	connect (&m_txt_terminal, SIGNAL(charTyped (char)), this, SIGNAL(terminalOutput (char)));
 	connect (m_btn_clear, SIGNAL(clicked ()), &m_txt_terminal, SLOT(clear ()));
@@ -34,19 +34,10 @@ TerminalWidget::reset () {
 }
 
 void
-TerminalWidget::enableDisableToggle (bool b) {
-	if (b) {
-		show ();
-	}
-	else {
-		hide ();
-	}
-
-	Q_EMIT enableDisable (b);
-}
-
-void
 TerminalWidget::terminalInput (char c) {
-	m_txt_terminal.insertPlainText (QChar (c));
+	QChar ch = c;
+	if (ch.isPrint () || ch == '\n' || ch == '\r') {
+		m_txt_terminal.insertPlainText (QChar (c));
+	}
 }
 

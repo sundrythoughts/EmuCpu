@@ -74,24 +74,32 @@ public:
 	/**
 	@brief Update the carry flag (CF) for an 8-bit subtraction operation.
 	*/
-	void updateFlagSubCF (unsigned char result8, unsigned short result16);
+	void updateFlagSubCF (unsigned char result8, short result16);
 
 	/**
 	@brief Update the carry flag (CF) for a 16-bit subtraction operation.
 	*/
-	void updateFlagSubCF (unsigned short result16, unsigned int result32);
+	void updateFlagSubCF (unsigned short result16, int result32);
 
 	/**
-	@brief Update the overflow flag (OF) for an 8-bit operation.
+	@brief Update the overflow flag (OF) for an 8-bit addition operation.
 	*/
-	//void updateFlagOF (unsigned char orig_dest, unsigned char src, unsigned char result);
-	void updateFlagOF (unsigned char result);
+	void updateFlagAddOF (unsigned char orig_dest, unsigned char src, unsigned char dest);
 
 	/**
-	@brief Update the overflow flag (OF) for a 16-bit operation.
+	@brief Update the overflow flag (OF) for an 16-bit addition operation.
 	*/
-	//void updateFlagOF (unsigned short orig_dest, unsigned short src, unsigned short result);
-	void updateFlagOF (unsigned short result);
+	void updateFlagAddOF (unsigned short orig_dest, unsigned short src, unsigned short dest);
+
+	/**
+	@brief Update the overflow flag (OF) for an 8-bit subtraction operation.
+	*/
+	void updateFlagSubOF (unsigned char orig_dest, unsigned char src, unsigned char dest);
+
+	/**
+	@brief Update the overflow flag (OF) for an 16-bit subtraction operation.
+	*/
+	void updateFlagSubOF (unsigned short orig_dest, unsigned short src, unsigned short dest);
 
 	/**
 	@brief Update the parity flag (PF) for an 8-bit operation.
@@ -174,12 +182,12 @@ public:
 	/**
 	@brief Do an 8-bit div.
 	*/
-	void opDiv (unsigned char src);
+	bool opDiv (unsigned char src);
 
 	/**
 	@brief Do a 16-bit div.
 	*/
-	void opDiv (unsigned short src);
+	bool opDiv (unsigned short src);
 
 	/**
 	@brief Do an 8-bit idiv.

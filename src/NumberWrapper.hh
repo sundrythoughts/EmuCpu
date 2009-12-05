@@ -19,7 +19,7 @@
 
 /**
 @file NumberWrapper.hh
-@brief Wrap an INumberReadableWritable reference or pointer.
+@brief Wrap an INumberReadableWritable reference or pointer with automatic or manual memory management.
 */
 
 #ifndef JAF__NUMBER_WRAPPER_HH
@@ -35,13 +35,12 @@
 
 /**
 @class NumberWrapper
-@brief Wrap an INumberReadableWritable reference or pointer.
+@brief Wrap an INumberReadableWritable reference or pointer with automatic or manual memory management.
 */
 class NumberWrapper {
 	void *m_num;
 	bool m_del;
 	size_t m_size;
-	//unsigned int *m_ref_count;
 	void (NumberWrapper::*free_func_ptr) ();
 	std::string (NumberWrapper::*to_string_func_ptr) ();
 
@@ -70,6 +69,7 @@ public:
 	size_t size () const;
 
 	/**
+	@brief Is this value null (uninitialized) or not.
 	@return true if uninitialized, false if initialized.
 	*/
 	bool isNull () const;
@@ -81,11 +81,10 @@ public:
 	template<typename T>
 	INumberReadableWritable<T>& get () throw(std::logic_error);
 
-	/** */
+	/** Release the resources associated with the value and set it back to null. */
 	void free ();
 
 private:
-
 	template<typename T>
 	void freeFunc ();
 

@@ -193,7 +193,8 @@ const InstructionTableItem InstructionTable::one_byte_opcode_instruction_map[256
 	{0, true, GROUP_2, &InstructionDecoder::decodeNotImplemented, &ExecutionUnit::execNotImplemented},
 
 	/* 9x */
-	{"nop", false, GROUP_NONE, &InstructionDecoder::decodeAccReg, &ExecutionUnit::execNOP},
+	//{"nop", false, GROUP_NONE, &InstructionDecoder::decodeAccReg, &ExecutionUnit::execNOP},
+	{"xchg", false, GROUP_NONE, &InstructionDecoder::decodeAccReg, &ExecutionUnit::execXCHG},
 	{"xchg", false, GROUP_NONE, &InstructionDecoder::decodeAccReg, &ExecutionUnit::execXCHG},
 	{"xchg", false, GROUP_NONE, &InstructionDecoder::decodeAccReg, &ExecutionUnit::execXCHG},
 	{"xchg", false, GROUP_NONE, &InstructionDecoder::decodeAccReg, &ExecutionUnit::execXCHG},
@@ -251,17 +252,17 @@ const InstructionTableItem InstructionTable::one_byte_opcode_instruction_map[256
 	{0, false, GROUP_RESERVED, &InstructionDecoder::decodeNotImplemented, &ExecutionUnit::execNotImplemented},
 	{"ret", false, GROUP_NONE, &InstructionDecoder::decodeRetPop, &ExecutionUnit::execRET}, //near
 	{"ret", false, GROUP_NONE, &InstructionDecoder::decodeNone, &ExecutionUnit::execRET}, //near
-	{"les", true, GROUP_NONE, &InstructionDecoder::decodeRegRM, &ExecutionUnit::execNotImplemented},
-	{"lds", true, GROUP_NONE, &InstructionDecoder::decodeRegRM, &ExecutionUnit::execNotImplemented},
+	{"les", true, GROUP_NONE, &InstructionDecoder::decodeRegRM, &ExecutionUnit::execNotImplemented}, //FIXME
+	{"lds", true, GROUP_NONE, &InstructionDecoder::decodeRegRM, &ExecutionUnit::execNotImplemented}, //FIXME
 	{"mov", true, GROUP_NONE, &InstructionDecoder::decodeRMImm, &ExecutionUnit::execMOV},
 	{"mov", true, GROUP_NONE, &InstructionDecoder::decodeRMImm, &ExecutionUnit::execMOV},
 	{0, false, GROUP_RESERVED, &InstructionDecoder::decodeNotImplemented, &ExecutionUnit::execNotImplemented},
 	{0, false, GROUP_RESERVED, &InstructionDecoder::decodeNotImplemented, &ExecutionUnit::execNotImplemented},
 	{"ret", false, GROUP_NONE, &InstructionDecoder::decodeRetPop, &ExecutionUnit::execRETFAR}, //far
 	{"ret", false, GROUP_NONE, &InstructionDecoder::decodeNone, &ExecutionUnit::execRETFAR}, //far
-	{"int 3", false, GROUP_NONE, &InstructionDecoder::decodeType3, &ExecutionUnit::execNotImplemented},
+	{"int 3", false, GROUP_NONE, &InstructionDecoder::decodeType3, &ExecutionUnit::execINT},
 	{"int", false, GROUP_NONE, &InstructionDecoder::decodeIntNum, &ExecutionUnit::execINT},
-	{"into", false, GROUP_NONE, &InstructionDecoder::decodeNone, &ExecutionUnit::execNotImplemented},
+	{"into", false, GROUP_NONE, &InstructionDecoder::decodeNone, &ExecutionUnit::execINTO},
 	{"iret", false, GROUP_NONE, &InstructionDecoder::decodeNone, &ExecutionUnit::execIRET},
 
 	/* Dx */
@@ -272,7 +273,7 @@ const InstructionTableItem InstructionTable::one_byte_opcode_instruction_map[256
 	{"aam", false, GROUP_NONE, &InstructionDecoder::decodeAccBase, &ExecutionUnit::execNotImplemented},
 	{"aad", false, GROUP_NONE, &InstructionDecoder::decodeAccBase, &ExecutionUnit::execNotImplemented},
 	{0, false, GROUP_RESERVED, &InstructionDecoder::decodeNotImplemented, &ExecutionUnit::execNotImplemented},
-	{"xlat", false, GROUP_NONE, &InstructionDecoder::decodeNone, &ExecutionUnit::execNotImplemented},
+	{"xlat", false, GROUP_NONE, &InstructionDecoder::decodeNone, &ExecutionUnit::execNotImplemented}, //FIXME
 	{"esc 0", false, GROUP_NONE, &InstructionDecoder::decodeEscNum, &ExecutionUnit::execNotImplemented},
 	{"esc 1", false, GROUP_NONE, &InstructionDecoder::decodeEscNum, &ExecutionUnit::execNotImplemented},
 	{"esc 2", false, GROUP_NONE, &InstructionDecoder::decodeEscNum, &ExecutionUnit::execNotImplemented},
@@ -370,9 +371,9 @@ const InstructionTableItem InstructionTable::one_byte_opcode_instruction_extensi
 		{"not", true, GROUP_4, &InstructionDecoder::decodeRM, &ExecutionUnit::execNOT},
 		{"neg", true, GROUP_4, &InstructionDecoder::decodeRM, &ExecutionUnit::execNEG},
 		{"mul", true, GROUP_4, &InstructionDecoder::decodeRM, &ExecutionUnit::execMUL},
-		{"imul", true, GROUP_4, &InstructionDecoder::decodeRM, &ExecutionUnit::execNotImplemented},
+		{"imul", true, GROUP_4, &InstructionDecoder::decodeRM, &ExecutionUnit::execNotImplemented}, //FIXME
 		{"div", true, GROUP_4, &InstructionDecoder::decodeRM, &ExecutionUnit::execDIV},
-		{"idiv", true, GROUP_4, &InstructionDecoder::decodeRM, &ExecutionUnit::execNotImplemented}
+		{"idiv", true, GROUP_4, &InstructionDecoder::decodeRM, &ExecutionUnit::execNotImplemented} //FIXME
 	},//END GROUP 4
 
 	{//GROUP 5

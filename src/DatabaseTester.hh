@@ -21,16 +21,16 @@
 #define JAF__DATABASE_TESTER_HH
 
 #include <QThread>
+#include <string>
 
 namespace syb {
 #include <sybdb.h>
 }
 
+class CpuComponents;
 class DatabaseTesterPrivate;
 
-class DatabaseTester : public QThread {
-	Q_OBJECT
-
+class DatabaseTester {
 	DatabaseTesterPrivate *p;
 
 public:
@@ -40,7 +40,10 @@ public:
 	/** */
 	virtual ~DatabaseTester ();
 
-public Q_SLOTS:
+public:
+	/** */
+	void connectTo (CpuComponents &cpu);
+
 	/**
 	@brief Connect to the database.
 	@param server Server name.
@@ -48,10 +51,14 @@ public Q_SLOTS:
 	@param uid User name.
 	@param pwd Password.
 	*/
-	void connect (const QString &server, const QString &db, const QString &uid, const QString &pwd);
+	void connect (const QString &server = "css.cs.bju.edu", const QString &db = "sim86",
+	              const QString &uid = "sim86", const QString &pwd = "sim86fall2009");
 
 	/** Disconnect from the database. */
 	void disconnect ();
+
+	/** */
+	bool isConnected ();
 
 	/**
 	@brief Execute the ChecksumsInsert stored procedure.
@@ -62,7 +69,12 @@ public Q_SLOTS:
 	*/
 	void spChecksumsInsert (const QString &userid, const QString &testid, int regcksum, int ramcksum);
 
-Q_SIGNALS:
+	/**
+	@param userid UserID nvarchar(50): Your login ID
+	@param testid TestID nvarchar(50): The name of the test routine being run (e.g. "test1.obj")
+	*/
+	void spExecInsert (const std::string &userid, const std::string &testid);
+
 	/** An error has occured. */
 	void error (QString err);
 
@@ -77,11 +89,6 @@ Q_SIGNALS:
 
 	/** Connection to database has been terminated. */
 	void disconnected ();
-
-protected:
-	//override
-	/** Run the DatabaseTester thread. */
-	virtual void run ();
 };
 
 #endif //JAF__DATABASE_TESTER_HH

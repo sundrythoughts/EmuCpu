@@ -43,21 +43,15 @@ public:
 	/** */
 	TerminalWidget (QWidget *parent = 0);
 
-	/** FIXME */
+	/** Set the widget back to its default state. */
 	void reset ();
 
 public Q_SLOTS:
-	/** Enable or disable the widget */
-	void enableDisableToggle (bool b);
-
-	/** */
+	/** Write a character onto the terminal. */
 	void terminalInput (char c);
 
 Q_SIGNALS:
-	/** */
-	void enableDisable (bool b);
-
-	/** */
+	/** Character read from the terminal. */
 	void terminalOutput (char c);
 
 }; //end class TerminalWidget

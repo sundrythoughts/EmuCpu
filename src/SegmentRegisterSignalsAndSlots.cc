@@ -48,3 +48,4 @@ void
 SegmentRegisterSignalsAndSlots::enableDisable (bool b) {
 	blockSignals (!b);
 }
+

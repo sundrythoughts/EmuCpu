@@ -19,7 +19,6 @@
 
 #include "Cpu.hh"
 
-
 class CpuPrivate {
 public:
 	CpuComponents m_cpu_comps;
@@ -89,22 +88,17 @@ Cpu::run () {
 	while (p->m_thread_run) {
 		switch (m_cpu_state) {
 		case CPU_STATE_RUN:
-			//std::cout << "cpu_state_run" << std::endl;
 			getInstructionDecoder ().nextInstruction ();
 			QThread::usleep (p->m_thread_delay);
-			//QThread::yieldCurrentThread ();
 			break;
 		case CPU_STATE_SINGLE_STEP:
-			//std::cout << "cpu_state_single_step" << std::endl;
 			getInstructionDecoder ().nextInstruction ();
 			p->m_mutex.lock ();
 				m_cpu_state = CPU_STATE_PAUSE;
 			p->m_mutex.unlock ();
 			break;
 		case CPU_STATE_PAUSE:
-			//std::cout << "cpu_state_pause" << std::endl;
 			QThread::usleep (100000);
-			//QThread::yieldCurrentThread ();
 			break;
 		}
 
@@ -164,11 +158,23 @@ Cpu::loadFile (QString file_name, bool load_sim86os) {
 		getLoader ().loadFile ("Sim86OS.obj");
 	}
 	getLoader ().loadFile (file_name.toStdString ());
+	QFileInfo file_info (file_name);
+	p->m_cpu_comps.setTestID (file_info.fileName ().toStdString ());
 	start ();
 }
 
 void
 Cpu::setSpeed (int i) {
 	p->m_thread_delay = i;
+}
+
+void
+Cpu::enableDatabase (bool b) {
+	if (b) {
+		p->m_cpu_comps.getDatabaseTester ().connect ();
+	}
+	else {
+		p->m_cpu_comps.getDatabaseTester ().disconnect ();
+	}
 }
 

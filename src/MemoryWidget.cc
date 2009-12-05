@@ -53,15 +53,12 @@ MemoryWidget::resize (size_t sz) {
 		QTableWidgetItem *item = new QTableWidgetItem (QString::number (i * 16, 16).toUpper ().rightJustified (5, '0'));
 		m_tbl_memory->setVerticalHeaderItem (i, item);
 	}
-	//std::cout << "resize" << std::endl;
 }
 
 
 //FIXME - doesn't check for validity of QTableWidgetItem
 void
 MemoryWidget::setMemoryAddress (int addr, unsigned char val) {
-	//std::cout << "setMemoryAddress: " << addr << ", " << (unsigned int)val << std::endl;
-
 	int row_index = addr / 16;
 	int elmt_index = addr % 16;
 
@@ -98,12 +95,6 @@ MemoryWidget::setMemoryAddress (int addr, unsigned char val) {
 
 void
 MemoryWidget::setAllMemoryAddresses (const unsigned char *arr, size_t sz) {
-	//FIXME
-	//std::cout << "setAllMemoryAddresses" << std::endl;
-	//for (size_t i = 0; i < sz; ++i) {
-	//	std::cout << (unsigned int)arr[i] << ' ';
-	//}
-	//std::cout << std::endl;
 	QString raw_mem, ascii;
 	QChar ascii_char;
 	size_t row = 0;
@@ -122,9 +113,6 @@ MemoryWidget::setAllMemoryAddresses (const unsigned char *arr, size_t sz) {
 
 		if (key == 16 || i == sz - 1) {
 			setTableWidgetRowFromStrings (row, raw_mem, ascii);
-
-			//std::cout << raw_mem.toStdString () << " : " << QString::number (row, 16).toStdString () << std::endl;
-
 			raw_mem.clear ();
 			ascii.clear ();
 			++row;

@@ -16,6 +16,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/**
+@file ToneGenerator.hh
+@brief Plays a tone through the main soundcard using GStreamer.
+*/
 
 #ifndef JAF__TONE_GENERATOR_HH
 #define JAF__TONE_GENERATOR_HH
@@ -23,6 +27,10 @@
 #include <iostream>
 #include <gst/gst.h>
 
+/**
+@class ToneGenerator
+@brief Plays a tone through the main soundcard using GStreamer.
+*/
 class ToneGenerator {
 	GstElement *m_audio_pipe;
 	GstElement *m_tone_src;
@@ -35,10 +43,14 @@ public:
 	/** */
 	~ToneGenerator ();
 
-	/** */
+	/**
+	@brief Play a tone.
+	@param freq Frequency of the tone.
+	@param duration Length of time in milliseconds to play the tone.
+	*/
 	void play (float freq, size_t duration);
 
-	/** */
+	/** Stop the underlying system. */
 	void stop ();
 };
 

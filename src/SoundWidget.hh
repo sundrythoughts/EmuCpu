@@ -44,18 +44,18 @@ public:
 	/** */
 	~SoundWidget ();
 
-	/** */
+	/** Set the widget to its default state. */
 	void reset ();
 
 public Q_SLOTS:
-	/** */
+	/** Enable/disable this widget display. */
 	void enableDisableToggle (bool b);
 
-	/** */
+	/** Play a tone of a particular frequency and duration. */
 	void playSound (unsigned short freq, unsigned short duration);
 
 Q_SIGNALS:
-	/** */
+	/** This widget display has been enabled/disabled. */
 	void enableDisable (bool b);
 
 }; //end class SoundWidget

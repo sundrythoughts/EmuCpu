@@ -41,8 +41,6 @@ int main (int argc, char **argv) {
 	QObject::connect (&app, SIGNAL(aboutToQuit ()),
 	                  &cpu, SLOT(shutdownCpu ()));
 
-	//cpu.start ();
-
 	sim.showMaximized ();
 
 	return app.exec ();

@@ -41,21 +41,21 @@ public:
 	/** */
 	StackWidget (QWidget *parent = 0);
 
-	/** */
+	/** Set this widget to its default values. */
 	void reset ();
 
 public Q_SLOTS:
-	/** */
+	/** Enable/disable this widget display. */
 	void enableDisableToggle (bool b);
 
-	/** */
+	/** Add a set of values to the stack widget. */
 	void push (unsigned short seg, unsigned short off, unsigned short val);
 
-	/** */
+	/** Remove the top set of values from the stack widget. */
 	void pop ();
 
 Q_SIGNALS:
-	/** */
+	/** This widget has benn enabled/disabled. */
 	void enableDisable (bool b);
 
 }; //end class StackWidget

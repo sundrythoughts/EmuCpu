@@ -212,7 +212,7 @@
     <property name="title">
      <string>Testing</string>
     </property>
-    <addaction name="actionEnable_Database"/>
+    <addaction name="m_act_enable_db"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuRun"/>
@@ -383,7 +383,7 @@
     <string>F7</string>
    </property>
   </action>
-  <action name="actionEnable_Database">
+  <action name="m_act_enable_db">
    <property name="checkable">
     <bool>true</bool>
    </property>

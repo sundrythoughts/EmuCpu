@@ -42,30 +42,30 @@ public:
 	/** */
 	SegmentRegistersWidget (QWidget *parent = 0);
 
-	/** */
+	/** Set the widget to its default state. */
 	void reset ();
 
 public Q_SLOTS:
-	/** */
+	/** Enable/disable the widget display. */
 	void enableDisableToggle (bool b);
 
-	/** */
+	/** Set the CS display. */
 	void setSegRegCS (unsigned short i);
 
-	/** */
+	/** Set the DS display. */
 	void setSegRegDS (unsigned short i);
 
-	/** */
+	/** Set the ES display. */
 	void setSegRegES (unsigned short i);
 
-	/** */
+	/** Set the SS display. */
 	void setSegRegSS (unsigned short i);
 
-	/** */
+	/** Set the IP display. */
 	void setRegIP (unsigned short i);
 
 Q_SIGNALS:
-	/** */
+	/** The widget display has been enabled/disabled. */
 	void enableDisable (bool b);
 
 }; //end class SegmentRegistersWidget

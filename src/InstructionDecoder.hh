@@ -48,7 +48,7 @@ public:
 	/** Create a connection to the CpuComponents. */
 	void connectTo (CpuComponents &cpu);
 
-	/** */
+	/** Set the decoder to its default state. */
 	void reset ();
 
 	/** Re-decode the current instruction */

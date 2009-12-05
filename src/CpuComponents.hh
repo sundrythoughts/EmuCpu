@@ -33,6 +33,7 @@
 #include "Loader.hh"
 #include "IOPorts.hh"
 #include "ToneGenerator.hh"
+#include "DatabaseTester.hh"
 
 class Instruction;
 class InstructionDecoder;
@@ -44,6 +45,7 @@ class Memory;
 class Loader;
 class IOPorts;
 class ToneGenerator;
+class DatabaseTester;
 
 class CpuComponentsPrivate;
 
@@ -85,7 +87,26 @@ public:
 	/** Get a reference to the IOPorts. */
 	IOPorts& getIOPorts ();
 
+	/** Get a reference to the ToneGenerator. */
 	ToneGenerator& getToneGenerator ();
+
+	/** */
+	DatabaseTester& getDatabaseTester ();
+
+	/** */
+	void setTestID (const std::string &t);
+
+	/** */
+	const std::string& getTestID () const;
+
+	/** Get the instruction counter. */
+	int getInstCounter () const;
+
+	/** Increment the instruction counter. */
+	void incInstCounter ();
+
+	/** Reset the instruction counter */
+	void resetInstCounter ();
 
 	/** Get whether the Cpu is halted or not. */
 	bool getHalt ();

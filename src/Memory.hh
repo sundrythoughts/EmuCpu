@@ -44,7 +44,7 @@ public:
 	/** */
 	Memory ();
 
-	/** */
+	/** Set the memory to its default state. */
 	void reset ();
 
 	/**

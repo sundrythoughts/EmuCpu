@@ -138,6 +138,8 @@ ProxyLayer::connectUiSignalsToCpuSlots (Sim86Window &win, Cpu &cpu) {
 	                  &cpu, SLOT(loadFile (QString, bool)));
 	QObject::connect (&win, SIGNAL(setSpeed (int)),
 	                  &cpu, SLOT(setSpeed (int)));
+	QObject::connect (&win, SIGNAL(enableDatabase (bool)),
+	                  &cpu, SLOT(enableDatabase (bool)));
 
 	QObject::connect (&win.getMemoryWidget (), SIGNAL(enableDisable (bool)),
 	                  &m_mem_s_s, SLOT(enableDisable (bool)));
@@ -151,8 +153,6 @@ ProxyLayer::connectUiSignalsToCpuSlots (Sim86Window &win, Cpu &cpu) {
 	                  &m_sreg_s_s, SLOT(enableDisable (bool)));
 	QObject::connect (&win.getStackWidget (), SIGNAL(enableDisable (bool)),
 	                  &m_stack_s_s, SLOT(enableDisable (bool)));
-	QObject::connect (&win.getTerminalWidget (), SIGNAL(enableDisable (bool)),
-	                  &m_terminal_s_s, SLOT(enableDisable (bool)));
 	QObject::connect (&win.getTerminalWidget (), SIGNAL(terminalOutput (char)),
 	                  &m_terminal_s_s, SLOT(terminalOutput (char)));
 

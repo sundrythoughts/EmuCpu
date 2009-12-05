@@ -39,19 +39,19 @@ public:
 	/** */
 	~OperandList ();
 
-	/** */
+	/** Get the operand size: false for 8-bit, true for 16-bit. */
 	bool operandSize () const;
 
-	/** */
+	/** Set the operand size: false for 8-bit, true for 16-bit. */
 	void setOperandSize (bool s);
 
-	/** */
+	/** Get the source operand. */
 	NumberWrapper& src ();
 
-	/** */
+	/** Get the destination operand. */
 	NumberWrapper& dest ();
 
-	/** */
+	/** Set the operand list to its default state. */
 	void reset ();
 };
 

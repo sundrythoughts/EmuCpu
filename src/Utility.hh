@@ -72,6 +72,7 @@ public:
 	*/
 	template<typename T>
 	static void clearBit (T &val, unsigned int n);
+
 }; //end class Utility
 
 template<typename T>

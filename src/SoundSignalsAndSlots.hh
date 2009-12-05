@@ -35,15 +35,15 @@ class SoundSignalsAndSlots : public QObject {
 	Q_OBJECT
 
 public:
-	/** Sigc++ slot called when a sound is played. */
+	/** @brief Sigc++ slot called when a sound is played. */
 	void sigcSlotPlaySound (unsigned short freq, unsigned short duration);
 
 public Q_SLOTS:
-	/** Enable/disable the sound. */
+	/** @brief Enable/disable the sound. */
 	void enableDisable (bool b);
 
 Q_SIGNALS:
-	/** Qt signal called when a sound is played. */
+	/** @brief Qt signal called when a sound is played. */
 	void playSound (unsigned short freq, unsigned short duration);
 
 }; //end class SoundSignalsAndSlots

@@ -50,7 +50,7 @@ public:
 	*/
 	void play (float freq, size_t duration);
 
-	/** Stop the underlying system. */
+	/** @brief Stop the underlying system. */
 	void stop ();
 };
 

@@ -122,12 +122,12 @@ public:
 		*m_num = r;
 	}
 
-	/** Signal activated when Register value is changed */
+	/** @brief Signal activated when Register value is changed */
 	sigc::signal<void, T>& signalValueChanged () {
 		return m_signal_value_changed;
 	}
 
-	/** Signal activated when Register value is changed */
+	/** @brief Signal activated when Register value is changed */
 	sigc::signal<void>& signalEmitSignalValueChanged () {
 		return m_signal_emit_signal_value_changed;
 	}
@@ -137,12 +137,12 @@ public:
 		m_signal_value_changed.emit (*m_num);
 	}
 
-	/** Implicit cast to stored value */
+	/** @brief Implicit cast to stored value */
 	virtual operator const T& () const {
 		return *m_num;
 	}
 
-	/** Get the stored value */
+	/** @brief Get the stored value */
 	virtual const T& getValue () const {
 		return *m_num;
 	}

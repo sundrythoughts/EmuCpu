@@ -44,22 +44,22 @@ public:
 	/** */
 	~IOPorts ();
 
-	/** Create a connection to the CpuComponents. */
+	/** @brief Create a connection to the CpuComponents. */
 	void connectTo (CpuComponents &cpu);
 
-	/** Get the signalCharOutput signal. */
+	/** @brief Get the signalCharOutput signal. */
 	sigc::signal<void, char>& signalCharOutput ();
 
-	/** Get the signalSoundOutput signal. */
+	/** @brief Get the signalSoundOutput signal. */
 	sigc::signal<void, unsigned short, unsigned short> signalSoundOutput ();
 
-	/** Queue a character from the terminal. */
+	/** @brief Queue a character from the terminal. */
 	void charInput (char c);
 
-	/** Get the character queue. */
+	/** @brief Get the character queue. */
 	std::queue<char>& charInputQueue ();
 
-	/** Set everything back to its default state. */
+	/** @brief Set everything back to its default state. */
 	void reset ();
 
 private:

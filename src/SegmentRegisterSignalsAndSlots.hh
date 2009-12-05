@@ -35,43 +35,43 @@ class SegmentRegisterSignalsAndSlots : public QObject {
 	Q_OBJECT
 
 public:
-	/** Sigc++ slot called when CS is changed. */
+	/** @brief Sigc++ slot called when CS is changed. */
 	void sigcSlotValueChangedSRegCS (unsigned short i);
 
-	/** Sigc++ slot called when DS is changed. */
+	/** @brief Sigc++ slot called when DS is changed. */
 	void sigcSlotValueChangedSRegDS (unsigned short i);
 
-	/** Sigc++ slot called when ES is changed. */
+	/** @brief Sigc++ slot called when ES is changed. */
 	void sigcSlotValueChangedSRegES (unsigned short i);
 
-	/** Sigc++ slot called when SS is changed. */
+	/** @brief Sigc++ slot called when SS is changed. */
 	void sigcSlotValueChangedSRegSS (unsigned short i);
 
-	/** Sigc++ slot called when IP is changed. */
+	/** @brief Sigc++ slot called when IP is changed. */
 	void sigcSlotValueChangedRegIP (unsigned short i);
 
 public Q_SLOTS:
-	/** Enable/disable the segment registers. */
+	/** @brief Enable/disable the segment registers. */
 	void enableDisable (bool b);
 
 Q_SIGNALS:
 	//segment register signals
 
-	/** Qt signal emitted when CS is changed. */
+	/** @brief Qt signal emitted when CS is changed. */
 	void valueChangedSegRegCS (unsigned short i);
 
-	/** Qt signal emitted when DS is changed. */
+	/** @brief Qt signal emitted when DS is changed. */
 	void valueChangedSegRegDS (unsigned short i);
 
-	/** Qt signal emitted when ES is changed. */
+	/** @brief Qt signal emitted when ES is changed. */
 	void valueChangedSegRegES (unsigned short i);
 
-	/** Qt signal emitted when SS is changed. */
+	/** @brief Qt signal emitted when SS is changed. */
 	void valueChangedSegRegSS (unsigned short i);
 
 	//instruction pointer signals
 
-	/** Qt signal emitted when IP is changed. */
+	/** @brief Qt signal emitted when IP is changed. */
 	void valueChangedRegIP (unsigned short i);
 
 }; //end class SegmentRegisterSignalsAndSlots

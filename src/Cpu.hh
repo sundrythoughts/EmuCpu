@@ -59,58 +59,58 @@ public:
 	/** */
 	~Cpu ();
 
-	/** Get a reference to the ExecutionUnit. */
+	/** @brief Get a reference to the ExecutionUnit. */
 	ExecutionUnit& getExecutionUnit ();
 
-	/** Get a reference to the BusInterfaceUnit. */
+	/** @brief Get a reference to the BusInterfaceUnit. */
 	BusInterfaceUnit& getBusInterfaceUnit ();
 
-	/** Get a reference to the Memory. */
+	/** @brief Get a reference to the Memory. */
 	Memory& getMemory ();
 
-	/** Get a reference to the ArithmeticLogicUnit. */
+	/** @brief Get a reference to the ArithmeticLogicUnit. */
 	ArithmeticLogicUnit& getArithmeticLogicUnit ();
 
-	/** Get a reference to the InstructionDecoder. */
+	/** @brief Get a reference to the InstructionDecoder. */
 	InstructionDecoder& getInstructionDecoder ();
 
-	/** Get a reference to the Instruction. */
+	/** @brief Get a reference to the Instruction. */
 	Instruction& getInstruction ();
 
-	/** Get a reference to the Loader. */
+	/** @brief Get a reference to the Loader. */
 	Loader& getLoader ();
 
-	/** Get a reference to the IOPorts. */
+	/** @brief Get a reference to the IOPorts. */
 	IOPorts& getIOPorts ();
 
 protected:
 	//virtual override
-	/** Run the Cpu thread. */
+	/** @brief Run the Cpu thread. */
 	virtual void run ();
 
 public Q_SLOTS:
-	/** Run the Cpu. */
+	/** @brief Run the Cpu. */
 	void startCpu ();
 
-	/** Pause the Cpu. */
+	/** @brief Pause the Cpu. */
 	void pauseCpu ();
 
-	/** Reset the Cpu. */
+	/** @brief Reset the Cpu. */
 	void resetCpu ();
 
-	/** Single-step the Cpu. */
+	/** @brief Single-step the Cpu. */
 	void singleStepCpu ();
 
-	/** Shutdown the Cpu. */
+	/** @brief Shutdown the Cpu. */
 	void shutdownCpu ();
 
-	/** Load a new file to execute. */
+	/** @brief Load a new file to execute. */
 	void loadFile (QString file_name, bool load_sim86os);
 
-	/** Change the delay between execution of instructions. */
+	/** @brief Change the delay between execution of instructions. */
 	void setSpeed (int);
 
-	/** */
+	/** @brief Enable/disable the database connection. */
 	void enableDatabase (bool b);
 
 }; //end class Cpu

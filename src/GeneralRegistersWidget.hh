@@ -50,28 +50,28 @@ public Q_SLOTS:
 	/** */
 	void enableDisableToggle (bool b);
 
-	/** Set register AX. */
+	/** @brief Set register AX. */
 	void setRegAX (unsigned short i);
 
-	/** Set register BX. */
+	/** @brief Set register BX. */
 	void setRegBX (unsigned short i);
 
-	/** Set register CX. */
+	/** @brief Set register CX. */
 	void setRegCX (unsigned short i);
 
-	/** Set register DX. */
+	/** @brief Set register DX. */
 	void setRegDX (unsigned short i);
 
-	/** Set register SI. */
+	/** @brief Set register SI. */
 	void setRegSI (unsigned short i);
 
-	/** Set register DI. */
+	/** @brief Set register DI. */
 	void setRegDI (unsigned short i);
 
-	/** Set register BP. */
+	/** @brief Set register BP. */
 	void setRegBP (unsigned short i);
 
-	/** Set register SP. */
+	/** @brief Set register SP. */
 	void setRegSP (unsigned short i);
 
 Q_SIGNALS:

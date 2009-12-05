@@ -70,7 +70,7 @@ public:
 	/** */
 	~Loader ();
 
-	/** Create a connection to the CpuComponents. */
+	/** @brief Create a connection to the CpuComponents. */
 	void connectTo (CpuComponents &cpu);
 
 	/**
@@ -81,10 +81,10 @@ public:
 	*/
 	bool loadFile (std::string filename, bool clear = false);
 
-	/** Return the checksum of the memory. */
+	/** @brief Return the checksum of the memory. */
 	int checksumMemory ();
 
-	/** Return the checksum of the registers. */
+	/** @brief Return the checksum of the registers. */
 	int checksumRegisters ();
 
 }; //end class Loader

@@ -61,7 +61,7 @@ public:
 	ProxyLayer () {
 	}
 
-	/** Connect the signals and slots between the Cpu and Sim86Window. */
+	/** @brief Connect the signals and slots between the Cpu and Sim86Window. */
 	void connectCpuAndUi (Cpu &cpu, Sim86Window &win);
 
 private:

@@ -96,12 +96,12 @@ private:
 	}
 
 public:
-	/** Implicit cast to stored value. */
+	/** @brief Implicit cast to stored value. */
 	virtual operator const T& () const {
 		return *m_num;
 	}
 
-	/** Get the stored value. */
+	/** @brief Get the stored value. */
 	virtual const T& getValue () const {
 		return *m_num;
 	}

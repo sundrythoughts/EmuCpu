@@ -63,28 +63,28 @@ public:
 	/** */
 	Sim86Window (QWidget *parent = 0);
 
-	/** Get the FlagsWidget. */
+	/** @brief Get the FlagsWidget. */
 	FlagsWidget& getFlagsWidget ();
 
-	/** Get the GeneralRegistersWidget. */
+	/** @brief Get the GeneralRegistersWidget. */
 	GeneralRegistersWidget& getGeneralRegistersWidget ();
 
-	/** Get the SegmentRegisterWidget. */
+	/** @brief Get the SegmentRegisterWidget. */
 	SegmentRegistersWidget& getSegmentRegistersWidget ();
 
-	/** Get the StackWidget. */
+	/** @brief Get the StackWidget. */
 	StackWidget& getStackWidget ();
 
-	/** Get the DisassemblyWidget. */
+	/** @brief Get the DisassemblyWidget. */
 	DisassemblyWidget& getDisassemblyWidget ();
 
-	/** Get the MemoryWidget. */
+	/** @brief Get the MemoryWidget. */
 	MemoryWidget& getMemoryWidget ();
 
-	/** Get the TerminalWidget. */
+	/** @brief Get the TerminalWidget. */
 	TerminalWidget& getTerminalWidget ();
 
-	/** Get the SoundWidget. */
+	/** @brief Get the SoundWidget. */
 	SoundWidget& getSoundWidget ();
 
 private Q_SLOTS:
@@ -101,25 +101,25 @@ private Q_SLOTS:
 	void resetUi ();
 
 Q_SIGNALS:
-	/** Run the Cpu. */
+	/** @brief Run the Cpu. */
 	void startCpu ();
 
-	/** Reset the Cpu. */
+	/** @brief Reset the Cpu. */
 	void resetCpu ();
 
-	/** Pause the Cpu. */
+	/** @brief Pause the Cpu. */
 	void pauseCpu ();
 
-	/** Single-step the Cpu. */
+	/** @brief Single-step the Cpu. */
 	void singleStepCpu ();
 
-	/** Load a new executable and maybe load Sim86OS. */
+	/** @brief Load a new executable and maybe load Sim86OS. */
 	void loadFile (QString file_name, bool load_sim86os);
 
-	/** Set the execution speed of the Cpu. */
+	/** @brief Set the execution speed of the Cpu. */
 	void setSpeed (int i);
 
-	/** Enable/disable the database testing. */
+	/** @brief Enable/disable the database testing. */
 	void enableDatabase (bool b);
 
 }; //end class Sim86Window

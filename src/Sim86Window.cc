@@ -39,7 +39,7 @@ Sim86Window::Sim86Window (QWidget *parent) : QMainWindow (parent) {
 	m_hbox_devices->addWidget (&m_terminal_widget);
 	m_hbox_devices->addWidget (&m_sound_widget);
 
-	m_file_widget = new QFileDialog (this, tr("Load executable..."), "", tr("Executables(*.obj);;All Files(*.*)"));
+	m_file_widget = new QFileDialog (this, tr("Load executable..."), "TEST8086", tr("Executables(*.obj);;All Files(*.*)"));
 	m_file_widget->setFileMode (QFileDialog::ExistingFile);
 
 	//add actions

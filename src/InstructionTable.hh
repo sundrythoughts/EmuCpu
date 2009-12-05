@@ -35,27 +35,27 @@
 */
 class InstructionTableItem {
 public:
-	/** Human readable instruction name. */
+	/** @brief Human readable instruction name. */
 	const char *mnemonic;
 
-	/** Does the instruction have a ModRM byte or not. */
+	/** @brief Does the instruction have a ModRM byte or not. */
 	bool has_modrm;
 
-	/** The InstructionGroups index of the instruction. */
+	/** @brief The InstructionGroups index of the instruction. */
 	unsigned int group;
 
-	/** Function pointer to the decode function. */
+	/** @brief Function pointer to the decode function. */
 	void (InstructionDecoder::*decode_func) ();
 
-	/** Function pointer to the execute function. */
+	/** @brief Function pointer to the execute function. */
 	void (ExecutionUnit::*execute_func) ();
 
-	/** Decode instruction. */
+	/** @brief Decode instruction. */
 	void decode (InstructionDecoder &id) const {
 		(id.*decode_func) ();
 	}
 
-	/** Execute instruction. */
+	/** @brief Execute instruction. */
 	void execute (ExecutionUnit &eu) const {
 		(eu.*execute_func) ();
 	}
@@ -72,7 +72,7 @@ class InstructionTable {
 	static const InstructionTableItem one_byte_opcode_instruction_map[256];
 
 public:
-	/** Indexes for the row of the secondary opcode table. */
+	/** @brief Indexes for the row of the secondary opcode table. */
 	enum {
 		GROUP_0 = 0,
 		GROUP_1,

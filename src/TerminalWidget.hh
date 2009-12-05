@@ -43,15 +43,15 @@ public:
 	/** */
 	TerminalWidget (QWidget *parent = 0);
 
-	/** Set the widget back to its default state. */
+	/** @brief Set the widget back to its default state. */
 	void reset ();
 
 public Q_SLOTS:
-	/** Write a character onto the terminal. */
+	/** @brief Write a character onto the terminal. */
 	void terminalInput (char c);
 
 Q_SIGNALS:
-	/** Character read from the terminal. */
+	/** @brief Character read from the terminal. */
 	void terminalOutput (char c);
 
 }; //end class TerminalWidget

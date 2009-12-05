@@ -16,6 +16,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/** @mainpage
+@author Joseph Freeman
+
+Sim8086 is an Intel 8086 emulator. It implements a large subgroup of the 8086 capabilities including interrupts and 'I/O'.
+
+*/
+
 
 #include "Cpu.hh"
 #include "Sim86Window.hh"

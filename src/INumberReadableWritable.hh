@@ -38,16 +38,16 @@ public:
 	virtual ~INumberReadableWritable () {
 	}
 
-	/** Implicit cast to stored value */
+	/** @brief Implicit cast to stored value */
 	virtual operator const T& () const = 0;
 
-	/** Get the stored value */
+	/** @brief Get the stored value */
 	virtual const T& getValue () const = 0;
 
-	/** Get the segment. */
+	/** @brief Get the segment. */
 	virtual unsigned short getSegment () const = 0;
 
-	/** Get the offset. */
+	/** @brief Get the offset. */
 	virtual unsigned short getOffset () const = 0;
 
 	/** */

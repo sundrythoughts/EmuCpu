@@ -63,52 +63,52 @@ public:
 	/** */
 	~CpuComponents ();
 
-	/** Get a reference to the ExecutionUnit. */
+	/** @brief Get a reference to the ExecutionUnit. */
 	ExecutionUnit& getExecutionUnit ();
 
-	/** Get a reference to the BusInterfaceUnit. */
+	/** @brief Get a reference to the BusInterfaceUnit. */
 	BusInterfaceUnit& getBusInterfaceUnit ();
 
-	/** Get a reference to the Memory. */
+	/** @brief Get a reference to the Memory. */
 	Memory& getMemory ();
 
-	/** Get a reference to the ArithmeticLogicUnit. */
+	/** @brief Get a reference to the ArithmeticLogicUnit. */
 	ArithmeticLogicUnit& getArithmeticLogicUnit ();
 
-	/** Get a reference to the InstructionDecoder. */
+	/** @brief Get a reference to the InstructionDecoder. */
 	InstructionDecoder& getInstructionDecoder ();
 
-	/** Get a reference to the Instruction. */
+	/** @brief Get a reference to the Instruction. */
 	Instruction& getInstruction ();
 
-	/** Get a reference to the Loader. */
+	/** @brief Get a reference to the Loader. */
 	Loader& getLoader ();
 
-	/** Get a reference to the IOPorts. */
+	/** @brief Get a reference to the IOPorts. */
 	IOPorts& getIOPorts ();
 
-	/** Get a reference to the ToneGenerator. */
+	/** @brief Get a reference to the ToneGenerator. */
 	ToneGenerator& getToneGenerator ();
 
-	/** */
+	/** @brief Get a reference to the DatabaseTester. */
 	DatabaseTester& getDatabaseTester ();
 
-	/** */
+	/** @brief Set the name of the current executable. */
 	void setTestID (const std::string &t);
 
-	/** */
+	/** @brief Get the name of the current executable. */
 	const std::string& getTestID () const;
 
-	/** Get the instruction counter. */
+	/** @brief Get the instruction counter. */
 	int getInstCounter () const;
 
-	/** Increment the instruction counter. */
+	/** @brief Increment the instruction counter. */
 	void incInstCounter ();
 
-	/** Reset the instruction counter */
+	/** @brief Reset the instruction counter. */
 	void resetInstCounter ();
 
-	/** Get whether the Cpu is halted or not. */
+	/** @brief Get whether the Cpu is halted or not. */
 	bool getHalt ();
 
 	/**
@@ -117,7 +117,7 @@ public:
 	*/
 	void setHalt (bool b);
 
-	/** FIXME */
+	/** @brief FIXME */
 	void reset ();
 
 }; //end class CpuComponents

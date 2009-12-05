@@ -49,484 +49,484 @@ public:
 	/** */
 	~ExecutionUnit ();
 
-	/** Create a connection to the CpuComponents. */
+	/** @brief Create a connection to the CpuComponents. */
 	void connectTo (CpuComponents &cpu);
 
-	/** Sigc++ signal emitted when data is pushed on the stack. */
+	/** @brief Sigc++ signal emitted when data is pushed on the stack. */
 	sigc::signal<void, unsigned short, unsigned short, unsigned short>& signalStackPush ();
 
-	/** Sigc++ signal emitted when data is popped off the stack. */
+	/** @brief Sigc++ signal emitted when data is popped off the stack. */
 	sigc::signal<void>& signalStackPop ();
 
-	/** Reset the ExecutionUnit. */
+	/** @brief Reset the ExecutionUnit. */
 	void reset ();
 
-	/** Get an 8-bit register given its RegisterIndex8 index. */
+	/** @brief Get an 8-bit register given its RegisterIndex8 index. */
 	Register<unsigned char>& getReg8 (size_t index);
 
-	/** Set an 8-bit register given its RegisterIndex8 index. */
+	/** @brief Set an 8-bit register given its RegisterIndex8 index. */
 	void setReg8 (size_t index, unsigned char val);
 
-	/** Get a 16-bit register given its RegisterIndex16 index. */
+	/** @brief Get a 16-bit register given its RegisterIndex16 index. */
 	Register<unsigned short>& getReg16 (size_t index);
 
-	/** Set a 16-bit register given its RegisterIndex16 index. */
+	/** @brief Set a 16-bit register given its RegisterIndex16 index. */
 	void setReg16 (size_t index, unsigned short val);
 
-	/** Get register AX. */
+	/** @brief Get register AX. */
 	Register<unsigned short>& getRegAX ();
 
-	/** Set register AX. */
+	/** @brief Set register AX. */
 	void setRegAX (unsigned short val);
 
-	/** Get register AH. */
+	/** @brief Get register AH. */
 	Register<unsigned char>& getRegAH ();
 
-	/** Set register AH. */
+	/** @brief Set register AH. */
 	void setRegAH (unsigned char val);
 
-	/** Get register AL. */
+	/** @brief Get register AL. */
 	Register<unsigned char>& getRegAL ();
 
-	/** Set register AL. */
+	/** @brief Set register AL. */
 	void setRegAL (unsigned char val);
 
-	/** Get register BX. */
+	/** @brief Get register BX. */
 	Register<unsigned short>& getRegBX ();
 
-	/** Set register BX. */
+	/** @brief Set register BX. */
 	void setRegBX (unsigned short val);
 
-	/** Get register BH. */
+	/** @brief Get register BH. */
 	Register<unsigned char>& getRegBH ();
 
-	/** Set register BH. */
+	/** @brief Set register BH. */
 	void setRegBH (unsigned char val);
 
-	/** Get register BL. */
+	/** @brief Get register BL. */
 	Register<unsigned char>& getRegBL ();
 
-	/** Set register BL. */
+	/** @brief Set register BL. */
 	void setRegBL (unsigned char val);
 
-	/** Get register CX. */
+	/** @brief Get register CX. */
 	Register<unsigned short>& getRegCX ();
 
-	/** Set register CX. */
+	/** @brief Set register CX. */
 	void setRegCX (unsigned short val);
 
-	/** Get register CH. */
+	/** @brief Get register CH. */
 	Register<unsigned char>& getRegCH ();
 
-	/** Set register CH. */
+	/** @brief Set register CH. */
 	void setRegCH (unsigned char val);
 
-	/** Get register CL. */
+	/** @brief Get register CL. */
 	Register<unsigned char>& getRegCL ();
 
-	/** Set register CL. */
+	/** @brief Set register CL. */
 	void setRegCL (unsigned char val);
 
-	/** Get register DX. */
+	/** @brief Get register DX. */
 	Register<unsigned short>& getRegDX ();
 
-	/** Set register DX. */
+	/** @brief Set register DX. */
 	void setRegDX (unsigned short val);
 
-	/** Get register DH. */
+	/** @brief Get register DH. */
 	Register<unsigned char>& getRegDH ();
 
-	/** Set register DH. */
+	/** @brief Set register DH. */
 	void setRegDH (unsigned char val);
 
-	/** Get register DL. */
+	/** @brief Get register DL. */
 	Register<unsigned char>& getRegDL ();
 
-	/** Set register DL. */
+	/** @brief Set register DL. */
 	void setRegDL (unsigned char val);
 
-	/** Get register DI. */
+	/** @brief Get register DI. */
 	Register<unsigned short>& getRegDI ();
 
-	/** Set register DI. */
+	/** @brief Set register DI. */
 	void setRegDI (unsigned short val);
 
-	/** Get register SI. */
+	/** @brief Get register SI. */
 	Register<unsigned short>& getRegSI ();
 
-	/** Set register SI. */
+	/** @brief Set register SI. */
 	void setRegSI (unsigned short val);
 
-	/** Get register BP. */
+	/** @brief Get register BP. */
 	Register<unsigned short>& getRegBP ();
 
-	/** Set register BP. */
+	/** @brief Set register BP. */
 	void setRegBP (unsigned short val);
 
-	/** Get register SP. */
+	/** @brief Get register SP. */
 	Register<unsigned short>& getRegSP ();
 
-	/** Set register SP. */
+	/** @brief Set register SP. */
 	void setRegSP (unsigned short val);
 
-	/** Reset the Flags register to a particular value. */
+	/** @brief Reset the Flags register to a particular value. */
 	void resetRegFlags (unsigned short val = 2);
 
-	/** Get register FLAGS. */
+	/** @brief Get register FLAGS. */
 	Register<unsigned short>& getRegFlags ();
 
-	/** Set register FLAGS. */
+	/** @brief Set register FLAGS. */
 	void setRegFlags (unsigned short val);
 
-	/** Get register FLAGS AF. */
+	/** @brief Get register FLAGS AF. */
 	bool getRegFlagsAF () const;
 
-	/** Set register FLAGS AF. */
+	/** @brief Set register FLAGS AF. */
 	void setRegFlagsAF (bool val);
 
-	/** Get register FLAGS CF. */
+	/** @brief Get register FLAGS CF. */
 	bool getRegFlagsCF () const;
 
-	/** Set register FLAGS CF. */
+	/** @brief Set register FLAGS CF. */
 	void setRegFlagsCF (bool val);
 
-	/** Get register FLAGS DF. */
+	/** @brief Get register FLAGS DF. */
 	bool getRegFlagsDF () const;
 
-	/** Set register FLAGS DF. */
+	/** @brief Set register FLAGS DF. */
 	void setRegFlagsDF (bool val);
 
-	/** Get register FLAGS IF. */
+	/** @brief Get register FLAGS IF. */
 	bool getRegFlagsIF () const;
 
-	/** Set register FLAGS IF. */
+	/** @brief Set register FLAGS IF. */
 	void setRegFlagsIF (bool val);
 
-	/** Get register FLAGS OF. */
+	/** @brief Get register FLAGS OF. */
 	bool getRegFlagsOF () const;
 
-	/** Set register FLAGS OF. */
+	/** @brief Set register FLAGS OF. */
 	void setRegFlagsOF (bool val);
 
-	/** Get register FLAGS PF. */
+	/** @brief Get register FLAGS PF. */
 	bool getRegFlagsPF () const;
 
-	/** Set register FLAGS PF. */
+	/** @brief Set register FLAGS PF. */
 	void setRegFlagsPF (bool val);
 
-	/** Get register FLAGS SF. */
+	/** @brief Get register FLAGS SF. */
 	bool getRegFlagsSF () const;
 
-	/** Set register FLAGS SF. */
+	/** @brief Set register FLAGS SF. */
 	void setRegFlagsSF (bool val);
 
-	/** Get register FLAGS TF. */
+	/** @brief Get register FLAGS TF. */
 	bool getRegFlagsTF () const;
 
-	/** Set register FLAGS TF. */
+	/** @brief Set register FLAGS TF. */
 	void setRegFlagsTF (bool val);
 
-	/** Get register FLAGS ZF. */
+	/** @brief Get register FLAGS ZF. */
 	bool getRegFlagsZF () const;
 
-	/** Set register FLAGS ZF. */
+	/** @brief Set register FLAGS ZF. */
 	void setRegFlagsZF (bool val);
 
-	/** Executed when an opcode is reserved. */
+	/** @brief Executed when an opcode is reserved. */
 	void execNotImplemented ();
 
-	/** UNIMPLEMENTED */
+	/** @brief UNIMPLEMENTED */
 	void execAAA ();
 
-	/** UNIMPLEMENTED */
+	/** @brief UNIMPLEMENTED */
 	void execAAD ();
 
-	/** UNIMPLEMENTED */
+	/** @brief UNIMPLEMENTED */
 	void execAAM ();
 
-	/** UNIMPLEMENTED */
+	/** @brief UNIMPLEMENTED */
 	void execAAS ();
 
-	/** Add with carry. */
+	/** @brief Add with carry. */
 	void execADC ();
 
-	/** Add. */
+	/** @brief Add. */
 	void execADD ();
 
-	/** And. */
+	/** @brief And. */
 	void execAND ();
 
-	/** Call near. */
+	/** @brief Call near. */
 	void execCALL ();
 
-	/** Call far. */
+	/** @brief Call far. */
 	void execCALLFAR ();
 
-	/** Convert byte to word. */
+	/** @brief Convert byte to word. */
 	void execCBW ();
 
-	/** Clear carry flag. */
+	/** @brief Clear carry flag. */
 	void execCLC ();
 
-	/** Clear direction flag. */
+	/** @brief Clear direction flag. */
 	void execCLD ();
 
-	/** Clear interrupt flag. */
+	/** @brief Clear interrupt flag. */
 	void execCLI ();
 
-	/** Complement carry flag. */
+	/** @brief Complement carry flag. */
 	void execCMC ();
 
-	/** Compare. */
+	/** @brief Compare. */
 	void execCMP ();
 
-	/** UNIMPLEMENTED */
+	/** @brief UNIMPLEMENTED */
 	void execCMPS ();
 
-	/** Convert word to double word. */
+	/** @brief Convert word to double word. */
 	void execCWD ();
 
-	/** UNIMPLEMENTED */
+	/** @brief UNIMPLEMENTED */
 	void execDAA ();
 
-	/** UNIMPLEMENTED */
+	/** @brief UNIMPLEMENTED */
 	void execDAS ();
 
-	/** Decrement. */
+	/** @brief Decrement. */
 	void execDEC ();
 
-	/** Divide. */
+	/** @brief Divide. */
 	void execDIV ();
 
-	/** UNIMPLEMENTED */
+	/** @brief UNIMPLEMENTED */
 	void execESC ();
 
-	/** Halt. */
+	/** @brief Halt. */
 	void execHLT ();
 
-	/** UNIMPLEMENTED */
+	/** @brief UNIMPLEMENTED */
 	void execIDIV ();
 
-	/** UNIMPLEMENTED */
+	/** @brief UNIMPLEMENTED */
 	void execIMUL ();
 
-	/** Input a byte/word from a port. */
+	/** @brief Input a byte/word from a port. */
 	void execIN ();
 
-	/** Increment. */
+	/** @brief Increment. */
 	void execINC ();
 
-	/** */
+	/** @brief Interrupt. */
 	void execINT ();
 
-	/** */
+	/** @brief Interrupt on overflow.  */
 	void execINTO ();
 
-	/** */
+	/** @brief Interrupt return. */
 	void execIRET ();
 
-	/** Jump on not above. */
+	/** @brief Jump on not above. */
 	void execJNA ();
 
-	/** Jump on not above or equal to. */
+	/** @brief Jump on not above or equal to. */
 	void execJNAE ();
 
-	/** Jump on not below. */
+	/** @brief Jump on not below. */
 	void execJNB ();
 
-	/** Jump on not below or equal to. */
+	/** @brief Jump on not below or equal to. */
 	void execJNBE ();
 
-	/** Jump on carry. */
+	/** @brief Jump on carry. */
 	void execJC ();
 
-	/** Jump on CX equal to zero. */
+	/** @brief Jump on CX equal to zero. */
 	void execJCXZ ();
 
-	/** Jump on equal to. */
+	/** @brief Jump on equal to. */
 	void execJE ();
 
-	/** Jump on greater than. */
+	/** @brief Jump on greater than. */
 	void execJG ();
 
-	/** Jump on greater than or equal to. */
+	/** @brief Jump on greater than or equal to. */
 	void execJGE ();
 
-	/** Jump on less than. */
+	/** @brief Jump on less than. */
 	void execJL ();
 
-	/** Jump on less than or equal to. */
+	/** @brief Jump on less than or equal to. */
 	void execJLE ();
 
-	/** Unconditional jump near. */
+	/** @brief Unconditional jump near. */
 	void execJMP ();
 
-	/** Unconditional jump short. */
+	/** @brief Unconditional jump short. */
 	void execJMPSHORT ();
 
-	/** Unconditional jump far. */
+	/** @brief Unconditional jump far. */
 	void execJMPFAR ();
 
-	/** Jump on not carry. */
+	/** @brief Jump on not carry. */
 	void execJNC ();
 
-	/** Jump on not equal to. */
+	/** @brief Jump on not equal to. */
 	void execJNE ();
 
-	/** Jump on not overflow. */
+	/** @brief Jump on not overflow. */
 	void execJNO ();
 
-	/** Jump on not sign. */
+	/** @brief Jump on not sign. */
 	void execJNS ();
 
-	/** Jump on not parity. */
+	/** @brief Jump on not parity. */
 	void execJNP ();
 
-	/** Jump on overflow. */
+	/** @brief Jump on overflow. */
 	void execJO ();
 
-	/** Jump on parity equal. */
+	/** @brief Jump on parity equal. */
 	void execJPE ();
 
-	/** Jump on sign. */
+	/** @brief Jump on sign. */
 	void execJS ();
 
-	/** Load register AH from register FLAGS. */
+	/** @brief Load register AH from register FLAGS. */
 	void execLAHF ();
 
-	/** UNIMPLEMENTED */
+	/** @brief UNIMPLEMENTED */
 	void execLDS ();
 
-	/** Load effective address. */
+	/** @brief Load effective address. */
 	void execLEA ();
 
-	/** UNIMPLEMENTED */
+	/** @brief UNIMPLEMENTED */
 	void execLES ();
 
-	/** UNIMPLEMENTED */
+	/** @brief UNIMPLEMENTED */
 	void execLOCK ();
 
-	/** UNIMPLEMENTED */
+	/** @brief UNIMPLEMENTED */
 	void execLODS ();
 
-	/** Loop. */
+	/** @brief Loop. */
 	void execLOOP ();
 
-	/** Loop while equal. */
+	/** @brief Loop while equal. */
 	void execLOOPE ();
 
-	/** Loop while not equal. */
+	/** @brief Loop while not equal. */
 	void execLOOPNE ();
 
-	/** Mov byte/word to/from memory. */
+	/** @brief Mov byte/word to/from memory. */
 	void execMOV ();
 
-	/** UNIMPLEMENTED */
+	/** @brief UNIMPLEMENTED */
 	void execMOVS ();
 
-	/** Multiply. */
+	/** @brief Multiply. */
 	void execMUL ();
 
-	/** Negate (two's complement). */
+	/** @brief Negate (two's complement). */
 	void execNEG ();
 
-	/** No operation. */
+	/** @brief No operation. */
 	void execNOP ();
 
-	/** Logical not (one's complement). */
+	/** @brief Logical not (one's complement). */
 	void execNOT ();
 
-	/** Logical or. */
+	/** @brief Logical or. */
 	void execOR ();
 
-	/** Output a byte/word to a port. */
+	/** @brief Output a byte/word to a port. */
 	void execOUT ();
 
-	/** Pop from stack. */
+	/** @brief Pop from stack. */
 	void execPOP ();
 
-	/** Pop from stack into FLAGS register. */
+	/** @brief Pop from stack into FLAGS register. */
 	void execPOPF ();
 
-	/** Push to stack. */
+	/** @brief Push to stack. */
 	void execPUSH ();
 
-	/** Push FLAGS register to stack. */
+	/** @brief Push FLAGS register to stack. */
 	void execPUSHF ();
 
-	/** Rotate carry left. */
+	/** @brief Rotate carry left. */
 	void execRCL ();
 
-	/** Rotate carry right. */
+	/** @brief Rotate carry right. */
 	void execRCR ();
 
-	/** UNIMPLEMENTED */
+	/** @brief UNIMPLEMENTED */
 	void execREP ();
 
-	/** UNIMPLEMENTED */
+	/** @brief UNIMPLEMENTED */
 	void execREPNE ();
 
-	/** Return near. */
+	/** @brief Return near. */
 	void execRET ();
 
-	/** Return far. */
+	/** @brief Return far. */
 	void execRETFAR ();
 
-	/** Rotate left. */
+	/** @brief Rotate left. */
 	void execROL ();
 
-	/** Rotate right. */
+	/** @brief Rotate right. */
 	void execROR ();
 
-	/** Store register AH into register FLAGS. */
+	/** @brief Store register AH into register FLAGS. */
 	void execSAHF ();
 
-	/** Shift left. */
+	/** @brief Shift left. */
 	void execSHL ();
 
-	/** Shift arithmetic right. */
+	/** @brief Shift arithmetic right. */
 	void execSAR ();
 
-	/** Subtract with borrow. */
+	/** @brief Subtract with borrow. */
 	void execSBB ();
 
-	/** UNIMPLEMENTED */
+	/** @brief UNIMPLEMENTED */
 	void execSCAS ();
 
-	/** Do a segment override. */
+	/** @brief Do a segment override. */
 	void execSEG ();
 
-	/** Shift right. */
+	/** @brief Shift right. */
 	void execSHR ();
 
-	/** Set carry flag. */
+	/** @brief Set carry flag. */
 	void execSTC ();
 
-	/** Set direction flag. */
+	/** @brief Set direction flag. */
 	void execSTD ();
 
-	/** Set interrupt flag. */
+	/** @brief Set interrupt flag. */
 	void execSTI ();
 
-	/** UNIMPLEMENTED */
+	/** @brief UNIMPLEMENTED */
 	void execSTOS ();
 
-	/** Subtract. */
+	/** @brief Subtract. */
 	void execSUB ();
 
-	/** Test. */
+	/** @brief Test. */
 	void execTEST ();
 
-	/** UNIMPLEMENTED */
+	/** @brief UNIMPLEMENTED */
 	void execWAIT ();
 
-	/** Exchange. */
+	/** @brief Exchange. */
 	void execXCHG ();
 
-	/** UNIMPLEMENTED */
+	/** @brief Xlat. */
 	void execXLAT ();
 
-	/** Xor. */
+	/** @brief Xor. */
 	void execXOR ();
 
 private:

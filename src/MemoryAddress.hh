@@ -49,24 +49,24 @@ public:
 		m_phys_addr += offset;
 	}
 
-	/** Implicit cast to stored value. */
+	/** @brief Implicit cast to stored value. */
 	virtual operator const T& () const {
 		read ();
 		return m_num;
 	}
 
-	/** Get the stored value. */
+	/** @brief Get the stored value. */
 	virtual const T& getValue () const {
 		read ();
 		return m_num;
 	}
 
-	/** Get segment. */
+	/** @brief Get segment. */
 	virtual unsigned short getSegment () const {
 		return m_seg;
 	}
 
-	/** Get offset. */
+	/** @brief Get offset. */
 	virtual unsigned short getOffset () const {
 		return m_offset;
 	}

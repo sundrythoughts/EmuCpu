@@ -1288,6 +1288,12 @@ ExecutionUnit::execXCHG () {
 }
 
 void
+ExecutionUnit::execXLAT () {
+	unsigned char c = p->m_biu->getMemoryData<unsigned char> (p->m_biu->getSegRegDS (), getRegBX () + getRegAL ());
+	setRegAL (c);
+}
+
+void
 ExecutionUnit::execXOR () {
 	OperandList &ops = p->m_inst->operands ();
 

@@ -16,6 +16,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/**
+@file DatabaseTester.hh
+@brief Connect to the database and execute test procedures.
+*/
+
 
 #ifndef JAF__DATABASE_TESTER_HH
 #define JAF__DATABASE_TESTER_HH
@@ -30,6 +35,10 @@ namespace syb {
 class CpuComponents;
 class DatabaseTesterPrivate;
 
+/**
+@class DatabaseTester
+@brief Connect to the database and execute test procedures.
+*/
 class DatabaseTester {
 	DatabaseTesterPrivate *p;
 
@@ -41,7 +50,7 @@ public:
 	virtual ~DatabaseTester ();
 
 public:
-	/** */
+	/** @brief Connect to CpuComponents. */
 	void connectTo (CpuComponents &cpu);
 
 	/**
@@ -54,10 +63,10 @@ public:
 	void connect (const QString &server = "css.cs.bju.edu", const QString &db = "sim86",
 	              const QString &uid = "sim86", const QString &pwd = "sim86fall2009");
 
-	/** Disconnect from the database. */
+	/** @brief Disconnect from the database. */
 	void disconnect ();
 
-	/** */
+	/** @brief Return true if database is connected, false otherwise. */
 	bool isConnected ();
 
 	/**
@@ -70,24 +79,25 @@ public:
 	void spChecksumsInsert (const QString &userid, const QString &testid, int regcksum, int ramcksum);
 
 	/**
+	@brief Execute the ExecInsert stored procedure on the database.
 	@param userid UserID nvarchar(50): Your login ID
 	@param testid TestID nvarchar(50): The name of the test routine being run (e.g. "test1.obj")
 	*/
 	void spExecInsert (const std::string &userid, const std::string &testid);
 
-	/** An error has occured. */
+	/** @brief An error has occured. */
 	void error (QString err);
 
-	/** Connecting to database. */
+	/** @brief Connecting to database. */
 	void connecting ();
 
-	/** Connection to database has been achieved. */
+	/** @brief Connection to database has been achieved. */
 	void connected ();
 
-	/** Disconnecting from database. */
+	/** @brief Disconnecting from database. */
 	void disconnecting ();
 
-	/** Connection to database has been terminated. */
+	/** @brief Connection to database has been terminated. */
 	void disconnected ();
 };
 

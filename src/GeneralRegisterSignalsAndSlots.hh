@@ -28,64 +28,64 @@
 #include <QObject>
 
 /**
-@class GeneralRegisterSignalsAndSlots.hh
+@class GeneralRegisterSignalsAndSlots
 @brief General register signal translation layer between Sigc++ and Qt.
 */
 class GeneralRegisterSignalsAndSlots : public QObject {
 	Q_OBJECT
 
 public:
-	/** Sigc++ -> QT translation slot for register AX. */
+	/** @brief Sigc++ -> QT translation slot for register AX. */
 	void sigcSlotValueChangedRegAX (unsigned short i);
 
-	/** Sigc++ -> QT translation slot for register BX. */
+	/** @brief Sigc++ -> QT translation slot for register BX. */
 	void sigcSlotValueChangedRegBX (unsigned short i);
 
-	/** Sigc++ -> QT translation slot for register CX. */
+	/** @brief Sigc++ -> QT translation slot for register CX. */
 	void sigcSlotValueChangedRegCX (unsigned short i);
 
-	/** Sigc++ -> QT translation slot for register DX. */
+	/** @brief Sigc++ -> QT translation slot for register DX. */
 	void sigcSlotValueChangedRegDX (unsigned short i);
 
-	/** Sigc++ -> QT translation slot for register SI. */
+	/** @brief Sigc++ -> QT translation slot for register SI. */
 	void sigcSlotValueChangedRegSI (unsigned short i);
 
-	/** Sigc++ -> QT translation slot for register DI. */
+	/** @brief Sigc++ -> QT translation slot for register DI. */
 	void sigcSlotValueChangedRegDI (unsigned short i);
 
-	/** Sigc++ -> QT translation slot for register BP. */
+	/** @brief Sigc++ -> QT translation slot for register BP. */
 	void sigcSlotValueChangedRegBP (unsigned short i);
 
-	/** Sigc++ -> QT translation slot for register SP. */
+	/** @brief Sigc++ -> QT translation slot for register SP. */
 	void sigcSlotValueChangedRegSP (unsigned short i);
 
 public Q_SLOTS:
-	/** */
+	/** @brief The widget has been enabled/disabled. */
 	void enableDisable (bool b);
 
 Q_SIGNALS:
-	/** QT signal for register AX. */
+	/** @brief QT signal for register AX. */
 	void valueChangedRegAX (unsigned short i);
 
-	/** QT signal for register BX. */
+	/** @brief QT signal for register BX. */
 	void valueChangedRegBX (unsigned short i);
 
-	/** QT signal for register CX. */
+	/** @brief QT signal for register CX. */
 	void valueChangedRegCX (unsigned short i);
 
-	/** QT signal for register DX. */
+	/** @brief QT signal for register DX. */
 	void valueChangedRegDX (unsigned short i);
 
-	/** QT signal for register SI. */
+	/** @brief QT signal for register SI. */
 	void valueChangedRegSI (unsigned short i);
 
-	/** QT signal for register DI. */
+	/** @brief QT signal for register DI. */
 	void valueChangedRegDI (unsigned short i);
 
-	/** QT signal for register BP. */
+	/** @brief QT signal for register BP. */
 	void valueChangedRegBP (unsigned short i);
 
-	/** QT signal for register SP. */
+	/** @brief QT signal for register SP. */
 	void valueChangedRegSP (unsigned short i);
 
 }; //end class GeneralRegisterSignalsAndSlots

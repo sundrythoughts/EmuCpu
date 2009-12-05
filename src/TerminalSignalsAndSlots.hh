@@ -37,18 +37,18 @@ class TerminalSignalsAndSlots : public QObject {
 	sigc::signal<void, char> m_sigc_signal_terminal_output;
 
 public:
-	/** Sigc++ slot for terminal input */
+	/** @brief Sigc++ slot for terminal input */
 	void sigcSlotTerminalInput (char c);
 
-	/** Sigc++ signal for terminal output */
+	/** @brief Sigc++ signal for terminal output */
 	sigc::signal<void, char>& sigcSignalTerminalOutput ();
 
 public Q_SLOTS:
-	/** Qt slot for terminal output */
+	/** @brief Qt slot for terminal output */
 	void terminalOutput (char c);
 
 Q_SIGNALS:
-	/** Qt signal for terminal input */
+	/** @brief Qt signal for terminal input */
 	void terminalInput (char c);
 
 }; //end class TerminalSignalsAndSlots

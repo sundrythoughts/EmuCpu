@@ -45,56 +45,56 @@ public:
 	/** */
 	~Instruction ();
 
-	/** Connect to CpuComponents. */
+	/** @brief Connect to CpuComponents. */
 	void connectTo (CpuComponents &cpu);
 
-	/** Connect to InstructionDecoder. */
+	/** @brief Connect to InstructionDecoder. */
 	void connectTo (InstructionDecoder &dec);
 
-	/** Connect to ExecutionUnit. */
+	/** @brief Connect to ExecutionUnit. */
 	void connectTo (ExecutionUnit &eu);
 
-	/** Get the OperandList. */
+	/** @brief Get the OperandList. */
 	OperandList& operands ();
 
-	/** Get the InstructionDisassembly. */
+	/** @brief Get the InstructionDisassembly. */
 	InstructionDisassembly& disassembly ();
 
-	/** Decode Instruction. */
+	/** @brief Decode Instruction. */
 	void decode ();
 
-	/** Execute Instruction. */
+	/** @brief Execute Instruction. */
 	void execute ();
 
-	/** Set the value of the InstructionTableItem. */
+	/** @brief Set the value of the InstructionTableItem. */
 	void setItem (const InstructionTableItem &item);
 
-	/** Get the value of the InstructionTableItem. */
+	/** @brief Get the value of the InstructionTableItem. */
 	const InstructionTableItem& getItem ();
 
-	/** Reset the Instruction to the default value. */
+	/** @brief Reset the Instruction to the default value. */
 	void reset ();
 
-	/** Is this instruction valid or not. */
+	/** @brief Is this instruction valid or not. */
 	bool isNull () const;
 
-	/** Get the raw bytes for the Instruction. */
+	/** @brief Get the raw bytes for the Instruction. */
 	const std::vector<unsigned char>& getBytes () const;
 
-	/** Get the raw bytes for the Instruction. */
+	/** @brief Get the raw bytes for the Instruction. */
 	std::vector<unsigned char>& getBytes ();
 
-	/** Get raw byte of Instruction at index. */
+	/** @brief Get raw byte of Instruction at index. */
 	unsigned char getByte (size_t i) const;
 
-	/** Add bytes to the raw bytes of the Instruction. */
+	/** @brief Add bytes to the raw bytes of the Instruction. */
 	template<typename T>
 	void addBytes (const T &val);
 
-	/** */
+	/** @brief Set the addressing mode. */
 	int setAddrMode (int am);
 
-	/** */
+	/** @brief Get the addressing mode. */
 	int getAddrMode () const;
 
 }; //end class Instruction

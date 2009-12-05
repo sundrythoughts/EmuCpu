@@ -16,6 +16,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/**
+@file OperandList.hh
+@brief Stores the operands for the Instruction.
+*/
+
 
 #ifndef JAF__OPERAND_LIST_HH
 #define JAF__OPERAND_LIST_HH
@@ -25,6 +30,10 @@
 #include <string>
 #include <vector>
 
+/**
+@class OperandList
+@brief Stores the operands for the Instruction.
+*/
 class OperandList {
 	//InstructionTableItem *m_inst;
 	//std::vector m_machine_code;
@@ -39,19 +48,19 @@ public:
 	/** */
 	~OperandList ();
 
-	/** Get the operand size: false for 8-bit, true for 16-bit. */
+	/** @brief Get the operand size: false for 8-bit, true for 16-bit. */
 	bool operandSize () const;
 
-	/** Set the operand size: false for 8-bit, true for 16-bit. */
+	/** @brief Set the operand size: false for 8-bit, true for 16-bit. */
 	void setOperandSize (bool s);
 
-	/** Get the source operand. */
+	/** @brief Get the source operand. */
 	NumberWrapper& src ();
 
-	/** Get the destination operand. */
+	/** @brief Get the destination operand. */
 	NumberWrapper& dest ();
 
-	/** Set the operand list to its default state. */
+	/** @brief Set the operand list to its default state. */
 	void reset ();
 };
 

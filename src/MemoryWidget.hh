@@ -44,20 +44,20 @@ public:
 	MemoryWidget (QWidget *parent = 0);
 
 public Q_SLOTS:
-	/** Enable/disable this widget display. */
+	/** @brief Enable/disable this widget display. */
 	void enableDisableToggle (bool b);
 
-	/** Resize the amount of data displayed in the widget. */
+	/** @brief Resize the amount of data displayed in the widget. */
 	void resize (size_t sz);
 
-	/** Update a memory address in the display to show a new value. */
+	/** @brief Update a memory address in the display to show a new value. */
 	void setMemoryAddress (int addr, unsigned char val);
 
-	/** Reset all memory addresses in the display to show new values. */
+	/** @brief Reset all memory addresses in the display to show new values. */
 	void setAllMemoryAddresses (const unsigned char *arr, size_t sz);
 
 Q_SIGNALS:
-	/** The display widget has been enabled/disabled. */
+	/** @brief The display widget has been enabled/disabled. */
 	void enableDisable (bool b);
 
 private:

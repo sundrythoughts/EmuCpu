@@ -35,15 +35,15 @@ class FlagRegisterSignalsAndSlots : public QObject {
 	Q_OBJECT
 
 public:
-	/** Sigc++ -> QT translation slot when FLAGS register is changed. */
+	/** @brief Sigc++ -> Qt translation slot when FLAGS register is changed. */
 	void sigcSlotValueChangedFlags (unsigned short i);
 
 public Q_SLOTS:
-	/** FIXME */
+	/** @brief FIXME */
 	void enableDisable (bool b);
 
 Q_SIGNALS:
-	/** QT signal emitted when FLAGS register is changed. */
+	/** @brief Qt signal emitted when FLAGS register is changed. */
 	void valueChangedFlags (unsigned short i);
 
 }; //end class FlagRegisterSignalsAndSlots

@@ -27,9 +27,10 @@
 
 #include <cstddef>
 
+/** @namespace Jaf */
 namespace Jaf {
 
-/** Addressing modes. */
+/** @brief Addressing modes. */
 enum AddressMode {
 	ADDR_MODE_NONE = 0,
 	ADDR_MODE_REG_RM,
@@ -58,14 +59,14 @@ enum AddressMode {
 	ADDR_MODE_STRING
 };
 
-/** Operand size. */
+/** @brief Operand size. */
 enum OperandSize {
 	OP_SIZE_8 = 0,
 	OP_SIZE_16,
 	OP_SIZE_NONE
 };
 
-/** Register indexes for 8-bit registers. */
+/** @brief Register indexes for 8-bit registers. */
 enum RegisterIndex8 {
 	REG_AL = 0,
 	REG_CL,
@@ -78,7 +79,7 @@ enum RegisterIndex8 {
 	REG_COUNT_8 //number of indexes
 };
 
-/** Register indexes for 16-bit registers. */
+/** @brief Register indexes for 16-bit registers. */
 enum RegisterIndex16 {
 	REG_AX = 0,
 	REG_CX,
@@ -111,7 +112,7 @@ const char* getRegIndex8Name (size_t reg_i);
 */
 const char* getRegIndex16Name (size_t reg_i);
 
-/** Register indexes of segment registers. */
+/** @brief Register indexes of segment registers. */
 enum SegmentRegisterIndex {
 	SREG_ES = 0,
 	SREG_CS,
@@ -126,7 +127,7 @@ enum SegmentRegisterIndex {
 */
 const char* getSegRegIndexName (size_t reg_i);
 
-/** ModRM */
+/** @brief ModRM */
 union ModRM {
 	unsigned char byte;
 	struct {
@@ -136,7 +137,7 @@ union ModRM {
 	};
 };
 
-/** Scale, index, and base */
+/** @brief Scale, index, and base */
 union ScaleIndexBase {
 	unsigned char byte;
 	struct {

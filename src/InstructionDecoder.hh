@@ -45,16 +45,16 @@ public:
 	/** */
 	~InstructionDecoder ();
 
-	/** Create a connection to the CpuComponents. */
+	/** @brief Create a connection to the CpuComponents. */
 	void connectTo (CpuComponents &cpu);
 
-	/** Set the decoder to its default state. */
+	/** @brief Set the decoder to its default state. */
 	void reset ();
 
-	/** Re-decode the current instruction */
+	/** @brief Re-decode the current instruction */
 	void getInstruction ();
 
-	/** Decode the next instruction */
+	/** @brief Decode the next instruction */
 	void nextInstruction ();
 
 	/** */
@@ -75,7 +75,7 @@ protected:
 	}
 #endif
 
-	/** Do the actual decoding of the next instruction */
+	/** @brief Do the actual decoding of the next instruction */
 	void decodeInstruction ();
 
 	//FIXME
@@ -85,79 +85,79 @@ public:
 	/** */
 	void decodeNotImplemented ();
 
-	/** Decode addressing mode None */
+	/** @brief Decode addressing mode None */
 	void decodeNone ();
 
-	/** Decode addressing mode RegRM */
+	/** @brief Decode addressing mode RegRM */
 	void decodeRegRM ();
 
-	/** Decode addressing mode AccImm */
+	/** @brief Decode addressing mode AccImm */
 	void decodeAccImm ();
 
-	/** Decode addressing mode Segment */
+	/** @brief Decode addressing mode Segment */
 	void decodeSegment ();
 
-	/** Decode addressing mode Acc */
+	/** @brief Decode addressing mode Acc */
 	void decodeAcc ();
 
-	/** Decode addressing mode Reg */
+	/** @brief Decode addressing mode Reg */
 	void decodeReg ();
 
-	/** Decode addressing mode Short */
+	/** @brief Decode addressing mode Short */
 	void decodeShort ();
 
-	/** Decode addressing mode SegRM */
+	/** @brief Decode addressing mode SegRM */
 	void decodeSegRM ();
 
-	/** Decode addressing mode AccReg */
+	/** @brief Decode addressing mode AccReg */
 	void decodeAccReg ();
 
-	/** Decode addressing mode AccMem */
+	/** @brief Decode addressing mode AccMem */
 	void decodeAccMem ();
 
-	/** Decode addressing mode RegImm */
+	/** @brief Decode addressing mode RegImm */
 	void decodeRegImm ();
 
-	/** Decode addressing mode Intra */
+	/** @brief Decode addressing mode Intra */
 	void decodeIntra ();
 
-	/** Decode addressing mode Inter */
+	/** @brief Decode addressing mode Inter */
 	void decodeInter ();
 
-	/** Decode addressing mode XferInd */
+	/** @brief Decode addressing mode XferInd */
 	void decodeXferInd ();
 
-	/** Decode addressing mode RmImm */
+	/** @brief Decode addressing mode RmImm */
 	void decodeRMImm ();
 
-	/** Decode addressing mode AccPort */
+	/** @brief Decode addressing mode AccPort */
 	void decodeAccPort ();
 
-	/** Decode addressing mode RM */
+	/** @brief Decode addressing mode RM */
 	void decodeRM ();
 
-	/** Decode addressing mode Flags */
+	/** @brief Decode addressing mode Flags */
 	void decodeFlags ();
 
-	/** Decode addressing mode RetPop */
+	/** @brief Decode addressing mode RetPop */
 	void decodeRetPop ();
 
-	/** Decode addressing mode Type3 */
+	/** @brief Decode addressing mode Type3 */
 	void decodeType3 ();
 
-	/** Decode addressing mode EscNum */
+	/** @brief Decode addressing mode EscNum */
 	void decodeEscNum ();
 
-	/** Decode addressing mode AccVPort */
+	/** @brief Decode addressing mode AccVPort */
 	void decodeAccVPort ();
 
-	/** Decode addressing mode AccBase */
+	/** @brief Decode addressing mode AccBase */
 	void decodeAccBase ();
 
-	/** Decode addressing mode IntNum */
+	/** @brief Decode addressing mode IntNum */
 	void decodeIntNum ();
 
-	/** Decode addressing mode String */
+	/** @brief Decode addressing mode String */
 	void decodeString ();
 
 }; //end class InstructionDecoder

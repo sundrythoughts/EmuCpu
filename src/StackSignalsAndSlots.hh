@@ -35,21 +35,21 @@ class StackSignalsAndSlots : public QObject {
 	Q_OBJECT
 
 public:
-	/** Sigc++ slot called when a value is pushed onto the stack. */
+	/** @brief Sigc++ slot called when a value is pushed onto the stack. */
 	void sigcSlotStackPush (unsigned short seg, unsigned short off, unsigned short val);
 
-	/** Sigc++ slot called when a value is popped off the stack. */
+	/** @brief Sigc++ slot called when a value is popped off the stack. */
 	void sigcSlotStackPop ();
 
 public Q_SLOTS:
-	/** Enable/disable the stack. */
+	/** @brief Enable/disable the stack. */
 	void enableDisable (bool b);
 
 Q_SIGNALS:
-	/** Qt signal emitted when a value is pushed onto the stack. */
+	/** @brief Qt signal emitted when a value is pushed onto the stack. */
 	void stackPush (unsigned short seg, unsigned short off, unsigned short val);
 
-	/** Qt signal emitted when a value is popped off the stack. */
+	/** @brief Qt signal emitted when a value is popped off the stack. */
 	void stackPop ();
 
 }; //end class StackSignalsAndSlots

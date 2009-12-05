@@ -36,15 +36,15 @@ class DisassemblySignalsAndSlots : public QObject {
 	Q_OBJECT
 
 public:
-	/** Sigc++ -> QT translation slot for the next instruction. */
+	/** @brief Sigc++ -> QT translation slot for the next instruction. */
 	void sigcSlotNextInstruction (const std::string&, const std::string&, const std::string&, const std::string&);
 
 public Q_SLOTS:
-	/** Enable/disable disassembly. */
+	/** @brief Enable/disable disassembly. */
 	void enableDisable (bool b);
 
 Q_SIGNALS:
-	/** Qt slot for the next instruction. */
+	/** @brief Qt slot for the next instruction. */
 	void nextInstruction (QString seg_off, QString mcode, QString asm_code, QString addr_mode);
 
 }; //end class DisassemblySignalsAndSlots

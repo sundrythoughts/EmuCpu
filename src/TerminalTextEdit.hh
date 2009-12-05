@@ -19,7 +19,7 @@
 
 /**
 @file TerminalTextEdit.hh
-@brief FIXME.
+@brief Overrides key presses and mouse presses to act as a terminal.
 */
 
 #ifndef JAF__TERMINAL_TEXT_EDIT_HH
@@ -28,6 +28,10 @@
 #include <QtCore>
 #include <QtGui>
 
+/**
+@class TerminalTextEdit
+@brief Overrides key presses and mouse presses to act as a terminal.
+*/
 class TerminalTextEdit : public QTextEdit {
 	Q_OBJECT
 
@@ -36,18 +40,18 @@ public:
 	TerminalTextEdit (QWidget *parent = 0);
 
 	//override
-	/** */
+	/** @brief Grab key presses. */
 	virtual void keyPressEvent (QKeyEvent *event);
 
 	//override
-	/** */
+	/** @brief Grab mouse presses. */
 	virtual void mousePressEvent (QMouseEvent *event);
 
 private Q_SLOTS:
 	void scrollToCursor ();
 
 Q_SIGNALS:
-	/** */
+	/** @brief Qt signal emitted when a keyboard printable character is pressed. */
 	void charTyped (char c);
 
 }; //class TerminalTextEdit

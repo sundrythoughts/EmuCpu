@@ -38,33 +38,33 @@ class MemorySignalsAndSlots : public QObject {
 	sigc::signal<void, size_t> m_sigc_signal_resize;
 
 public:
-	/** Sigc++ slot called when a memory address' value is changed. */
+	/** @brief Sigc++ slot called when a memory address' value is changed. */
 	void sigcSlotValueChanged (int addr, unsigned char val);
 
-	/** Sigc++ slot called when memory is resized. */
+	/** @brief Sigc++ slot called when memory is resized. */
 	void sigcSlotResized (size_t sz);
 
-	/** Sigc++ slot called when all the memory addressess' values are changed. */
+	/** @brief Sigc++ slot called when all the memory addressess' values are changed. */
 	void sigcSlotReloaded (const unsigned char *arr, size_t sz);
 
-	/** Sigc++ signal emitted when a memory resize request is given. */
+	/** @brief Sigc++ signal emitted when a memory resize request is given. */
 	sigc::signal<void, size_t>& sigcSignalResize ();
 
 public Q_SLOTS:
-	/** Qt slot called when the memory is enabled/disabled. */
+	/** @brief Qt slot called when the memory is enabled/disabled. */
 	void enableDisable (bool b);
 
-	/** Qt slot called when there is a request to resize the memory. */
+	/** @brief Qt slot called when there is a request to resize the memory. */
 	void resize (size_t sz);
 
 Q_SIGNALS:
-	/** Qt signal emitted when a memory address' value is changed. */
+	/** @brief Qt signal emitted when a memory address' value is changed. */
 	void valueChanged (int addr, unsigned char val);
 
-	/** Qt signal emitted when memory is resized. */
+	/** @brief Qt signal emitted when memory is resized. */
 	void resized (size_t sz);
 
-	/** Qt signal emitted when all the memory addressess' values are changed. */
+	/** @brief Qt signal emitted when all the memory addressess' values are changed. */
 	void reloaded (const unsigned char *arr, size_t sz);
 
 }; //end class MemorySignalsAndSlots

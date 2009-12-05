@@ -62,13 +62,13 @@ public:
 	/** */
 	~BusInterfaceUnit ();
 
-	/** Reverts to original state. */
+	/** @brief Reverts to original state. */
 	void reset ();
 
-	/** FIXME */
+	/** @brief FIXME */
 	void initialize ();
 
-	/** Create a connection to the CpuComponents. */
+	/** @brief Create a connection to the CpuComponents. */
 	void connectTo (CpuComponents &cpu);
 
 	/**
@@ -84,37 +84,37 @@ public:
 	*/
 	void setSegReg (size_t index, unsigned short val);
 
-	/** Get the CS segment register. */
+	/** @brief Get the CS segment register. */
 	Register<unsigned short>& getSegRegCS ();
 
-	/** Set the CS segment register. */
+	/** @brief Set the CS segment register. */
 	void setSegRegCS (unsigned short val);
 
-	/** Get the DS segment register. */
+	/** @brief Get the DS segment register. */
 	Register<unsigned short>& getSegRegDS ();
 
-	/** Set the DS segment register. */
+	/** @brief Set the DS segment register. */
 	void setSegRegDS (unsigned short val);
 
-	/** Get the ES segment register. */
+	/** @brief Get the ES segment register. */
 	Register<unsigned short>& getSegRegES ();
 
-	/** Set the ES segment register. */
+	/** @brief Set the ES segment register. */
 	void setSegRegES (unsigned short val);
 
-	/** Get the SS segment register. */
+	/** @brief Get the SS segment register. */
 	Register<unsigned short>& getSegRegSS ();
 
-	/** Set the SS segment register. */
+	/** @brief Set the SS segment register. */
 	void setSegRegSS (unsigned short val);
 
-	/** Get the IP register. */
+	/** @brief Get the IP register. */
 	Register<unsigned short>& getRegIP ();
 
-	/** Set the IP register. */
+	/** @brief Set the IP register. */
 	void setRegIP (unsigned short val);
 
-	/** Set the segment override value. */
+	/** @brief Set the segment override value. */
 	void setSegOverride (unsigned short val);
 
 	/**
@@ -146,7 +146,7 @@ public:
 	MemoryAddress<T>*
 	getMemoryAddress (unsigned short seg, unsigned short offset, bool override_the_override = false);
 
-	/** Read sizeof(T) bytes starting at IP and then increment IP sizeof(T) bytes. */
+	/** @brief Read sizeof(T) bytes starting at IP and then increment IP sizeof(T) bytes. */
 	template<typename T>
 	T getInstructionBytes ();
 

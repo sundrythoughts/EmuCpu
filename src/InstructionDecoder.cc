@@ -88,6 +88,7 @@ InstructionDecoder::nextInstruction () {
 		p->m_inst->execute ();
 		p->m_cpu->incInstCounter ();
 
+		std::cout << p->m_inst->disassembly ().toString () << std::endl;
 		if (p->m_cpu->getDatabaseTester ().isConnected ()) {
 			p->m_cpu->getDatabaseTester ().spExecInsert ("jfree143", p->m_cpu->getTestID ());
 		}
@@ -140,13 +141,16 @@ InstructionDecoder::decodeInstruction () {
 		}
 	}
 
-	//get the mnemonic for disassembly
-	p->m_disasm << p->m_inst->getItem ().mnemonic << " ";
-
 	p->m_inst->decode ();
 
+	//get the mnemonic for disassembly
+	p->m_disasm << p->m_inst->getItem ().mnemonic;
+	p->m_disasm << ((!p->m_dis_dest.str ().empty () || !p->m_dis_src.str ().empty ()) ? " " : "");
+
 	//get src and dest for disassembly
-	p->m_disasm << p->m_dis_dest.str () << ((!p->m_dis_src.str ().empty ()) ? ", " : "") << p->m_dis_src.str ();
+	p->m_disasm << p->m_dis_dest.str ();
+	p->m_disasm << ((!p->m_dis_dest.str ().empty () && !p->m_dis_src.str ().empty ()) ? "," : "");
+	p->m_disasm << p->m_dis_src.str ();
 
 	//output disassembly
 	p->m_inst->disassembly ().setMachineCode (p->m_inst->getBytes ());
@@ -212,22 +216,22 @@ InstructionDecoder::decodeRegRM () {
 		unsigned short mem;
 		switch (modrm.rm) {
 			case 0: { //[bx + si {+ d8}{+ d16}]
-				((im.d) ? p->m_dis_src : p->m_dis_dest) << "[" << Jaf::getRegIndex16Name (Jaf::REG_BX) << " + " << Jaf::getRegIndex16Name (Jaf::REG_SI);
+				((im.d) ? p->m_dis_src : p->m_dis_dest) << "[" << Jaf::getRegIndex16Name (Jaf::REG_BX) << "+" << Jaf::getRegIndex16Name (Jaf::REG_SI);
 				mem = p->m_eunit->getRegBX () + p->m_eunit->getRegSI (); //zero displacement
 			} break;
 
 			case 1: { //[bx + di {+ d8}{+ d16}]
-				((im.d) ? p->m_dis_src : p->m_dis_dest) << "[" << Jaf::getRegIndex16Name (Jaf::REG_BX) << " + " << Jaf::getRegIndex16Name (Jaf::REG_DI);
+				((im.d) ? p->m_dis_src : p->m_dis_dest) << "[" << Jaf::getRegIndex16Name (Jaf::REG_BX) << "+" << Jaf::getRegIndex16Name (Jaf::REG_DI);
 				mem = p->m_eunit->getRegBX () + p->m_eunit->getRegDI (); //zero displacement
 			} break;
 
 			case 2: { //[bp + si {+ d8}{+ d16}]
-				((im.d) ? p->m_dis_src : p->m_dis_dest) << "[" << Jaf::getRegIndex16Name (Jaf::REG_BP) << " + " << Jaf::getRegIndex16Name (Jaf::REG_SI);
+				((im.d) ? p->m_dis_src : p->m_dis_dest) << "[" << Jaf::getRegIndex16Name (Jaf::REG_BP) << "+" << Jaf::getRegIndex16Name (Jaf::REG_SI);
 				mem = p->m_eunit->getRegBP () + p->m_eunit->getRegSI (); //zero displacement
 			} break;
 
 			case 3: { //[bp + di {+ d8}{+ d16}]
-				((im.d) ? p->m_dis_src : p->m_dis_dest) << "[" << Jaf::getRegIndex16Name (Jaf::REG_BP) << " + " << Jaf::getRegIndex16Name (Jaf::REG_DI);
+				((im.d) ? p->m_dis_src : p->m_dis_dest) << "[" << Jaf::getRegIndex16Name (Jaf::REG_BP) << "+" << Jaf::getRegIndex16Name (Jaf::REG_DI);
 				mem = p->m_eunit->getRegBP () + p->m_eunit->getRegDI (); //zero displacement
 			} break;
 
@@ -267,13 +271,13 @@ InstructionDecoder::decodeRegRM () {
 				unsigned char udis = p->m_biu->getInstructionBytes<unsigned char> ();
 				p->m_inst->addBytes (udis);
 				mem += (short)udis;
-				((im.d) ? p->m_dis_src : p->m_dis_dest) << " + " << (unsigned int)udis << "]";
+				((im.d) ? p->m_dis_src : p->m_dis_dest) << "+" << (unsigned int)udis << "]";
 			} break;
 			case 2: { //next two bytes
 				unsigned short udis = p->m_biu->getInstructionBytes<unsigned short> ();
 				p->m_inst->addBytes (udis);
 				mem += udis;
-				((im.d) ? p->m_dis_src : p->m_dis_dest) << " + " << (unsigned int)udis << "]";
+				((im.d) ? p->m_dis_src : p->m_dis_dest) << "+" << (unsigned int)udis << "]";
 			} break;
 		}
 
@@ -434,22 +438,22 @@ InstructionDecoder::decodeSegRM () {
 		unsigned short mem;
 		switch (modrm.rm) {
 			case 0: { //[bx + si {+ d8}{+ d16}]
-				((im.d) ? p->m_dis_src : p->m_dis_dest) << "[" << Jaf::getRegIndex16Name (Jaf::REG_BX) << " + " << Jaf::getRegIndex16Name (Jaf::REG_SI);
+				((im.d) ? p->m_dis_src : p->m_dis_dest) << "[" << Jaf::getRegIndex16Name (Jaf::REG_BX) << "+" << Jaf::getRegIndex16Name (Jaf::REG_SI);
 				mem = p->m_eunit->getRegBX () + p->m_eunit->getRegSI (); //zero displacement
 			} break;
 
 			case 1: { //[bx + di {+ d8}{+ d16}]
-				((im.d) ? p->m_dis_src : p->m_dis_dest) << "[" << Jaf::getRegIndex16Name (Jaf::REG_BX) << " + " << Jaf::getRegIndex16Name (Jaf::REG_DI);
+				((im.d) ? p->m_dis_src : p->m_dis_dest) << "[" << Jaf::getRegIndex16Name (Jaf::REG_BX) << "+" << Jaf::getRegIndex16Name (Jaf::REG_DI);
 				mem = p->m_eunit->getRegBX () + p->m_eunit->getRegDI (); //zero displacement
 			} break;
 
 			case 2: { //[bp + si {+ d8}{+ d16}]
-				((im.d) ? p->m_dis_src : p->m_dis_dest) << "[" << Jaf::getRegIndex16Name (Jaf::REG_BP) << " + " << Jaf::getRegIndex16Name (Jaf::REG_SI);
+				((im.d) ? p->m_dis_src : p->m_dis_dest) << "[" << Jaf::getRegIndex16Name (Jaf::REG_BP) << "+" << Jaf::getRegIndex16Name (Jaf::REG_SI);
 				mem = p->m_eunit->getRegBP () + p->m_eunit->getRegSI (); //zero displacement
 			} break;
 
 			case 3: { //[bp + di {+ d8}{+ d16}]
-				((im.d) ? p->m_dis_src : p->m_dis_dest) << "[" << Jaf::getRegIndex16Name (Jaf::REG_BP) << " + " << Jaf::getRegIndex16Name (Jaf::REG_DI);
+				((im.d) ? p->m_dis_src : p->m_dis_dest) << "[" << Jaf::getRegIndex16Name (Jaf::REG_BP) << "+" << Jaf::getRegIndex16Name (Jaf::REG_DI);
 				mem = p->m_eunit->getRegBP () + p->m_eunit->getRegDI (); //zero displacement
 			} break;
 
@@ -486,14 +490,14 @@ InstructionDecoder::decodeSegRM () {
 				unsigned char udis = p->m_biu->getInstructionBytes<unsigned char> ();
 				p->m_inst->addBytes (udis);
 				mem += (short)udis;
-				((im.d) ? p->m_dis_src : p->m_dis_dest) << " + " << (unsigned int)udis << "]";
+				((im.d) ? p->m_dis_src : p->m_dis_dest) << "+" << (unsigned int)udis << "]";
 			} break;
 
 			case 2: { //next two bytes
 				unsigned short udis = p->m_biu->getInstructionBytes<unsigned short> ();
 				p->m_inst->addBytes (udis);
 				mem += udis;
-				((im.d) ? p->m_dis_src : p->m_dis_dest) << " + " << (unsigned int)udis << "]";
+				((im.d) ? p->m_dis_src : p->m_dis_dest) << "+" << (unsigned int)udis << "]";
 			} break;
 		}
 
@@ -667,22 +671,22 @@ InstructionDecoder::decodeXferInd () {
 		unsigned short mem;
 		switch (modrm.rm) {
 			case 0: { //[bx + si {+ d8}{+ d16}]
-				p->m_dis_dest << "[" << Jaf::getRegIndex16Name (Jaf::REG_BX) << " + " << Jaf::getRegIndex16Name (Jaf::REG_SI);
+				p->m_dis_dest << "[" << Jaf::getRegIndex16Name (Jaf::REG_BX) << "+" << Jaf::getRegIndex16Name (Jaf::REG_SI);
 				mem = p->m_eunit->getRegBX () + p->m_eunit->getRegSI (); //zero displacement
 			} break;
 
 			case 1: { //[bx + di {+ d8}{+ d16}]
-				p->m_dis_dest << "[" << Jaf::getRegIndex16Name (Jaf::REG_BX) << " + " << Jaf::getRegIndex16Name (Jaf::REG_DI);
+				p->m_dis_dest << "[" << Jaf::getRegIndex16Name (Jaf::REG_BX) << "+" << Jaf::getRegIndex16Name (Jaf::REG_DI);
 				mem = p->m_eunit->getRegBX () + p->m_eunit->getRegDI (); //zero displacement
 			} break;
 
 			case 2: { //[bp + si {+ d8}{+ d16}]
-				p->m_dis_dest << "[" << Jaf::getRegIndex16Name (Jaf::REG_BP) << " + " << Jaf::getRegIndex16Name (Jaf::REG_SI);
+				p->m_dis_dest << "[" << Jaf::getRegIndex16Name (Jaf::REG_BP) << "+" << Jaf::getRegIndex16Name (Jaf::REG_SI);
 				mem = p->m_eunit->getRegBP () + p->m_eunit->getRegSI (); //zero displacement
 			} break;
 
 			case 3: { //[bp + di {+ d8}{+ d16}]
-				p->m_dis_dest << "[" << Jaf::getRegIndex16Name (Jaf::REG_BP) << " + " << Jaf::getRegIndex16Name (Jaf::REG_DI);
+				p->m_dis_dest << "[" << Jaf::getRegIndex16Name (Jaf::REG_BP) << "+" << Jaf::getRegIndex16Name (Jaf::REG_DI);
 				mem = p->m_eunit->getRegBP () + p->m_eunit->getRegDI (); //zero displacement
 			} break;
 
@@ -722,13 +726,13 @@ InstructionDecoder::decodeXferInd () {
 				unsigned char udis = p->m_biu->getInstructionBytes<unsigned char> ();
 				p->m_inst->addBytes (udis);
 				mem += (short)udis;
-				p->m_dis_dest << " + " << (unsigned int)udis << "]";
+				p->m_dis_dest << "+" << (unsigned int)udis << "]";
 			} break;
 			case 2: { //next two bytes
 				unsigned short udis = p->m_biu->getInstructionBytes<unsigned short> ();
 				p->m_inst->addBytes (udis);
 				mem += udis;
-				p->m_dis_dest << " + " << (unsigned int)udis << "]";
+				p->m_dis_dest << "+" << (unsigned int)udis << "]";
 			} break;
 		}
 
@@ -771,22 +775,22 @@ InstructionDecoder::decodeRMImm () {
 		unsigned short mem;
 		switch (modrm.rm) {
 			case 0: { //[bx + si {+ d8}{+ d16}]
-				p->m_dis_dest << "[" << Jaf::getRegIndex16Name (Jaf::REG_BX) << " + " << Jaf::getRegIndex16Name (Jaf::REG_SI);
+				p->m_dis_dest << "[" << Jaf::getRegIndex16Name (Jaf::REG_BX) << "+" << Jaf::getRegIndex16Name (Jaf::REG_SI);
 				mem = p->m_eunit->getRegBX () + p->m_eunit->getRegSI (); //zero displacement
 			} break;
 
 			case 1: { //[bx + di {+ d8}{+ d16}]
-				p->m_dis_dest << "[" << Jaf::getRegIndex16Name (Jaf::REG_BX) << " + " << Jaf::getRegIndex16Name (Jaf::REG_DI);
+				p->m_dis_dest << "[" << Jaf::getRegIndex16Name (Jaf::REG_BX) << "+" << Jaf::getRegIndex16Name (Jaf::REG_DI);
 				mem = p->m_eunit->getRegBX () + p->m_eunit->getRegDI (); //zero displacement
 			} break;
 
 			case 2: { //[bp + si {+ d8}{+ d16}]
-				p->m_dis_dest << "[" << Jaf::getRegIndex16Name (Jaf::REG_BP) << " + " << Jaf::getRegIndex16Name (Jaf::REG_SI);
+				p->m_dis_dest << "[" << Jaf::getRegIndex16Name (Jaf::REG_BP) << "+" << Jaf::getRegIndex16Name (Jaf::REG_SI);
 				mem = p->m_eunit->getRegBP () + p->m_eunit->getRegSI (); //zero displacement
 			} break;
 
 			case 3: { //[bp + di {+ d8}{+ d16}]
-				p->m_dis_dest << "[" << Jaf::getRegIndex16Name (Jaf::REG_BP) << " + " << Jaf::getRegIndex16Name (Jaf::REG_DI);
+				p->m_dis_dest << "[" << Jaf::getRegIndex16Name (Jaf::REG_BP) << "+" << Jaf::getRegIndex16Name (Jaf::REG_DI);
 				mem = p->m_eunit->getRegBP () + p->m_eunit->getRegDI (); //zero displacement
 			} break;
 
@@ -826,13 +830,13 @@ InstructionDecoder::decodeRMImm () {
 				unsigned char udis = p->m_biu->getInstructionBytes<unsigned char> ();
 				p->m_inst->addBytes (udis);
 				mem += (short)udis;
-				p->m_dis_dest << " + " << (unsigned int)udis << "]";
+				p->m_dis_dest << "+" << (unsigned int)udis << "]";
 			} break;
 			case 2: { //next two bytes
 				unsigned short udis = p->m_biu->getInstructionBytes<unsigned short> ();
 				p->m_inst->addBytes (udis);
 				mem += udis;
-				p->m_dis_dest << " + " << (unsigned int)udis << "]";
+				p->m_dis_dest << "+" << (unsigned int)udis << "]";
 			} break;
 		}
 
@@ -934,22 +938,22 @@ InstructionDecoder::decodeRM () {
 		unsigned short mem;
 		switch (modrm.rm) {
 			case 0: { //[bx + si {+ d8}{+ d16}]
-				p->m_dis_dest << "[" << Jaf::getRegIndex16Name (Jaf::REG_BX) << " + " << Jaf::getRegIndex16Name (Jaf::REG_SI);
+				p->m_dis_dest << "[" << Jaf::getRegIndex16Name (Jaf::REG_BX) << "+" << Jaf::getRegIndex16Name (Jaf::REG_SI);
 				mem = p->m_eunit->getRegBX () + p->m_eunit->getRegSI (); //zero displacement
 			} break;
 
 			case 1: { //[bx + di {+ d8}{+ d16}]
-				p->m_dis_dest << "[" << Jaf::getRegIndex16Name (Jaf::REG_BX) << " + " << Jaf::getRegIndex16Name (Jaf::REG_DI);
+				p->m_dis_dest << "[" << Jaf::getRegIndex16Name (Jaf::REG_BX) << "+" << Jaf::getRegIndex16Name (Jaf::REG_DI);
 				mem = p->m_eunit->getRegBX () + p->m_eunit->getRegDI (); //zero displacement
 			} break;
 
 			case 2: { //[bp + si {+ d8}{+ d16}]
-				p->m_dis_dest << "[" << Jaf::getRegIndex16Name (Jaf::REG_BP) << " + " << Jaf::getRegIndex16Name (Jaf::REG_SI);
+				p->m_dis_dest << "[" << Jaf::getRegIndex16Name (Jaf::REG_BP) << "+" << Jaf::getRegIndex16Name (Jaf::REG_SI);
 				mem = p->m_eunit->getRegBP () + p->m_eunit->getRegSI (); //zero displacement
 			} break;
 
 			case 3: { //[bp + di {+ d8}{+ d16}]
-				p->m_dis_dest << "[" << Jaf::getRegIndex16Name (Jaf::REG_BP) << " + " << Jaf::getRegIndex16Name (Jaf::REG_DI);
+				p->m_dis_dest << "[" << Jaf::getRegIndex16Name (Jaf::REG_BP) << "+" << Jaf::getRegIndex16Name (Jaf::REG_DI);
 				mem = p->m_eunit->getRegBP () + p->m_eunit->getRegDI (); //zero displacement
 			} break;
 
@@ -989,13 +993,13 @@ InstructionDecoder::decodeRM () {
 				unsigned char udis = p->m_biu->getInstructionBytes<unsigned char> ();
 				p->m_inst->addBytes (udis);
 				mem += (short)udis;
-				p->m_dis_dest << " + " << (unsigned int)udis << "]";
+				p->m_dis_dest << "+" << (unsigned int)udis << "]";
 			} break;
 			case 2: { //next two bytes
 				unsigned short udis = p->m_biu->getInstructionBytes<unsigned short> ();
 				p->m_inst->addBytes (udis);
 				mem += udis;
-				p->m_dis_dest << " + " << (unsigned int)udis << "]";
+				p->m_dis_dest << "+" << (unsigned int)udis << "]";
 			} break;
 		}
 

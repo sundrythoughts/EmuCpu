@@ -1,2 +1,3 @@
  * Memory widget will not display memory at certain times.
    - If the memory widget is disabled before loading a file and then re-enabled after a file has been loaded, then the widget will not display the new memory.
+ * Fix the visibilityChanged signal on the QDockWidgets so that they modify the QActions that modify them (ex. clicking X on a QDockWidget makes it disappear...but it should be able to reappear)

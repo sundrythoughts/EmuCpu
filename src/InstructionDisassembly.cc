@@ -97,6 +97,6 @@ InstructionDisassembly::clear () {
 
 std::string
 InstructionDisassembly::toString () const {
-	return p->m_seg_off + "\t" + p->m_machine_code + "\t" + p->m_assembly + "\t" + p->m_addr_mode;
+	return p->m_seg_off + "\t" + p->m_machine_code + "\t" + p->m_assembly + "\t\t" + p->m_addr_mode;
 }
 

@@ -52,14 +52,14 @@ public:
 	connectTo (CpuComponents &cpu);
 
 	/**
-	@brief FIXME - Update the auxilliary flag (AF) for an 8-bit operation.
+	@brief FIXME - Update the auxilliary flag (AF) for an 8-bit addition operation.
 	*/
-	void updateFlagAF (unsigned char result8, unsigned short result16);
+	void updateFlagAddAF (unsigned char result8);
 
 	/**
-	@brief FIXME - Update the auxilliary flag (AF) for a 16-bit operation.
+	@brief FIXME - Update the auxilliary flag (AF) for an 8-bit subtraction operation.
 	*/
-	void updateFlagAF (unsigned short result16, unsigned int result32);
+	void updateFlagSubAF (char result8);
 
 	/**
 	@brief Update the carry flag (CF) for an 8-bit addition operation.

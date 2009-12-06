@@ -159,20 +159,20 @@ const InstructionTableItem InstructionTable::one_byte_opcode_instruction_map[256
 	/* 7x */
 	{"jo", false, GROUP_NONE, &InstructionDecoder::decodeShort, &ExecutionUnit::execJO},
 	{"jno", false, GROUP_NONE, &InstructionDecoder::decodeShort, &ExecutionUnit::execJNO},
-	{"jb/jnae/jc", false, GROUP_NONE, &InstructionDecoder::decodeShort, &ExecutionUnit::execJNAE},
-	{"jnb/jae/jnc", false, GROUP_NONE, &InstructionDecoder::decodeShort, &ExecutionUnit::execJNB},
-	{"jz/je", false, GROUP_NONE, &InstructionDecoder::decodeShort, &ExecutionUnit::execJE},
-	{"jnz/jne", false, GROUP_NONE, &InstructionDecoder::decodeShort, &ExecutionUnit::execJNE},
-	{"jbe/jna", false, GROUP_NONE, &InstructionDecoder::decodeShort, &ExecutionUnit::execJNA},
-	{"jnbe/ja", false, GROUP_NONE, &InstructionDecoder::decodeShort, &ExecutionUnit::execJNBE},
+	{"jnae", false, GROUP_NONE, &InstructionDecoder::decodeShort, &ExecutionUnit::execJNAE},
+	{"jnb", false, GROUP_NONE, &InstructionDecoder::decodeShort, &ExecutionUnit::execJNB},
+	{"je", false, GROUP_NONE, &InstructionDecoder::decodeShort, &ExecutionUnit::execJE},
+	{"jne", false, GROUP_NONE, &InstructionDecoder::decodeShort, &ExecutionUnit::execJNE},
+	{"jna", false, GROUP_NONE, &InstructionDecoder::decodeShort, &ExecutionUnit::execJNA},
+	{"jnbe", false, GROUP_NONE, &InstructionDecoder::decodeShort, &ExecutionUnit::execJNBE},
 	{"js", false, GROUP_NONE, &InstructionDecoder::decodeShort, &ExecutionUnit::execJS},
 	{"jns", false, GROUP_NONE, &InstructionDecoder::decodeShort, &ExecutionUnit::execJNS},
-	{"jp/jpe", false, GROUP_NONE, &InstructionDecoder::decodeShort, &ExecutionUnit::execJPE},
-	{"jnp/jpo", false, GROUP_NONE, &InstructionDecoder::decodeShort, &ExecutionUnit::execJNP},
-	{"jl/jnge", false, GROUP_NONE, &InstructionDecoder::decodeShort, &ExecutionUnit::execJL},
-	{"jnl/jge", false, GROUP_NONE, &InstructionDecoder::decodeShort, &ExecutionUnit::execJGE},
-	{"jle/jng", false, GROUP_NONE, &InstructionDecoder::decodeShort, &ExecutionUnit::execJLE},
-	{"jnle/jg", false, GROUP_NONE, &InstructionDecoder::decodeShort, &ExecutionUnit::execJG},
+	{"jpe", false, GROUP_NONE, &InstructionDecoder::decodeShort, &ExecutionUnit::execJPE},
+	{"jnp", false, GROUP_NONE, &InstructionDecoder::decodeShort, &ExecutionUnit::execJNP},
+	{"jl", false, GROUP_NONE, &InstructionDecoder::decodeShort, &ExecutionUnit::execJL},
+	{"jge", false, GROUP_NONE, &InstructionDecoder::decodeShort, &ExecutionUnit::execJGE},
+	{"jle", false, GROUP_NONE, &InstructionDecoder::decodeShort, &ExecutionUnit::execJLE},
+	{"jg", false, GROUP_NONE, &InstructionDecoder::decodeShort, &ExecutionUnit::execJG},
 
 	/* 8x */
 	{0, true, GROUP_0, &InstructionDecoder::decodeNotImplemented, &ExecutionUnit::execNotImplemented},
@@ -252,8 +252,8 @@ const InstructionTableItem InstructionTable::one_byte_opcode_instruction_map[256
 	{0, false, GROUP_RESERVED, &InstructionDecoder::decodeNotImplemented, &ExecutionUnit::execNotImplemented},
 	{"ret", false, GROUP_NONE, &InstructionDecoder::decodeRetPop, &ExecutionUnit::execRET}, //near
 	{"ret", false, GROUP_NONE, &InstructionDecoder::decodeNone, &ExecutionUnit::execRET}, //near
-	{"les", true, GROUP_NONE, &InstructionDecoder::decodeRegRM, &ExecutionUnit::execNotImplemented}, //FIXME
-	{"lds", true, GROUP_NONE, &InstructionDecoder::decodeRegRM, &ExecutionUnit::execNotImplemented}, //FIXME
+	{"les", true, GROUP_NONE, &InstructionDecoder::decodeRegRM, &ExecutionUnit::execLES}, //FIXME
+	{"lds", true, GROUP_NONE, &InstructionDecoder::decodeRegRM, &ExecutionUnit::execLDS}, //FIXME
 	{"mov", true, GROUP_NONE, &InstructionDecoder::decodeRMImm, &ExecutionUnit::execMOV},
 	{"mov", true, GROUP_NONE, &InstructionDecoder::decodeRMImm, &ExecutionUnit::execMOV},
 	{0, false, GROUP_RESERVED, &InstructionDecoder::decodeNotImplemented, &ExecutionUnit::execNotImplemented},

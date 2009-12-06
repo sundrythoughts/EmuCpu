@@ -394,13 +394,13 @@ public:
 	/** @brief Load register AH from register FLAGS. */
 	void execLAHF ();
 
-	/** @brief UNIMPLEMENTED */
+	/** @brief Load DS register */
 	void execLDS ();
 
 	/** @brief Load effective address. */
 	void execLEA ();
 
-	/** @brief UNIMPLEMENTED */
+	/** @brief Load ES register */
 	void execLES ();
 
 	/** @brief UNIMPLEMENTED */

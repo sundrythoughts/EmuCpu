@@ -61,6 +61,7 @@ IOPorts::signalSoundOutput () {
 
 void
 IOPorts::charInput (char c) {
+	//std::cout << c << " = " << std::hex << (short)c << std::endl;
 	p->m_char_input_q.push (c);
 }
 

@@ -124,7 +124,8 @@ DatabaseTester::spExecInsert (const std::string &userid, const std::string &test
 	}
 
 	syb::dbfcmd (p->m_dbproc,
-	             "exec ExecInsert \"%s\", \"%s\", %d, \"%s\", %d, \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", %d\n",
+	             //"exec ExecInsertIgnoreFlags \"%s\", \"%s\", %d, \"%s\", %d, \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", %d\n",
+	             "exec ExecInsertIgnoreFlags \"%s\", \"%s\", %d, \"%s\", %d, \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", %d\n",
 	             userid.c_str (),
 	             testid.c_str (),
 	             p->m_cpu_comps->getInstCounter (),
@@ -143,14 +144,15 @@ DatabaseTester::spExecInsert (const std::string &userid, const std::string &test
 	             QString::number (p->m_biu->getSegRegSS (), 16).rightJustified (4, '0').toUpper ().toAscii ().data (),
 	             QString::number (p->m_biu->getSegRegES (), 16).rightJustified (4, '0').toUpper ().toAscii ().data (),
 	             QString::number (p->m_biu->getRegIP (), 16).rightJustified (4, '0').toUpper ().toAscii ().data (),
-	             QString::number (p->m_eunit->getRegFlags (), 16).rightJustified (4, '0').toUpper ().toAscii ().data (),
+	             //QString::number (p->m_eunit->getRegFlags (), 16).rightJustified (4, '0').toUpper ().toAscii ().data (),
 	             0); //no ram checksum
 
 	p->m_ret = syb::dbsqlexec (p->m_dbproc);
 	if (p->m_ret == false) {
-		std::cerr << "FAILED: spResultsInsert (" << userid << ", " << testid << ")" << std::endl;
+		std::cerr << "FAILED: ExecInsertIgnoreFlags (" << userid << ", " << testid << ")" << std::endl;
 	}
 
+#if 0
 	std::printf ("exec ExecInsert \"%s\", \"%s\", %d, \"%s\", %d, \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", %d\n",
 	             userid.c_str (),
 	             testid.c_str (),
@@ -172,5 +174,7 @@ DatabaseTester::spExecInsert (const std::string &userid, const std::string &test
 	             QString::number (p->m_biu->getRegIP (), 16).rightJustified (4, '0').toUpper ().toAscii ().data (),
 	             QString::number (p->m_eunit->getRegFlags (), 16).rightJustified (4, '0').toUpper ().toAscii ().data (),
 	             0); //no ram checksum
+#endif
+
 }
 

@@ -25,8 +25,12 @@
 #ifndef JAF__INSTRUCTION_DECODER_HH
 #define JAF__INSTRUCTION_DECODER_HH
 
+#include <sstream>
+#include <iostream>
+#include <iomanip>
 #include <string>
 #include <sigc++/sigc++.h>
+#include "NumberWrapper.hh"
 
 class CpuComponents;
 class InstructionDecoderPrivate;
@@ -159,6 +163,26 @@ public:
 
 	/** @brief Decode addressing mode String */
 	void decodeString ();
+
+private:
+	NumberWrapper& instSrc ();
+	NumberWrapper& instDest ();
+
+	NumberWrapper& instSrcIf (bool b);
+	NumberWrapper& instDestIf (bool b);
+
+	std::ostringstream& disSrc ();
+	std::ostringstream& disDest ();
+
+	std::ostringstream& disSrcIf (bool b);
+	std::ostringstream& disDestIf (bool b);
+
+	template<typename T>
+	std::ostream&
+	outHexDisasm (std::ostream& os, const T &val) {
+		os << std::setfill ('0') << std::setw (sizeof(T) << 1) << std::hex;
+		return os;
+	}
 
 }; //end class InstructionDecoder
 

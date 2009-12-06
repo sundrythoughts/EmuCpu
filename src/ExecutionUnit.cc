@@ -883,10 +883,32 @@ ExecutionUnit::execLAHF () {
 }
 
 void
+ExecutionUnit::execLDS () {
+	OperandList &ops = p->m_inst->operands ();
+
+	unsigned short segment = ops.src ().get<unsigned short> ().getSegment ();
+	unsigned short offset = ops.src ().get<unsigned short> ().getOffset ();
+
+	ops.dest ().get<unsigned short> () = p->m_biu->getMemoryData<unsigned short> (segment, offset);
+	p->m_biu->getSegRegDS () = p->m_biu->getMemoryData<unsigned short> (segment, offset + 2);
+}
+
+void
 ExecutionUnit::execLEA () {
 	OperandList &ops = p->m_inst->operands ();
 
 	ops.dest ().get<unsigned short> () = ops.src ().get<unsigned short> ().getOffset ();
+}
+
+void
+ExecutionUnit::execLES () {
+	OperandList &ops = p->m_inst->operands ();
+
+	unsigned short segment = ops.src ().get<unsigned short> ().getSegment ();
+	unsigned short offset = ops.src ().get<unsigned short> ().getOffset ();
+
+	ops.dest ().get<unsigned short> () = p->m_biu->getMemoryData<unsigned short> (segment, offset);
+	p->m_biu->getSegRegES () = p->m_biu->getMemoryData<unsigned short> (segment, offset + 2);
 }
 
 void

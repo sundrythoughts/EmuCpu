@@ -46,19 +46,13 @@ ArithmeticLogicUnit::connectTo (CpuComponents &cpu) {
 }
 
 void
-ArithmeticLogicUnit::updateFlagAF (unsigned char result8, unsigned short result16) {
-	//FIXME - this is wrong
-	result8 &= 0xF;
-	result16 &= 0x1F;
-	p->m_eunit->setRegFlagsCF (result8 != result16);
+ArithmeticLogicUnit::updateFlagAddAF (unsigned char result8) {
+	p->m_eunit->setRegFlagsAF (result8 > (result8 & 0xF));
 }
 
 void
-ArithmeticLogicUnit::updateFlagAF (unsigned short result16, unsigned int result32) {
-	//FIXME - this is wrong
-	result16 &= 0xF;
-	result32 &= 0x1F;
-	p->m_eunit->setRegFlagsCF (result16 != result32);
+ArithmeticLogicUnit::updateFlagSubAF (char result8) {
+	p->m_eunit->setRegFlagsAF (result8 & 0x08); //FIXME
 }
 
 void
@@ -179,6 +173,7 @@ ArithmeticLogicUnit::opAdc (unsigned short dest, unsigned short src, unsigned sh
 	ret = (unsigned short)result;
 
 	//FIXME - fix flags
+	//updateFlagAddAF (ret);
 	updateFlagAddCF (ret, result);
 	updateFlagAddOF (orig_dest, src, ret);
 	updateFlagPF (ret);
@@ -194,6 +189,7 @@ ArithmeticLogicUnit::opAdd (unsigned char dest, unsigned char src, unsigned char
 	ret = (unsigned char)result;
 
 	//FIXME - fix flags
+	//updateFlagAddAF (ret);
 	updateFlagAddCF (ret, result);
 	updateFlagAddOF (orig_dest, src, ret);
 	updateFlagPF (ret);
@@ -209,6 +205,7 @@ ArithmeticLogicUnit::opAdd (unsigned short dest, unsigned short src, unsigned sh
 	ret = (unsigned short)result;
 
 	//FIXME - fix flags
+	//updateFlagAddAF (ret);
 	updateFlagAddCF (ret, result);
 	updateFlagAddOF (orig_dest, src, ret);
 	updateFlagPF (ret);
@@ -258,6 +255,7 @@ ArithmeticLogicUnit::opCmp (unsigned char dest, unsigned char src) {
 	unsigned char ret = dest - src;
 
 	//FIXME - fix flags
+	//updateFlagSubAF (ret);
 	updateFlagSubCF (ret, result);
 	updateFlagSubOF (orig_dest, src, ret);
 	updateFlagPF (ret);
@@ -272,6 +270,7 @@ ArithmeticLogicUnit::opCmp (unsigned short dest, unsigned short src) {
 	unsigned short ret = dest - src;
 
 	//FIXME - fix flags
+	//updateFlagSubAF (ret);
 	updateFlagSubCF (ret, result);
 	updateFlagSubOF (orig_dest, src, ret);
 	updateFlagPF (ret);
@@ -286,6 +285,7 @@ ArithmeticLogicUnit::opDec (unsigned char dest, unsigned char &ret) {
 	ret = (unsigned char)result;
 
 	//FIXME - fix flags
+	//updateFlagSubAF (ret);
 	updateFlagSubOF (orig_dest, 1, ret);
 	updateFlagPF (ret);
 	updateFlagSF (ret);
@@ -299,6 +299,7 @@ ArithmeticLogicUnit::opDec (unsigned short dest, unsigned short &ret) {
 	ret = (unsigned short)result;
 
 	//FIXME - fix flags
+	//updateFlagSubAF (ret);
 	updateFlagSubOF (orig_dest, 1, ret);
 	updateFlagPF (ret);
 	updateFlagSF (ret);
@@ -454,6 +455,7 @@ ArithmeticLogicUnit::opInc (unsigned char dest, unsigned char &ret) {
 	ret = (unsigned char)result;
 
 	//FIXME - fix flags
+	//updateFlagAddAF (ret);
 	updateFlagAddOF (orig_dest, 1, ret);
 	updateFlagPF (ret);
 	updateFlagSF (ret);
@@ -467,6 +469,7 @@ ArithmeticLogicUnit::opInc (unsigned short dest, unsigned short &ret) {
 	ret = (unsigned short)result;
 
 	//FIXME - fix flags
+	//updateFlagAddAF (ret);
 	updateFlagAddOF (orig_dest, 1, ret);
 	updateFlagPF (ret);
 	updateFlagSF (ret);
@@ -772,6 +775,7 @@ ArithmeticLogicUnit::opSbb (unsigned char dest, unsigned char src, unsigned char
 	ret = (unsigned char)result;
 
 	//FIXME - fix flags
+	//updateFlagSubAF (ret);
 	updateFlagSubCF (ret, result);
 	updateFlagSubOF (orig_dest, src, ret);
 	updateFlagPF (ret);
@@ -789,6 +793,7 @@ ArithmeticLogicUnit::opSbb (unsigned short dest, unsigned short src, unsigned sh
 	ret = (unsigned short)result;
 
 	//FIXME - fix flags
+	//updateFlagSubAF (ret);
 	updateFlagSubCF (ret, result);
 	updateFlagSubOF (orig_dest, src, ret);
 	updateFlagPF (ret);
@@ -871,6 +876,7 @@ ArithmeticLogicUnit::opSub (unsigned char dest, unsigned char src, unsigned char
 	ret = (unsigned char)result;
 
 	//FIXME - fix flags
+	//updateFlagSubAF (ret);
 	updateFlagSubCF (ret, result);
 	updateFlagSubOF (orig_dest, src, ret);
 	updateFlagPF (ret);
@@ -885,8 +891,8 @@ ArithmeticLogicUnit::opSub (unsigned short dest, unsigned short src, unsigned sh
 	ret = (unsigned short)result;
 
 	//FIXME - fix flags
+	//updateFlagSubAF (ret);
 	updateFlagSubCF (ret, result);
-	//updateFlagOF (ret);
 	updateFlagSubOF (orig_dest, src, ret);
 	updateFlagPF (ret);
 	updateFlagSF (ret);

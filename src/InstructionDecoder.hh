@@ -164,20 +164,55 @@ public:
 	/** @brief Decode addressing mode String */
 	void decodeString ();
 
-private:
+protected:
+	/**
+	@brief Get the Instruction source operand.
+	*/
 	NumberWrapper& instSrc ();
+
+	/**
+	@brief Get the Instruction destination operand.
+	*/
 	NumberWrapper& instDest ();
 
+	/**
+	@brief Get the Instruction source operand if b is true, else get destination.
+	*/
 	NumberWrapper& instSrcIf (bool b);
+
+	/**
+	@brief Get the Instruction destination operand if b is true, else get source.
+	*/
 	NumberWrapper& instDestIf (bool b);
 
+	/**
+	@brief Get the disassembly source operand.
+	*/
 	std::ostringstream& disSrc ();
+
+	/**
+	@brief Get the disassembly destination operand.
+	*/
 	std::ostringstream& disDest ();
 
+	/**
+	@brief Get the disassembly source operand if b is true, else get destination.
+	*/
 	std::ostringstream& disSrcIf (bool b);
+
+	/**
+	@brief Get the disassembly destination operand if b is true, else get source.
+	*/
 	std::ostringstream& disDestIf (bool b);
 
+	/**
+	@brief Format the ostream for a 1-byte hex digit with zeros for padding.
+	*/
 	static std::ostream& formatHexByte (std::ostream& os);
+
+	/**
+	@brief Format the ostream for a 2-byte hex digit with zeros for padding.
+	*/
 	static std::ostream& formatHexWord (std::ostream& os);
 
 }; //end class InstructionDecoder

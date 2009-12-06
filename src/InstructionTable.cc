@@ -252,8 +252,8 @@ const InstructionTableItem InstructionTable::one_byte_opcode_instruction_map[256
 	{0, false, GROUP_RESERVED, &InstructionDecoder::decodeNotImplemented, &ExecutionUnit::execNotImplemented},
 	{"ret", false, GROUP_NONE, &InstructionDecoder::decodeRetPop, &ExecutionUnit::execRET}, //near
 	{"ret", false, GROUP_NONE, &InstructionDecoder::decodeNone, &ExecutionUnit::execRET}, //near
-	{"les", true, GROUP_NONE, &InstructionDecoder::decodeRegRM, &ExecutionUnit::execLES}, //FIXME
-	{"lds", true, GROUP_NONE, &InstructionDecoder::decodeRegRM, &ExecutionUnit::execLDS}, //FIXME
+	{"les", true, GROUP_NONE, &InstructionDecoder::decodeRegRM, &ExecutionUnit::execLES},
+	{"lds", true, GROUP_NONE, &InstructionDecoder::decodeRegRM, &ExecutionUnit::execLDS},
 	{"mov", true, GROUP_NONE, &InstructionDecoder::decodeRMImm, &ExecutionUnit::execMOV},
 	{"mov", true, GROUP_NONE, &InstructionDecoder::decodeRMImm, &ExecutionUnit::execMOV},
 	{0, false, GROUP_RESERVED, &InstructionDecoder::decodeNotImplemented, &ExecutionUnit::execNotImplemented},

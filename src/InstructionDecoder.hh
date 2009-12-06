@@ -177,12 +177,8 @@ private:
 	std::ostringstream& disSrcIf (bool b);
 	std::ostringstream& disDestIf (bool b);
 
-	template<typename T>
-	std::ostream&
-	outHexDisasm (std::ostream& os, const T &val) {
-		os << std::setfill ('0') << std::setw (sizeof(T) << 1) << std::hex;
-		return os;
-	}
+	static std::ostream& formatHexByte (std::ostream& os);
+	static std::ostream& formatHexWord (std::ostream& os);
 
 }; //end class InstructionDecoder
 

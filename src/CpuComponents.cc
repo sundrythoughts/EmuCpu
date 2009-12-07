@@ -153,5 +153,6 @@ CpuComponents::reset () {
 	//p->m_loader.reset ();
 	p->m_io_ports.reset ();
 	resetInstCounter ();
+	setTestID ("");
 }
 

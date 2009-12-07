@@ -89,7 +89,7 @@ InstructionDecoder::nextInstruction () {
 		p->m_inst->execute ();
 		p->m_cpu->incInstCounter ();
 
-		//FIXME std::cout << p->m_cpu->getInstCounter () << ":  " << p->m_inst->disassembly ().toString () << std::endl;
+		//std::cout << p->m_cpu->getInstCounter () << ":  " << p->m_inst->disassembly ().toString () << /*" Flag: " << formatHexWord << p->m_eunit->getRegFlags () <<*/ std::endl;
 		if (p->m_cpu->getDatabaseTester ().isConnected ()) {
 			p->m_cpu->getDatabaseTester ().spExecInsert ("jfree143", p->m_cpu->getTestID ());
 		}
@@ -198,11 +198,11 @@ InstructionDecoder::decodeRegRM () {
 	if (im.byte == 0x8D) { //LEA is special because it's D bit is inverted
 		im.d = 1;
 	}
-	else if (im.byte == 0xC4) {
+	else if (im.byte == 0xC4) { //LES is special because it's W and D bits are inverted
 		im.w = 1;
 		im.d = 1;
 	}
-	else if (im.byte == 0xC5) {
+	else if (im.byte == 0xC5) { //LDS is special because it's D bit is inverted
 		im.d = 1;
 	}
 
@@ -283,7 +283,8 @@ InstructionDecoder::decodeRegRM () {
 			case 1: { //sign extend next byte
 				unsigned char udis = p->m_biu->getInstructionBytes<unsigned char> ();
 				p->m_inst->addBytes (udis);
-				mem += (short)udis;
+				mem += (short)(char)udis;
+				//std::cout << (short)(char)udis << std::endl;
 				disSrcIf (im.d) << "+" << formatHexByte << (unsigned int)udis << "]";
 			} break;
 			case 2: { //next two bytes
@@ -506,7 +507,7 @@ InstructionDecoder::decodeSegRM () {
 			case 1: { //sign extend next byte
 				unsigned char udis = p->m_biu->getInstructionBytes<unsigned char> ();
 				p->m_inst->addBytes (udis);
-				mem += (short)udis;
+				mem += (short)(char)udis;
 				disSrcIf (im.d) << "+" << formatHexByte << (unsigned int)udis << "]";
 			} break;
 
@@ -746,7 +747,7 @@ InstructionDecoder::decodeXferInd () {
 			case 1: { //sign extend next byte
 				unsigned char udis = p->m_biu->getInstructionBytes<unsigned char> ();
 				p->m_inst->addBytes (udis);
-				mem += (short)udis;
+				mem += (short)(char)udis;
 				disDest () << "+" << formatHexByte << (unsigned int)udis << "]";
 			} break;
 			case 2: { //next two bytes
@@ -854,7 +855,7 @@ InstructionDecoder::decodeRMImm () {
 			case 1: { //sign extend next byte
 				unsigned char udis = p->m_biu->getInstructionBytes<unsigned char> ();
 				p->m_inst->addBytes (udis);
-				mem += (short)udis;
+				mem += (short)(char)udis;
 				disDest () << "+" << formatHexByte << (unsigned int)udis << "]";
 			} break;
 			case 2: { //next two bytes
@@ -1021,7 +1022,7 @@ InstructionDecoder::decodeRM () {
 			case 1: { //sign extend next byte
 				unsigned char udis = p->m_biu->getInstructionBytes<unsigned char> ();
 				p->m_inst->addBytes (udis);
-				mem += (short)udis;
+				mem += (short)(char)udis;
 				disDest () << "+" << formatHexByte << (unsigned int)udis << "]";
 			} break;
 			case 2: { //next two bytes

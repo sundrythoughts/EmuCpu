@@ -284,8 +284,8 @@ const InstructionTableItem InstructionTable::one_byte_opcode_instruction_map[256
 	{"esc 7", false, GROUP_NONE, &InstructionDecoder::decodeEscNum, &ExecutionUnit::execNotImplemented},
 
 	/* Ex */
-	{"loopne/loopnz", false, GROUP_NONE, &InstructionDecoder::decodeShort, &ExecutionUnit::execLOOPNE},
-	{"loope/loopz", false, GROUP_NONE, &InstructionDecoder::decodeShort, &ExecutionUnit::execLOOPE},
+	{"loopne", false, GROUP_NONE, &InstructionDecoder::decodeShort, &ExecutionUnit::execLOOPNE},
+	{"loope", false, GROUP_NONE, &InstructionDecoder::decodeShort, &ExecutionUnit::execLOOPE},
 	{"loop", false, GROUP_NONE, &InstructionDecoder::decodeShort, &ExecutionUnit::execLOOP},
 	{"jcxz", false, GROUP_NONE, &InstructionDecoder::decodeShort, &ExecutionUnit::execJCXZ},
 	{"in", false, GROUP_NONE, &InstructionDecoder::decodeAccPort, &ExecutionUnit::execIN},
@@ -359,7 +359,7 @@ const InstructionTableItem InstructionTable::one_byte_opcode_instruction_extensi
 		{"ror", true, GROUP_3, &InstructionDecoder::decodeRM, &ExecutionUnit::execROR},
 		{"rcl", true, GROUP_3, &InstructionDecoder::decodeRM, &ExecutionUnit::execRCL},
 		{"rcr", true, GROUP_3, &InstructionDecoder::decodeRM, &ExecutionUnit::execRCR},
-		{"shl/sal", true, GROUP_3, &InstructionDecoder::decodeRM, &ExecutionUnit::execSHL},
+		{"shl", true, GROUP_3, &InstructionDecoder::decodeRM, &ExecutionUnit::execSHL},
 		{"shr", true, GROUP_3, &InstructionDecoder::decodeRM, &ExecutionUnit::execSHR},
 		{0, false, GROUP_RESERVED, &InstructionDecoder::decodeNotImplemented, &ExecutionUnit::execNotImplemented},
 		{"sar", true, GROUP_3, &InstructionDecoder::decodeRM, &ExecutionUnit::execSAR}

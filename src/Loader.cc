@@ -56,7 +56,7 @@ Loader::connectTo (CpuComponents &cpu) {
 
 bool
 Loader::loadFile (std::string filename, bool clear) {
-	if (clear) {
+	if (clear) { //clear the memory and registers first
 		size_t i;
 		size_t sz;
 
@@ -82,22 +82,24 @@ Loader::loadFile (std::string filename, bool clear) {
 		return ret;
 	}
 
+	//read in the initial register values
 	std::fread (&p->m_regs[0], sizeof(unsigned short), p->m_regs.size (), f);
 
+	//get the number of modules
 	unsigned char n_modules;
 	std::fread (&n_modules, sizeof(unsigned char), 1, f);
 
 	unsigned char m_header[5];
 	ModuleHeader m_header_mask;
 
-	while (n_modules) {
+	while (n_modules) { //read in the modules
 		std::fread (m_header, 5, 1, f);
 		m_header_mask.segment_register = m_header[0];
 		m_header_mask.module_offset = *((unsigned short*)&m_header[1]);
 		m_header_mask.module_size = *((unsigned short*)&m_header[3]);
 
 		unsigned short seg_reg = 0;
-		switch (m_header_mask.segment_register) {
+		switch (m_header_mask.segment_register) { //set the segment register values
 		case 0: //cs
 			seg_reg = p->m_regs[m_CS];
 			break;
@@ -112,6 +114,7 @@ Loader::loadFile (std::string filename, bool clear) {
 			break;
 		}
 
+		//do the actually reading into memory of the modules
 		unsigned int addr = physicalAddress (seg_reg, m_header_mask.module_offset);
 		std::fread (&(p->m_memory->data ())[addr], sizeof(unsigned char), m_header_mask.module_size, f);
 
@@ -120,6 +123,7 @@ Loader::loadFile (std::string filename, bool clear) {
 
 	fclose (f);
 
+	//copy the temporary registers into the real registers
 	p->m_eunit->setReg16 (Jaf::REG_AX, p->m_regs[m_AX]);
 	p->m_eunit->setReg16 (Jaf::REG_BX, p->m_regs[m_BX]);
 	p->m_eunit->setReg16 (Jaf::REG_CX, p->m_regs[m_CX]);
@@ -135,6 +139,7 @@ Loader::loadFile (std::string filename, bool clear) {
 	p->m_biu->setRegIP (p->m_regs[m_IP]);
 	p->m_eunit->setReg16 (Jaf::REG_FLAGS, p->m_regs[m_FLAGS]);
 
+	//signal that the memory had been loaded
 	p->m_memory->emitSignalReloaded ();
 
 	return ret;

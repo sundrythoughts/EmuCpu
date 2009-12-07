@@ -25,6 +25,7 @@
 #include "BusInterfaceUnit.hh"
 #include "Defines.hh"
 
+#include <cstdio>
 #include <vector>
 
 class LoaderPrivate {

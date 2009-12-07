@@ -82,8 +82,8 @@ protected:
 	/** @brief Do the actual decoding of the next instruction */
 	void decodeInstruction ();
 
-	//FIXME
-	void decodeRm0To7 ();
+	/** @brief Do the actual decoding of the ModRM byte */
+	unsigned short decodeRm0To7 (unsigned char mrm, std::ostringstream &dis);
 
 public:
 	/** */

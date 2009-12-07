@@ -23,7 +23,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Sim8086</string>
   </property>
   <property name="unifiedTitleAndToolBarOnMac">
    <bool>true</bool>

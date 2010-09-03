@@ -28,7 +28,7 @@
 #include <QtCore>
 #include <QtGui>
 
-#include "ui_FlagsWidget.h"
+#include "ui_FlagsWidget.hh"
 
 /**
 @class FlagsWidget

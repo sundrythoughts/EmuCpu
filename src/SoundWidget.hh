@@ -28,7 +28,7 @@
 #include <QtCore>
 #include <QtGui>
 
-#include "ui_SoundWidget.h"
+#include "ui_SoundWidget.hh"
 
 /**
 @class SoundWidget

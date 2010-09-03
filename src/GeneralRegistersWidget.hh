@@ -28,7 +28,7 @@
 #include <QtCore>
 #include <QtGui>
 
-#include "ui_GeneralRegistersWidget.h"
+#include "ui_GeneralRegistersWidget.hh"
 
 #include <iostream>
 

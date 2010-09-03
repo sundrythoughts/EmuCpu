@@ -28,7 +28,7 @@
 #include <QtCore>
 #include <QtGui>
 
-#include "ui_DisassemblyWidget.h"
+#include "ui_DisassemblyWidget.hh"
 
 /**
 @class DisassemblyWidget

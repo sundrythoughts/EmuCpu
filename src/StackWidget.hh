@@ -28,7 +28,7 @@
 #include <QtCore>
 #include <QtGui>
 
-#include "ui_StackWidget.h"
+#include "ui_StackWidget.hh"
 
 /**
 @class StackWidget

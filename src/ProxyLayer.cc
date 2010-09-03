@@ -138,8 +138,6 @@ ProxyLayer::connectUiSignalsToCpuSlots (Sim86Window &win, Cpu &cpu) {
 	                  &cpu, SLOT(loadFile (QString, bool)));
 	QObject::connect (&win, SIGNAL(setSpeed (int)),
 	                  &cpu, SLOT(setSpeed (int)));
-	QObject::connect (&win, SIGNAL(enableDatabase (bool)),
-	                  &cpu, SLOT(enableDatabase (bool)));
 
 	QObject::connect (&win.getMemoryWidget (), SIGNAL(enableDisable (bool)),
 	                  &m_mem_s_s, SLOT(enableDisable (bool)));

@@ -32,7 +32,6 @@ public:
 	Loader m_loader;
 	IOPorts m_io_ports;
 	ToneGenerator m_tone_gen;
-	DatabaseTester m_db_tester;
 
 	std::string m_testid;
 	int m_inst_counter;
@@ -48,7 +47,6 @@ CpuComponents::CpuComponents () {
 	p->m_decoder.connectTo (*this);
 	p->m_inst.connectTo (*this);
 	p->m_loader.connectTo (*this);
-	p->m_db_tester.connectTo (*this);
 
 	resetInstCounter ();
 }
@@ -100,11 +98,6 @@ CpuComponents::getIOPorts () {
 ToneGenerator&
 CpuComponents::getToneGenerator () {
 	return p->m_tone_gen;
-}
-
-DatabaseTester&
-CpuComponents::getDatabaseTester () {
-	return p->m_db_tester;
 }
 
 void

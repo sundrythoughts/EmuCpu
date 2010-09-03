@@ -28,7 +28,7 @@
 #include <QtCore>
 #include <QtGui>
 
-#include "ui_Sim86Window.h"
+#include "ui_Sim86Window.hh"
 
 #include "FlagsWidget.hh"
 #include "GeneralRegistersWidget.hh"
@@ -118,9 +118,6 @@ Q_SIGNALS:
 
 	/** @brief Set the execution speed of the Cpu. */
 	void setSpeed (int i);
-
-	/** @brief Enable/disable the database testing. */
-	void enableDatabase (bool b);
 
 }; //end class Sim86Window
 

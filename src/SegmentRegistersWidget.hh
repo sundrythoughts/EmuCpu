@@ -28,7 +28,7 @@
 #include <QtCore>
 #include <QtGui>
 
-#include "ui_SegmentRegistersWidget.h"
+#include "ui_SegmentRegistersWidget.hh"
 
 
 /**

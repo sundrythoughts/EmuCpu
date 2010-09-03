@@ -90,9 +90,6 @@ public:
 	/** @brief Get a reference to the ToneGenerator. */
 	ToneGenerator& getToneGenerator ();
 
-	/** @brief Get a reference to the DatabaseTester. */
-	DatabaseTester& getDatabaseTester ();
-
 	/** @brief Set the name of the current executable. */
 	void setTestID (const std::string &t);
 

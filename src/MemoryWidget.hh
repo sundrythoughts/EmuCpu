@@ -30,7 +30,7 @@
 
 #include <iostream>
 
-#include "ui_MemoryWidget.h"
+#include "ui_MemoryWidget.hh"
 
 /**
 @class MemoryWidget

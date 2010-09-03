@@ -110,9 +110,6 @@ public Q_SLOTS:
 	/** @brief Change the delay between execution of instructions. */
 	void setSpeed (int);
 
-	/** @brief Enable/disable the database connection. */
-	void enableDatabase (bool b);
-
 }; //end class Cpu
 
 #endif //JAF__CPU_HH

@@ -18,6 +18,7 @@
 
 
 #include "Cpu.hh"
+#include "Paths.hh"
 
 class CpuPrivate {
 public:
@@ -155,7 +156,7 @@ void
 Cpu::loadFile (QString file_name, bool load_sim86os) {
 	pauseCpu ();
 	if (load_sim86os) {
-		getLoader ().loadFile ("Sim86OS.obj");
+		getLoader ().loadFile (PATH_SIM8086_SHARE "/Sim86OS.obj");
 	}
 	getLoader ().loadFile (file_name.toStdString ());
 	QFileInfo file_info (file_name);
@@ -166,15 +167,5 @@ Cpu::loadFile (QString file_name, bool load_sim86os) {
 void
 Cpu::setSpeed (int i) {
 	p->m_thread_delay = i;
-}
-
-void
-Cpu::enableDatabase (bool b) {
-	if (b) {
-		p->m_cpu_comps.getDatabaseTester ().connect ();
-	}
-	else {
-		p->m_cpu_comps.getDatabaseTester ().disconnect ();
-	}
 }
 

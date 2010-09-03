@@ -32,7 +32,8 @@ class ArithmeticLogicUnitPrivate;
 
 /**
 @class ArithmeticLogicUnit
-@brief Does all the arithmetic and logical operations of the 8086. It also updates flags after arithmetic operations.
+@brief Does all the arithmetic and logical operations of the 8086.
+       It also updates flags after arithmetic operations.
 */
 class ArithmeticLogicUnit {
 	ArithmeticLogicUnitPrivate *p;

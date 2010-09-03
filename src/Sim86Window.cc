@@ -69,8 +69,6 @@ Sim86Window::Sim86Window (QWidget *parent) : QMainWindow (parent) {
 	connect (m_act_view_disassembly, SIGNAL(toggled (bool)), &m_disassembly_widget, SLOT(enableDisableToggle (bool)));
 	connect (m_act_view_disassembly, SIGNAL(toggled (bool)), this, SLOT(enableDisableToggleDisassembly (bool)));
 
-	connect (m_act_enable_db, SIGNAL(triggered (bool)), this, SIGNAL(enableDatabase (bool)));
-
 	connect (m_act_run_start, SIGNAL(triggered ()), this, SIGNAL(startCpu ()));
 	connect (m_act_run_halt, SIGNAL(triggered ()), this, SIGNAL(pauseCpu ()));
 	connect (m_act_run_single_step, SIGNAL(triggered ()), this, SIGNAL(singleStepCpu ()));

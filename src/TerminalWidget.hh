@@ -29,7 +29,7 @@
 #include <QtGui>
 #include "TerminalTextEdit.hh"
 
-#include "ui_TerminalWidget.h"
+#include "ui_TerminalWidget.hh"
 
 /**
 @class TerminalWidget

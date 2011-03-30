@@ -11,8 +11,6 @@ sim8086_SOURCES = Sim86.cc \
                   Cpu.cc \
                   CpuComponents.hh \
                   CpuComponents.cc \
-                  DatabaseTester.hh \
-                  DatabaseTester.cc \
                   Defines.hh \
                   Defines.cc \
                   DisassemblySignalsAndSlots.hh \
@@ -78,6 +76,7 @@ sim8086_SOURCES = Sim86.cc \
                   TerminalWidget.cc \
                   ToneGenerator.hh \
                   ToneGenerator.cc \
+                  Types.hh \
                   Utility.hh \
                   Utility.cc
 
@@ -122,5 +121,5 @@ moc_%.cc: %.hh
 CLEANFILES = moc_*.cc \
              ui_*.hh
 
-sim8086_LDADD = ${QT4_LIBS} ${SIGC2_LIBS} ${GST_LIBS} -lsybdb
+sim8086_LDADD = ${QT4_LIBS} ${SIGC2_LIBS} ${GST_LIBS}
 sim8086_CXXFLAGS = ${QT4_CFLAGS} ${SIGC2_CFLAGS} ${GST_CFLAGS}

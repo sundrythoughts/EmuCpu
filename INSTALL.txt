@@ -1,13 +1,12 @@
-INSTALLING PACKAGES THAT SIM8086 DEPENDS ON:
- * Make sure the following packages are installed:
-   - libgstreamer0.10-dev
-   - qt4-dev-tools
-   - libsigc++-2.0-dev
-   - freetds-dev
- * Ubuntu/Debian package install command: sudo apt-get install libgstreamer0.10-dev qt4-dev-tools libsigc++-2.0-dev freetds-dev
+Dependencies for Sim8086:
+ * Make sure the following packages along with header files are installed:
+   - gstreamer 0.10
+   - qt4
+   - libsigc++-2.0
 
-COMPILING SIM8086 FOR ANYTHING OTHER THAN UBUNTU 9.04 32-bit:
+Compiling with Automake:
  * cd to sim8086 root directory
- * qmake -o Makefile sim86.pro
+ * ./configure
  * make
- * ./sim86
+ * make install
+ * sim8086

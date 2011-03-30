@@ -22,8 +22,8 @@
 @brief Widget for displaying the stack.
 */
 
-#ifndef JAF__STACK_WIDGET_HH
-#define JAF__STACK_WIDGET_HH
+#ifndef SIM8086__STACK_WIDGET_HH
+#define SIM8086__STACK_WIDGET_HH
 
 #include <QtCore>
 #include <QtGui>
@@ -60,5 +60,5 @@ Q_SIGNALS:
 
 }; //end class StackWidget
 
-#endif //JAF__STACK_WIDGET_HH
+#endif //SIM8086__STACK_WIDGET_HH
 

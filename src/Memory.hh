@@ -22,23 +22,24 @@
 @brief Manage the memory for the Cpu.
 */
 
-#ifndef JAF__MEMORY_HH
-#define JAF__MEMORY_HH
+#ifndef SIM8086__MEMORY_HH
+#define SIM8086__MEMORY_HH
 
 #include <sigc++/sigc++.h>
 #include "INumberReadableWritable.hh"
 #include <vector>
 
+#include "Types.hh"
 
 /**
 @class Memory
 @brief Manage the memory for the Cpu.
 */
 class Memory {
-	std::vector<unsigned char> m_memory;
-	sigc::signal<void, int, unsigned char> m_signal_value_changed;
+	std::vector<uint8> m_memory;
+	sigc::signal<void, int32, uint8> m_signal_value_changed;
 	sigc::signal<void, size_t> m_signal_resized;
-	sigc::signal<void, const unsigned char*, size_t> m_signal_reloaded;
+	sigc::signal<void, const uint8*, size_t> m_signal_reloaded;
 
 public:
 	/** */
@@ -57,22 +58,22 @@ public:
 	/**
 	@brief Get a memory loaction at the given index.
 	*/
-	unsigned char operator[] (size_t index) const;
+	uint8 operator[] (size_t index) const;
 
 	/** @brief Get the size of the memory. */
 	size_t size () const;
 
 	/** @brief Get an unchecked pointer to the memory. */
-	unsigned char* data ();
+	uint8* data ();
 
 	/** @brief Signal activated when a memory location is changed. */
-	sigc::signal<void, int, unsigned char>& signalValueChanged ();
+	sigc::signal<void, int32, uint8>& signalValueChanged ();
 
 	/** @brief Signal activated when memory is resized. */
 	sigc::signal<void, size_t>& signalResized ();
 
 	/** @brief Signal activated when memory is reloaded. */
-	sigc::signal<void, const unsigned char*, size_t>& signalReloaded ();
+	sigc::signal<void, const uint8*, size_t>& signalReloaded ();
 
 	/** @brief Emit signalValueChanged () for each memory location. */
 	void emitValueChangedForAll () const;
@@ -178,5 +179,5 @@ Memory::write (size_t addr, const INumberReadableWritable<T> &src) {
 	return true;
 }
 
-#endif //JAF__MEMORY_HH
+#endif //SIM8086__MEMORY_HH
 

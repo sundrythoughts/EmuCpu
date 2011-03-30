@@ -34,7 +34,7 @@ public:
 	ToneGenerator m_tone_gen;
 
 	std::string m_testid;
-	int m_inst_counter;
+	int32 m_inst_counter;
 	bool m_halt;
 };
 
@@ -110,7 +110,7 @@ CpuComponents::getTestID () const {
 	return p->m_testid;
 }
 
-int
+int32
 CpuComponents::getInstCounter () const {
 	return p->m_inst_counter;
 }

@@ -22,8 +22,8 @@
 @brief General register signal translation layer between Sigc++ and Qt.
 */
 
-#ifndef JAF__GENERAL_REGISTER_SIGNALS_AND_SLOTS_HH
-#define JAF__GENERAL_REGISTER_SIGNALS_AND_SLOTS_HH
+#ifndef SIM8086__GENERAL_REGISTER_SIGNALS_AND_SLOTS_HH
+#define SIM8086__GENERAL_REGISTER_SIGNALS_AND_SLOTS_HH
 
 #include <QObject>
 
@@ -90,5 +90,5 @@ Q_SIGNALS:
 
 }; //end class GeneralRegisterSignalsAndSlots
 
-#endif //JAF__GENERAL_REGISTER_SIGNALS_AND_SLOTS_HH
+#endif //SIM8086__GENERAL_REGISTER_SIGNALS_AND_SLOTS_HH
 

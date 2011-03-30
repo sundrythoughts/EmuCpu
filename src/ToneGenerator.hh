@@ -21,8 +21,8 @@
 @brief Plays a tone through the main soundcard using GStreamer.
 */
 
-#ifndef JAF__TONE_GENERATOR_HH
-#define JAF__TONE_GENERATOR_HH
+#ifndef SIM8086__TONE_GENERATOR_HH
+#define SIM8086__TONE_GENERATOR_HH
 
 #include <iostream>
 #include <gst/gst.h>
@@ -54,5 +54,5 @@ public:
 	void stop ();
 };
 
-#endif //JAF__TONE_GENERATOR_HH
+#endif //SIM8086__TONE_GENERATOR_HH
 

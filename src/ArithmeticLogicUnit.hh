@@ -22,10 +22,10 @@
 @brief Does all the arithmetic and logical operations of the 8086.
 */
 
-#ifndef JAF__ARITHMETIC_LOGIC_UNIT_HH
-#define JAF__ARITHMETIC_LOGIC_UNIT_HH
+#ifndef SIM8086__ARITHMETIC_LOGIC_UNIT_HH
+#define SIM8086__ARITHMETIC_LOGIC_UNIT_HH
 
-//#include "CpuComponents.hh"
+#include "Types.hh"
 
 class CpuComponents;
 class ArithmeticLogicUnitPrivate;
@@ -55,107 +55,107 @@ public:
 	/**
 	@brief FIXME - Update the auxilliary flag (AF) for an 8-bit addition operation.
 	*/
-	void updateFlagAddAF (unsigned char result8);
+	void updateFlagAddAF (uint8 result8);
 
 	/**
 	@brief FIXME - Update the auxilliary flag (AF) for an 8-bit subtraction operation.
 	*/
-	void updateFlagSubAF (char result8);
+	void updateFlagSubAF (int8 result8);
 
 	/**
 	@brief Update the carry flag (CF) for an 8-bit addition operation.
 	*/
-	void updateFlagAddCF (unsigned char result8, unsigned short result16);
+	void updateFlagAddCF (uint8 result8, uint16 result16);
 
 	/**
 	@brief Update the carry flag (CF) for a 16-bit addition operation.
 	*/
-	void updateFlagAddCF (unsigned short result16, unsigned int result32);
+	void updateFlagAddCF (uint16 result16, uint32 result32);
 
 	/**
 	@brief Update the carry flag (CF) for an 8-bit subtraction operation.
 	*/
-	void updateFlagSubCF (unsigned char result8, short result16);
+	void updateFlagSubCF (uint8 result8, int16 result16);
 
 	/**
 	@brief Update the carry flag (CF) for a 16-bit subtraction operation.
 	*/
-	void updateFlagSubCF (unsigned short result16, int result32);
+	void updateFlagSubCF (uint16 result16, int32 result32);
 
 	/**
 	@brief Update the overflow flag (OF) for an 8-bit addition operation.
 	*/
-	void updateFlagAddOF (unsigned char orig_dest, unsigned char src, unsigned char dest);
+	void updateFlagAddOF (uint8 orig_dest, uint8 src, uint8 dest);
 
 	/**
 	@brief Update the overflow flag (OF) for an 16-bit addition operation.
 	*/
-	void updateFlagAddOF (unsigned short orig_dest, unsigned short src, unsigned short dest);
+	void updateFlagAddOF (uint16 orig_dest, uint16 src, uint16 dest);
 
 	/**
 	@brief Update the overflow flag (OF) for an 8-bit subtraction operation.
 	*/
-	void updateFlagSubOF (unsigned char orig_dest, unsigned char src, unsigned char dest);
+	void updateFlagSubOF (uint8 orig_dest, uint8 src, uint8 dest);
 
 	/**
 	@brief Update the overflow flag (OF) for an 16-bit subtraction operation.
 	*/
-	void updateFlagSubOF (unsigned short orig_dest, unsigned short src, unsigned short dest);
+	void updateFlagSubOF (uint16 orig_dest, uint16 src, uint16 dest);
 
 	/**
 	@brief Update the parity flag (PF) for an 8-bit operation.
 	*/
-	void updateFlagPF (unsigned char val);
+	void updateFlagPF (uint8 val);
 
 	/**
 	@brief Update the sign flag (SF) for an 8-bit operation.
 	*/
-	void updateFlagSF (unsigned char val);
+	void updateFlagSF (uint8 val);
 
 	/**
 	@brief Update the sign flag (SF) for a 16-bit operation.
 	*/
-	void updateFlagSF (unsigned short val);
+	void updateFlagSF (uint16 val);
 
 	/**
 	@brief Update the zero flag (ZF) for an 8-bit operation.
 	*/
-	void updateFlagZF (unsigned char val);
+	void updateFlagZF (uint8 val);
 
 	/**
 	@brief Update the zero flag (ZF) for a 16-bit operation.
 	*/
-	void updateFlagZF (unsigned short val);
+	void updateFlagZF (uint16 val);
 
 	/**
 	@brief Do an 8-bit add with a carry.
 	*/
-	void opAdc (unsigned char dest, unsigned char src, unsigned char &ret);
+	void opAdc (uint8 dest, uint8 src, uint8 &ret);
 
 	/**
 	@brief Do a 16-bit add with a carry.
 	*/
-	void opAdc (unsigned short dest, unsigned short src, unsigned short &ret);
+	void opAdc (uint16 dest, uint16 src, uint16 &ret);
 
 	/**
 	@brief Do an 8-bit add.
 	*/
-	void opAdd (unsigned char dest, unsigned char src, unsigned char &ret);
+	void opAdd (uint8 dest, uint8 src, uint8 &ret);
 
 	/**
 	@brief Do a 16-bit add.
 	*/
-	void opAdd (unsigned short dest, unsigned short src, unsigned short &ret);
+	void opAdd (uint16 dest, uint16 src, uint16 &ret);
 
 	/**
 	@brief Do an 8-bit and.
 	*/
-	void opAnd (unsigned char dest, unsigned char src, unsigned char &ret);
+	void opAnd (uint8 dest, uint8 src, uint8 &ret);
 
 	/**
 	@brief Do a 16-bit and.
 	*/
-	void opAnd (unsigned short dest, unsigned short src, unsigned short &ret);
+	void opAnd (uint16 dest, uint16 src, uint16 &ret);
 
 	/** */
 	void opCmc ();
@@ -163,214 +163,214 @@ public:
 	/**
 	@brief Do an 8-bit cmp.
 	*/
-	void opCmp (unsigned char dest, unsigned char src);
+	void opCmp (uint8 dest, uint8 src);
 
 	/**
 	@brief Do a 16-bit cmp.
 	*/
-	void opCmp (unsigned short dest, unsigned short src);
+	void opCmp (uint16 dest, uint16 src);
 
 	/**
 	@brief Do an 8-bit dec.
 	*/
-	void opDec (unsigned char src, unsigned char &ret);
+	void opDec (uint8 src, uint8 &ret);
 
 	/**
 	@brief Do a 16-bit dec.
 	*/
-	void opDec (unsigned short src, unsigned short &ret);
+	void opDec (uint16 src, uint16 &ret);
 
 	/**
 	@brief Do an 8-bit div.
 	*/
-	bool opDiv (unsigned char src);
+	bool opDiv (uint8 src);
 
 	/**
 	@brief Do a 16-bit div.
 	*/
-	bool opDiv (unsigned short src);
+	bool opDiv (uint16 src);
 
 	/**
 	@brief Do an 8-bit idiv.
 	*/
-	void opIdiv (unsigned char src);
+	void opIdiv (uint8 src);
 
 	/**
 	@brief Do a 16-bit idiv.
 	*/
-	void opIdiv (unsigned short src);
+	void opIdiv (uint16 src);
 
 	/**
 	@brief Do an 8-bit imul.
 	*/
-	void opImul (unsigned char src);
+	void opImul (uint8 src);
 
 	/**
 	@brief Do a 16-bit imul.
 	*/
-	void opImul (unsigned short src);
+	void opImul (uint16 src);
 
 	/**
 	@brief Do an 8-bit inc.
 	*/
-	void opInc (unsigned char src, unsigned char &ret);
+	void opInc (uint8 src, uint8 &ret);
 
 	/**
 	@brief Do a 16-bit inc.
 	*/
-	void opInc (unsigned short src, unsigned short &ret);
+	void opInc (uint16 src, uint16 &ret);
 
 	/**
 	@brief Do an 8-bit mul.
 	*/
-	void opMul (unsigned char src);
+	void opMul (uint8 src);
 
 	/**
 	@brief Do a 16-bit mul.
 	*/
-	void opMul (unsigned short src);
+	void opMul (uint16 src);
 
 	/**
 	@brief Do an 8-bit neg.
 	*/
-	void opNeg (unsigned char dest, unsigned char &ret);
+	void opNeg (uint8 dest, uint8 &ret);
 
 	/**
 	@brief Do a 16-bit neg.
 	*/
-	void opNeg (unsigned short dest, unsigned short &ret);
+	void opNeg (uint16 dest, uint16 &ret);
 
 	/**
 	@brief Do an 8-bit or.
 	*/
-	void opOr (unsigned char dest, unsigned char src, unsigned char &ret);
+	void opOr (uint8 dest, uint8 src, uint8 &ret);
 
 	/**
 	@brief Do a 16-bit or.
 	*/
-	void opOr (unsigned short dest, unsigned short src, unsigned short &ret);
+	void opOr (uint16 dest, uint16 src, uint16 &ret);
 
 	/**
 	@brief Do an 8-bit rcl.
 	*/
-	void opRcl (unsigned char dest, unsigned int cnt, unsigned char &ret);
+	void opRcl (uint8 dest, uint32 cnt, uint8 &ret);
 
 	/**
 	@brief Do a 16-bit rcl.
 	*/
-	void opRcl (unsigned short dest, unsigned int cnt, unsigned short &ret);
+	void opRcl (uint16 dest, uint32 cnt, uint16 &ret);
 
 	/**
 	@brief Do an 8-bit rcr.
 	*/
-	void opRcr (unsigned char dest, unsigned int cnt, unsigned char &ret);
+	void opRcr (uint8 dest, uint32 cnt, uint8 &ret);
 
 	/**
 	@brief Do a 16-bit rcr.
 	*/
-	void opRcr (unsigned short dest, unsigned int cnt, unsigned short &ret);
+	void opRcr (uint16 dest, uint32 cnt, uint16 &ret);
 
 	/**
 	@brief Do an 8-bit rol.
 	*/
-	void opRol (unsigned char dest, unsigned char cnt, unsigned char &ret);
+	void opRol (uint8 dest, uint8 cnt, uint8 &ret);
 
 	/**
 	@brief Do a 16-bit rol.
 	*/
-	void opRol (unsigned short dest, unsigned char cnt, unsigned short &ret);
+	void opRol (uint16 dest, uint8 cnt, uint16 &ret);
 
 	/**
 	@brief Do an 8-bit ror.
 	*/
-	void opRor (unsigned char dest, unsigned char cnt, unsigned char &ret);
+	void opRor (uint8 dest, uint8 cnt, uint8 &ret);
 
 	/**
 	@brief Do a 16-bit ror.
 	*/
-	void opRor (unsigned short dest, unsigned char cnt, unsigned short &ret);
+	void opRor (uint16 dest, uint8 cnt, uint16 &ret);
 
 	/**
 	@brief Do an 8-bit sal.
 	*/
-	void opSal (unsigned char dest, unsigned int cnt, unsigned char &ret);
+	void opSal (uint8 dest, uint32 cnt, uint8 &ret);
 
 	/**
 	@brief Do a 16-bit sal.
 	*/
-	void opSal (unsigned short dest, unsigned int cnt, unsigned short &ret);
+	void opSal (uint16 dest, uint32 cnt, uint16 &ret);
 
 	/**
 	@brief Do an 8-bit sar.
 	*/
-	void opSar (unsigned char dest, unsigned int cnt, unsigned char &ret);
+	void opSar (uint8 dest, uint32 cnt, uint8 &ret);
 
 	/**
 	@brief Do a 16-bit sar.
 	*/
-	void opSar (unsigned short dest, unsigned int cnt, unsigned short &ret);
+	void opSar (uint16 dest, uint32 cnt, uint16 &ret);
 
 	/**
 	@brief Do an 8-bit sbb.
 	*/
-	void opSbb (unsigned char dest, unsigned char src, unsigned char &ret);
+	void opSbb (uint8 dest, uint8 src, uint8 &ret);
 
 	/**
 	@brief Do a 16-bit sbb.
 	*/
-	void opSbb (unsigned short dest, unsigned short src, unsigned short &ret);
+	void opSbb (uint16 dest, uint16 src, uint16 &ret);
 
 	/**
 	@brief Do an 8-bit shl.
 	*/
-	void opShl (unsigned char dest, unsigned int cnt, unsigned char &ret);
+	void opShl (uint8 dest, uint32 cnt, uint8 &ret);
 
 	/**
 	@brief Do a 16-bit shl.
 	*/
-	void opShl (unsigned short dest, unsigned int cnt, unsigned short &ret);
+	void opShl (uint16 dest, uint32 cnt, uint16 &ret);
 
 	/**
 	@brief Do an 8-bit shr.
 	*/
-	void opShr (unsigned char dest, unsigned int cnt, unsigned char &ret);
+	void opShr (uint8 dest, uint32 cnt, uint8 &ret);
 
 	/**
 	@brief Do a 16-bit shr.
 	*/
-	void opShr (unsigned short dest, unsigned int cnt, unsigned short &ret);
+	void opShr (uint16 dest, uint32 cnt, uint16 &ret);
 
 	/**
 	@brief Do an 8-bit sub.
 	*/
-	void opSub (unsigned char dest, unsigned char src, unsigned char &ret);
+	void opSub (uint8 dest, uint8 src, uint8 &ret);
 
 	/**
 	@brief Do a 16-bit sub.
 	*/
-	void opSub (unsigned short dest, unsigned short src, unsigned short &ret);
+	void opSub (uint16 dest, uint16 src, uint16 &ret);
 
 	/**
 	@brief Do an 8-bit test.
 	*/
-	void opTest (unsigned char dest, unsigned char src);
+	void opTest (uint8 dest, uint8 src);
 
 	/**
 	@brief Do a 16-bit test
 	*/
-	void opTest (unsigned short dest, unsigned short src);
+	void opTest (uint16 dest, uint16 src);
 
 	/**
 	@brief Do an 8-bit xor.
 	*/
-	void opXor (unsigned char dest, unsigned char src, unsigned char &ret);
+	void opXor (uint8 dest, uint8 src, uint8 &ret);
 
 	/**
 	@brief Do a 16-bit xor.
 	*/
-	void opXor (unsigned short dest, unsigned short src, unsigned short &ret);
+	void opXor (uint16 dest, uint16 src, uint16 &ret);
 
 }; //end class ArithmeticLogicUnit
 
-#endif //JAF__ARITHMETIC_LOGIC_UNIT_HH
+#endif //SIM8086__ARITHMETIC_LOGIC_UNIT_HH
 

@@ -21,8 +21,8 @@
 @brief Packages together all of the parts of the cpu like the EU, BIU, etc.
 */
 
-#ifndef JAF__CPU_COMPONENTS_HH
-#define JAF__CPU_COMPONENTS_HH
+#ifndef SIM8086__CPU_COMPONENTS_HH
+#define SIM8086__CPU_COMPONENTS_HH
 
 #include "ExecutionUnit.hh"
 #include "ArithmeticLogicUnit.hh"
@@ -33,7 +33,8 @@
 #include "Loader.hh"
 #include "IOPorts.hh"
 #include "ToneGenerator.hh"
-#include "DatabaseTester.hh"
+
+#include "Types.hh"
 
 class Instruction;
 class InstructionDecoder;
@@ -97,7 +98,7 @@ public:
 	const std::string& getTestID () const;
 
 	/** @brief Get the instruction counter. */
-	int getInstCounter () const;
+	int32 getInstCounter () const;
 
 	/** @brief Increment the instruction counter. */
 	void incInstCounter ();
@@ -119,5 +120,5 @@ public:
 
 }; //end class CpuComponents
 
-#endif //JAF__CPU_COMPONENTS_HH
+#endif //SIM8086__CPU_COMPONENTS_HH
 

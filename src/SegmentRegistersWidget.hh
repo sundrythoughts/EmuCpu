@@ -22,8 +22,8 @@
 @brief Widget for displaying the segment registers.
 */
 
-#ifndef JAF__SEGMENT_REGISTERS_WIDGET_HH
-#define JAF__SEGMENT_REGISTERS_WIDGET_HH
+#ifndef SIM8086__SEGMENT_REGISTERS_WIDGET_HH
+#define SIM8086__SEGMENT_REGISTERS_WIDGET_HH
 
 #include <QtCore>
 #include <QtGui>
@@ -70,5 +70,5 @@ Q_SIGNALS:
 
 }; //end class SegmentRegistersWidget
 
-#endif //JAF__SEGMENT_REGISTERS_WIDGET_HH
+#endif //SIM8086__SEGMENT_REGISTERS_WIDGET_HH
 

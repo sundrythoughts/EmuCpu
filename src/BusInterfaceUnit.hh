@@ -22,8 +22,8 @@
 @brief Manages the segment registers, the instruction pointer, and memory access.
 */
 
-#ifndef JAF__BUS_INTERFACE_UNIT_HH
-#define JAF__BUS_INTERFACE_UNIT_HH
+#ifndef SIM8086__BUS_INTERFACE_UNIT_HH
+#define SIM8086__BUS_INTERFACE_UNIT_HH
 
 #include "Defines.hh"
 #include "Memory.hh"
@@ -31,6 +31,8 @@
 #include "MemoryAddress.hh"
 #include <vector>
 #include <iostream>
+
+#include "Types.hh"
 
 class CpuComponents;
 class BusInterfaceUnitPrivate;
@@ -42,13 +44,13 @@ class BusInterfaceUnitPrivate;
 class BusInterfaceUnit {
 	BusInterfaceUnitPrivate *p;
 
-	unsigned short m_sregs[Jaf::SREG_COUNT];
-	Register<unsigned short> m_seg_regs[Jaf::SREG_COUNT];
+	uint16 m_sregs[Jaf::SREG_COUNT];
+	Register<uint16> m_seg_regs[Jaf::SREG_COUNT];
 
-	unsigned short m_ip;
-	unsigned short m_seg_override;
+	uint16 m_ip;
+	uint16 m_seg_override;
 
-	Register<unsigned short> m_reg_ip;
+	Register<uint16> m_reg_ip;
 
 	Memory *m_memory;
 
@@ -75,47 +77,47 @@ public:
 	@brief Get reference to a segment register.
 	@param index Index of a segment register (possible values are the same as Intel's).
 	*/
-	Register<unsigned short>& getSegReg (size_t index);
+	Register<uint16>& getSegReg (size_t index);
 
 	/**
 	@brief Set a segment register value.
 	@param index Index of a segment register (possible values are the same as Intel's).
 	@param val Value to use.
 	*/
-	void setSegReg (size_t index, unsigned short val);
+	void setSegReg (size_t index, uint16 val);
 
 	/** @brief Get the CS segment register. */
-	Register<unsigned short>& getSegRegCS ();
+	Register<uint16>& getSegRegCS ();
 
 	/** @brief Set the CS segment register. */
-	void setSegRegCS (unsigned short val);
+	void setSegRegCS (uint16 val);
 
 	/** @brief Get the DS segment register. */
-	Register<unsigned short>& getSegRegDS ();
+	Register<uint16>& getSegRegDS ();
 
 	/** @brief Set the DS segment register. */
-	void setSegRegDS (unsigned short val);
+	void setSegRegDS (uint16 val);
 
 	/** @brief Get the ES segment register. */
-	Register<unsigned short>& getSegRegES ();
+	Register<uint16>& getSegRegES ();
 
 	/** @brief Set the ES segment register. */
-	void setSegRegES (unsigned short val);
+	void setSegRegES (uint16 val);
 
 	/** @brief Get the SS segment register. */
-	Register<unsigned short>& getSegRegSS ();
+	Register<uint16>& getSegRegSS ();
 
 	/** @brief Set the SS segment register. */
-	void setSegRegSS (unsigned short val);
+	void setSegRegSS (uint16 val);
 
 	/** @brief Get the IP register. */
-	Register<unsigned short>& getRegIP ();
+	Register<uint16>& getRegIP ();
 
 	/** @brief Set the IP register. */
-	void setRegIP (unsigned short val);
+	void setRegIP (uint16 val);
 
 	/** @brief Set the segment override value. */
-	void setSegOverride (unsigned short val);
+	void setSegOverride (uint16 val);
 
 	/**
 	@brief Get a copy of data in memory.
@@ -123,7 +125,7 @@ public:
 	@param offset Offset of memory location.
 	*/
 	template<typename T>
-	T getMemoryData (unsigned short seg, unsigned offset);
+	T getMemoryData (uint16 seg, uint32 offset);
 
 	/**
 	@brief Get a MemoryAddress pointer to a memory location.
@@ -133,7 +135,7 @@ public:
 	@param override_the_override If true, then use seg for the segment value even if the instruction has a segment override.
 	*/
 	template<typename T>
-	void getMemoryAddress (MemoryAddress<T> * &mem_addr, unsigned short seg, unsigned short offset, bool override_the_override = false);
+	void getMemoryAddress (MemoryAddress<T> * &mem_addr, uint16 seg, uint16 offset, bool override_the_override = false);
 
 	/**
 	@brief Get a MemoryAddress pointer to a memory location.
@@ -144,7 +146,7 @@ public:
 	*/
 	template<typename T>
 	MemoryAddress<T>*
-	getMemoryAddress (unsigned short seg, unsigned short offset, bool override_the_override = false);
+	getMemoryAddress (uint16 seg, uint16 offset, bool override_the_override = false);
 
 	/** @brief Read sizeof(T) bytes starting at IP and then increment IP sizeof(T) bytes. */
 	template<typename T>
@@ -154,7 +156,7 @@ public:
 
 template<typename T>
 T
-BusInterfaceUnit::getMemoryData (unsigned short seg, unsigned offset) {
+BusInterfaceUnit::getMemoryData (uint16 seg, uint32 offset) {
 	size_t addr = (seg << 4) + offset;
 	T val;
 	m_memory->read (addr, val);
@@ -163,10 +165,10 @@ BusInterfaceUnit::getMemoryData (unsigned short seg, unsigned offset) {
 
 template<typename T>
 void
-BusInterfaceUnit::getMemoryAddress (MemoryAddress<T> * &mem_addr, unsigned short seg, unsigned short offset, bool override_the_override) {
-	if (!override_the_override && m_seg_override != (unsigned short)-1) {
+BusInterfaceUnit::getMemoryAddress (MemoryAddress<T> * &mem_addr, uint16 seg, uint16 offset, bool override_the_override) {
+	if (!override_the_override && m_seg_override != (uint16)-1) {
 		seg = m_seg_override;
-		m_seg_override = (unsigned short)-1;
+		m_seg_override = (uint16)-1;
 	}
 
 	mem_addr = new MemoryAddress<T> (m_memory, seg, offset);
@@ -174,10 +176,10 @@ BusInterfaceUnit::getMemoryAddress (MemoryAddress<T> * &mem_addr, unsigned short
 
 template<typename T>
 MemoryAddress<T>*
-BusInterfaceUnit::getMemoryAddress (unsigned short seg, unsigned short offset, bool override_the_override) {
-	if (!override_the_override && m_seg_override != (unsigned short)-1) {
+BusInterfaceUnit::getMemoryAddress (uint16 seg, uint16 offset, bool override_the_override) {
+	if (!override_the_override && m_seg_override != (uint16)-1) {
 		seg = m_seg_override;
-		m_seg_override = (unsigned short)-1;
+		m_seg_override = (uint16)-1;
 	}
 
 	return new MemoryAddress<T> (m_memory, seg, offset);
@@ -196,5 +198,5 @@ BusInterfaceUnit::getInstructionBytes () {
 	return val;
 }
 
-#endif //JAF__BUS_INTERFACE_UNIT_HH
+#endif //SIM8086__BUS_INTERFACE_UNIT_HH
 

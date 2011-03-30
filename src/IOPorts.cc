@@ -26,7 +26,7 @@ public:
 	CpuComponents *m_cpu;
 
 	sigc::signal<void, char> m_signal_char_out;
-	sigc::signal<void, unsigned short, unsigned short> m_signal_sound_out;
+	sigc::signal<void, uint16, uint16> m_signal_sound_out;
 
 	std::queue<char> m_char_input_q;
 
@@ -53,8 +53,8 @@ IOPorts::signalCharOutput () {
 }
 
 sigc::signal<void,
-             unsigned short,
-             unsigned short>
+             uint16,
+             uint16>
 IOPorts::signalSoundOutput () {
 	return p->m_signal_sound_out;
 }
@@ -78,7 +78,7 @@ IOPorts::reset () {
 }
 
 void
-IOPorts::playSound (unsigned short freq, unsigned short duration) {
-	p->m_tone_gen.play ((float)freq, duration);
+IOPorts::playSound (uint16 freq, uint16 duration) {
+	p->m_tone_gen.play ((float32)freq, duration);
 }
 

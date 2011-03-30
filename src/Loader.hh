@@ -22,10 +22,12 @@
 @brief Load an obj file into memory.
 */
 
-#ifndef JAF__LOADER_HH
-#define JAF__LOADER_HH
+#ifndef SIM8086__LOADER_HH
+#define SIM8086__LOADER_HH
 
 #include <string>
+
+#include "Types.hh"
 
 class CpuComponents;
 class LoaderPrivate;
@@ -54,14 +56,14 @@ class Loader {
 	};
 
 	struct ModuleHeader {
-		unsigned char segment_register;
-		unsigned short module_offset;
-		unsigned short module_size;
+		uint8 segment_register;
+		uint16 module_offset;
+		uint16 module_size;
 	};
 
 	LoaderPrivate *p;
 
-	unsigned int physicalAddress (unsigned int seg, unsigned int offset);
+	uint32 physicalAddress (uint32 seg, uint32 offset);
 
 public:
 	/** */
@@ -82,12 +84,12 @@ public:
 	bool loadFile (std::string filename, bool clear = false);
 
 	/** @brief Return the checksum of the memory. */
-	int checksumMemory ();
+	int32 checksumMemory ();
 
 	/** @brief Return the checksum of the registers. */
-	int checksumRegisters ();
+	int32 checksumRegisters ();
 
 }; //end class Loader
 
-#endif //JAF__LOADER_HH
+#endif //SIM8086__LOADER_HH
 

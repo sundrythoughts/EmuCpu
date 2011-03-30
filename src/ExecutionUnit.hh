@@ -22,11 +22,13 @@
 @brief Manage the general registers, flag register, and instruction execution.
 */
 
-#ifndef JAF__EXECUTION_UNIT_HH
-#define JAF__EXECUTION_UNIT_HH
+#ifndef SIM8086__EXECUTION_UNIT_HH
+#define SIM8086__EXECUTION_UNIT_HH
 
 #include "Register.hh"
 #include <sigc++/sigc++.h>
+
+#include "Types.hh"
 
 class CpuComponents;
 class OperandList;
@@ -53,7 +55,7 @@ public:
 	void connectTo (CpuComponents &cpu);
 
 	/** @brief Sigc++ signal emitted when data is pushed on the stack. */
-	sigc::signal<void, unsigned short, unsigned short, unsigned short>& signalStackPush ();
+	sigc::signal<void, uint16, uint16, uint16>& signalStackPush ();
 
 	/** @brief Sigc++ signal emitted when data is popped off the stack. */
 	sigc::signal<void>& signalStackPop ();
@@ -62,121 +64,121 @@ public:
 	void reset ();
 
 	/** @brief Get an 8-bit register given its RegisterIndex8 index. */
-	Register<unsigned char>& getReg8 (size_t index);
+	Register<uint8>& getReg8 (size_t index);
 
 	/** @brief Set an 8-bit register given its RegisterIndex8 index. */
-	void setReg8 (size_t index, unsigned char val);
+	void setReg8 (size_t index, uint8 val);
 
 	/** @brief Get a 16-bit register given its RegisterIndex16 index. */
-	Register<unsigned short>& getReg16 (size_t index);
+	Register<uint16>& getReg16 (size_t index);
 
 	/** @brief Set a 16-bit register given its RegisterIndex16 index. */
-	void setReg16 (size_t index, unsigned short val);
+	void setReg16 (size_t index, uint16 val);
 
 	/** @brief Get register AX. */
-	Register<unsigned short>& getRegAX ();
+	Register<uint16>& getRegAX ();
 
 	/** @brief Set register AX. */
-	void setRegAX (unsigned short val);
+	void setRegAX (uint16 val);
 
 	/** @brief Get register AH. */
-	Register<unsigned char>& getRegAH ();
+	Register<uint8>& getRegAH ();
 
 	/** @brief Set register AH. */
-	void setRegAH (unsigned char val);
+	void setRegAH (uint8 val);
 
 	/** @brief Get register AL. */
-	Register<unsigned char>& getRegAL ();
+	Register<uint8>& getRegAL ();
 
 	/** @brief Set register AL. */
-	void setRegAL (unsigned char val);
+	void setRegAL (uint8 val);
 
 	/** @brief Get register BX. */
-	Register<unsigned short>& getRegBX ();
+	Register<uint16>& getRegBX ();
 
 	/** @brief Set register BX. */
-	void setRegBX (unsigned short val);
+	void setRegBX (uint16 val);
 
 	/** @brief Get register BH. */
-	Register<unsigned char>& getRegBH ();
+	Register<uint8>& getRegBH ();
 
 	/** @brief Set register BH. */
-	void setRegBH (unsigned char val);
+	void setRegBH (uint8 val);
 
 	/** @brief Get register BL. */
-	Register<unsigned char>& getRegBL ();
+	Register<uint8>& getRegBL ();
 
 	/** @brief Set register BL. */
-	void setRegBL (unsigned char val);
+	void setRegBL (uint8 val);
 
 	/** @brief Get register CX. */
-	Register<unsigned short>& getRegCX ();
+	Register<uint16>& getRegCX ();
 
 	/** @brief Set register CX. */
-	void setRegCX (unsigned short val);
+	void setRegCX (uint16 val);
 
 	/** @brief Get register CH. */
-	Register<unsigned char>& getRegCH ();
+	Register<uint8>& getRegCH ();
 
 	/** @brief Set register CH. */
-	void setRegCH (unsigned char val);
+	void setRegCH (uint8 val);
 
 	/** @brief Get register CL. */
-	Register<unsigned char>& getRegCL ();
+	Register<uint8>& getRegCL ();
 
 	/** @brief Set register CL. */
-	void setRegCL (unsigned char val);
+	void setRegCL (uint8 val);
 
 	/** @brief Get register DX. */
-	Register<unsigned short>& getRegDX ();
+	Register<uint16>& getRegDX ();
 
 	/** @brief Set register DX. */
-	void setRegDX (unsigned short val);
+	void setRegDX (uint16 val);
 
 	/** @brief Get register DH. */
-	Register<unsigned char>& getRegDH ();
+	Register<uint8>& getRegDH ();
 
 	/** @brief Set register DH. */
-	void setRegDH (unsigned char val);
+	void setRegDH (uint8 val);
 
 	/** @brief Get register DL. */
-	Register<unsigned char>& getRegDL ();
+	Register<uint8>& getRegDL ();
 
 	/** @brief Set register DL. */
-	void setRegDL (unsigned char val);
+	void setRegDL (uint8 val);
 
 	/** @brief Get register DI. */
-	Register<unsigned short>& getRegDI ();
+	Register<uint16>& getRegDI ();
 
 	/** @brief Set register DI. */
-	void setRegDI (unsigned short val);
+	void setRegDI (uint16 val);
 
 	/** @brief Get register SI. */
-	Register<unsigned short>& getRegSI ();
+	Register<uint16>& getRegSI ();
 
 	/** @brief Set register SI. */
-	void setRegSI (unsigned short val);
+	void setRegSI (uint16 val);
 
 	/** @brief Get register BP. */
-	Register<unsigned short>& getRegBP ();
+	Register<uint16>& getRegBP ();
 
 	/** @brief Set register BP. */
-	void setRegBP (unsigned short val);
+	void setRegBP (uint16 val);
 
 	/** @brief Get register SP. */
-	Register<unsigned short>& getRegSP ();
+	Register<uint16>& getRegSP ();
 
 	/** @brief Set register SP. */
-	void setRegSP (unsigned short val);
+	void setRegSP (uint16 val);
 
 	/** @brief Reset the Flags register to a particular value. */
-	void resetRegFlags (unsigned short val = 2);
+	void resetRegFlags (uint16 val = 2);
 
 	/** @brief Get register FLAGS. */
-	Register<unsigned short>& getRegFlags ();
+	Register<uint16>& getRegFlags ();
 
 	/** @brief Set register FLAGS. */
-	void setRegFlags (unsigned short val);
+	void setRegFlags (uint16 val);
 
 	/** @brief Get register FLAGS AF. */
 	bool getRegFlagsAF () const;
@@ -530,13 +532,13 @@ public:
 	void execXOR ();
 
 private:
-	void realPush (unsigned short num);
+	void realPush (uint16 num);
 
 	void realPop ();
 
-	void realPop (INumberReadableWritable<unsigned short> &num);
+	void realPop (INumberReadableWritable<uint16> &num);
 
 }; //end class ExecutionUnit
 
-#endif //JAF__EXECUTION_UNIT_HH
+#endif //SIM8086__EXECUTION_UNIT_HH
 

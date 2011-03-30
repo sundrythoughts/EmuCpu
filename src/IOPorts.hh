@@ -21,11 +21,13 @@
 @brief Control the input and output ports of the Cpu.
 */
 
-#ifndef JAF__IO_PORTS_HH
-#define JAF__IO_PORTS_HH
+#ifndef SIM8086__IO_PORTS_HH
+#define SIM8086__IO_PORTS_HH
 
 #include <sigc++/sigc++.h>
 #include <queue>
+
+#include "Types.hh"
 
 class CpuComponents;
 class IOPortsPrivate;
@@ -51,7 +53,7 @@ public:
 	sigc::signal<void, char>& signalCharOutput ();
 
 	/** @brief Get the signalSoundOutput signal. */
-	sigc::signal<void, unsigned short, unsigned short> signalSoundOutput ();
+	sigc::signal<void, uint16, uint16> signalSoundOutput ();
 
 	/** @brief Queue a character from the terminal. */
 	void charInput (char c);
@@ -64,8 +66,8 @@ public:
 
 private:
 	//play a sound through the ToneGenerator
-	void playSound (unsigned short freq, unsigned short duration);
+	void playSound (uint16 freq, uint16 duration);
 };
 
-#endif //JAF__IO_PORTS_HH
+#endif //SIM8086__IO_PORTS_HH
 

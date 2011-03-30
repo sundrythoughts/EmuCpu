@@ -22,8 +22,8 @@
 @brief Widget for displaying the sound.
 */
 
-#ifndef JAF__SOUND_WIDGET_HH
-#define JAF__SOUND_WIDGET_HH
+#ifndef SIM8086__SOUND_WIDGET_HH
+#define SIM8086__SOUND_WIDGET_HH
 
 #include <QtCore>
 #include <QtGui>
@@ -60,5 +60,5 @@ Q_SIGNALS:
 
 }; //end class SoundWidget
 
-#endif //JAF__SOUND_WIDGET_HH
+#endif //SIM8086__SOUND_WIDGET_HH
 

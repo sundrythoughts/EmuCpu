@@ -22,8 +22,8 @@
 @brief Widget for displaying the terminal.
 */
 
-#ifndef JAF__TERMINAL_WIDGET_HH
-#define JAF__TERMINAL_WIDGET_HH
+#ifndef SIM8086__TERMINAL_WIDGET_HH
+#define SIM8086__TERMINAL_WIDGET_HH
 
 #include <QtCore>
 #include <QtGui>
@@ -56,5 +56,5 @@ Q_SIGNALS:
 
 }; //end class TerminalWidget
 
-#endif //JAF__TERMINAL_WIDGET_HH
+#endif //SIM8086__TERMINAL_WIDGET_HH
 

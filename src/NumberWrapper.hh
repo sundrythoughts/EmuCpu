@@ -22,8 +22,8 @@
 @brief Wrap an INumberReadableWritable reference or pointer with automatic or manual memory management.
 */
 
-#ifndef JAF__NUMBER_WRAPPER_HH
-#define JAF__NUMBER_WRAPPER_HH
+#ifndef SIM8086__NUMBER_WRAPPER_HH
+#define SIM8086__NUMBER_WRAPPER_HH
 
 #include "INumberReadableWritable.hh"
 #include <stdexcept>
@@ -31,6 +31,8 @@
 #include <string>
 #include <iomanip>
 #include <iostream>
+
+#include "Types.hh"
 
 
 /**
@@ -147,5 +149,5 @@ NumberWrapper::toStringFunc () {
 	return oss.str ();
 }
 
-#endif //JAF__NUMBER_WRAPPER_HH
+#endif //SIM8086__NUMBER_WRAPPER_HH
 

@@ -22,13 +22,15 @@
 */
 
 
-#ifndef JAF__OPERAND_LIST_HH
-#define JAF__OPERAND_LIST_HH
+#ifndef SIM8086__OPERAND_LIST_HH
+#define SIM8086__OPERAND_LIST_HH
 
 //#include "InstructionTable.hh"
 #include "NumberWrapper.hh"
 #include <string>
 #include <vector>
+
+#include "Types.hh"
 
 /**
 @class OperandList
@@ -64,5 +66,5 @@ public:
 	void reset ();
 };
 
-#endif //JAF__OPERAND_LIST_HH
+#endif //SIM8086__OPERAND_LIST_HH
 

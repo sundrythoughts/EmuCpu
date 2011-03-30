@@ -22,9 +22,10 @@
 @brief Interface for Immediate, Register, and MemoryAddress.
 */
 
-#ifndef JAF__I_NUMBER_READABLE_WRITABLE_HH
-#define JAF__I_NUMBER_READABLE_WRITABLE_HH
+#ifndef SIM8086__I_NUMBER_READABLE_WRITABLE_HH
+#define SIM8086__I_NUMBER_READABLE_WRITABLE_HH
 
+#include "Types.hh"
 
 /**
 @class INumberReadableWritable
@@ -45,22 +46,22 @@ public:
 	virtual const T& getValue () const = 0;
 
 	/** @brief Get the segment. */
-	virtual unsigned short getSegment () const = 0;
+	virtual uint16 getSegment () const = 0;
 
 	/** @brief Get the offset. */
-	virtual unsigned short getOffset () const = 0;
+	virtual uint16 getOffset () const = 0;
 
 	/** */
 	virtual const INumberReadableWritable<T>& operator++ () = 0;
 
 	/** */
-	virtual const T operator++ (int) = 0;
+	virtual const T operator++ (int32) = 0;
 
 	/** */
 	virtual const INumberReadableWritable<T>& operator-- () = 0;
 
 	/** */
-	virtual const T operator-- (int) = 0;
+	virtual const T operator-- (int32) = 0;
 
 	/** */
 	virtual INumberReadableWritable<T>& operator= (const T &right) = 0;
@@ -100,5 +101,5 @@ public:
 
 }; //end class INumberReadableWritable
 
-#endif //JAF__I_NUMBER_READABLE_WRITABLE_HH
+#endif //SIM8086__I_NUMBER_READABLE_WRITABLE_HH
 

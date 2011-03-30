@@ -22,11 +22,13 @@
 @brief Implementation of INumberReadableWritable for memory addresses.
 */
 
-#ifndef JAF__MEMORY_ADDRESS_HH
-#define JAF__MEMORY_ADDRESS_HH
+#ifndef SIM8086__MEMORY_ADDRESS_HH
+#define SIM8086__MEMORY_ADDRESS_HH
 
 #include "INumberReadableWritable.hh"
 #include "Memory.hh"
+
+#include "Types.hh"
 
 /**
 @class MemoryAddress
@@ -36,13 +38,13 @@ template<typename T>
 class MemoryAddress : public INumberReadableWritable<T> {
 	Memory *m_memory;
 	size_t m_phys_addr;
-	unsigned short m_seg;
-	unsigned short m_offset;
+	uint16 m_seg;
+	uint16 m_offset;
 	mutable T m_num;
 
 public:
 	/** */
-	MemoryAddress (Memory *mem, unsigned short seg, unsigned short offset) : m_memory (mem) {
+	MemoryAddress (Memory *mem, uint16 seg, uint16 offset) : m_memory (mem) {
 		m_seg = seg;
 		m_offset = offset;
 		m_phys_addr = seg << 4;
@@ -62,12 +64,12 @@ public:
 	}
 
 	/** @brief Get segment. */
-	virtual unsigned short getSegment () const {
+	virtual uint16 getSegment () const {
 		return m_seg;
 	}
 
 	/** @brief Get offset. */
-	virtual unsigned short getOffset () const {
+	virtual uint16 getOffset () const {
 		return m_offset;
 	}
 
@@ -80,7 +82,7 @@ public:
 	}
 
 	/** */
-	virtual const T operator++ (int) {
+	virtual const T operator++ (int32) {
 		read ();
 		T tmp = m_num;
 		++m_num;
@@ -97,7 +99,7 @@ public:
 	}
 
 	/** */
-	virtual const T operator-- (int) {
+	virtual const T operator-- (int32) {
 		read ();
 		T tmp = m_num;
 		--m_num;
@@ -229,5 +231,5 @@ private:
 	}
 }; //end class MemoryAddress
 
-#endif //JAF__MEMORY_ADDRESS_HH
+#endif //SIM8086__MEMORY_ADDRESS_HH
 

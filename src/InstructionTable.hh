@@ -22,12 +22,14 @@
 @brief List of all the instructions in the 8086.
 */
 
-#ifndef JAF__INSTRUCTION_TABLE_HH
-#define JAF__INSTRUCTION_TABLE_HH
+#ifndef SIM8086__INSTRUCTION_TABLE_HH
+#define SIM8086__INSTRUCTION_TABLE_HH
 
 #include <vector>
 #include "ExecutionUnit.hh"
 #include "InstructionDecoder.hh"
+
+#include "Types.hh"
 
 /**
 @class InstructionTableItem
@@ -42,7 +44,7 @@ public:
 	bool has_modrm;
 
 	/** @brief The InstructionGroups index of the instruction. */
-	unsigned int group;
+	uint32 group;
 
 	/** @brief Function pointer to the decode function. */
 	void (InstructionDecoder::*decode_func) ();
@@ -100,5 +102,5 @@ public:
 
 }; //end class InstructionTable
 
-#endif //JAF__INSTRUCTION_TABLE_HH
+#endif //SIM8086__INSTRUCTION_TABLE_HH
 

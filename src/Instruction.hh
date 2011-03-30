@@ -21,12 +21,14 @@
 @brief Stores the information and function pointers for decoding and executing instructions.
 */
 
-#ifndef JAF__INSTRUCTION_HH
-#define JAF__INSTRUCTION_HH
+#ifndef SIM8086__INSTRUCTION_HH
+#define SIM8086__INSTRUCTION_HH
 
 #include "InstructionDisassembly.hh"
 #include "InstructionTable.hh"
 #include <vector>
+
+#include "Types.hh"
 
 class CpuComponents;
 class InstructionPrivate;
@@ -79,35 +81,35 @@ public:
 	bool isNull () const;
 
 	/** @brief Get the raw bytes for the Instruction. */
-	const std::vector<unsigned char>& getBytes () const;
+	const std::vector<uint8>& getBytes () const;
 
 	/** @brief Get the raw bytes for the Instruction. */
-	std::vector<unsigned char>& getBytes ();
+	std::vector<uint8>& getBytes ();
 
 	/** @brief Get raw byte of Instruction at index. */
-	unsigned char getByte (size_t i) const;
+	uint8 getByte (size_t i) const;
 
 	/** @brief Add bytes to the raw bytes of the Instruction. */
 	template<typename T>
 	void addBytes (const T &val);
 
 	/** @brief Set the addressing mode. */
-	int setAddrMode (int am);
+	int32 setAddrMode (int32 am);
 
 	/** @brief Get the addressing mode. */
-	int getAddrMode () const;
+	int32 getAddrMode () const;
 
 }; //end class Instruction
 
 template<typename T>
 void
 Instruction::addBytes (const T &val) {
-	unsigned char *b = (unsigned char*)&val;
+	uint8 *b = (uint8*)&val;
 	for (size_t i = 0; i < sizeof(T); ++i) {
 		getBytes ().push_back (*b);
 		++b;
 	}
 }
 
-#endif //JAF__INSTRUCTION_HH
+#endif //SIM8086__INSTRUCTION_HH
 

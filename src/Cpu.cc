@@ -26,7 +26,7 @@ public:
 
 	QMutex m_mutex;
 	bool m_thread_run;
-	unsigned long int m_thread_delay;
+	uint64 m_thread_delay;
 };
 
 Cpu::Cpu (QObject *parent) : QThread (parent) {

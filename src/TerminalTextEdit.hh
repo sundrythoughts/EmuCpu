@@ -22,8 +22,8 @@
 @brief Overrides key presses and mouse presses to act as a terminal.
 */
 
-#ifndef JAF__TERMINAL_TEXT_EDIT_HH
-#define JAF__TERMINAL_TEXT_EDIT_HH
+#ifndef SIM8086__TERMINAL_TEXT_EDIT_HH
+#define SIM8086__TERMINAL_TEXT_EDIT_HH
 
 #include <QtCore>
 #include <QtGui>
@@ -56,5 +56,5 @@ Q_SIGNALS:
 
 }; //class TerminalTextEdit
 
-#endif //JAF__TERMINAL_TEXT_EDIT_HH
+#endif //SIM8086__TERMINAL_TEXT_EDIT_HH
 

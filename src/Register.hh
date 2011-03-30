@@ -22,13 +22,15 @@
 @brief Implementation of INumberReadableWritable for register values.
 */
 
-#ifndef JAF__REGISTER_HH
-#define JAF__REGISTER_HH
+#ifndef SIM8086__REGISTER_HH
+#define SIM8086__REGISTER_HH
 
 #include "INumberReadableWritable.hh"
 #include <sigc++/sigc++.h>
 
 #include <iostream>
+
+#include "Types.hh"
 
 /**
 @class Register
@@ -290,17 +292,17 @@ public:
 	}
 
 private:
-	virtual unsigned short getSegment () const {
+	virtual uint16 getSegment () const {
 		std::cerr << "Debug: class Immediate has no segment" << std::endl;
 		return 0;
 	}
 
-	virtual unsigned short getOffset () const {
+	virtual uint16 getOffset () const {
 		std::cerr << "Debug: class Immediate has no offset" << std::endl;
 		return 0;
 	}
 
 }; //end class Register
 
-#endif //JAF__REGISTER_HH
+#endif //SIM8086__REGISTER_HH
 

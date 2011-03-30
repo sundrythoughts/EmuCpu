@@ -22,8 +22,8 @@
 @brief Memory signal translation layer between Sigc++ and Qt.
 */
 
-#ifndef JAF__MEMORY_SIGNALS_AND_SLOTS_HH
-#define JAF__MEMORY_SIGNALS_AND_SLOTS_HH
+#ifndef SIM8086__MEMORY_SIGNALS_AND_SLOTS_HH
+#define SIM8086__MEMORY_SIGNALS_AND_SLOTS_HH
 
 #include <sigc++/sigc++.h>
 #include <QObject>
@@ -69,5 +69,5 @@ Q_SIGNALS:
 
 }; //end class MemorySignalsAndSlots
 
-#endif //JAF__MEMORY_SIGNALS_AND_SLOTS_HH
+#endif //SIM8086__MEMORY_SIGNALS_AND_SLOTS_HH
 

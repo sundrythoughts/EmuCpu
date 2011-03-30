@@ -22,8 +22,8 @@
 @brief Main emulator window.
 */
 
-#ifndef JAF__SIM_86_WINDOW_HH
-#define JAF__SIM_86_WINDOW_HH
+#ifndef SIM8086__SIM_86_WINDOW_HH
+#define SIM8086__SIM_86_WINDOW_HH
 
 #include <QtCore>
 #include <QtGui>
@@ -121,5 +121,5 @@ Q_SIGNALS:
 
 }; //end class Sim86Window
 
-#endif //JAF__SIM_86_WINDOW_HH
+#endif //SIM8086__SIM_86_WINDOW_HH
 

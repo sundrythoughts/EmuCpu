@@ -46,37 +46,37 @@ ArithmeticLogicUnit::connectTo (CpuComponents &cpu) {
 }
 
 void
-ArithmeticLogicUnit::updateFlagAddAF (unsigned char result8) {
+ArithmeticLogicUnit::updateFlagAddAF (uint8 result8) {
 	p->m_eunit->setRegFlagsAF (result8 > (result8 & 0xF));
 }
 
 void
-ArithmeticLogicUnit::updateFlagSubAF (char result8) {
+ArithmeticLogicUnit::updateFlagSubAF (int8 result8) {
 	p->m_eunit->setRegFlagsAF (result8 & 0x08); //FIXME
 }
 
 void
-ArithmeticLogicUnit::updateFlagAddCF (unsigned char result8, unsigned short result16) {
+ArithmeticLogicUnit::updateFlagAddCF (uint8 result8, uint16 result16) {
 	p->m_eunit->setRegFlagsCF (result16 > 0xFF);
 }
 
 void
-ArithmeticLogicUnit::updateFlagAddCF (unsigned short result16, unsigned int result32) {
+ArithmeticLogicUnit::updateFlagAddCF (uint16 result16, uint32 result32) {
 	p->m_eunit->setRegFlagsCF (result32 > 0xFFFF);
 }
 
 void
-ArithmeticLogicUnit::updateFlagSubCF (unsigned char result8, short result16) {
+ArithmeticLogicUnit::updateFlagSubCF (uint8 result8, int16 result16) {
 	p->m_eunit->setRegFlagsCF (result16 < 0);
 }
 
 void
-ArithmeticLogicUnit::updateFlagSubCF (unsigned short result16, int result32) {
+ArithmeticLogicUnit::updateFlagSubCF (uint16 result16, int32 result32) {
 	p->m_eunit->setRegFlagsCF (result32 < 0);
 }
 
 void
-ArithmeticLogicUnit::updateFlagAddOF (unsigned char orig_dest, unsigned char src, unsigned char dest) {
+ArithmeticLogicUnit::updateFlagAddOF (uint8 orig_dest, uint8 src, uint8 dest) {
 	bool a = Utility::getMsb (orig_dest);
 	bool b = Utility::getMsb (src);
 	bool c = Utility::getMsb (dest);
@@ -84,7 +84,7 @@ ArithmeticLogicUnit::updateFlagAddOF (unsigned char orig_dest, unsigned char src
 }
 
 void
-ArithmeticLogicUnit::updateFlagAddOF (unsigned short orig_dest, unsigned short src, unsigned short dest) {
+ArithmeticLogicUnit::updateFlagAddOF (uint16 orig_dest, uint16 src, uint16 dest) {
 	bool a = Utility::getMsb (orig_dest);
 	bool b = Utility::getMsb (src);
 	bool c = Utility::getMsb (dest);
@@ -92,7 +92,7 @@ ArithmeticLogicUnit::updateFlagAddOF (unsigned short orig_dest, unsigned short s
 }
 
 void
-ArithmeticLogicUnit::updateFlagSubOF (unsigned char orig_dest, unsigned char src, unsigned char dest) {
+ArithmeticLogicUnit::updateFlagSubOF (uint8 orig_dest, uint8 src, uint8 dest) {
 	bool a = Utility::getMsb (orig_dest);
 	bool b = Utility::getMsb (src);
 	bool c = Utility::getMsb (dest);
@@ -100,7 +100,7 @@ ArithmeticLogicUnit::updateFlagSubOF (unsigned char orig_dest, unsigned char src
 }
 
 void
-ArithmeticLogicUnit::updateFlagSubOF (unsigned short orig_dest, unsigned short src, unsigned short dest) {
+ArithmeticLogicUnit::updateFlagSubOF (uint16 orig_dest, uint16 src, uint16 dest) {
 	bool a = Utility::getMsb (orig_dest);
 	bool b = Utility::getMsb (src);
 	bool c = Utility::getMsb (dest);
@@ -108,8 +108,8 @@ ArithmeticLogicUnit::updateFlagSubOF (unsigned short orig_dest, unsigned short s
 }
 
 void
-ArithmeticLogicUnit::updateFlagPF (unsigned char val) {
-	unsigned int count = 0;
+ArithmeticLogicUnit::updateFlagPF (uint8 val) {
+	uint32 count = 0;
 	while (val) {
 		if (val & 1) {
 			++count;
@@ -121,36 +121,36 @@ ArithmeticLogicUnit::updateFlagPF (unsigned char val) {
 }
 
 void
-ArithmeticLogicUnit::updateFlagSF (unsigned char val) {
+ArithmeticLogicUnit::updateFlagSF (uint8 val) {
 	p->m_eunit->setRegFlagsSF (Utility::getMsb (val));
 }
 
 void
-ArithmeticLogicUnit::updateFlagSF (unsigned short val) {
+ArithmeticLogicUnit::updateFlagSF (uint16 val) {
 	p->m_eunit->setRegFlagsSF (Utility::getMsb (val));
 }
 
 void
-ArithmeticLogicUnit::updateFlagZF (unsigned char val) {
+ArithmeticLogicUnit::updateFlagZF (uint8 val) {
 	p->m_eunit->setRegFlagsZF (!val);
 }
 
 void
-ArithmeticLogicUnit::updateFlagZF (unsigned short val) {
+ArithmeticLogicUnit::updateFlagZF (uint16 val) {
 	p->m_eunit->setRegFlagsZF (!val);
 }
 
 void
-ArithmeticLogicUnit::opAdc (unsigned char dest, unsigned char src, unsigned char &ret) {
+ArithmeticLogicUnit::opAdc (uint8 dest, uint8 src, uint8 &ret) {
 	bool cf = p->m_eunit->getRegFlagsCF ();
-	unsigned char orig_dest = dest;
+	uint8 orig_dest = dest;
 
-	unsigned short result = dest + src;
+	uint16 result = dest + src;
 	if (cf) {
 		result += 1;
 	}
 
-	ret = (unsigned char)result;
+	ret = (uint8)result;
 
 	//FIXME - fix flags
 	updateFlagAddCF (ret, result);
@@ -161,16 +161,16 @@ ArithmeticLogicUnit::opAdc (unsigned char dest, unsigned char src, unsigned char
 }
 
 void
-ArithmeticLogicUnit::opAdc (unsigned short dest, unsigned short src, unsigned short &ret) {
+ArithmeticLogicUnit::opAdc (uint16 dest, uint16 src, uint16 &ret) {
 	bool cf = p->m_eunit->getRegFlagsCF ();
-	unsigned short orig_dest = dest;
+	uint16 orig_dest = dest;
 
-	unsigned int result = dest + src;
+	uint32 result = dest + src;
 	if (cf) {
 		result += 1;
 	}
 
-	ret = (unsigned short)result;
+	ret = (uint16)result;
 
 	//FIXME - fix flags
 	//updateFlagAddAF (ret);
@@ -182,27 +182,11 @@ ArithmeticLogicUnit::opAdc (unsigned short dest, unsigned short src, unsigned sh
 }
 
 void
-ArithmeticLogicUnit::opAdd (unsigned char dest, unsigned char src, unsigned char &ret) {
-	unsigned char orig_dest = dest;
-	unsigned short result = dest + src;
+ArithmeticLogicUnit::opAdd (uint8 dest, uint8 src, uint8 &ret) {
+	uint8 orig_dest = dest;
+	uint16 result = dest + src;
 
-	ret = (unsigned char)result;
-
-	//FIXME - fix flags
-	//updateFlagAddAF (ret);
-	updateFlagAddCF (ret, result);
-	updateFlagAddOF (orig_dest, src, ret);
-	updateFlagPF (ret);
-	updateFlagSF (ret);
-	updateFlagZF (ret);
-}
-
-void
-ArithmeticLogicUnit::opAdd (unsigned short dest, unsigned short src, unsigned short &ret) {
-	unsigned short orig_dest = dest;
-	unsigned int result = dest + src;
-
-	ret = (unsigned short)result;
+	ret = (uint8)result;
 
 	//FIXME - fix flags
 	//updateFlagAddAF (ret);
@@ -214,12 +198,28 @@ ArithmeticLogicUnit::opAdd (unsigned short dest, unsigned short src, unsigned sh
 }
 
 void
-ArithmeticLogicUnit::opAnd (unsigned char dest, unsigned char src, unsigned char &ret) {
-	unsigned short result = dest & src;
+ArithmeticLogicUnit::opAdd (uint16 dest, uint16 src, uint16 &ret) {
+	uint16 orig_dest = dest;
+	uint32 result = dest + src;
+
+	ret = (uint16)result;
+
+	//FIXME - fix flags
+	//updateFlagAddAF (ret);
+	updateFlagAddCF (ret, result);
+	updateFlagAddOF (orig_dest, src, ret);
+	updateFlagPF (ret);
+	updateFlagSF (ret);
+	updateFlagZF (ret);
+}
+
+void
+ArithmeticLogicUnit::opAnd (uint8 dest, uint8 src, uint8 &ret) {
+	uint16 result = dest & src;
 	p->m_eunit->setRegFlagsCF (false);
 	p->m_eunit->setRegFlagsOF (false);
 
-	ret = (unsigned char)result;
+	ret = (uint8)result;
 
 	//FIXME - fix flags
 	updateFlagPF (ret);
@@ -228,12 +228,12 @@ ArithmeticLogicUnit::opAnd (unsigned char dest, unsigned char src, unsigned char
 }
 
 void
-ArithmeticLogicUnit::opAnd (unsigned short dest, unsigned short src, unsigned short &ret) {
-	unsigned int result = dest & src;
+ArithmeticLogicUnit::opAnd (uint16 dest, uint16 src, uint16 &ret) {
+	uint32 result = dest & src;
 	p->m_eunit->setRegFlagsCF (false);
 	p->m_eunit->setRegFlagsOF (false);
 
-	ret = (unsigned short)result;
+	ret = (uint16)result;
 
 	//FIXME - fix flags
 	updateFlagPF (ret);
@@ -249,10 +249,10 @@ ArithmeticLogicUnit::opCmc () {
 }
 
 void
-ArithmeticLogicUnit::opCmp (unsigned char dest, unsigned char src) {
-	unsigned char orig_dest = dest;
-	short result = (char)dest - (char)src;
-	unsigned char ret = dest - src;
+ArithmeticLogicUnit::opCmp (uint8 dest, uint8 src) {
+	uint8 orig_dest = dest;
+	int16 result = (int8)dest - (int8)src;
+	uint8 ret = dest - src;
 
 	//FIXME - fix flags
 	//updateFlagSubAF (ret);
@@ -264,10 +264,10 @@ ArithmeticLogicUnit::opCmp (unsigned char dest, unsigned char src) {
 }
 
 void
-ArithmeticLogicUnit::opCmp (unsigned short dest, unsigned short src) {
-	unsigned short orig_dest = dest;
-	int result = dest - src;
-	unsigned short ret = dest - src;
+ArithmeticLogicUnit::opCmp (uint16 dest, uint16 src) {
+	uint16 orig_dest = dest;
+	int32 result = dest - src;
+	uint16 ret = dest - src;
 
 	//FIXME - fix flags
 	//updateFlagSubAF (ret);
@@ -279,10 +279,10 @@ ArithmeticLogicUnit::opCmp (unsigned short dest, unsigned short src) {
 }
 
 void
-ArithmeticLogicUnit::opDec (unsigned char dest, unsigned char &ret) {
-	unsigned char orig_dest = dest;
-	short result = --dest;
-	ret = (unsigned char)result;
+ArithmeticLogicUnit::opDec (uint8 dest, uint8 &ret) {
+	uint8 orig_dest = dest;
+	int16 result = --dest;
+	ret = (uint8)result;
 
 	//FIXME - fix flags
 	//updateFlagSubAF (ret);
@@ -293,10 +293,10 @@ ArithmeticLogicUnit::opDec (unsigned char dest, unsigned char &ret) {
 }
 
 void
-ArithmeticLogicUnit::opDec (unsigned short dest, unsigned short &ret) {
-	unsigned short orig_dest = dest;
-	int result = --dest;
-	ret = (unsigned short)result;
+ArithmeticLogicUnit::opDec (uint16 dest, uint16 &ret) {
+	uint16 orig_dest = dest;
+	int32 result = --dest;
+	ret = (uint16)result;
 
 	//FIXME - fix flags
 	//updateFlagSubAF (ret);
@@ -307,18 +307,18 @@ ArithmeticLogicUnit::opDec (unsigned short dest, unsigned short &ret) {
 }
 
 bool
-ArithmeticLogicUnit::opDiv (unsigned char src) {
-	Register<unsigned short> ax = p->m_eunit->getRegAX ();
-	Register<unsigned char> &al = p->m_eunit->getRegAL ();
-	Register<unsigned char> &ah = p->m_eunit->getRegAH ();
+ArithmeticLogicUnit::opDiv (uint8 src) {
+	Register<uint16> ax = p->m_eunit->getRegAX ();
+	Register<uint8> &al = p->m_eunit->getRegAL ();
+	Register<uint8> &ah = p->m_eunit->getRegAH ();
 
 	if (src == 0) {
 		//interrupt 0
 		return false;
 	}
 
-	//Register<unsigned char> tmp = ax / src;
-	unsigned short tmp = ax / src;
+	//Register<uint8> tmp = ax / src;
+	uint16 tmp = ax / src;
 
 	if (tmp > 0xFF) {
 		//interrupt 0
@@ -333,11 +333,11 @@ ArithmeticLogicUnit::opDiv (unsigned char src) {
 }
 
 bool
-ArithmeticLogicUnit::opDiv (unsigned short src) {
-	Register<unsigned short> &ax = p->m_eunit->getRegAX ();
-	Register<unsigned short> &dx = p->m_eunit->getRegDX ();
+ArithmeticLogicUnit::opDiv (uint16 src) {
+	Register<uint16> &ax = p->m_eunit->getRegAX ();
+	Register<uint16> &dx = p->m_eunit->getRegDX ();
 
-	unsigned int dx_ax = dx;
+	uint32 dx_ax = dx;
 	dx_ax <<= 16;
 	dx_ax += ax;
 
@@ -346,8 +346,8 @@ ArithmeticLogicUnit::opDiv (unsigned short src) {
 		return false;
 	}
 
-	//Register<unsigned short> tmp = dx_ax / src;
-	unsigned int tmp = dx_ax / src;
+	//Register<uint16> tmp = dx_ax / src;
+	uint32 tmp = dx_ax / src;
 
 	if (tmp > 0xFFFF) {
 		//interrupt 0
@@ -362,10 +362,10 @@ ArithmeticLogicUnit::opDiv (unsigned short src) {
 }
 
 void
-ArithmeticLogicUnit::opIdiv (unsigned char src) {
-	Register<unsigned short> ax = p->m_eunit->getRegAX ();
-	Register<unsigned char> &al = p->m_eunit->getRegAL ();
-	Register<unsigned char> &ah = p->m_eunit->getRegAH ();
+ArithmeticLogicUnit::opIdiv (uint8 src) {
+	Register<uint16> ax = p->m_eunit->getRegAX ();
+	Register<uint8> &al = p->m_eunit->getRegAL ();
+	Register<uint8> &ah = p->m_eunit->getRegAH ();
 
 	if (src == 0) {
 		//FIXME - interrupt 0
@@ -373,21 +373,21 @@ ArithmeticLogicUnit::opIdiv (unsigned char src) {
 		return;
 	}
 
-	char tmp = (short)ax / (char)src;
+	int8 tmp = (int16)ax / (int8)src;
 	//if ((tmp > 0x7F) || (tmp < 0x80)) {
 	//	//FIXME - interrupt 0
 	//}
 	//else {
 		al = tmp;
-		ah = (short)ax % (char)src;
+		ah = (int16)ax % (int8)src;
 	//}
 }
 
 void
-ArithmeticLogicUnit::opIdiv (unsigned short src) {
-	Register<unsigned short> &ax = p->m_eunit->getRegAX ();
-	Register<unsigned short> &dx = p->m_eunit->getRegDX ();
-	unsigned int dx_ax = dx;
+ArithmeticLogicUnit::opIdiv (uint16 src) {
+	Register<uint16> &ax = p->m_eunit->getRegAX ();
+	Register<uint16> &dx = p->m_eunit->getRegDX ();
+	uint32 dx_ax = dx;
 	dx_ax <<= 16;
 	dx_ax += ax;
 
@@ -397,24 +397,24 @@ ArithmeticLogicUnit::opIdiv (unsigned short src) {
 		return;
 	}
 
-	short tmp = (int)dx_ax / (short)src;
+	int16 tmp = (int32)dx_ax / (int16)src;
 	//if ((tmp > 0x7FFF) || (tmp < 0x8000)) {
 	//	//FIXME - interrupt 0
 	//}
 	//else {
 		ax = tmp;
-		dx = (int)dx_ax % (short)tmp;
+		dx = (int32)dx_ax % (int16)tmp;
 	//}
 }
 
 void
-ArithmeticLogicUnit::opImul (unsigned char src) {
-	Register<unsigned short> &ax = p->m_eunit->getRegAX ();
-	Register<unsigned char> &al = p->m_eunit->getRegAL ();
-	Register<unsigned char> &ah = p->m_eunit->getRegAH ();
+ArithmeticLogicUnit::opImul (uint8 src) {
+	Register<uint16> &ax = p->m_eunit->getRegAX ();
+	Register<uint8> &al = p->m_eunit->getRegAL ();
+	Register<uint8> &ah = p->m_eunit->getRegAH ();
 
-	ax = (char)src * (char)al;
-	unsigned char al_sign_ext = (Utility::getBit (al, (sizeof(unsigned char) << 3) - 1)) ? 0xFF : 0;
+	ax = (int8)src * (int8)al;
+	uint8 al_sign_ext = (Utility::getBit (al, (sizeof(uint8) << 3) - 1)) ? 0xFF : 0;
 
 	if (ah == al_sign_ext) {
 		p->m_eunit->setRegFlagsCF (false);
@@ -426,18 +426,18 @@ ArithmeticLogicUnit::opImul (unsigned char src) {
 }
 
 void
-ArithmeticLogicUnit::opImul (unsigned short src) {
-	Register<unsigned short> &ax = p->m_eunit->getRegAX ();
-	Register<unsigned short> &dx = p->m_eunit->getRegDX ();
-	unsigned int dx_ax = dx;
+ArithmeticLogicUnit::opImul (uint16 src) {
+	Register<uint16> &ax = p->m_eunit->getRegAX ();
+	Register<uint16> &dx = p->m_eunit->getRegDX ();
+	uint32 dx_ax = dx;
 	dx_ax <<= 16;
 	dx_ax += ax;
-	unsigned short *dx_ax_ptr = (unsigned short*)&dx_ax;
+	uint16 *dx_ax_ptr = (uint16*)&dx_ax;
 
-	dx_ax = (short)src * (short)ax;
+	dx_ax = (int16)src * (int16)ax;
 	p->m_eunit->setRegAX (dx_ax_ptr[0]);
 	p->m_eunit->setRegDX (dx_ax_ptr[1]);
-	unsigned short ax_sign_ext = (Utility::getBit (ax, (sizeof(unsigned short) << 3) - 1)) ? 0xFFFF : 0;
+	uint16 ax_sign_ext = (Utility::getBit (ax, (sizeof(uint16) << 3) - 1)) ? 0xFFFF : 0;
 
 	if (dx == ax_sign_ext) {
 		p->m_eunit->setRegFlagsCF (false);
@@ -449,10 +449,10 @@ ArithmeticLogicUnit::opImul (unsigned short src) {
 }
 
 void
-ArithmeticLogicUnit::opInc (unsigned char dest, unsigned char &ret) {
-	unsigned char orig_dest = dest;
-	unsigned short result = ++dest;
-	ret = (unsigned char)result;
+ArithmeticLogicUnit::opInc (uint8 dest, uint8 &ret) {
+	uint8 orig_dest = dest;
+	uint16 result = ++dest;
+	ret = (uint8)result;
 
 	//FIXME - fix flags
 	//updateFlagAddAF (ret);
@@ -463,10 +463,10 @@ ArithmeticLogicUnit::opInc (unsigned char dest, unsigned char &ret) {
 }
 
 void
-ArithmeticLogicUnit::opInc (unsigned short dest, unsigned short &ret) {
-	unsigned short orig_dest = dest;
-	unsigned int result = ++dest;
-	ret = (unsigned short)result;
+ArithmeticLogicUnit::opInc (uint16 dest, uint16 &ret) {
+	uint16 orig_dest = dest;
+	uint32 result = ++dest;
+	ret = (uint16)result;
 
 	//FIXME - fix flags
 	//updateFlagAddAF (ret);
@@ -477,10 +477,10 @@ ArithmeticLogicUnit::opInc (unsigned short dest, unsigned short &ret) {
 }
 
 void
-ArithmeticLogicUnit::opMul (unsigned char src) {
-	Register<unsigned short> &ax = p->m_eunit->getRegAX ();
-	Register<unsigned char> &al = p->m_eunit->getRegAL ();
-	Register<unsigned char> &ah = p->m_eunit->getRegAH ();
+ArithmeticLogicUnit::opMul (uint8 src) {
+	Register<uint16> &ax = p->m_eunit->getRegAX ();
+	Register<uint8> &al = p->m_eunit->getRegAL ();
+	Register<uint8> &ah = p->m_eunit->getRegAH ();
 
 	ax = src * al;
 
@@ -494,13 +494,13 @@ ArithmeticLogicUnit::opMul (unsigned char src) {
 }
 
 void
-ArithmeticLogicUnit::opMul (unsigned short src) {
-	Register<unsigned short> &ax = p->m_eunit->getRegAX ();
-	Register<unsigned short> &dx = p->m_eunit->getRegDX ();
-	unsigned int dx_ax = dx;
+ArithmeticLogicUnit::opMul (uint16 src) {
+	Register<uint16> &ax = p->m_eunit->getRegAX ();
+	Register<uint16> &dx = p->m_eunit->getRegDX ();
+	uint32 dx_ax = dx;
 	dx_ax <<= 16;
 	dx_ax += ax;
-	unsigned short *dx_ax_ptr = (unsigned short*)&dx_ax;
+	uint16 *dx_ax_ptr = (uint16*)&dx_ax;
 
 	dx_ax = src * ax;
 	p->m_eunit->setRegAX (dx_ax_ptr[0]);
@@ -516,30 +516,30 @@ ArithmeticLogicUnit::opMul (unsigned short src) {
 }
 
 void
-ArithmeticLogicUnit::opNeg (unsigned char dest, unsigned char &ret) {
+ArithmeticLogicUnit::opNeg (uint8 dest, uint8 &ret) {
 	dest = ~dest;
-	unsigned char r;
+	uint8 r;
 	opAdd (dest, 1, r);
 
-	ret = (unsigned char)r;
+	ret = (uint8)r;
 }
 
 void
-ArithmeticLogicUnit::opNeg (unsigned short dest, unsigned short &ret) {
+ArithmeticLogicUnit::opNeg (uint16 dest, uint16 &ret) {
 	dest = ~dest;
-	unsigned short r;
+	uint16 r;
 	opAdd (dest, 1, r);
 
-	ret = (unsigned short)r;
+	ret = (uint16)r;
 }
 
 void
-ArithmeticLogicUnit::opOr (unsigned char dest, unsigned char src, unsigned char &ret) {
-	unsigned short result = dest | src;
+ArithmeticLogicUnit::opOr (uint8 dest, uint8 src, uint8 &ret) {
+	uint16 result = dest | src;
 	p->m_eunit->setRegFlagsCF (false);
 	p->m_eunit->setRegFlagsOF (false);
 
-	ret = (unsigned char)result;
+	ret = (uint8)result;
 
 	//FIXME - fix flags
 	updateFlagPF (ret);
@@ -548,12 +548,12 @@ ArithmeticLogicUnit::opOr (unsigned char dest, unsigned char src, unsigned char 
 }
 
 void
-ArithmeticLogicUnit::opOr (unsigned short dest, unsigned short src, unsigned short &ret) {
-	unsigned int result = dest | src;
+ArithmeticLogicUnit::opOr (uint16 dest, uint16 src, uint16 &ret) {
+	uint32 result = dest | src;
 	p->m_eunit->setRegFlagsCF (false);
 	p->m_eunit->setRegFlagsOF (false);
 
-	ret = (unsigned short)result;
+	ret = (uint16)result;
 
 	//FIXME - fix flags
 	updateFlagPF (ret);
@@ -562,8 +562,8 @@ ArithmeticLogicUnit::opOr (unsigned short dest, unsigned short src, unsigned sho
 }
 
 void
-ArithmeticLogicUnit::opRcl (unsigned char dest, unsigned int cnt, unsigned char &ret) {
-	unsigned int tmp_cnt = cnt;
+ArithmeticLogicUnit::opRcl (uint8 dest, uint32 cnt, uint8 &ret) {
+	uint32 tmp_cnt = cnt;
 	bool tmpCF;
 	while (tmp_cnt != 0) {
 		tmpCF = p->m_eunit->getRegFlagsCF ();
@@ -578,12 +578,12 @@ ArithmeticLogicUnit::opRcl (unsigned char dest, unsigned int cnt, unsigned char 
 		p->m_eunit->setRegFlagsOF (Utility::getMsb (dest) ^ p->m_eunit->getRegFlagsCF ());
 	}
 
-	ret = (unsigned char)dest;
+	ret = (uint8)dest;
 }
 
 void
-ArithmeticLogicUnit::opRcl (unsigned short dest, unsigned int cnt, unsigned short &ret) {
-	unsigned int tmp_cnt = cnt;
+ArithmeticLogicUnit::opRcl (uint16 dest, uint32 cnt, uint16 &ret) {
+	uint32 tmp_cnt = cnt;
 	bool tmpCF;
 	while (tmp_cnt != 0) {
 		tmpCF = p->m_eunit->getRegFlagsCF ();
@@ -598,12 +598,12 @@ ArithmeticLogicUnit::opRcl (unsigned short dest, unsigned int cnt, unsigned shor
 		p->m_eunit->setRegFlagsOF (Utility::getMsb (dest) ^ p->m_eunit->getRegFlagsCF ());
 	}
 
-	ret = (unsigned short)dest;
+	ret = (uint16)dest;
 }
 
 void
-ArithmeticLogicUnit::opRcr (unsigned char dest, unsigned int cnt, unsigned char &ret) {
-	unsigned int tmp_cnt = cnt;
+ArithmeticLogicUnit::opRcr (uint8 dest, uint32 cnt, uint8 &ret) {
+	uint32 tmp_cnt = cnt;
 	bool tmpCF;
 	while (tmp_cnt != 0) {
 		tmpCF = p->m_eunit->getRegFlagsCF ();
@@ -618,12 +618,12 @@ ArithmeticLogicUnit::opRcr (unsigned char dest, unsigned int cnt, unsigned char 
 		p->m_eunit->setRegFlagsOF (Utility::getLsb (dest) ^ p->m_eunit->getRegFlagsCF ());
 	}
 
-	ret = (unsigned char)dest;
+	ret = (uint8)dest;
 }
 
 void
-ArithmeticLogicUnit::opRcr (unsigned short dest, unsigned int cnt, unsigned short &ret) {
-	unsigned int tmp_cnt = cnt;
+ArithmeticLogicUnit::opRcr (uint16 dest, uint32 cnt, uint16 &ret) {
+	uint32 tmp_cnt = cnt;
 	bool tmpCF;
 	while (tmp_cnt != 0) {
 		tmpCF = p->m_eunit->getRegFlagsCF ();
@@ -638,12 +638,12 @@ ArithmeticLogicUnit::opRcr (unsigned short dest, unsigned int cnt, unsigned shor
 		p->m_eunit->setRegFlagsOF (Utility::getLsb (dest) ^ p->m_eunit->getRegFlagsCF ());
 	}
 
-	ret = (unsigned short)dest;
+	ret = (uint16)dest;
 }
 
 void
-ArithmeticLogicUnit::opRol (unsigned char dest, unsigned char cnt, unsigned char &ret) {
-	unsigned char tmp_cnt = cnt;
+ArithmeticLogicUnit::opRol (uint8 dest, uint8 cnt, uint8 &ret) {
+	uint8 tmp_cnt = cnt;
 	while (tmp_cnt != 0) {
 		p->m_eunit->setRegFlagsCF (Utility::getMsb (dest));
 		dest <<= 1;
@@ -651,12 +651,12 @@ ArithmeticLogicUnit::opRol (unsigned char dest, unsigned char cnt, unsigned char
 		tmp_cnt -= 1;
 	}
 
-	ret = (unsigned char)dest;
+	ret = (uint8)dest;
 }
 
 void
-ArithmeticLogicUnit::opRol (unsigned short dest, unsigned char cnt, unsigned short &ret) {
-	unsigned char tmp_cnt = cnt;
+ArithmeticLogicUnit::opRol (uint16 dest, uint8 cnt, uint16 &ret) {
+	uint8 tmp_cnt = cnt;
 	while (tmp_cnt != 0) {
 		p->m_eunit->setRegFlagsCF (Utility::getMsb (dest));
 		dest <<= 1;
@@ -664,12 +664,12 @@ ArithmeticLogicUnit::opRol (unsigned short dest, unsigned char cnt, unsigned sho
 		tmp_cnt -= 1;
 	}
 
-	ret = (unsigned short)dest;
+	ret = (uint16)dest;
 }
 
 void
-ArithmeticLogicUnit::opRor (unsigned char dest, unsigned char cnt, unsigned char &ret) {
-	unsigned char tmp_cnt = cnt;
+ArithmeticLogicUnit::opRor (uint8 dest, uint8 cnt, uint8 &ret) {
+	uint8 tmp_cnt = cnt;
 	while (tmp_cnt != 0) {
 		p->m_eunit->setRegFlagsCF (Utility::getLsb (dest));
 		dest >>= 1;
@@ -677,12 +677,12 @@ ArithmeticLogicUnit::opRor (unsigned char dest, unsigned char cnt, unsigned char
 		tmp_cnt -= 1;
 	}
 
-	ret = (unsigned char)dest;
+	ret = (uint8)dest;
 }
 
 void
-ArithmeticLogicUnit::opRor (unsigned short dest, unsigned char cnt, unsigned short &ret) {
-	unsigned char tmp_cnt = cnt;
+ArithmeticLogicUnit::opRor (uint16 dest, uint8 cnt, uint16 &ret) {
+	uint8 tmp_cnt = cnt;
 	while (tmp_cnt != 0) {
 		p->m_eunit->setRegFlagsCF (Utility::getLsb (dest));
 		dest >>= 1;
@@ -690,19 +690,19 @@ ArithmeticLogicUnit::opRor (unsigned short dest, unsigned char cnt, unsigned sho
 		tmp_cnt -= 1;
 	}
 
-	ret = (unsigned short)dest;
+	ret = (uint16)dest;
 }
 
 void
-ArithmeticLogicUnit::opSal (unsigned char dest, unsigned int cnt, unsigned char &ret) {
-	unsigned int tmp_cnt = cnt;
+ArithmeticLogicUnit::opSal (uint8 dest, uint32 cnt, uint8 &ret) {
+	uint32 tmp_cnt = cnt;
 	while (tmp_cnt != 0) {
 		p->m_eunit->setRegFlagsCF (Utility::getMsb (dest));
 		dest <<= 1;
 		tmp_cnt -= 1;
 	}
 
-	ret = (unsigned char)dest;
+	ret = (uint8)dest;
 
 	//FIXME - fix flags
 	updateFlagPF (ret);
@@ -711,15 +711,15 @@ ArithmeticLogicUnit::opSal (unsigned char dest, unsigned int cnt, unsigned char 
 }
 
 void
-ArithmeticLogicUnit::opSal (unsigned short dest, unsigned int cnt, unsigned short &ret) {
-	unsigned int tmp_cnt = cnt;
+ArithmeticLogicUnit::opSal (uint16 dest, uint32 cnt, uint16 &ret) {
+	uint32 tmp_cnt = cnt;
 	while (tmp_cnt != 0) {
 		p->m_eunit->setRegFlagsCF (Utility::getMsb (dest));
 		dest <<= 1;
 		tmp_cnt -= 1;
 	}
 
-	ret = (unsigned short)dest;
+	ret = (uint16)dest;
 
 	//FIXME - fix flags
 	updateFlagPF (ret);
@@ -728,8 +728,8 @@ ArithmeticLogicUnit::opSal (unsigned short dest, unsigned int cnt, unsigned shor
 }
 
 void
-ArithmeticLogicUnit::opSar (unsigned char dest, unsigned int cnt, unsigned char &ret) {
-	unsigned int tmp_cnt = cnt;
+ArithmeticLogicUnit::opSar (uint8 dest, uint32 cnt, uint8 &ret) {
+	uint32 tmp_cnt = cnt;
 	bool tmp_msb = Utility::getMsb (dest);
 	while (tmp_cnt != 0) {
 		p->m_eunit->setRegFlagsCF (Utility::getLsb (dest));
@@ -738,7 +738,7 @@ ArithmeticLogicUnit::opSar (unsigned char dest, unsigned int cnt, unsigned char 
 		tmp_cnt -= 1;
 	}
 
-	ret = (unsigned char)dest;
+	ret = (uint8)dest;
 
 	//FIXME - fix flags
 	updateFlagPF (ret);
@@ -747,8 +747,8 @@ ArithmeticLogicUnit::opSar (unsigned char dest, unsigned int cnt, unsigned char 
 }
 
 void
-ArithmeticLogicUnit::opSar (unsigned short dest, unsigned int cnt, unsigned short &ret) {
-	unsigned int tmp_cnt = cnt;
+ArithmeticLogicUnit::opSar (uint16 dest, uint32 cnt, uint16 &ret) {
+	uint32 tmp_cnt = cnt;
 	bool tmp_msb = Utility::getMsb (dest);
 	while (tmp_cnt != 0) {
 		p->m_eunit->setRegFlagsCF (Utility::getLsb (dest));
@@ -757,7 +757,7 @@ ArithmeticLogicUnit::opSar (unsigned short dest, unsigned int cnt, unsigned shor
 		tmp_cnt -= 1;
 	}
 
-	ret = (unsigned short)dest;
+	ret = (uint16)dest;
 
 	//FIXME - fix flags
 	updateFlagPF (ret);
@@ -766,13 +766,13 @@ ArithmeticLogicUnit::opSar (unsigned short dest, unsigned int cnt, unsigned shor
 }
 
 void
-ArithmeticLogicUnit::opSbb (unsigned char dest, unsigned char src, unsigned char &ret) {
-	unsigned char orig_dest = dest;
+ArithmeticLogicUnit::opSbb (uint8 dest, uint8 src, uint8 &ret) {
+	uint8 orig_dest = dest;
 	bool cf = p->m_eunit->getRegFlagsCF ();
 
-	short result = dest - src - cf;
+	int16 result = dest - src - cf;
 
-	ret = (unsigned char)result;
+	ret = (uint8)result;
 
 	//FIXME - fix flags
 	//updateFlagSubAF (ret);
@@ -784,13 +784,13 @@ ArithmeticLogicUnit::opSbb (unsigned char dest, unsigned char src, unsigned char
 }
 
 void
-ArithmeticLogicUnit::opSbb (unsigned short dest, unsigned short src, unsigned short &ret) {
-	unsigned short orig_dest = dest;
+ArithmeticLogicUnit::opSbb (uint16 dest, uint16 src, uint16 &ret) {
+	uint16 orig_dest = dest;
 	bool cf = p->m_eunit->getRegFlagsCF ();
 
-	int result = dest - src - cf;
+	int32 result = dest - src - cf;
 
-	ret = (unsigned short)result;
+	ret = (uint16)result;
 
 	//FIXME - fix flags
 	//updateFlagSubAF (ret);
@@ -802,15 +802,15 @@ ArithmeticLogicUnit::opSbb (unsigned short dest, unsigned short src, unsigned sh
 }
 
 void
-ArithmeticLogicUnit::opShl (unsigned char dest, unsigned int cnt, unsigned char &ret) {
-	unsigned int tmp_cnt = cnt;
+ArithmeticLogicUnit::opShl (uint8 dest, uint32 cnt, uint8 &ret) {
+	uint32 tmp_cnt = cnt;
 	while (tmp_cnt != 0) {
 		p->m_eunit->setRegFlagsCF (Utility::getMsb (dest));
 		dest <<= 1;
 		tmp_cnt -= 1;
 	}
 
-	ret = (unsigned char)dest;
+	ret = (uint8)dest;
 
 	//FIXME - fix flags
 	updateFlagPF (ret);
@@ -819,15 +819,15 @@ ArithmeticLogicUnit::opShl (unsigned char dest, unsigned int cnt, unsigned char 
 }
 
 void
-ArithmeticLogicUnit::opShl (unsigned short dest, unsigned int cnt, unsigned short &ret) {
-	unsigned int tmp_cnt = cnt;
+ArithmeticLogicUnit::opShl (uint16 dest, uint32 cnt, uint16 &ret) {
+	uint32 tmp_cnt = cnt;
 	while (tmp_cnt != 0) {
 		p->m_eunit->setRegFlagsCF (Utility::getMsb (dest));
 		dest <<= 1;
 		tmp_cnt -= 1;
 	}
 
-	ret = (unsigned short)dest;
+	ret = (uint16)dest;
 
 	//FIXME - fix flags
 	updateFlagPF (ret);
@@ -836,15 +836,15 @@ ArithmeticLogicUnit::opShl (unsigned short dest, unsigned int cnt, unsigned shor
 }
 
 void
-ArithmeticLogicUnit::opShr (unsigned char dest, unsigned int cnt, unsigned char &ret) {
-	unsigned int tmp_cnt = cnt;
+ArithmeticLogicUnit::opShr (uint8 dest, uint32 cnt, uint8 &ret) {
+	uint32 tmp_cnt = cnt;
 	while (tmp_cnt != 0) {
 		p->m_eunit->setRegFlagsCF (Utility::getLsb (dest));
 		dest >>= 1;
 		tmp_cnt -= 1;
 	}
 
-	ret = (unsigned char)dest;
+	ret = (uint8)dest;
 
 	//FIXME - fix flags
 	updateFlagPF (ret);
@@ -853,15 +853,15 @@ ArithmeticLogicUnit::opShr (unsigned char dest, unsigned int cnt, unsigned char 
 }
 
 void
-ArithmeticLogicUnit::opShr (unsigned short dest, unsigned int cnt, unsigned short &ret) {
-	unsigned int tmp_cnt = cnt;
+ArithmeticLogicUnit::opShr (uint16 dest, uint32 cnt, uint16 &ret) {
+	uint32 tmp_cnt = cnt;
 	while (tmp_cnt != 0) {
 		p->m_eunit->setRegFlagsCF (Utility::getLsb (dest));
 		dest >>= 1;
 		tmp_cnt -= 1;
 	}
 
-	ret = (unsigned short)dest;
+	ret = (uint16)dest;
 
 	//FIXME - fix flags
 	updateFlagPF (ret);
@@ -870,10 +870,10 @@ ArithmeticLogicUnit::opShr (unsigned short dest, unsigned int cnt, unsigned shor
 }
 
 void
-ArithmeticLogicUnit::opSub (unsigned char dest, unsigned char src, unsigned char &ret) {
-	unsigned char orig_dest = dest;
-	short result = dest - src;
-	ret = (unsigned char)result;
+ArithmeticLogicUnit::opSub (uint8 dest, uint8 src, uint8 &ret) {
+	uint8 orig_dest = dest;
+	int16 result = dest - src;
+	ret = (uint8)result;
 
 	//FIXME - fix flags
 	//updateFlagSubAF (ret);
@@ -885,10 +885,10 @@ ArithmeticLogicUnit::opSub (unsigned char dest, unsigned char src, unsigned char
 }
 
 void
-ArithmeticLogicUnit::opSub (unsigned short dest, unsigned short src, unsigned short &ret) {
-	unsigned short orig_dest = dest;
-	int result = dest - src;
-	ret = (unsigned short)result;
+ArithmeticLogicUnit::opSub (uint16 dest, uint16 src, uint16 &ret) {
+	uint16 orig_dest = dest;
+	int32 result = dest - src;
+	ret = (uint16)result;
 
 	//FIXME - fix flags
 	//updateFlagSubAF (ret);
@@ -900,9 +900,9 @@ ArithmeticLogicUnit::opSub (unsigned short dest, unsigned short src, unsigned sh
 }
 
 void
-ArithmeticLogicUnit::opTest (unsigned char dest, unsigned char src) {
-	unsigned short result = dest & src;
-	unsigned char ret = (unsigned char)result;
+ArithmeticLogicUnit::opTest (uint8 dest, uint8 src) {
+	uint16 result = dest & src;
+	uint8 ret = (uint8)result;
 
 	p->m_eunit->setRegFlagsCF (false);
 	p->m_eunit->setRegFlagsOF (false);
@@ -914,9 +914,9 @@ ArithmeticLogicUnit::opTest (unsigned char dest, unsigned char src) {
 }
 
 void
-ArithmeticLogicUnit::opTest (unsigned short dest, unsigned short src) {
-	unsigned int result = dest & src;
-	unsigned short ret = (unsigned short)result;
+ArithmeticLogicUnit::opTest (uint16 dest, uint16 src) {
+	uint32 result = dest & src;
+	uint16 ret = (uint16)result;
 
 	p->m_eunit->setRegFlagsCF (false);
 	p->m_eunit->setRegFlagsOF (false);
@@ -928,12 +928,12 @@ ArithmeticLogicUnit::opTest (unsigned short dest, unsigned short src) {
 }
 
 void
-ArithmeticLogicUnit::opXor (unsigned char dest, unsigned char src, unsigned char &ret) {
-	unsigned short result = dest ^ src;
+ArithmeticLogicUnit::opXor (uint8 dest, uint8 src, uint8 &ret) {
+	uint16 result = dest ^ src;
 	p->m_eunit->setRegFlagsCF (false);
 	p->m_eunit->setRegFlagsOF (false);
 
-	ret = (unsigned char)result;
+	ret = (uint8)result;
 
 	//FIXME - fix flags
 	updateFlagPF (ret);
@@ -942,12 +942,12 @@ ArithmeticLogicUnit::opXor (unsigned char dest, unsigned char src, unsigned char
 }
 
 void
-ArithmeticLogicUnit::opXor (unsigned short dest, unsigned short src, unsigned short &ret) {
-	unsigned int result = dest ^ src;
+ArithmeticLogicUnit::opXor (uint16 dest, uint16 src, uint16 &ret) {
+	uint32 result = dest ^ src;
 	p->m_eunit->setRegFlagsCF (false);
 	p->m_eunit->setRegFlagsOF (false);
 
-	ret = (unsigned short)result;
+	ret = (uint16)result;
 
 	//FIXME - fix flags
 	updateFlagPF (ret);

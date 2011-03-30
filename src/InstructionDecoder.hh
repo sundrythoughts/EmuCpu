@@ -22,8 +22,8 @@
 @brief Do all the decoding of instruction addressing modes.
 */
 
-#ifndef JAF__INSTRUCTION_DECODER_HH
-#define JAF__INSTRUCTION_DECODER_HH
+#ifndef SIM8086__INSTRUCTION_DECODER_HH
+#define SIM8086__INSTRUCTION_DECODER_HH
 
 #include <sstream>
 #include <iostream>
@@ -31,6 +31,8 @@
 #include <string>
 #include <sigc++/sigc++.h>
 #include "NumberWrapper.hh"
+
+#include "Types.hh"
 
 class CpuComponents;
 class InstructionDecoderPrivate;
@@ -72,7 +74,7 @@ protected:
 #if 0
 	template<typename T>
 	T getInstructionBytes () {
-		unsigned short imm = p->m_biu->getInstructionBytes<unsigned short> ();
+		uint16 imm = p->m_biu->getInstructionBytes<uint16> ();
 		p->m_inst.addBytes (imm);
 
 		return val;
@@ -83,7 +85,7 @@ protected:
 	void decodeInstruction ();
 
 	/** @brief Do the actual decoding of the ModRM byte */
-	unsigned short decodeRm0To7 (unsigned char mrm, std::ostringstream &dis);
+	uint16 decodeRm0To7 (uint8 mrm, std::ostringstream &dis);
 
 public:
 	/** */
@@ -217,5 +219,5 @@ protected:
 
 }; //end class InstructionDecoder
 
-#endif //JAF__INSTRUCTION_DECODER_HH
+#endif //SIM8086__INSTRUCTION_DECODER_HH
 

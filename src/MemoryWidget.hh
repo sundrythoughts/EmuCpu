@@ -22,8 +22,8 @@
 @brief Widget for displaying the memory.
 */
 
-#ifndef JAF__MEMORY_WIDGET_HH
-#define JAF__MEMORY_WIDGET_HH
+#ifndef SIM8086__MEMORY_WIDGET_HH
+#define SIM8086__MEMORY_WIDGET_HH
 
 #include <QtCore>
 #include <QtGui>
@@ -66,5 +66,5 @@ private:
 
 }; //end namespace MemoryWidget
 
-#endif //JAF__MEMORY_WIDGET_HH
+#endif //SIM8086__MEMORY_WIDGET_HH
 

@@ -22,8 +22,8 @@
 @brief Widget for displaying the general registers.
 */
 
-#ifndef JAF__GENERAL_REGISTERS_WIDGET_HH
-#define JAF__GENERAL_REGISTERS_WIDGET_HH
+#ifndef SIM8086__GENERAL_REGISTERS_WIDGET_HH
+#define SIM8086__GENERAL_REGISTERS_WIDGET_HH
 
 #include <QtCore>
 #include <QtGui>
@@ -80,5 +80,5 @@ Q_SIGNALS:
 
 }; //end class GeneralRegistersWidget
 
-#endif //JAF__GENERAL_REGISTERS_WIDGET_HH
+#endif //SIM8086__GENERAL_REGISTERS_WIDGET_HH
 

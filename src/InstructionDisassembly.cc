@@ -43,7 +43,7 @@ InstructionDisassembly::getSegmentOffset () const {
 }
 
 void
-InstructionDisassembly::setSegmentOffset (unsigned short seg, unsigned short off) {
+InstructionDisassembly::setSegmentOffset (uint16 seg, uint16 off) {
 	std::ostringstream oss;
 	oss << std::setfill ('0') << std::setw (4) << std::hex << seg;
 	oss << ":";
@@ -58,7 +58,7 @@ InstructionDisassembly::getMachineCode () const {
 }
 
 void
-InstructionDisassembly::setMachineCode (const std::vector<unsigned char> &code) {
+InstructionDisassembly::setMachineCode (const std::vector<uint8> &code) {
 	std::ostringstream oss;
 	for (size_t i = 0; i < code.size (); ++i) {
 		oss << std::setfill ('0') << std::setw (2) << std::hex << (size_t)code[i];

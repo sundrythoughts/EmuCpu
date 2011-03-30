@@ -101,7 +101,7 @@ InstructionDecoder::nextInstruction () {
 	}
 
 	p->m_inst->disassembly ().setSegmentOffset (p->m_biu->getSegRegCS (), p->m_biu->getRegIP ());
-	p->m_inst->addBytes (p->m_biu->getInstructionBytes<unsigned char> ());
+	p->m_inst->addBytes (p->m_biu->getInstructionBytes<uint8> ());
 
 	decodeInstruction ();
 
@@ -126,7 +126,7 @@ InstructionDecoder::decodeInstruction () {
 
 	//decode modrm if instruction has it
 	if (p->m_inst->getItem ().has_modrm) {
-		p->m_inst->addBytes (p->m_biu->getInstructionBytes<unsigned char> ());
+		p->m_inst->addBytes (p->m_biu->getInstructionBytes<uint8> ());
 
 		//check secondary table
 		size_t grp = p->m_inst->getItem ().group;
@@ -155,7 +155,7 @@ InstructionDecoder::decodeInstruction () {
 
 void
 InstructionDecoder::decodeNotImplemented () {
-	std::cerr << "decodeNotImplemented (" << std::hex << (unsigned int)p->m_inst->getByte (0);
+	std::cerr << "decodeNotImplemented (" << std::hex << (uint32)p->m_inst->getByte (0);
 	std::cerr << "): this addressing mode is not implemented or doesn't exist" << std::endl;
 }
 
@@ -165,13 +165,13 @@ InstructionDecoder::decodeNone () {
 	p->m_inst->setAddrMode (0);
 }
 
-unsigned short
-InstructionDecoder::decodeRm0To7 (unsigned char mrm, std::ostringstream &dis) {
+uint16
+InstructionDecoder::decodeRm0To7 (uint8 mrm, std::ostringstream &dis) {
 	//FIXME - this should help to remove duplicate code in ModRM stuff
 
 	Jaf::ModRM modrm;
 	modrm.byte = mrm;
-	unsigned short mem;
+	uint16 mem;
 	switch (modrm.rm) {
 		case 0: { //[bx + si {+ d8}{+ d16}]
 			dis << "[" << Jaf::getRegIndex16Name (Jaf::REG_BX);
@@ -212,10 +212,10 @@ InstructionDecoder::decodeRm0To7 (unsigned char mrm, std::ostringstream &dis) {
 			mem = p->m_eunit->getRegBP ();
 
 			if (modrm.mod == 0) { //zero displacement SPECIAL CASE
-				mem = p->m_biu->getInstructionBytes<unsigned short> ();
+				mem = p->m_biu->getInstructionBytes<uint16> ();
 				p->m_inst->addBytes (mem);
 				dis.str ("");
-				dis << "[" << formatHexWord << (unsigned int)mem;
+				dis << "[" << formatHexWord << (uint32)mem;
 			}
 		} break;
 
@@ -230,16 +230,16 @@ InstructionDecoder::decodeRm0To7 (unsigned char mrm, std::ostringstream &dis) {
 			dis << "]";
 		}break;
 		case 1: { //sign extend next byte
-			unsigned char udis = p->m_biu->getInstructionBytes<unsigned char> ();
+			uint8 udis = p->m_biu->getInstructionBytes<uint8> ();
 			p->m_inst->addBytes (udis);
-			mem += (short)(char)udis;
-			dis << "+" << formatHexByte << (unsigned int)udis << "]";
+			mem += (int16)(int8)udis;
+			dis << "+" << formatHexByte << (uint32)udis << "]";
 		} break;
 		case 2: { //next two bytes
-			unsigned short udis = p->m_biu->getInstructionBytes<unsigned short> ();
+			uint16 udis = p->m_biu->getInstructionBytes<uint16> ();
 			p->m_inst->addBytes (udis);
 			mem += udis;
-			dis << "+" << formatHexWord << (unsigned int)udis << "]";
+			dis << "+" << formatHexWord << (uint32)udis << "]";
 		} break;
 	}
 
@@ -249,10 +249,10 @@ InstructionDecoder::decodeRm0To7 (unsigned char mrm, std::ostringstream &dis) {
 void
 InstructionDecoder::decodeRegRM () {
 	union InstMask {
-		unsigned char byte;
+		uint8 byte;
 		struct {
-			unsigned int w : 1;
-			unsigned int d : 1;
+			uint32 w : 1;
+			uint32 d : 1;
 		};
 	};
 
@@ -282,27 +282,27 @@ InstructionDecoder::decodeRegRM () {
 		disSrcIf (im.d) << Jaf::getRegIndexName (im.w, modrm.rm);
 
 		if (im.w) { //16 bits
-			instDestIf (im.d).init<unsigned short> (p->m_eunit->getReg16 (modrm.reg));
-			instSrcIf (im.d).init<unsigned short> (p->m_eunit->getReg16 (modrm.rm));
+			instDestIf (im.d).init<uint16> (p->m_eunit->getReg16 (modrm.reg));
+			instSrcIf (im.d).init<uint16> (p->m_eunit->getReg16 (modrm.rm));
 		}
 		else { //8 bits
-			instDestIf (im.d).init<unsigned char> (p->m_eunit->getReg8 (modrm.reg));
-			instSrcIf (im.d).init<unsigned char> (p->m_eunit->getReg8 (modrm.rm));
+			instDestIf (im.d).init<uint8> (p->m_eunit->getReg8 (modrm.reg));
+			instSrcIf (im.d).init<uint8> (p->m_eunit->getReg8 (modrm.rm));
 		}
 	}
 	else {
 		disDestIf (im.d) << Jaf::getRegIndexName (im.w, modrm.reg);
 
-		unsigned short mem;
+		uint16 mem;
 		mem = decodeRm0To7 (modrm.byte, disSrcIf (im.d));
 
 		if (im.w) { //16 bits
-			instDestIf (im.d).init<unsigned short> (p->m_eunit->getReg16 (modrm.reg));
-			instSrcIf (im.d).init<unsigned short> (p->m_biu->getMemoryAddress<unsigned short> (p->m_biu->getSegRegDS (), mem), true);
+			instDestIf (im.d).init<uint16> (p->m_eunit->getReg16 (modrm.reg));
+			instSrcIf (im.d).init<uint16> (p->m_biu->getMemoryAddress<uint16> (p->m_biu->getSegRegDS (), mem), true);
 		}
 		else { //8 bits
-			instDestIf (im.d).init<unsigned char> (p->m_eunit->getReg8 (modrm.reg));
-			instSrcIf (im.d).init<unsigned char> (p->m_biu->getMemoryAddress<unsigned char> (p->m_biu->getSegRegDS (), mem), true);
+			instDestIf (im.d).init<uint8> (p->m_eunit->getReg8 (modrm.reg));
+			instSrcIf (im.d).init<uint8> (p->m_biu->getMemoryAddress<uint8> (p->m_biu->getSegRegDS (), mem), true);
 		}
 	}
 }
@@ -310,9 +310,9 @@ InstructionDecoder::decodeRegRM () {
 void
 InstructionDecoder::decodeAccImm () {
 	union InstMask {
-		unsigned char byte;
+		uint8 byte;
 		struct {
-			unsigned int w : 1;
+			uint32 w : 1;
 		};
 	};
 
@@ -327,34 +327,34 @@ InstructionDecoder::decodeAccImm () {
 	disDest () << Jaf::getRegIndexName (im.w, Jaf::REG_AX);
 
 	if (im.w) { //16 bits
-		instDest ().init<unsigned short> (p->m_eunit->getRegAX ());
+		instDest ().init<uint16> (p->m_eunit->getRegAX ());
 
-		const unsigned short imm = p->m_biu->getInstructionBytes<unsigned short> ();
+		const uint16 imm = p->m_biu->getInstructionBytes<uint16> ();
 		p->m_inst->addBytes (imm);
 
-		disSrc () << formatHexWord << (unsigned int)imm;
+		disSrc () << formatHexWord << (uint32)imm;
 
-		instSrc ().init<unsigned short> (new Immediate<unsigned short> (imm), true);
+		instSrc ().init<uint16> (new Immediate<uint16> (imm), true);
 	}
 	else { //8 bits
-		instDest ().init<unsigned char> (p->m_eunit->getRegAL ());
+		instDest ().init<uint8> (p->m_eunit->getRegAL ());
 
-		const unsigned char imm = p->m_biu->getInstructionBytes<unsigned char> ();
+		const uint8 imm = p->m_biu->getInstructionBytes<uint8> ();
 		p->m_inst->addBytes (imm);
 
-		disSrc () << formatHexByte << (unsigned int)imm;
+		disSrc () << formatHexByte << (uint32)imm;
 
-		instSrc ().init<unsigned char> (new Immediate<unsigned char> (imm), true);
+		instSrc ().init<uint8> (new Immediate<uint8> (imm), true);
 	}
 }
 
 void
 InstructionDecoder::decodeSegment () {
 	union InstMask {
-		unsigned char byte;
+		uint8 byte;
 		struct {
-			unsigned int _padding : 3;
-			unsigned int sreg : 2;
+			uint32 _padding : 3;
+			uint32 sreg : 2;
 		};
 	};
 
@@ -368,7 +368,7 @@ InstructionDecoder::decodeSegment () {
 
 	disDest () << Jaf::getSegRegIndexName (im.sreg);
 
-	instDest ().init<unsigned short> (p->m_biu->getSegReg (im.sreg));
+	instDest ().init<uint16> (p->m_biu->getSegReg (im.sreg));
 }
 
 void
@@ -380,9 +380,9 @@ InstructionDecoder::decodeAcc () {
 void
 InstructionDecoder::decodeReg () {
 	union InstMask {
-		unsigned char byte;
+		uint8 byte;
 		struct {
-			unsigned int reg : 3;
+			uint32 reg : 3;
 		};
 	};
 
@@ -396,7 +396,7 @@ InstructionDecoder::decodeReg () {
 
 	disDest () << Jaf::getRegIndex16Name (im.reg);
 
-	instDest ().init<unsigned short> (p->m_eunit->getReg16 (im.reg));
+	instDest ().init<uint16> (p->m_eunit->getReg16 (im.reg));
 }
 
 void
@@ -404,23 +404,23 @@ InstructionDecoder::decodeShort () {
 	p->m_inst->disassembly ().setAddressingMode ("Short");
 	p->m_inst->setAddrMode (6);
 
-	const char imm = p->m_biu->getInstructionBytes<char> ();
-	p->m_inst->addBytes ((unsigned char)imm);
+	const char8 imm = p->m_biu->getInstructionBytes<char8> ();
+	p->m_inst->addBytes ((uint8)imm);
 
-	disDest () << formatHexWord << (unsigned int)(p->m_biu->getRegIP () + imm);
+	disDest () << formatHexWord << (uint32)(p->m_biu->getRegIP () + imm);
 
 	p->m_inst->operands ().setOperandSize (Jaf::OP_SIZE_8);
 
-	instDest ().init<char> (new Immediate<char> (imm), true);
+	instDest ().init<char8> (new Immediate<char8> (imm), true);
 }
 
 void
 InstructionDecoder::decodeSegRM () {
 	union InstMask {
-		unsigned char byte;
+		uint8 byte;
 		struct {
-			unsigned int _padding : 1;
-			unsigned int d : 1;
+			uint32 _padding : 1;
+			uint32 d : 1;
 		};
 	};
 
@@ -439,27 +439,27 @@ InstructionDecoder::decodeSegRM () {
 		disSrcIf (im.d) << Jaf::getRegIndex16Name (modrm.rm);
 
 		if (im.d) { //reg is dest
-			instDest ().init<unsigned short> (p->m_biu->getSegReg (modrm.reg & 3));
-			instSrc ().init<unsigned short> (p->m_eunit->getReg16 (modrm.rm));
+			instDest ().init<uint16> (p->m_biu->getSegReg (modrm.reg & 3));
+			instSrc ().init<uint16> (p->m_eunit->getReg16 (modrm.rm));
 		}
 		else { //reg is src
-			instSrc ().init<unsigned short> (p->m_biu->getSegReg (modrm.reg & 3));
-			instDest ().init<unsigned short> (p->m_eunit->getReg16 (modrm.rm));
+			instSrc ().init<uint16> (p->m_biu->getSegReg (modrm.reg & 3));
+			instDest ().init<uint16> (p->m_eunit->getReg16 (modrm.rm));
 		}
 	}
 	else {
 		disDestIf (im.d) << Jaf::getSegRegIndexName (modrm.reg & 3);
 
-		unsigned short mem;
+		uint16 mem;
 		mem = decodeRm0To7 (modrm.byte, disSrcIf (im.d));
 
 		if (im.d) { //reg is dest
-			instDest ().init<unsigned short> (p->m_biu->getSegReg (modrm.reg & 3));
-			instSrc ().init<unsigned short> (p->m_biu->getMemoryAddress<unsigned short> (p->m_biu->getSegRegDS (), mem), true);
+			instDest ().init<uint16> (p->m_biu->getSegReg (modrm.reg & 3));
+			instSrc ().init<uint16> (p->m_biu->getMemoryAddress<uint16> (p->m_biu->getSegRegDS (), mem), true);
 		}
 		else { //reg is src
-			instSrc ().init<unsigned short> (p->m_biu->getSegReg (modrm.reg & 3));
-			instDest ().init<unsigned short> (p->m_biu->getMemoryAddress<unsigned short> (p->m_biu->getSegRegDS (), mem), true);
+			instSrc ().init<uint16> (p->m_biu->getSegReg (modrm.reg & 3));
+			instDest ().init<uint16> (p->m_biu->getMemoryAddress<uint16> (p->m_biu->getSegRegDS (), mem), true);
 		}
 	}
 }
@@ -467,9 +467,9 @@ InstructionDecoder::decodeSegRM () {
 void
 InstructionDecoder::decodeAccReg () {
 	union InstMask {
-		unsigned char byte;
+		uint8 byte;
 		struct {
-			unsigned int reg : 3;
+			uint32 reg : 3;
 		};
 	};
 
@@ -482,19 +482,19 @@ InstructionDecoder::decodeAccReg () {
 	p->m_inst->operands ().setOperandSize (Jaf::OP_SIZE_16);
 
 	disDest () << Jaf::getRegIndex16Name (Jaf::REG_AX);
-	instDest ().init<unsigned short> (p->m_eunit->getRegAX ());
+	instDest ().init<uint16> (p->m_eunit->getRegAX ());
 
 	disSrc () << Jaf::getRegIndex16Name (im.reg);
-	instSrc ().init<unsigned short> (p->m_eunit->getReg16 (im.reg));
+	instSrc ().init<uint16> (p->m_eunit->getReg16 (im.reg));
 }
 
 void
 InstructionDecoder::decodeAccMem () {
 	union InstMask {
-		unsigned char byte;
+		uint8 byte;
 		struct {
-			unsigned int w : 1;
-			unsigned int d : 1;
+			uint32 w : 1;
+			uint32 d : 1;
 		};
 	};
 
@@ -504,31 +504,31 @@ InstructionDecoder::decodeAccMem () {
 	InstMask im;
 	im.byte = p->m_inst->getByte (0);
 
-	unsigned short mem = p->m_biu->getInstructionBytes<unsigned short> ();
+	uint16 mem = p->m_biu->getInstructionBytes<uint16> ();
 	p->m_inst->addBytes (mem);
 
 	p->m_inst->operands ().setOperandSize (im.w);
 
 	disDestIf (!im.d) << Jaf::getRegIndexName (im.w, Jaf::REG_AX);
-	disSrcIf (!im.d) << "[" << formatHexWord << (unsigned int)mem << "]";
+	disSrcIf (!im.d) << "[" << formatHexWord << (uint32)mem << "]";
 
 	if (im.w) { //16 bits
-		instDestIf (im.d).init<unsigned short> (p->m_biu->getMemoryAddress<unsigned short> (p->m_biu->getSegRegDS (), mem), true);
-		instSrcIf (im.d).init<unsigned short> (p->m_eunit->getRegAX ());
+		instDestIf (im.d).init<uint16> (p->m_biu->getMemoryAddress<uint16> (p->m_biu->getSegRegDS (), mem), true);
+		instSrcIf (im.d).init<uint16> (p->m_eunit->getRegAX ());
 	}
 	else { //8 bits
-		instDestIf (im.d).init<unsigned char> (p->m_biu->getMemoryAddress<unsigned char> (p->m_biu->getSegRegDS (), mem), true);
-		instSrcIf (im.d).init<unsigned char> (p->m_eunit->getRegAL ());
+		instDestIf (im.d).init<uint8> (p->m_biu->getMemoryAddress<uint8> (p->m_biu->getSegRegDS (), mem), true);
+		instSrcIf (im.d).init<uint8> (p->m_eunit->getRegAL ());
 	}
 }
 
 void
 InstructionDecoder::decodeRegImm () {
 	union InstMask {
-		unsigned char byte;
+		uint8 byte;
 		struct {
-			unsigned int reg : 3;
-			unsigned int w : 1;
+			uint32 reg : 3;
+			uint32 w : 1;
 		};
 	};
 
@@ -543,24 +543,24 @@ InstructionDecoder::decodeRegImm () {
 	p->m_inst->operands ().setOperandSize (im.w);
 
 	if (im.w) { //16 bits
-		instDest ().init<unsigned short> (p->m_eunit->getReg16 (im.reg));
+		instDest ().init<uint16> (p->m_eunit->getReg16 (im.reg));
 
-		const unsigned short imm = p->m_biu->getInstructionBytes<unsigned short> ();
+		const uint16 imm = p->m_biu->getInstructionBytes<uint16> ();
 		p->m_inst->addBytes (imm);
 
-		disSrc () << formatHexWord << (unsigned int)imm;
+		disSrc () << formatHexWord << (uint32)imm;
 
-		instSrc ().init<unsigned short> (new Immediate<unsigned short> (imm), true);
+		instSrc ().init<uint16> (new Immediate<uint16> (imm), true);
 	}
 	else { //8 bits
-		instDest ().init<unsigned char> (p->m_eunit->getReg8 (im.reg));
+		instDest ().init<uint8> (p->m_eunit->getReg8 (im.reg));
 
-		const unsigned char imm = p->m_biu->getInstructionBytes<unsigned char> ();
+		const uint8 imm = p->m_biu->getInstructionBytes<uint8> ();
 		p->m_inst->addBytes (imm);
 
-		disSrc () << formatHexByte << (unsigned int)imm;
+		disSrc () << formatHexByte << (uint32)imm;
 
-		instSrc ().init<unsigned char> (new Immediate<unsigned char> (imm), true);
+		instSrc ().init<uint8> (new Immediate<uint8> (imm), true);
 	}
 }
 
@@ -569,14 +569,14 @@ InstructionDecoder::decodeIntra () {
 	p->m_inst->disassembly ().setAddressingMode ("Intra");
 	p->m_inst->setAddrMode (11);
 
-	const short imm = p->m_biu->getInstructionBytes<short> ();
+	const int16 imm = p->m_biu->getInstructionBytes<int16> ();
 	p->m_inst->addBytes (imm);
 
-	disDest () << formatHexWord << (unsigned int)(p->m_biu->getRegIP () + imm);
+	disDest () << formatHexWord << (uint32)(p->m_biu->getRegIP () + imm);
 
 	p->m_inst->operands ().setOperandSize (Jaf::OP_SIZE_16);
 
-	instDest ().init<short> (new Immediate<short> (imm), true);
+	instDest ().init<int16> (new Immediate<int16> (imm), true);
 }
 
 void
@@ -584,9 +584,9 @@ InstructionDecoder::decodeInter () {
 	p->m_inst->disassembly ().setAddressingMode ("Inter");
 	p->m_inst->setAddrMode (12);
 
-	const unsigned short off = p->m_biu->getInstructionBytes<unsigned short> ();
+	const uint16 off = p->m_biu->getInstructionBytes<uint16> ();
 	p->m_inst->addBytes (off);
-	const unsigned short seg = p->m_biu->getInstructionBytes<unsigned short> ();
+	const uint16 seg = p->m_biu->getInstructionBytes<uint16> ();
 	p->m_inst->addBytes (seg);
 
 	disDest () << formatHexWord << seg;
@@ -595,13 +595,13 @@ InstructionDecoder::decodeInter () {
 
 	p->m_inst->operands ().setOperandSize (Jaf::OP_SIZE_16);
 
-	instDest ().init<unsigned short> (p->m_biu->getMemoryAddress<unsigned short> (seg, off), true);
+	instDest ().init<uint16> (p->m_biu->getMemoryAddress<uint16> (seg, off), true);
 }
 
 void
 InstructionDecoder::decodeXferInd () {
 	union InstMask {
-		unsigned char byte;
+		uint8 byte;
 	};
 
 	p->m_inst->disassembly ().setAddressingMode ("XferInd");
@@ -617,25 +617,25 @@ InstructionDecoder::decodeXferInd () {
 	if (modrm.mod == 3) {
 		disDest () << Jaf::getRegIndex16Name (modrm.rm);
 
-		instDest ().init<unsigned short> (p->m_eunit->getReg16 (modrm.rm));
+		instDest ().init<uint16> (p->m_eunit->getReg16 (modrm.rm));
 	}
 	else {
 
-		unsigned short mem;
+		uint16 mem;
 		mem = decodeRm0To7 (modrm.byte, disDest ());
 
-		unsigned short segment = p->m_biu->getMemoryData<unsigned short> (p->m_biu->getSegRegDS (), mem);
-		unsigned short offset = p->m_biu->getMemoryData<unsigned short> (p->m_biu->getSegRegDS (), mem + 2);
-		instDest ().init<unsigned short> (p->m_biu->getMemoryAddress<unsigned short> (segment, offset), true);
+		uint16 segment = p->m_biu->getMemoryData<uint16> (p->m_biu->getSegRegDS (), mem);
+		uint16 offset = p->m_biu->getMemoryData<uint16> (p->m_biu->getSegRegDS (), mem + 2);
+		instDest ().init<uint16> (p->m_biu->getMemoryAddress<uint16> (segment, offset), true);
 	}
 }
 
 void
 InstructionDecoder::decodeRMImm () {
 	union InstMask {
-		unsigned char byte;
+		uint8 byte;
 		struct {
-			unsigned int w : 1;
+			uint32 w : 1;
 		};
 	};
 
@@ -653,52 +653,52 @@ InstructionDecoder::decodeRMImm () {
 		disDest () << Jaf::getRegIndexName (im.w, modrm.rm);
 
 		if (im.w) { //16 bits
-			instDest ().init<unsigned short> (p->m_eunit->getReg16 (modrm.rm));
+			instDest ().init<uint16> (p->m_eunit->getReg16 (modrm.rm));
 		}
 		else { //8 bits
-			instDest ().init<unsigned char> (p->m_eunit->getReg8 (modrm.rm));
+			instDest ().init<uint8> (p->m_eunit->getReg8 (modrm.rm));
 		}
 	}
 	else {
-		unsigned short mem;
+		uint16 mem;
 		mem = decodeRm0To7 (modrm.byte, disDest ());
 
 		if (im.w) { //16 bits
-			instDest ().init<unsigned short> (p->m_biu->getMemoryAddress<unsigned short> (p->m_biu->getSegRegDS (), mem), true);
+			instDest ().init<uint16> (p->m_biu->getMemoryAddress<uint16> (p->m_biu->getSegRegDS (), mem), true);
 		}
 		else { //8 bits
-			instDest ().init<unsigned char> (p->m_biu->getMemoryAddress<unsigned char> (p->m_biu->getSegRegDS (), mem), true);
+			instDest ().init<uint8> (p->m_biu->getMemoryAddress<uint8> (p->m_biu->getSegRegDS (), mem), true);
 		}
 	}
 
 	if (im.byte == 0x83) {
-		char immc = p->m_biu->getInstructionBytes<char> ();
-		p->m_inst->addBytes ((unsigned char)immc);
-		const unsigned short imms = (short)immc;
-		instSrc ().init<unsigned short> (new Immediate<unsigned short> (imms), true);
-		disSrc () << formatHexWord << (unsigned short)imms;
+		int8 immc = p->m_biu->getInstructionBytes<int8> ();
+		p->m_inst->addBytes ((uint8)immc);
+		const uint16 imms = (int16)immc;
+		instSrc ().init<uint16> (new Immediate<uint16> (imms), true);
+		disSrc () << formatHexWord << (uint16)imms;
 	}
 	else if (im.w) { //16 bits
-		const unsigned short imm = p->m_biu->getInstructionBytes<unsigned short> ();
+		const uint16 imm = p->m_biu->getInstructionBytes<uint16> ();
 		p->m_inst->addBytes (imm);
-		instSrc ().init<unsigned short> (new Immediate<unsigned short> (imm), true);
-		disSrc () << formatHexWord << (unsigned int)imm;
+		instSrc ().init<uint16> (new Immediate<uint16> (imm), true);
+		disSrc () << formatHexWord << (uint32)imm;
 	}
 	else { // 8 bits
-		const unsigned char imm = p->m_biu->getInstructionBytes<unsigned char> ();
+		const uint8 imm = p->m_biu->getInstructionBytes<uint8> ();
 		p->m_inst->addBytes (imm);
-		instSrc ().init<unsigned char> (new Immediate<unsigned char> (imm), true);
-		disSrc () << formatHexByte << (unsigned int)imm;
+		instSrc ().init<uint8> (new Immediate<uint8> (imm), true);
+		disSrc () << formatHexByte << (uint32)imm;
 	}
 }
 
 void
 InstructionDecoder::decodeAccPort () {
 	union InstMask {
-		unsigned char byte;
+		uint8 byte;
 		struct {
-			unsigned int w : 1;
-			unsigned int d : 1;
+			uint32 w : 1;
+			uint32 d : 1;
 		};
 	};
 
@@ -712,28 +712,28 @@ InstructionDecoder::decodeAccPort () {
 
 	disDestIf (!im.d) << Jaf::getRegIndexName (im.w, Jaf::REG_AX);
 
-	const unsigned char imm = p->m_biu->getInstructionBytes<unsigned char> ();
+	const uint8 imm = p->m_biu->getInstructionBytes<uint8> ();
 	p->m_inst->addBytes (imm);
 
-	disSrcIf (!im.d) << formatHexByte << (unsigned int)imm;
+	disSrcIf (!im.d) << formatHexByte << (uint32)imm;
 
-	instSrcIf (!im.d).init<unsigned short> (new Immediate<unsigned short> (imm), true);
+	instSrcIf (!im.d).init<uint16> (new Immediate<uint16> (imm), true);
 
 	if (im.w) { //16 bits
-		instDestIf (!im.d).init<unsigned short> (p->m_eunit->getRegAX ());
+		instDestIf (!im.d).init<uint16> (p->m_eunit->getRegAX ());
 	}
 	else { //8 bits
-		instDestIf (!im.d).init<unsigned char> (p->m_eunit->getRegAL ());
+		instDestIf (!im.d).init<uint8> (p->m_eunit->getRegAL ());
 	}
 }
 
 void
 InstructionDecoder::decodeRM () {
 	union InstMask {
-		unsigned char byte;
+		uint8 byte;
 		struct {
-			unsigned int w : 1;
-			unsigned int v : 1;
+			uint32 w : 1;
+			uint32 v : 1;
 		};
 	};
 
@@ -751,31 +751,31 @@ InstructionDecoder::decodeRM () {
 		disDest () << Jaf::getRegIndexName (im.w, modrm.rm);
 
 		if (im.w) { //16 bits
-			instDest ().init<unsigned short> (p->m_eunit->getReg16 (modrm.rm));
+			instDest ().init<uint16> (p->m_eunit->getReg16 (modrm.rm));
 		}
 		else { //8 bits
-			instDest ().init<unsigned char> (p->m_eunit->getReg8 (modrm.rm));
+			instDest ().init<uint8> (p->m_eunit->getReg8 (modrm.rm));
 		}
 	}
 	else {
-		unsigned short mem;
+		uint16 mem;
 		mem = decodeRm0To7 (modrm.byte, disDest ());
 
 		if (im.w) { //16 bits
-			instDest ().init<unsigned short> (p->m_biu->getMemoryAddress<unsigned short> (p->m_biu->getSegRegDS (), mem), true);
+			instDest ().init<uint16> (p->m_biu->getMemoryAddress<uint16> (p->m_biu->getSegRegDS (), mem), true);
 		}
 		else { //8 bits
-			instDest ().init<unsigned char> (p->m_biu->getMemoryAddress<unsigned char> (p->m_biu->getSegRegDS (), mem), true);
+			instDest ().init<uint8> (p->m_biu->getMemoryAddress<uint8> (p->m_biu->getSegRegDS (), mem), true);
 		}
 	}
 
 	if (im.byte >= 0xD0 && im.byte <= 0xD3) {
 		if (im.v) { //16 bits
-			instSrc ().init<unsigned char> (new Immediate<unsigned char> (p->m_eunit->getRegCL ()), true);
+			instSrc ().init<uint8> (new Immediate<uint8> (p->m_eunit->getRegCL ()), true);
 			disSrc () << "cl";
 		}
 		else { // 8 bits
-			instSrc ().init<unsigned char> (new Immediate<unsigned char> (1), true);
+			instSrc ().init<uint8> (new Immediate<uint8> (1), true);
 			disSrc () << "1";
 		}
 	}
@@ -794,16 +794,16 @@ InstructionDecoder::decodeRetPop () {
 
 	p->m_inst->operands ().setOperandSize (Jaf::OP_SIZE_16);
 
-	const unsigned short imm = p->m_biu->getInstructionBytes<unsigned short> ();
+	const uint16 imm = p->m_biu->getInstructionBytes<uint16> ();
 	p->m_inst->addBytes (imm);
-	instSrc ().init<unsigned short> (new Immediate<unsigned short> (imm), true);
+	instSrc ().init<uint16> (new Immediate<uint16> (imm), true);
 	disSrc () << formatHexWord << imm;
 }
 
 void
 InstructionDecoder::decodeType3 () {
 	union InstMask {
-		unsigned char byte;
+		uint8 byte;
 	};
 
 	p->m_inst->disassembly ().setAddressingMode ("Type3");
@@ -814,7 +814,7 @@ InstructionDecoder::decodeType3 () {
 
 	p->m_inst->operands ().setOperandSize (Jaf::OP_SIZE_8);
 
-	instSrc ().init<unsigned char> (new Immediate<unsigned char> (3), true);
+	instSrc ().init<uint8> (new Immediate<uint8> (3), true);
 }
 
 void
@@ -826,10 +826,10 @@ InstructionDecoder::decodeEscNum () {
 void
 InstructionDecoder::decodeAccVPort () {
 	union InstMask {
-		unsigned char byte;
+		uint8 byte;
 		struct {
-			unsigned int w : 1;
-			unsigned int d : 1;
+			uint32 w : 1;
+			uint32 d : 1;
 		};
 	};
 
@@ -845,13 +845,13 @@ InstructionDecoder::decodeAccVPort () {
 
 	disSrcIf (!im.d) << Jaf::getRegIndex16Name (Jaf::REG_DX);
 
-	instSrcIf (!im.d).init<unsigned short> (p->m_eunit->getRegDX ());
+	instSrcIf (!im.d).init<uint16> (p->m_eunit->getRegDX ());
 
 	if (im.w) { //16 bits
-		instDestIf (!im.d).init<unsigned short> (p->m_eunit->getRegAX ());
+		instDestIf (!im.d).init<uint16> (p->m_eunit->getRegAX ());
 	}
 	else { //8 bits
-		instDestIf (!im.d).init<unsigned char> (p->m_eunit->getRegAL ());
+		instDestIf (!im.d).init<uint8> (p->m_eunit->getRegAL ());
 	}
 }
 
@@ -864,7 +864,7 @@ InstructionDecoder::decodeAccBase () {
 void
 InstructionDecoder::decodeIntNum () {
 	union InstMask {
-		unsigned char byte;
+		uint8 byte;
 	};
 
 	p->m_inst->disassembly ().setAddressingMode ("IntNum");
@@ -875,20 +875,20 @@ InstructionDecoder::decodeIntNum () {
 
 	p->m_inst->operands ().setOperandSize (Jaf::OP_SIZE_8);
 
-	const unsigned char imm = p->m_biu->getInstructionBytes<unsigned char> ();
+	const uint8 imm = p->m_biu->getInstructionBytes<uint8> ();
 	p->m_inst->addBytes (imm);
 
-	disSrc () << formatHexByte << (unsigned int)imm;
+	disSrc () << formatHexByte << (uint32)imm;
 
-	instSrc ().init<unsigned char> (new Immediate<unsigned char> (imm), true);
+	instSrc ().init<uint8> (new Immediate<uint8> (imm), true);
 }
 
 void
 InstructionDecoder::decodeString () {
 	union InstMask {
-		unsigned char byte;
+		uint8 byte;
 		struct {
-			unsigned int w : 1;
+			uint32 w : 1;
 		};
 	};
 
@@ -901,12 +901,12 @@ InstructionDecoder::decodeString () {
 	p->m_inst->operands ().setOperandSize (im.w);
 
 	if (im.w) { //16 bits
-		instDest ().init<short> (p->m_biu->getMemoryAddress<short> (p->m_biu->getSegRegDS (), p->m_eunit->getRegDI ()), true);
-		instSrc ().init<short> (p->m_biu->getMemoryAddress<short> (p->m_biu->getSegRegDS (), p->m_eunit->getRegSI ()), true);
+		instDest ().init<int16> (p->m_biu->getMemoryAddress<int16> (p->m_biu->getSegRegDS (), p->m_eunit->getRegDI ()), true);
+		instSrc ().init<int16> (p->m_biu->getMemoryAddress<int16> (p->m_biu->getSegRegDS (), p->m_eunit->getRegSI ()), true);
 	}
 	else { //8 bits
-		instDest ().init<unsigned char> (p->m_biu->getMemoryAddress<unsigned char> (p->m_biu->getSegRegDS (), p->m_eunit->getRegDI ()), true);
-		instSrc ().init<unsigned char> (p->m_biu->getMemoryAddress<unsigned char> (p->m_biu->getSegRegDS (), p->m_eunit->getRegSI ()), true);
+		instDest ().init<uint8> (p->m_biu->getMemoryAddress<uint8> (p->m_biu->getSegRegDS (), p->m_eunit->getRegDI ()), true);
+		instSrc ().init<uint8> (p->m_biu->getMemoryAddress<uint8> (p->m_biu->getSegRegDS (), p->m_eunit->getRegSI ()), true);
 	}
 }
 
@@ -952,13 +952,13 @@ InstructionDecoder::disDestIf (bool b) {
 
 std::ostream&
 InstructionDecoder::formatHexByte (std::ostream& os) {
-	os << std::setfill ('0') << std::setw (sizeof(unsigned char) << 1) << std::hex;
+	os << std::setfill ('0') << std::setw (sizeof(uint8) << 1) << std::hex;
 	return os;
 }
 
 std::ostream&
 InstructionDecoder::formatHexWord (std::ostream& os) {
-	os << std::setfill ('0') << std::setw (sizeof(unsigned short) << 1) << std::hex;
+	os << std::setfill ('0') << std::setw (sizeof(uint16) << 1) << std::hex;
 	return os;
 }
 

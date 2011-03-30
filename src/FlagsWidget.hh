@@ -22,8 +22,8 @@
 @brief Widget for displaying the flags.
 */
 
-#ifndef JAF__FLAGS_WIDGET_HH
-#define JAF__FLAGS_WIDGET_HH
+#ifndef SIM8086__FLAGS_WIDGET_HH
+#define SIM8086__FLAGS_WIDGET_HH
 
 #include <QtCore>
 #include <QtGui>
@@ -68,5 +68,5 @@ private:
 
 }; //end class FlagsWidget
 
-#endif //JAF__FLAGS_WIDGET_HH
+#endif //SIM8086__FLAGS_WIDGET_HH
 

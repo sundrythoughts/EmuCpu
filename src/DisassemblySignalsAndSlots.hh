@@ -22,8 +22,8 @@
 @brief Disassembly signal translation layer between Sigc++ and Qt.
 */
 
-#ifndef JAF__DISASSEMBLY_SIGNALS_AND_SLOTS_HH
-#define JAF__DISASSEMBLY_SIGNALS_AND_SLOTS_HH
+#ifndef SIM8086__DISASSEMBLY_SIGNALS_AND_SLOTS_HH
+#define SIM8086__DISASSEMBLY_SIGNALS_AND_SLOTS_HH
 
 #include <string>
 #include <QtCore>
@@ -49,5 +49,5 @@ Q_SIGNALS:
 
 }; //end class DisassemblySignalsAndSlots
 
-#endif //JAF__DISASSEMBLY_SIGNALS_AND_SLOTS_HH
+#endif //SIM8086__DISASSEMBLY_SIGNALS_AND_SLOTS_HH
 

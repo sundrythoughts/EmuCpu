@@ -22,11 +22,13 @@
 @brief Read-only implementation of INumberReadableWritable for immediate values.
 */
 
-#ifndef JAF__IMMEDIATE_HH
-#define JAF__IMMEDIATE_HH
+#ifndef SIM8086__IMMEDIATE_HH
+#define SIM8086__IMMEDIATE_HH
 
 #include "INumberReadableWritable.hh"
 #include <iostream>
+
+#include "Types.hh"
 
 /**
 @class Immediate
@@ -107,12 +109,12 @@ public:
 	}
 
 private:
-	virtual unsigned short getSegment () const {
+	virtual uint16 getSegment () const {
 		std::cerr << "Debug: class Immediate has no segment" << std::endl;
 		return 0;
 	}
 
-	virtual unsigned short getOffset () const {
+	virtual uint16 getOffset () const {
 		std::cerr << "Debug: class Immediate has no offset" << std::endl;
 		return 0;
 	}
@@ -122,7 +124,7 @@ private:
 		return *this;
 	}
 
-	virtual const T operator++ (int) {
+	virtual const T operator++ (int32) {
 		std::cerr << "Debug: class Immediate is read-only" << std::endl;
 		return *m_num;
 	}
@@ -132,7 +134,7 @@ private:
 		return *this;
 	}
 
-	virtual const T operator-- (int) {
+	virtual const T operator-- (int32) {
 		std::cerr << "Debug: class Immediate is read-only" << std::endl;
 		return *m_num;
 	}
@@ -204,5 +206,5 @@ private:
 
 }; //end class Immediate
 
-#endif //JAF__IMMEDIATE_HH
+#endif //SIM8086__IMMEDIATE_HH
 

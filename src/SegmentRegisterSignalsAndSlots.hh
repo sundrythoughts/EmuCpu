@@ -22,8 +22,8 @@
 @brief Segment register signal translation layer between Sigc++ and Qt.
 */
 
-#ifndef JAF__SEGMENT_REGISTER_SIGNALS_AND_SLOTS_HH
-#define JAF__SEGMENT_REGISTER_SIGNALS_AND_SLOTS_HH
+#ifndef SIM8086__SEGMENT_REGISTER_SIGNALS_AND_SLOTS_HH
+#define SIM8086__SEGMENT_REGISTER_SIGNALS_AND_SLOTS_HH
 
 #include <QObject>
 
@@ -76,5 +76,5 @@ Q_SIGNALS:
 
 }; //end class SegmentRegisterSignalsAndSlots
 
-#endif //JAF__SEGMENT_REGISTER_SIGNALS_AND_SLOTS_HH
+#endif //SIM8086__SEGMENT_REGISTER_SIGNALS_AND_SLOTS_HH
 

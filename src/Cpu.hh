@@ -22,8 +22,8 @@
 @brief Manage a thread that holds all the components of a Cpu.
 */
 
-#ifndef JAF__CPU_HH
-#define JAF__CPU_HH
+#ifndef SIM8086__CPU_HH
+#define SIM8086__CPU_HH
 
 #include "CpuComponents.hh"
 
@@ -108,9 +108,9 @@ public Q_SLOTS:
 	void loadFile (QString file_name, bool load_sim86os);
 
 	/** @brief Change the delay between execution of instructions. */
-	void setSpeed (int);
+	void setSpeed (int i);
 
 }; //end class Cpu
 
-#endif //JAF__CPU_HH
+#endif //SIM8086__CPU_HH
 

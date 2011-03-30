@@ -22,8 +22,8 @@
 @brief Widget for displaying the disassembly.
 */
 
-#ifndef JAF__DISASSEMBLY_WIDGET_HH
-#define JAF__DISASSEMBLY_WIDGET_HH
+#ifndef SIM8086__DISASSEMBLY_WIDGET_HH
+#define SIM8086__DISASSEMBLY_WIDGET_HH
 
 #include <QtCore>
 #include <QtGui>
@@ -57,5 +57,5 @@ Q_SIGNALS:
 
 }; //end class DisassemblyWidget
 
-#endif //JAF__DISASSEMBLY_WIDGET_HH
+#endif //SIM8086__DISASSEMBLY_WIDGET_HH
 

@@ -22,8 +22,8 @@
 */
 
 
-#ifndef JAF__DATABASE_TESTER_HH
-#define JAF__DATABASE_TESTER_HH
+#ifndef SIM8086__DATABASE_TESTER_HH
+#define SIM8086__DATABASE_TESTER_HH
 
 #include <QThread>
 #include <string>
@@ -101,5 +101,5 @@ public:
 	void disconnected ();
 };
 
-#endif //JAF__DATABASE_TESTER_HH
+#endif //SIM8086__DATABASE_TESTER_HH
 

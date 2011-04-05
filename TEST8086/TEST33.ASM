@@ -1,0 +1,26 @@
+;
+; SOUND2.ASM
+; USES THE LOOP INSTRUCTION TO SWEEP THE SOUNDS
+; ALSO USES MEMORY TRANSFERS FOR TEMPORARY STORAGE
+; BY DONALD R. CONGDON 1990
+;
+         SETREG IP=MAIN
+         SETREG SP=0100
+         ORG 1000
+MAIN:    MOV CX,0200
+         MOV DATA1,CX
+         MOV BX,0001
+         MOV CX,50
+SWEEP:   PUSH CX
+         MOV CX,0030   
+         MOV AX,DATA1
+         OUT 03,AX
+         DEC WORD DATA1
+         DEC WORD DATA1
+         POP CX
+         LOOP SWEEP
+         HLT
+DATA1:   DW
+         ORG 1000
+         DW
+

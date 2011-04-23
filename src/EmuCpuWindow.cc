@@ -1,5 +1,5 @@
 /*
- * sim8086 -- Emulates an Intel 8086 processor
+ * emucpu -- Emulates processors
  * Copyright (C) 2009  Joseph Freeman (jfree143dev AT gmail DOT com)
  * 
  * This program is free software: you can redistribute it and/or modify
@@ -17,9 +17,9 @@
  */
 
 
-#include "Sim86Window.hh"
+#include "EmuCpuWindow.hh"
 
-Sim86Window::Sim86Window (QWidget *parent) : QMainWindow (parent) {
+EmuCpuWindow::EmuCpuWindow (QWidget *parent) : QMainWindow (parent) {
 	setupUi (this);
 
 	//add widgets
@@ -85,66 +85,66 @@ Sim86Window::Sim86Window (QWidget *parent) : QMainWindow (parent) {
 
 
 FlagsWidget&
-Sim86Window::getFlagsWidget () {
+EmuCpuWindow::getFlagsWidget () {
 	return m_flags_widget;
 }
 
 
 GeneralRegistersWidget&
-Sim86Window::getGeneralRegistersWidget () {
+EmuCpuWindow::getGeneralRegistersWidget () {
 	return m_general_registers_widget;
 }
 
 
 SegmentRegistersWidget&
-Sim86Window::getSegmentRegistersWidget () {
+EmuCpuWindow::getSegmentRegistersWidget () {
 	return m_segment_registers_widget;
 }
 
 
 StackWidget&
-Sim86Window::getStackWidget () {
+EmuCpuWindow::getStackWidget () {
 	return m_stack_widget;
 }
 
 
 DisassemblyWidget&
-Sim86Window::getDisassemblyWidget () {
+EmuCpuWindow::getDisassemblyWidget () {
 	return m_disassembly_widget;
 }
 
 
 MemoryWidget&
-Sim86Window::getMemoryWidget () {
+EmuCpuWindow::getMemoryWidget () {
 	return m_memory_widget;
 }
 
 
 TerminalWidget&
-Sim86Window::getTerminalWidget () {
+EmuCpuWindow::getTerminalWidget () {
 	return m_terminal_widget;
 }
 
 SoundWidget&
-Sim86Window::getSoundWidget () {
+EmuCpuWindow::getSoundWidget () {
 	return m_sound_widget;
 }
 
 
 void
-Sim86Window::enableDisableToggleDisassembly (bool b) {
+EmuCpuWindow::enableDisableToggleDisassembly (bool b) {
 	m_tab_widget->setTabEnabled (m_tab_widget->indexOf (m_tab_disassembly), b);
 }
 
 
 void
-Sim86Window::enableDisableToggleMemory (bool b) {
+EmuCpuWindow::enableDisableToggleMemory (bool b) {
 	m_tab_widget->setTabEnabled (m_tab_widget->indexOf (m_tab_memory), b);
 }
 
 
 void
-Sim86Window::openFile () {
+EmuCpuWindow::openFile () {
 	QStringList file_name;
 	if (m_file_widget->exec ()) {
 		file_name = m_file_widget->selectedFiles ();
@@ -159,7 +159,7 @@ Sim86Window::openFile () {
 }
 
 void
-Sim86Window::resetUi () {
+EmuCpuWindow::resetUi () {
 	getFlagsWidget ().reset ();
 	getGeneralRegistersWidget ().reset ();
 	getSegmentRegistersWidget ().reset ();

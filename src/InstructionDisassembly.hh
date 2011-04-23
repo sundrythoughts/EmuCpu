@@ -1,5 +1,5 @@
 /*
- * sim8086 -- Emulates an Intel 8086 processor
+ * emucpu -- Emulates processors
  * Copyright (C) 2009  Joseph Freeman (jfree143dev AT gmail DOT com)
  * 
  * This program is free software: you can redistribute it and/or modify
@@ -22,8 +22,8 @@
 @brief Store the disassembly of the instruction.
 */
 
-#ifndef SIM8086__INSTRUCTION_DISASSEMBLY_HH
-#define SIM8086__INSTRUCTION_DISASSEMBLY_HH
+#ifndef EMUCPU__INSTRUCTION_DISASSEMBLY_HH
+#define EMUCPU__INSTRUCTION_DISASSEMBLY_HH
 
 #include <string>
 #include <vector>
@@ -76,5 +76,5 @@ public:
 
 }; //end class InstructionDisassembly
 
-#endif //SIM8086__INSTRUCTION_DISASSEMBLY_HH
+#endif //EMUCPU__INSTRUCTION_DISASSEMBLY_HH
 

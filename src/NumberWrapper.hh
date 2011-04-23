@@ -1,5 +1,5 @@
 /*
- * sim8086 -- Emulates an Intel 8086 processor
+ * emucpu -- Emulates processors
  * Copyright (C) 2009  Joseph Freeman (jfree143dev AT gmail DOT com)
  * 
  * This program is free software: you can redistribute it and/or modify
@@ -22,8 +22,8 @@
 @brief Wrap an INumberReadableWritable reference or pointer with automatic or manual memory management.
 */
 
-#ifndef SIM8086__NUMBER_WRAPPER_HH
-#define SIM8086__NUMBER_WRAPPER_HH
+#ifndef EMUCPU__NUMBER_WRAPPER_HH
+#define EMUCPU__NUMBER_WRAPPER_HH
 
 #include "INumberReadableWritable.hh"
 #include <stdexcept>
@@ -149,5 +149,5 @@ NumberWrapper::toStringFunc () {
 	return oss.str ();
 }
 
-#endif //SIM8086__NUMBER_WRAPPER_HH
+#endif //EMUCPU__NUMBER_WRAPPER_HH
 

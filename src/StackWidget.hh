@@ -1,5 +1,5 @@
 /*
- * sim8086 -- Emulates an Intel 8086 processor
+ * emucpu -- Emulates processors
  * Copyright (C) 2009  Joseph Freeman (jfree143dev AT gmail DOT com)
  * 
  * This program is free software: you can redistribute it and/or modify
@@ -22,8 +22,8 @@
 @brief Widget for displaying the stack.
 */
 
-#ifndef SIM8086__STACK_WIDGET_HH
-#define SIM8086__STACK_WIDGET_HH
+#ifndef EMUCPU__STACK_WIDGET_HH
+#define EMUCPU__STACK_WIDGET_HH
 
 #include <QtCore>
 #include <QtGui>
@@ -60,5 +60,5 @@ Q_SIGNALS:
 
 }; //end class StackWidget
 
-#endif //SIM8086__STACK_WIDGET_HH
+#endif //EMUCPU__STACK_WIDGET_HH
 

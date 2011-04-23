@@ -1,5 +1,5 @@
-#ifndef SIM8086__TYPES_HH
-#define SIM8086__TYPES_HH
+#ifndef EMUCPU__TYPES_HH
+#define EMUCPU__TYPES_HH
 
 typedef char                 char8;
 typedef unsigned char        uchar8;
@@ -17,5 +17,5 @@ typedef float                float32;
 typedef double               float64;
 typedef long double          float128;
 
-#endif //SIM8086__TYPES_HH
+#endif //EMUCPU__TYPES_HH
 

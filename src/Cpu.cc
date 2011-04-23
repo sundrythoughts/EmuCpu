@@ -1,5 +1,5 @@
 /*
- * sim8086 -- Emulates an Intel 8086 processor
+ * emucpu -- Emulates processors
  * Copyright (C) 2009  Joseph Freeman (jfree143dev AT gmail DOT com)
  * 
  * This program is free software: you can redistribute it and/or modify
@@ -156,7 +156,7 @@ void
 Cpu::loadFile (QString file_name, bool load_sim86os) {
 	pauseCpu ();
 	if (load_sim86os) {
-		getLoader ().loadFile (PATH_SIM8086_SHARE "/Sim86OS.obj");
+		getLoader ().loadFile (PATH_EMUCPU_SHARE "/EmuCpuOS.obj");
 	}
 	getLoader ().loadFile (file_name.toStdString ());
 	QFileInfo file_info (file_name);

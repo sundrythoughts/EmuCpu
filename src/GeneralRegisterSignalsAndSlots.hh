@@ -1,5 +1,5 @@
 /*
- * sim8086 -- Emulates an Intel 8086 processor
+ * emucpu -- Emulates processors
  * Copyright (C) 2009  Joseph Freeman (jfree143dev AT gmail DOT com)
  * 
  * This program is free software: you can redistribute it and/or modify
@@ -22,8 +22,8 @@
 @brief General register signal translation layer between Sigc++ and Qt.
 */
 
-#ifndef SIM8086__GENERAL_REGISTER_SIGNALS_AND_SLOTS_HH
-#define SIM8086__GENERAL_REGISTER_SIGNALS_AND_SLOTS_HH
+#ifndef EMUCPU__GENERAL_REGISTER_SIGNALS_AND_SLOTS_HH
+#define EMUCPU__GENERAL_REGISTER_SIGNALS_AND_SLOTS_HH
 
 #include <QObject>
 
@@ -90,5 +90,5 @@ Q_SIGNALS:
 
 }; //end class GeneralRegisterSignalsAndSlots
 
-#endif //SIM8086__GENERAL_REGISTER_SIGNALS_AND_SLOTS_HH
+#endif //EMUCPU__GENERAL_REGISTER_SIGNALS_AND_SLOTS_HH
 

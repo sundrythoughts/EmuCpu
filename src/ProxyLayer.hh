@@ -1,5 +1,5 @@
 /*
- * sim8086 -- Emulates an Intel 8086 processor
+ * emucpu -- Emulates processors
  * Copyright (C) 2009  Joseph Freeman (jfree143dev AT gmail DOT com)
  * 
  * This program is free software: you can redistribute it and/or modify
@@ -22,11 +22,11 @@
 @brief Signal translation layer between the Gui and the Cpu.
 */
 
-#ifndef JAF__PROXY_LAYER_HH
-#define JAF__PROXY_LAYER_HH
+#ifndef EMUCPU__PROXY_LAYER_HH
+#define EMUCPU__PROXY_LAYER_HH
 
 #include "Cpu.hh"
-#include "Sim86Window.hh"
+#include "EmuCpuWindow.hh"
 
 #include "FlagRegisterSignalsAndSlots.hh"
 #include "MemorySignalsAndSlots.hh"
@@ -61,13 +61,13 @@ public:
 	ProxyLayer () {
 	}
 
-	/** @brief Connect the signals and slots between the Cpu and Sim86Window. */
-	void connectCpuAndUi (Cpu &cpu, Sim86Window &win);
+	/** @brief Connect the signals and slots between the Cpu and EmuCpuWindow. */
+	void connectCpuAndUi (Cpu &cpu, EmuCpuWindow &win);
 
 private:
-	void connectCpuSignalsToUiSlots (Cpu &cpu, Sim86Window &win);
-	void connectUiSignalsToCpuSlots (Sim86Window &win, Cpu &cpu);
+	void connectCpuSignalsToUiSlots (Cpu &cpu, EmuCpuWindow &win);
+	void connectUiSignalsToCpuSlots (EmuCpuWindow &win, Cpu &cpu);
 }; //end class ProxyLayer
 
-#endif //JAF__PROXY_LAYER_HH
+#endif //EMUCPU__PROXY_LAYER_HH
 

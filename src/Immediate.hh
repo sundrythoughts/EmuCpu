@@ -1,5 +1,5 @@
 /*
- * sim8086 -- Emulates an Intel 8086 processor
+ * emucpu -- Emulates processors
  * Copyright (C) 2009  Joseph Freeman (jfree143dev AT gmail DOT com)
  * 
  * This program is free software: you can redistribute it and/or modify
@@ -22,8 +22,8 @@
 @brief Read-only implementation of INumberReadableWritable for immediate values.
 */
 
-#ifndef SIM8086__IMMEDIATE_HH
-#define SIM8086__IMMEDIATE_HH
+#ifndef EMUCPU__IMMEDIATE_HH
+#define EMUCPU__IMMEDIATE_HH
 
 #include "INumberReadableWritable.hh"
 #include <iostream>
@@ -206,5 +206,5 @@ private:
 
 }; //end class Immediate
 
-#endif //SIM8086__IMMEDIATE_HH
+#endif //EMUCPU__IMMEDIATE_HH
 

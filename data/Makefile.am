@@ -1,1 +1,1 @@
-dist_pkgdata_DATA = Sim86OS.obj
+dist_pkgdata_DATA = EmuCpuOS.obj

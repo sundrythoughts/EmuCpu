@@ -1,5 +1,5 @@
 /*
- * sim8086 -- Emulates an Intel 8086 processor
+ * emucpu -- Emulates processors
  * Copyright (C) 2009  Joseph Freeman (jfree143dev AT gmail DOT com)
  * 
  * This program is free software: you can redistribute it and/or modify
@@ -22,8 +22,8 @@
 @brief Load an obj file into memory.
 */
 
-#ifndef SIM8086__LOADER_HH
-#define SIM8086__LOADER_HH
+#ifndef EMUCPU__LOADER_HH
+#define EMUCPU__LOADER_HH
 
 #include <string>
 
@@ -91,5 +91,5 @@ public:
 
 }; //end class Loader
 
-#endif //SIM8086__LOADER_HH
+#endif //EMUCPU__LOADER_HH
 

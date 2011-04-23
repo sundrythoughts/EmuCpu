@@ -1,5 +1,5 @@
 /*
- * sim8086 -- Emulates an Intel 8086 processor
+ * emucpu -- Emulates processors
  * Copyright (C) 2009  Joseph Freeman (jfree143dev AT gmail DOT com)
  * 
  * This program is free software: you can redistribute it and/or modify
@@ -22,8 +22,8 @@
 @brief Manage the memory for the Cpu.
 */
 
-#ifndef SIM8086__MEMORY_HH
-#define SIM8086__MEMORY_HH
+#ifndef EMUCPU__MEMORY_HH
+#define EMUCPU__MEMORY_HH
 
 #include <sigc++/sigc++.h>
 #include "INumberReadableWritable.hh"
@@ -179,5 +179,5 @@ Memory::write (size_t addr, const INumberReadableWritable<T> &src) {
 	return true;
 }
 
-#endif //SIM8086__MEMORY_HH
+#endif //EMUCPU__MEMORY_HH
 

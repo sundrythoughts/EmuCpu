@@ -1,5 +1,5 @@
 /*
- * sim8086 -- Emulates an Intel 8086 processor
+ * emucpu -- Emulates processors
  * Copyright (C) 2009  Joseph Freeman (jfree143dev AT gmail DOT com)
  * 
  * This program is free software: you can redistribute it and/or modify
@@ -22,8 +22,8 @@
 */
 
 
-#ifndef SIM8086__OPERAND_LIST_HH
-#define SIM8086__OPERAND_LIST_HH
+#ifndef EMUCPU__OPERAND_LIST_HH
+#define EMUCPU__OPERAND_LIST_HH
 
 //#include "InstructionTable.hh"
 #include "NumberWrapper.hh"
@@ -66,5 +66,5 @@ public:
 	void reset ();
 };
 
-#endif //SIM8086__OPERAND_LIST_HH
+#endif //EMUCPU__OPERAND_LIST_HH
 

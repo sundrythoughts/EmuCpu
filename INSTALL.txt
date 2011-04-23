@@ -1,12 +1,12 @@
-Dependencies for Sim8086:
+Dependencies for EmuCpu:
  * Make sure the following packages along with header files are installed:
    - gstreamer 0.10
    - qt4
    - libsigc++-2.0
 
 Compiling with Automake:
- * cd to sim8086 root directory
+ * cd to emucpu root directory
  * ./configure
  * make
  * make install
- * sim8086
+ * emucpu

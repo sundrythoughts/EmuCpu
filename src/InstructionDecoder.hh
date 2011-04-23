@@ -1,5 +1,5 @@
 /*
- * sim8086 -- Emulates an Intel 8086 processor
+ * emucpu -- Emulates processors
  * Copyright (C) 2009  Joseph Freeman (jfree143dev AT gmail DOT com)
  * 
  * This program is free software: you can redistribute it and/or modify
@@ -22,8 +22,8 @@
 @brief Do all the decoding of instruction addressing modes.
 */
 
-#ifndef SIM8086__INSTRUCTION_DECODER_HH
-#define SIM8086__INSTRUCTION_DECODER_HH
+#ifndef EMUCPU__INSTRUCTION_DECODER_HH
+#define EMUCPU__INSTRUCTION_DECODER_HH
 
 #include <sstream>
 #include <iostream>
@@ -219,5 +219,5 @@ protected:
 
 }; //end class InstructionDecoder
 
-#endif //SIM8086__INSTRUCTION_DECODER_HH
+#endif //EMUCPU__INSTRUCTION_DECODER_HH
 

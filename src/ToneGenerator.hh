@@ -1,5 +1,5 @@
 /*
- * sim8086 -- Emulates an Intel 8086 processor
+ * emucpu -- Emulates processors
  * Copyright (C) 2009  Joseph Freeman (jfree143dev AT gmail DOT com)
  * 
  * This program is free software: you can redistribute it and/or modify
@@ -21,8 +21,8 @@
 @brief Plays a tone through the main soundcard using GStreamer.
 */
 
-#ifndef SIM8086__TONE_GENERATOR_HH
-#define SIM8086__TONE_GENERATOR_HH
+#ifndef EMUCPU__TONE_GENERATOR_HH
+#define EMUCPU__TONE_GENERATOR_HH
 
 #include <iostream>
 #include <gst/gst.h>
@@ -54,5 +54,5 @@ public:
 	void stop ();
 };
 
-#endif //SIM8086__TONE_GENERATOR_HH
+#endif //EMUCPU__TONE_GENERATOR_HH
 

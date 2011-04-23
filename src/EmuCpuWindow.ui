@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Sim86Window</class>
- <widget class="QMainWindow" name="Sim86Window">
+ <class>EmuCpuWindow</class>
+ <widget class="QMainWindow" name="EmuCpuWindow">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -23,7 +23,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Sim8086</string>
+   <string>EmuCpu</string>
   </property>
   <property name="unifiedTitleAndToolBarOnMac">
    <bool>true</bool>

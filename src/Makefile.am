@@ -1,8 +1,8 @@
-bin_PROGRAMS = sim8086
+bin_PROGRAMS = emucpu
 
-sim8086_CPPFLAGS = -DQT_NO_DEBUG -DQT_NO_KEYWORDS
+emucpu_CPPFLAGS = -DQT_NO_DEBUG -DQT_NO_KEYWORDS
 
-sim8086_SOURCES = Sim86.cc \
+emucpu_SOURCES =  EmuCpu.cc \
                   ArithmeticLogicUnit.hh \
                   ArithmeticLogicUnit.cc \
                   BusInterfaceUnit.hh \
@@ -58,8 +58,8 @@ sim8086_SOURCES = Sim86.cc \
                   SegmentRegisterSignalsAndSlots.cc \
                   SegmentRegistersWidget.hh \
                   SegmentRegistersWidget.cc \
-                  Sim86Window.hh \
-                  Sim86Window.cc \
+                  EmuCpuWindow.hh \
+                  EmuCpuWindow.cc \
                   SoundSignalsAndSlots.hh \
                   SoundSignalsAndSlots.cc \
                   SoundWidget.hh \
@@ -80,7 +80,7 @@ sim8086_SOURCES = Sim86.cc \
                   Utility.hh \
                   Utility.cc
 
-nodist_sim8086_SOURCES = moc_Cpu.cc \
+nodist_emucpu_SOURCES = moc_Cpu.cc \
                          moc_DisassemblySignalsAndSlots.cc \
                          moc_DisassemblyWidget.cc \
                          moc_FlagRegisterSignalsAndSlots.cc \
@@ -92,7 +92,7 @@ nodist_sim8086_SOURCES = moc_Cpu.cc \
                          moc_ProxyLayer.cc \
                          moc_SegmentRegisterSignalsAndSlots.cc \
                          moc_SegmentRegistersWidget.cc \
-                         moc_Sim86Window.cc \
+                         moc_EmuCpuWindow.cc \
                          moc_SoundSignalsAndSlots.cc \
                          moc_SoundWidget.cc \
                          moc_StackSignalsAndSlots.cc \
@@ -101,13 +101,13 @@ nodist_sim8086_SOURCES = moc_Cpu.cc \
                          moc_TerminalTextEdit.cc \
                          moc_TerminalWidget.cc
 
-#Qt4 .ui files must be built BEFORE the sim8086 program starts compiling
+#Qt4 .ui files must be built BEFORE the emucpu program starts compiling
 BUILT_SOURCES = ui_DisassemblyWidget.hh \
                 ui_FlagsWidget.hh \
                 ui_GeneralRegistersWidget.hh \
                 ui_MemoryWidget.hh \
                 ui_SegmentRegistersWidget.hh \
-                ui_Sim86Window.hh \
+                ui_EmuCpuWindow.hh \
                 ui_SoundWidget.hh \
                 ui_StackWidget.hh \
                 ui_TerminalWidget.hh
@@ -121,5 +121,5 @@ moc_%.cc: %.hh
 CLEANFILES = moc_*.cc \
              ui_*.hh
 
-sim8086_LDADD = ${QT4_LIBS} ${SIGC2_LIBS} ${GST_LIBS}
-sim8086_CXXFLAGS = ${QT4_CFLAGS} ${SIGC2_CFLAGS} ${GST_CFLAGS}
+emucpu_LDADD = ${QT4_LIBS} ${SIGC2_LIBS} ${GST_LIBS}
+emucpu_CXXFLAGS = ${QT4_CFLAGS} ${SIGC2_CFLAGS} ${GST_CFLAGS}

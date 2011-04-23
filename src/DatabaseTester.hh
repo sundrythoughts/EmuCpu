@@ -1,5 +1,5 @@
 /*
- * sim8086 -- Emulates an Intel 8086 processor
+ * emucpu -- Emulates processors
  * Copyright (C) 2009  Joseph Freeman (jfree143dev AT gmail DOT com)
  * 
  * This program is free software: you can redistribute it and/or modify
@@ -22,8 +22,8 @@
 */
 
 
-#ifndef SIM8086__DATABASE_TESTER_HH
-#define SIM8086__DATABASE_TESTER_HH
+#ifndef EMUCPU__DATABASE_TESTER_HH
+#define EMUCPU__DATABASE_TESTER_HH
 
 #include <QThread>
 #include <string>
@@ -101,5 +101,5 @@ public:
 	void disconnected ();
 };
 
-#endif //SIM8086__DATABASE_TESTER_HH
+#endif //EMUCPU__DATABASE_TESTER_HH
 

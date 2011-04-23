@@ -1,5 +1,5 @@
 /*
- * sim8086 -- Emulates an Intel 8086 processor
+ * emucpu -- Emulates processors
  * Copyright (C) 2009  Joseph Freeman (jfree143dev AT gmail DOT com)
  * 
  * This program is free software: you can redistribute it and/or modify
@@ -18,17 +18,17 @@
 
 
 /**
-@file Sim86Window.hh
+@file EmuCpuWindow.hh
 @brief Main emulator window.
 */
 
-#ifndef SIM8086__SIM_86_WINDOW_HH
-#define SIM8086__SIM_86_WINDOW_HH
+#ifndef EMUCPU__EMU_CPU_WINDOW_HH
+#define EMUCPU__EMU_CPU_WINDOW_HH
 
 #include <QtCore>
 #include <QtGui>
 
-#include "ui_Sim86Window.hh"
+#include "ui_EmuCpuWindow.hh"
 
 #include "FlagsWidget.hh"
 #include "GeneralRegistersWidget.hh"
@@ -42,10 +42,10 @@
 #include <iostream>
 
 /**
-@class Sim86Window
+@class EmuCpuWindow
 @brief Main emulator window.
 */
-class Sim86Window : public QMainWindow, protected Ui::Sim86Window {
+class EmuCpuWindow : public QMainWindow, protected Ui::EmuCpuWindow {
 	Q_OBJECT
 
 	FlagsWidget m_flags_widget;
@@ -61,7 +61,7 @@ class Sim86Window : public QMainWindow, protected Ui::Sim86Window {
 
 public:
 	/** */
-	Sim86Window (QWidget *parent = 0);
+	EmuCpuWindow (QWidget *parent = 0);
 
 	/** @brief Get the FlagsWidget. */
 	FlagsWidget& getFlagsWidget ();
@@ -119,7 +119,7 @@ Q_SIGNALS:
 	/** @brief Set the execution speed of the Cpu. */
 	void setSpeed (int i);
 
-}; //end class Sim86Window
+}; //end class EmuCpuWindow
 
-#endif //SIM8086__SIM_86_WINDOW_HH
+#endif //EMUCPU__EMU_CPU_WINDOW_HH
 

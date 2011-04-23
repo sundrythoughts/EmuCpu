@@ -1,5 +1,5 @@
 /*
- * sim8086 -- Emulates an Intel 8086 processor
+ * emucpu -- Emulates processors
  * Copyright (C) 2009  Joseph Freeman (jfree143dev AT gmail DOT com)
  * 
  * This program is free software: you can redistribute it and/or modify
@@ -22,8 +22,8 @@
 @brief Manage a thread that holds all the components of a Cpu.
 */
 
-#ifndef SIM8086__CPU_HH
-#define SIM8086__CPU_HH
+#ifndef EMUCPU__CPU_HH
+#define EMUCPU__CPU_HH
 
 #include "CpuComponents.hh"
 
@@ -112,5 +112,5 @@ public Q_SLOTS:
 
 }; //end class Cpu
 
-#endif //SIM8086__CPU_HH
+#endif //EMUCPU__CPU_HH
 

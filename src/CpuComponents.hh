@@ -1,5 +1,5 @@
 /*
- * sim8086 -- Emulates an Intel 8086 processor
+ * emucpu -- Emulates processors
  * Copyright (C) 2009  Joseph Freeman (jfree143dev AT gmail DOT com)
  * 
  * This program is free software: you can redistribute it and/or modify
@@ -21,8 +21,8 @@
 @brief Packages together all of the parts of the cpu like the EU, BIU, etc.
 */
 
-#ifndef SIM8086__CPU_COMPONENTS_HH
-#define SIM8086__CPU_COMPONENTS_HH
+#ifndef EMUCPU__CPU_COMPONENTS_HH
+#define EMUCPU__CPU_COMPONENTS_HH
 
 #include "ExecutionUnit.hh"
 #include "ArithmeticLogicUnit.hh"
@@ -120,5 +120,5 @@ public:
 
 }; //end class CpuComponents
 
-#endif //SIM8086__CPU_COMPONENTS_HH
+#endif //EMUCPU__CPU_COMPONENTS_HH
 

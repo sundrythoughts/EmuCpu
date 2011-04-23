@@ -1,5 +1,5 @@
 /*
- * sim8086 -- Emulates an Intel 8086 processor
+ * emucpu -- Emulates processors
  * Copyright (C) 2009  Joseph Freeman (jfree143dev AT gmail DOT com)
  * 
  * This program is free software: you can redistribute it and/or modify
@@ -21,8 +21,8 @@
 @brief Stores the information and function pointers for decoding and executing instructions.
 */
 
-#ifndef SIM8086__INSTRUCTION_HH
-#define SIM8086__INSTRUCTION_HH
+#ifndef EMUCPU__INSTRUCTION_HH
+#define EMUCPU__INSTRUCTION_HH
 
 #include "InstructionDisassembly.hh"
 #include "InstructionTable.hh"
@@ -111,5 +111,5 @@ Instruction::addBytes (const T &val) {
 	}
 }
 
-#endif //SIM8086__INSTRUCTION_HH
+#endif //EMUCPU__INSTRUCTION_HH
 

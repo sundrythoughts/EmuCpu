@@ -1,5 +1,5 @@
 /*
- * sim8086 -- Emulates an Intel 8086 processor
+ * emucpu -- Emulates processors
  * Copyright (C) 2009  Joseph Freeman (jfree143dev AT gmail DOT com)
  * 
  * This program is free software: you can redistribute it and/or modify
@@ -22,8 +22,8 @@
 @brief Various utility functions.
 */
 
-#ifndef SIM8086__UTILITY_HH
-#define SIM8086__UTILITY_HH
+#ifndef EMUCPU__UTILITY_HH
+#define EMUCPU__UTILITY_HH
 
 #include "Types.hh"
 
@@ -126,5 +126,5 @@ Utility::clearBit (T &val, uint32 n) {
 	val &= mask;
 }
 
-#endif //SIM8086__UTILITY_HH
+#endif //EMUCPU__UTILITY_HH
 

@@ -1,4 +1,4 @@
-AC_INIT([sim8086], [0.1], [jfree143dev@gmail.com])
+AC_INIT([emucpu], [0.1], [jfree143dev@gmail.com])
 AM_INIT_AUTOMAKE([-Wall -Werror foreign])
 
 AC_PROG_CXX
@@ -11,7 +11,7 @@ AC_CONFIG_FILES([
     data/Makefile
 ])
 
-AC_DEFINE_DIR([SIM8086_DATADIR], [datadir], [Base data directory])
+AC_DEFINE_DIR([EMUCPU_DATADIR], [datadir], [Base data directory])
 #AS_AC_EXPAND(PACKAGE_DATADIR, $datadir)
 #AC_MSG_NOTICE(Storing data files in $PACKAGE_DATADIR)
 

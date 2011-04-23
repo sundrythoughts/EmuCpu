@@ -1,5 +1,5 @@
 /*
- * sim8086 -- Emulates an Intel 8086 processor
+ * emucpu -- Emulates processors
  * Copyright (C) 2009  Joseph Freeman (jfree143dev AT gmail DOT com)
  * 
  * This program is free software: you can redistribute it and/or modify
@@ -19,13 +19,13 @@
 /** @mainpage
 @author Joseph Freeman
 
-Sim8086 is an Intel 8086 emulator. It implements a large subgroup of the 8086 capabilities including interrupts and 'I/O'.
+EmuCpu is a processor emulator. It currently implements a large subgroup of the 8086 capabilities including interrupts and 'I/O'.
 
 */
 
 
 #include "Cpu.hh"
-#include "Sim86Window.hh"
+#include "EmuCpuWindow.hh"
 #include "ProxyLayer.hh"
 
 #include <gst/gst.h>
@@ -37,7 +37,7 @@ int main (int argc, char **argv) {
 	gst_init (&argc, &argv);
 	QApplication app (argc, argv);
 
-	Sim86Window sim;
+	EmuCpuWindow sim;
 	Cpu cpu;
 	ProxyLayer proxy;
 

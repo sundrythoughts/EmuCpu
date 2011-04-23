@@ -1,5 +1,5 @@
 /*
- * sim8086 -- Emulates an Intel 8086 processor
+ * emucpu -- Emulates processors
  * Copyright (C) 2009  Joseph Freeman (jfree143dev AT gmail DOT com)
  * 
  * This program is free software: you can redistribute it and/or modify
@@ -21,8 +21,8 @@
 @brief Terminal signal translation layer between Sigc++ and Qt.
 */
 
-#ifndef SIM8086__TERMINAL_SIGNALS_AND_SLOTS_HH
-#define SIM8086__TERMINAL_SIGNALS_AND_SLOTS_HH
+#ifndef EMUCPU__TERMINAL_SIGNALS_AND_SLOTS_HH
+#define EMUCPU__TERMINAL_SIGNALS_AND_SLOTS_HH
 
 #include <sigc++/sigc++.h>
 #include <QObject>
@@ -53,5 +53,5 @@ Q_SIGNALS:
 
 }; //end class TerminalSignalsAndSlots
 
-#endif //SIM8086__TERMINAL_SIGNALS_AND_SLOTS_HH
+#endif //EMUCPU__TERMINAL_SIGNALS_AND_SLOTS_HH
 

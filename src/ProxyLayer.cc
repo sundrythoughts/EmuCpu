@@ -1,5 +1,5 @@
 /*
- * sim8086 -- Emulates an Intel 8086 processor
+ * emucpu -- Emulates processors
  * Copyright (C) 2009  Joseph Freeman (jfree143dev AT gmail DOT com)
  * 
  * This program is free software: you can redistribute it and/or modify
@@ -20,13 +20,13 @@
 #include "ProxyLayer.hh"
 
 void
-ProxyLayer::connectCpuAndUi (Cpu &cpu, Sim86Window &win) {
+ProxyLayer::connectCpuAndUi (Cpu &cpu, EmuCpuWindow &win) {
 	connectCpuSignalsToUiSlots (cpu, win);
 	connectUiSignalsToCpuSlots (win, cpu);
 }
 
 void
-ProxyLayer::connectCpuSignalsToUiSlots (Cpu &cpu, Sim86Window &win) {
+ProxyLayer::connectCpuSignalsToUiSlots (Cpu &cpu, EmuCpuWindow &win) {
 	//connect Cpu sigc++ signals to ProxyLayer
 	cpu.getExecutionUnit ().getRegAX ().signalValueChanged ().connect (sigc::mem_fun (m_gen_reg_s_s, &GeneralRegisterSignalsAndSlots::sigcSlotValueChangedRegAX));
 	cpu.getExecutionUnit ().getRegBX ().signalValueChanged ().connect (sigc::mem_fun (m_gen_reg_s_s, &GeneralRegisterSignalsAndSlots::sigcSlotValueChangedRegBX));
@@ -61,7 +61,7 @@ ProxyLayer::connectCpuSignalsToUiSlots (Cpu &cpu, Sim86Window &win) {
 
 	cpu.getIOPorts ().signalSoundOutput ().connect (sigc::mem_fun (m_sound_s_s, &SoundSignalsAndSlots::sigcSlotPlaySound));
 
-	//connect ProxyLayer Qt signals to Sim86Window Qt slots
+	//connect ProxyLayer Qt signals to EmuCpuWindow Qt slots
 
 	//Flag Register Widget Signals and Slots
 	QObject::connect (&m_flag_reg_s_s, SIGNAL(valueChangedFlags (unsigned short)),
@@ -125,7 +125,7 @@ ProxyLayer::connectCpuSignalsToUiSlots (Cpu &cpu, Sim86Window &win) {
 }
 
 void
-ProxyLayer::connectUiSignalsToCpuSlots (Sim86Window &win, Cpu &cpu) {
+ProxyLayer::connectUiSignalsToCpuSlots (EmuCpuWindow &win, Cpu &cpu) {
 	QObject::connect (&win, SIGNAL(startCpu ()),
 	                  &cpu, SLOT(startCpu ()));
 	QObject::connect (&win, SIGNAL(pauseCpu ()),

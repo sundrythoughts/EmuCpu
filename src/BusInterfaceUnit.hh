@@ -1,5 +1,5 @@
 /*
- * sim8086 -- Emulates an Intel 8086 processor
+ * emucpu -- Emulates processors
  * Copyright (C) 2009  Joseph Freeman (jfree143dev AT gmail DOT com)
  * 
  * This program is free software: you can redistribute it and/or modify
@@ -22,8 +22,8 @@
 @brief Manages the segment registers, the instruction pointer, and memory access.
 */
 
-#ifndef SIM8086__BUS_INTERFACE_UNIT_HH
-#define SIM8086__BUS_INTERFACE_UNIT_HH
+#ifndef EMUCPU__BUS_INTERFACE_UNIT_HH
+#define EMUCPU__BUS_INTERFACE_UNIT_HH
 
 #include "Defines.hh"
 #include "Memory.hh"
@@ -198,5 +198,5 @@ BusInterfaceUnit::getInstructionBytes () {
 	return val;
 }
 
-#endif //SIM8086__BUS_INTERFACE_UNIT_HH
+#endif //EMUCPU__BUS_INTERFACE_UNIT_HH
 

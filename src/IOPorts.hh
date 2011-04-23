@@ -1,5 +1,5 @@
 /*
- * sim8086 -- Emulates an Intel 8086 processor
+ * emucpu -- Emulates processors
  * Copyright (C) 2009  Joseph Freeman (jfree143dev AT gmail DOT com)
  * 
  * This program is free software: you can redistribute it and/or modify
@@ -21,8 +21,8 @@
 @brief Control the input and output ports of the Cpu.
 */
 
-#ifndef SIM8086__IO_PORTS_HH
-#define SIM8086__IO_PORTS_HH
+#ifndef EMUCPU__IO_PORTS_HH
+#define EMUCPU__IO_PORTS_HH
 
 #include <sigc++/sigc++.h>
 #include <queue>
@@ -69,5 +69,5 @@ private:
 	void playSound (uint16 freq, uint16 duration);
 };
 
-#endif //SIM8086__IO_PORTS_HH
+#endif //EMUCPU__IO_PORTS_HH
 

@@ -1,3 +1,3 @@
 #include "../config.h"
 
-#define PATH_SIM8086_SHARE    SIM8086_DATADIR "/sim8086"
+#define PATH_EMUCPU_SHARE    EMUCPU_DATADIR "/emucpu"

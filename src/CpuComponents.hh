@@ -34,7 +34,7 @@
 #include "IOPorts.hh"
 #include "ToneGenerator.hh"
 
-#include "Types.hh"
+#include <QtGlobal>
 
 class Instruction;
 class InstructionDecoder;
@@ -98,7 +98,7 @@ public:
 	const std::string& getTestID () const;
 
 	/** @brief Get the instruction counter. */
-	int32 getInstCounter () const;
+	qint32 getInstCounter () const;
 
 	/** @brief Increment the instruction counter. */
 	void incInstCounter ();

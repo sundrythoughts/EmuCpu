@@ -25,7 +25,7 @@
 #ifndef EMUCPU__UTILITY_HH
 #define EMUCPU__UTILITY_HH
 
-#include "Types.hh"
+#include <QtGlobal>
 
 /**
 @class Utility
@@ -39,7 +39,7 @@ public:
 	@param n The bit index to get where 0 is the LSB.
 	*/
 	template<typename T>
-	static bool getBit (const T &val, uint32 n);
+	static bool getBit (const T &val, quint32 n);
 
 	/**
 	@brief Get the LSB
@@ -59,27 +59,27 @@ public:
 	@param b The new value of bit n.
 	*/
 	template<typename T>
-	static void setBit (T &val, uint32 n, bool b);
+	static void setBit (T &val, quint32 n, bool b);
 
 	/**
 	@brief Set a bit
 	@param n The bit index to set where 0 is the LSB.
 	*/
 	template<typename T>
-	static void setBit (T &val, uint32 n);
+	static void setBit (T &val, quint32 n);
 
 	/**
 	@brief Clear a bit
 	@param n The bit index to clear where 0 is the LSB.
 	*/
 	template<typename T>
-	static void clearBit (T &val, uint32 n);
+	static void clearBit (T &val, quint32 n);
 
 }; //end class Utility
 
 template<typename T>
 bool
-Utility::getBit (const T &val, uint32 n) {
+Utility::getBit (const T &val, quint32 n) {
 	T mask = 1;
 	mask <<= n;
 	T ret = val & mask;
@@ -100,7 +100,7 @@ Utility::getMsb (const T &val) {
 
 template<typename T>
 void
-Utility::setBit (T &val, uint32 n, bool b) {
+Utility::setBit (T &val, quint32 n, bool b) {
 	if (b) {
 		Utility::setBit (val, n);
 	}
@@ -111,7 +111,7 @@ Utility::setBit (T &val, uint32 n, bool b) {
 
 template<typename T>
 void
-Utility::setBit (T &val, uint32 n) {
+Utility::setBit (T &val, quint32 n) {
 	T mask = 1;
 	mask <<= n;
 	val |= mask;
@@ -119,7 +119,7 @@ Utility::setBit (T &val, uint32 n) {
 
 template<typename T>
 void
-Utility::clearBit (T &val, uint32 n) {
+Utility::clearBit (T &val, quint32 n) {
 	T mask = 1;
 	mask <<= n;
 	mask = ~mask;

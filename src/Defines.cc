@@ -21,7 +21,7 @@
 
 namespace Jaf {
 
-const char8* reg_index_8_names[REG_COUNT_8] = {
+const char* reg_index_8_names[REG_COUNT_8] = {
 	"al",
 	"cl",
 	"dl",
@@ -32,7 +32,7 @@ const char8* reg_index_8_names[REG_COUNT_8] = {
 	"bh"
 };
 
-const char8* reg_index_16_names[REG_COUNT_16] = {
+const char* reg_index_16_names[REG_COUNT_16] = {
 	"ax",
 	"cx",
 	"dx",
@@ -44,14 +44,14 @@ const char8* reg_index_16_names[REG_COUNT_16] = {
 	"flags"
 };
 
-const char8* sreg_index_names[SREG_COUNT] = {
+const char* sreg_index_names[SREG_COUNT] = {
 	"es",
 	"cs",
 	"ss",
 	"ds"
 };
 
-const char8*
+const char*
 getSegRegIndexName (size_t reg_i) {
 	if (reg_i >= SREG_COUNT) {
 		return "";
@@ -60,7 +60,7 @@ getSegRegIndexName (size_t reg_i) {
 	return sreg_index_names[reg_i];
 }
 
-const char8*
+const char*
 getRegIndexName (size_t op_sz, size_t reg_i) {
 	if (op_sz == OP_SIZE_8 && reg_i < REG_COUNT_8) {
 		return reg_index_8_names[reg_i];
@@ -73,7 +73,7 @@ getRegIndexName (size_t op_sz, size_t reg_i) {
 	}
 }
 
-const char8*
+const char*
 getRegIndex8Name (size_t reg_i) {
 	if (reg_i < REG_COUNT_8) {
 		return reg_index_8_names[reg_i];
@@ -83,7 +83,7 @@ getRegIndex8Name (size_t reg_i) {
 	}
 }
 
-const char8*
+const char*
 getRegIndex16Name (size_t reg_i) {
 	if (reg_i < REG_COUNT_16) {
 		return reg_index_16_names[reg_i];

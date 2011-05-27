@@ -28,7 +28,7 @@
 #include "INumberReadableWritable.hh"
 #include "Memory.hh"
 
-#include "Types.hh"
+#include <QtGlobal>
 
 /**
 @class MemoryAddress
@@ -38,13 +38,13 @@ template<typename T>
 class MemoryAddress : public INumberReadableWritable<T> {
 	Memory *m_memory;
 	size_t m_phys_addr;
-	uint16 m_seg;
-	uint16 m_offset;
+	quint16 m_seg;
+	quint16 m_offset;
 	mutable T m_num;
 
 public:
 	/** */
-	MemoryAddress (Memory *mem, uint16 seg, uint16 offset) : m_memory (mem) {
+	MemoryAddress (Memory *mem, quint16 seg, quint16 offset) : m_memory (mem) {
 		m_seg = seg;
 		m_offset = offset;
 		m_phys_addr = seg << 4;
@@ -64,12 +64,12 @@ public:
 	}
 
 	/** @brief Get segment. */
-	virtual uint16 getSegment () const {
+	virtual quint16 getSegment () const {
 		return m_seg;
 	}
 
 	/** @brief Get offset. */
-	virtual uint16 getOffset () const {
+	virtual quint16 getOffset () const {
 		return m_offset;
 	}
 
@@ -82,7 +82,7 @@ public:
 	}
 
 	/** */
-	virtual const T operator++ (int32) {
+	virtual const T operator++ (qint32) {
 		read ();
 		T tmp = m_num;
 		++m_num;
@@ -99,7 +99,7 @@ public:
 	}
 
 	/** */
-	virtual const T operator-- (int32) {
+	virtual const T operator-- (qint32) {
 		read ();
 		T tmp = m_num;
 		--m_num;

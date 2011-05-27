@@ -29,17 +29,17 @@
 #include "INumberReadableWritable.hh"
 #include <vector>
 
-#include "Types.hh"
+#include <QtGlobal>
 
 /**
 @class Memory
 @brief Manage the memory for the Cpu.
 */
 class Memory {
-	std::vector<uint8> m_memory;
-	sigc::signal<void, int32, uint8> m_signal_value_changed;
+	std::vector<quint8> m_memory;
+	sigc::signal<void, qint32, quint8> m_signal_value_changed;
 	sigc::signal<void, size_t> m_signal_resized;
-	sigc::signal<void, const uint8*, size_t> m_signal_reloaded;
+	sigc::signal<void, const quint8*, size_t> m_signal_reloaded;
 
 public:
 	/** */
@@ -58,22 +58,22 @@ public:
 	/**
 	@brief Get a memory loaction at the given index.
 	*/
-	uint8 operator[] (size_t index) const;
+	quint8 operator[] (size_t index) const;
 
 	/** @brief Get the size of the memory. */
 	size_t size () const;
 
 	/** @brief Get an unchecked pointer to the memory. */
-	uint8* data ();
+	quint8* data ();
 
 	/** @brief Signal activated when a memory location is changed. */
-	sigc::signal<void, int32, uint8>& signalValueChanged ();
+	sigc::signal<void, qint32, quint8>& signalValueChanged ();
 
 	/** @brief Signal activated when memory is resized. */
 	sigc::signal<void, size_t>& signalResized ();
 
 	/** @brief Signal activated when memory is reloaded. */
-	sigc::signal<void, const uint8*, size_t>& signalReloaded ();
+	sigc::signal<void, const quint8*, size_t>& signalReloaded ();
 
 	/** @brief Emit signalValueChanged () for each memory location. */
 	void emitValueChangedForAll () const;

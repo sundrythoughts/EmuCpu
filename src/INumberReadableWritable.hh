@@ -25,7 +25,7 @@
 #ifndef EMUCPU__I_NUMBER_READABLE_WRITABLE_HH
 #define EMUCPU__I_NUMBER_READABLE_WRITABLE_HH
 
-#include "Types.hh"
+#include <QtGlobal>
 
 /**
 @class INumberReadableWritable
@@ -46,22 +46,22 @@ public:
 	virtual const T& getValue () const = 0;
 
 	/** @brief Get the segment. */
-	virtual uint16 getSegment () const = 0;
+	virtual quint16 getSegment () const = 0;
 
 	/** @brief Get the offset. */
-	virtual uint16 getOffset () const = 0;
+	virtual quint16 getOffset () const = 0;
 
 	/** */
 	virtual const INumberReadableWritable<T>& operator++ () = 0;
 
 	/** */
-	virtual const T operator++ (int32) = 0;
+	virtual const T operator++ (qint32) = 0;
 
 	/** */
 	virtual const INumberReadableWritable<T>& operator-- () = 0;
 
 	/** */
-	virtual const T operator-- (int32) = 0;
+	virtual const T operator-- (qint32) = 0;
 
 	/** */
 	virtual INumberReadableWritable<T>& operator= (const T &right) = 0;

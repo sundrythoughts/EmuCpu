@@ -28,7 +28,7 @@
 #include "INumberReadableWritable.hh"
 #include <iostream>
 
-#include "Types.hh"
+#include <QtGlobal>
 
 /**
 @class Immediate
@@ -109,12 +109,12 @@ public:
 	}
 
 private:
-	virtual uint16 getSegment () const {
+	virtual quint16 getSegment () const {
 		std::cerr << "Debug: class Immediate has no segment" << std::endl;
 		return 0;
 	}
 
-	virtual uint16 getOffset () const {
+	virtual quint16 getOffset () const {
 		std::cerr << "Debug: class Immediate has no offset" << std::endl;
 		return 0;
 	}
@@ -124,7 +124,7 @@ private:
 		return *this;
 	}
 
-	virtual const T operator++ (int32) {
+	virtual const T operator++ (qint32) {
 		std::cerr << "Debug: class Immediate is read-only" << std::endl;
 		return *m_num;
 	}
@@ -134,7 +134,7 @@ private:
 		return *this;
 	}
 
-	virtual const T operator-- (int32) {
+	virtual const T operator-- (qint32) {
 		std::cerr << "Debug: class Immediate is read-only" << std::endl;
 		return *m_num;
 	}

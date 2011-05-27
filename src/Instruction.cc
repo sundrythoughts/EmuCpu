@@ -31,9 +31,9 @@ public:
 	ExecutionUnit *m_eunit;
 	OperandList m_operands;
 	const InstructionTableItem *m_inst_item;
-	std::vector<uint8> m_inst_bytes;
+	std::vector<quint8> m_inst_bytes;
 	InstructionDisassembly m_disasm;
-	int32 m_addr_mode;
+	qint32 m_addr_mode;
 };
 
 Instruction::Instruction () {
@@ -105,27 +105,27 @@ Instruction::isNull () const {
 	return p->m_inst_item == 0;
 }
 
-const std::vector<uint8>&
+const std::vector<quint8>&
 Instruction::getBytes () const {
 	return p->m_inst_bytes;
 }
 
-std::vector<uint8>&
+std::vector<quint8>&
 Instruction::getBytes () {
 	return p->m_inst_bytes;
 }
 
-uint8
+quint8
 Instruction::getByte (size_t i) const {
 	return p->m_inst_bytes[i];
 }
 
-int32
-Instruction::setAddrMode (int32 am) {
+qint32
+Instruction::setAddrMode (qint32 am) {
 	p->m_addr_mode = am;
 }
 
-int32
+qint32
 Instruction::getAddrMode () const {
 	return p->m_addr_mode;
 }

@@ -40,9 +40,9 @@
 
 class ExecutionUnitPrivate {
 public:
-	uint16 m_regs[Jaf::REG_COUNT_16];
-	Register<uint8> m_regs8[Jaf::REG_COUNT_8];
-	Register<uint16> m_regs16[Jaf::REG_COUNT_16];
+	quint16 m_regs[Jaf::REG_COUNT_16];
+	Register<quint8> m_regs8[Jaf::REG_COUNT_8];
+	Register<quint16> m_regs16[Jaf::REG_COUNT_16];
 
 	CpuComponents *m_cpu;
 	BusInterfaceUnit *m_biu;
@@ -50,7 +50,7 @@ public:
 	Instruction *m_inst;
 	IOPorts *m_io_ports;
 
-	sigc::signal<void, uint16, uint16, uint16> m_signal_stack_push;
+	sigc::signal<void, quint16, quint16, quint16> m_signal_stack_push;
 	sigc::signal<void> m_signal_stack_pop;
 };
 
@@ -58,10 +58,10 @@ public:
 ExecutionUnit::ExecutionUnit () {
 	p = new ExecutionUnitPrivate ();
 
-	uint8 *m_a = (uint8*)&p->m_regs[Jaf::REG_AX];
-	uint8 *m_b = (uint8*)&p->m_regs[Jaf::REG_BX];
-	uint8 *m_c = (uint8*)&p->m_regs[Jaf::REG_CX];
-	uint8 *m_d = (uint8*)&p->m_regs[Jaf::REG_DX];
+	quint8 *m_a = (quint8*)&p->m_regs[Jaf::REG_AX];
+	quint8 *m_b = (quint8*)&p->m_regs[Jaf::REG_BX];
+	quint8 *m_c = (quint8*)&p->m_regs[Jaf::REG_CX];
+	quint8 *m_d = (quint8*)&p->m_regs[Jaf::REG_DX];
 
 	p->m_regs8[Jaf::REG_AL].reinitialize (m_a[0]);
 	p->m_regs8[Jaf::REG_AH].reinitialize (m_a[1]);
@@ -86,14 +86,14 @@ ExecutionUnit::ExecutionUnit () {
 	reset ();
 
 	//connect 8-bit register signals to their 16-bit parents
-	p->m_regs8[Jaf::REG_AL].signalEmitSignalValueChanged ().connect (sigc::mem_fun (p->m_regs16[Jaf::REG_AX], &Register<uint16>::emitSignalValueChanged));
-	p->m_regs8[Jaf::REG_AH].signalEmitSignalValueChanged ().connect (sigc::mem_fun (p->m_regs16[Jaf::REG_AX], &Register<uint16>::emitSignalValueChanged));
-	p->m_regs8[Jaf::REG_BL].signalEmitSignalValueChanged ().connect (sigc::mem_fun (p->m_regs16[Jaf::REG_BX], &Register<uint16>::emitSignalValueChanged));
-	p->m_regs8[Jaf::REG_BH].signalEmitSignalValueChanged ().connect (sigc::mem_fun (p->m_regs16[Jaf::REG_BX], &Register<uint16>::emitSignalValueChanged));
-	p->m_regs8[Jaf::REG_CL].signalEmitSignalValueChanged ().connect (sigc::mem_fun (p->m_regs16[Jaf::REG_CX], &Register<uint16>::emitSignalValueChanged));
-	p->m_regs8[Jaf::REG_CH].signalEmitSignalValueChanged ().connect (sigc::mem_fun (p->m_regs16[Jaf::REG_CX], &Register<uint16>::emitSignalValueChanged));
-	p->m_regs8[Jaf::REG_DL].signalEmitSignalValueChanged ().connect (sigc::mem_fun (p->m_regs16[Jaf::REG_DX], &Register<uint16>::emitSignalValueChanged));
-	p->m_regs8[Jaf::REG_DH].signalEmitSignalValueChanged ().connect (sigc::mem_fun (p->m_regs16[Jaf::REG_DX], &Register<uint16>::emitSignalValueChanged));
+	p->m_regs8[Jaf::REG_AL].signalEmitSignalValueChanged ().connect (sigc::mem_fun (p->m_regs16[Jaf::REG_AX], &Register<quint16>::emitSignalValueChanged));
+	p->m_regs8[Jaf::REG_AH].signalEmitSignalValueChanged ().connect (sigc::mem_fun (p->m_regs16[Jaf::REG_AX], &Register<quint16>::emitSignalValueChanged));
+	p->m_regs8[Jaf::REG_BL].signalEmitSignalValueChanged ().connect (sigc::mem_fun (p->m_regs16[Jaf::REG_BX], &Register<quint16>::emitSignalValueChanged));
+	p->m_regs8[Jaf::REG_BH].signalEmitSignalValueChanged ().connect (sigc::mem_fun (p->m_regs16[Jaf::REG_BX], &Register<quint16>::emitSignalValueChanged));
+	p->m_regs8[Jaf::REG_CL].signalEmitSignalValueChanged ().connect (sigc::mem_fun (p->m_regs16[Jaf::REG_CX], &Register<quint16>::emitSignalValueChanged));
+	p->m_regs8[Jaf::REG_CH].signalEmitSignalValueChanged ().connect (sigc::mem_fun (p->m_regs16[Jaf::REG_CX], &Register<quint16>::emitSignalValueChanged));
+	p->m_regs8[Jaf::REG_DL].signalEmitSignalValueChanged ().connect (sigc::mem_fun (p->m_regs16[Jaf::REG_DX], &Register<quint16>::emitSignalValueChanged));
+	p->m_regs8[Jaf::REG_DH].signalEmitSignalValueChanged ().connect (sigc::mem_fun (p->m_regs16[Jaf::REG_DX], &Register<quint16>::emitSignalValueChanged));
 }
 
 ExecutionUnit::~ExecutionUnit () {
@@ -109,7 +109,7 @@ ExecutionUnit::connectTo (CpuComponents &cpu) {
 	p->m_io_ports = &cpu.getIOPorts ();
 }
 
-sigc::signal<void, uint16, uint16, uint16>&
+sigc::signal<void, quint16, quint16, quint16>&
 ExecutionUnit::signalStackPush () {
 	return p->m_signal_stack_push;
 }
@@ -124,198 +124,198 @@ ExecutionUnit::reset () {
 	resetRegFlags ();
 }
 
-Register<uint8>&
+Register<quint8>&
 ExecutionUnit::getReg8 (size_t index) {
 	return p->m_regs8[index]; //FIXME - no bounds checking
 }
 
 void
-ExecutionUnit::setReg8 (size_t index, uint8 val) {
+ExecutionUnit::setReg8 (size_t index, quint8 val) {
 	p->m_regs8[index] = val; //FIXME - no bounds checking
 }
 
-Register<uint16>&
+Register<quint16>&
 ExecutionUnit::getReg16 (size_t index) {
 	return p->m_regs16[index]; //FIXME - no bounds checking
 }
 
 void
-ExecutionUnit::setReg16 (size_t index, uint16 val) {
+ExecutionUnit::setReg16 (size_t index, quint16 val) {
 	p->m_regs16[index] = val; //FIXME - no bounds checking
 }
 
-Register<uint16>&
+Register<quint16>&
 ExecutionUnit::getRegAX () {
 	return p->m_regs16[Jaf::REG_AX];
 }
 
 void
-ExecutionUnit::setRegAX (uint16 val) {
+ExecutionUnit::setRegAX (quint16 val) {
 	p->m_regs16[Jaf::REG_AX] = val;
 }
 
-Register<uint8>&
+Register<quint8>&
 ExecutionUnit::getRegAH () {
 	return p->m_regs8[Jaf::REG_AH];
 }
 
 void
-ExecutionUnit::setRegAH (uint8 val) {
+ExecutionUnit::setRegAH (quint8 val) {
 	p->m_regs8[Jaf::REG_AH] = val;
 }
 
-Register<uint8>&
+Register<quint8>&
 ExecutionUnit::getRegAL () {
 	return p->m_regs8[Jaf::REG_AL];
 }
 
 void
-ExecutionUnit::setRegAL (uint8 val) {
+ExecutionUnit::setRegAL (quint8 val) {
 	p->m_regs8[Jaf::REG_AL] = val;
 }
 
-Register<uint16>&
+Register<quint16>&
 ExecutionUnit::getRegBX () {
 	return p->m_regs16[Jaf::REG_BX];
 }
 
 void
-ExecutionUnit::setRegBX (uint16 val) {
+ExecutionUnit::setRegBX (quint16 val) {
 	p->m_regs16[Jaf::REG_BX] = val;
 }
 
-Register<uint8>&
+Register<quint8>&
 ExecutionUnit::getRegBH () {
 	return p->m_regs8[Jaf::REG_BH];
 }
 
 void
-ExecutionUnit::setRegBH (uint8 val) {
+ExecutionUnit::setRegBH (quint8 val) {
 	p->m_regs8[Jaf::REG_BH] = val;
 }
 
-Register<uint8>&
+Register<quint8>&
 ExecutionUnit::getRegBL () {
 	return p->m_regs8[Jaf::REG_BL];
 }
 
 void
-ExecutionUnit::setRegBL (uint8 val) {
+ExecutionUnit::setRegBL (quint8 val) {
 	p->m_regs8[Jaf::REG_BL] = val;
 }
 
-Register<uint16>&
+Register<quint16>&
 ExecutionUnit::getRegCX () {
 	return p->m_regs16[Jaf::REG_CX];
 }
 
 void
-ExecutionUnit::setRegCX (uint16 val) {
+ExecutionUnit::setRegCX (quint16 val) {
 	p->m_regs16[Jaf::REG_CX] = val;
 }
 
-Register<uint8>&
+Register<quint8>&
 ExecutionUnit::getRegCH () {
 	return p->m_regs8[Jaf::REG_CH];
 }
 
 void
-ExecutionUnit::setRegCH (uint8 val) {
+ExecutionUnit::setRegCH (quint8 val) {
 	p->m_regs8[Jaf::REG_CH] = val;
 }
 
-Register<uint8>&
+Register<quint8>&
 ExecutionUnit::getRegCL () {
 	return p->m_regs8[Jaf::REG_CL];
 }
 
 void
-ExecutionUnit::setRegCL (uint8 val) {
+ExecutionUnit::setRegCL (quint8 val) {
 	p->m_regs8[Jaf::REG_CL] = val;
 }
 
-Register<uint16>&
+Register<quint16>&
 ExecutionUnit::getRegDX () {
 	return p->m_regs16[Jaf::REG_DX];
 }
 
 void
-ExecutionUnit::setRegDX (uint16 val) {
+ExecutionUnit::setRegDX (quint16 val) {
 	p->m_regs16[Jaf::REG_DX] = val;
 }
 
-Register<uint8>&
+Register<quint8>&
 ExecutionUnit::getRegDH () {
 	return p->m_regs8[Jaf::REG_DH];
 }
 
 void
-ExecutionUnit::setRegDH (uint8 val) {
+ExecutionUnit::setRegDH (quint8 val) {
 	p->m_regs8[Jaf::REG_DH] = val;
 }
 
-Register<uint8>&
+Register<quint8>&
 ExecutionUnit::getRegDL () {
 	return p->m_regs8[Jaf::REG_DL];
 }
 
 void
-ExecutionUnit::setRegDL (uint8 val) {
+ExecutionUnit::setRegDL (quint8 val) {
 	p->m_regs8[Jaf::REG_DL] = val;
 }
 
-Register<uint16>&
+Register<quint16>&
 ExecutionUnit::getRegDI () {
 	return p->m_regs16[Jaf::REG_DI];
 }
 
 void
-ExecutionUnit::setRegDI (uint16 val) {
+ExecutionUnit::setRegDI (quint16 val) {
 	p->m_regs16[Jaf::REG_DI] = val;
 }
 
-Register<uint16>&
+Register<quint16>&
 ExecutionUnit::getRegSI () {
 	return p->m_regs16[Jaf::REG_SI];
 }
 
 void
-ExecutionUnit::setRegSI (uint16 val) {
+ExecutionUnit::setRegSI (quint16 val) {
 	p->m_regs16[Jaf::REG_SI] = val;
 }
 
-Register<uint16>&
+Register<quint16>&
 ExecutionUnit::getRegBP () {
 	return p->m_regs16[Jaf::REG_BP];
 }
 
 void
-ExecutionUnit::setRegBP (uint16 val) {
+ExecutionUnit::setRegBP (quint16 val) {
 	p->m_regs16[Jaf::REG_BP] = val;
 }
 
-Register<uint16>&
+Register<quint16>&
 ExecutionUnit::getRegSP () {
 	return p->m_regs16[Jaf::REG_SP];
 }
 
 void
-ExecutionUnit::setRegSP (uint16 val) {
+ExecutionUnit::setRegSP (quint16 val) {
 	p->m_regs16[Jaf::REG_SP] = val;
 }
 
 void
-ExecutionUnit::resetRegFlags (uint16 val) {
+ExecutionUnit::resetRegFlags (quint16 val) {
 	setRegFlags (val);
 }
 
-Register<uint16>&
+Register<quint16>&
 ExecutionUnit::getRegFlags () {
 	return p->m_regs16[Jaf::REG_FLAGS];
 }
 
 void
-ExecutionUnit::setRegFlags (uint16 val) {
+ExecutionUnit::setRegFlags (quint16 val) {
 	p->m_regs16[Jaf::REG_FLAGS] = val;
 }
 
@@ -464,14 +464,14 @@ ExecutionUnit::execADC () {
 	OperandList &ops = p->m_inst->operands ();
 
 	if (ops.operandSize () == Jaf::OP_SIZE_16) {
-		uint16 ret;
-		p->m_alu->opAdc (ops.dest ().get<uint16> (), ops.src ().get<uint16> (), ret);
-		ops.dest ().get<uint16> () = ret;
+		quint16 ret;
+		p->m_alu->opAdc (ops.dest ().get<quint16> (), ops.src ().get<quint16> (), ret);
+		ops.dest ().get<quint16> () = ret;
 	}
 	else {
-		uint8 ret;
-		p->m_alu->opAdc (ops.dest ().get<uint8> (), ops.src ().get<uint8> (), ret);
-		ops.dest ().get<uint8> () = ret;
+		quint8 ret;
+		p->m_alu->opAdc (ops.dest ().get<quint8> (), ops.src ().get<quint8> (), ret);
+		ops.dest ().get<quint8> () = ret;
 	}
 }
 
@@ -480,14 +480,14 @@ ExecutionUnit::execADD () {
 	OperandList &ops = p->m_inst->operands ();
 
 	if (ops.operandSize () == Jaf::OP_SIZE_16) {
-		uint16 ret;
-		p->m_alu->opAdd (ops.dest ().get<uint16> (), ops.src ().get<uint16> (), ret);
-		ops.dest ().get<uint16> () = ret;
+		quint16 ret;
+		p->m_alu->opAdd (ops.dest ().get<quint16> (), ops.src ().get<quint16> (), ret);
+		ops.dest ().get<quint16> () = ret;
 	}
 	else {
-		uint8 ret;
-		p->m_alu->opAdd (ops.dest ().get<uint8> (), ops.src ().get<uint8> (), ret);
-		ops.dest ().get<uint8> () = ret;
+		quint8 ret;
+		p->m_alu->opAdd (ops.dest ().get<quint8> (), ops.src ().get<quint8> (), ret);
+		ops.dest ().get<quint8> () = ret;
 	}
 }
 
@@ -496,14 +496,14 @@ ExecutionUnit::execAND () {
 	OperandList &ops = p->m_inst->operands ();
 
 	if (ops.operandSize () == Jaf::OP_SIZE_16) {
-		uint16 ret;
-		p->m_alu->opAnd (ops.dest ().get<uint16> (), ops.src ().get<uint16> (), ret);
-		ops.dest ().get<uint16> () = ret;
+		quint16 ret;
+		p->m_alu->opAnd (ops.dest ().get<quint16> (), ops.src ().get<quint16> (), ret);
+		ops.dest ().get<quint16> () = ret;
 	}
 	else {
-		uint8 ret;
-		p->m_alu->opAnd (ops.dest ().get<uint8> (), ops.src ().get<uint8> (), ret);
-		ops.dest ().get<uint8> () = ret;
+		quint8 ret;
+		p->m_alu->opAnd (ops.dest ().get<quint8> (), ops.src ().get<quint8> (), ret);
+		ops.dest ().get<quint8> () = ret;
 	}
 }
 
@@ -555,10 +555,10 @@ ExecutionUnit::execCMP () {
 	OperandList &ops = p->m_inst->operands ();
 
 	if (ops.operandSize () == Jaf::OP_SIZE_16) {
-		p->m_alu->opCmp (ops.dest ().get<uint16> (), ops.src ().get<uint16> ());
+		p->m_alu->opCmp (ops.dest ().get<quint16> (), ops.src ().get<quint16> ());
 	}
 	else {
-		p->m_alu->opCmp (ops.dest ().get<uint8> (), ops.src ().get<uint8> ());
+		p->m_alu->opCmp (ops.dest ().get<quint8> (), ops.src ().get<quint8> ());
 	}
 }
 
@@ -567,10 +567,10 @@ ExecutionUnit::execCMPS () {
 	OperandList &ops = p->m_inst->operands ();
 
 	if (ops.operandSize () == Jaf::OP_SIZE_16) {
-		p->m_alu->opCmp (ops.dest ().get<uint16> (), ops.src ().get<uint16> ());
+		p->m_alu->opCmp (ops.dest ().get<quint16> (), ops.src ().get<quint16> ());
 	}
 	else {
-		p->m_alu->opCmp (ops.dest ().get<uint8> (), ops.src ().get<uint8> ());
+		p->m_alu->opCmp (ops.dest ().get<quint8> (), ops.src ().get<quint8> ());
 	}
 
 	if (getRegFlagsDF ()) {
@@ -598,14 +598,14 @@ ExecutionUnit::execDEC () {
 	OperandList &ops = p->m_inst->operands ();
 
 	if (ops.operandSize () == Jaf::OP_SIZE_16) {
-		uint16 ret;
-		p->m_alu->opDec (ops.dest ().get<uint16> (), ret);
-		ops.dest ().get<uint16> () = ret;
+		quint16 ret;
+		p->m_alu->opDec (ops.dest ().get<quint16> (), ret);
+		ops.dest ().get<quint16> () = ret;
 	}
 	else {
-		uint8 ret;
-		p->m_alu->opDec (ops.dest ().get<uint8> (), ret);
-		ops.dest ().get<uint8> () = ret;
+		quint8 ret;
+		p->m_alu->opDec (ops.dest ().get<quint8> (), ret);
+		ops.dest ().get<quint8> () = ret;
 	}
 }
 
@@ -615,15 +615,15 @@ ExecutionUnit::execDIV () {
 
 	bool inter;
 	if (ops.operandSize () == Jaf::OP_SIZE_16) {
-		inter = p->m_alu->opDiv (ops.dest ().get<uint16> ());
+		inter = p->m_alu->opDiv (ops.dest ().get<quint16> ());
 	}
 	else {
-		inter = p->m_alu->opDiv (ops.dest ().get<uint8> ());
+		inter = p->m_alu->opDiv (ops.dest ().get<quint8> ());
 	}
 
 	if (!inter) {
 		ops.src ().free ();
-		ops.src ().init<uint8> (new Immediate<uint8> (0), true);
+		ops.src ().init<quint8> (new Immediate<quint8> (0), true);
 		execINT ();
 	}
 }
@@ -637,7 +637,7 @@ void
 ExecutionUnit::execIN () {
 	OperandList &ops = p->m_inst->operands ();
 
-	uint16 port = ops.src ().get<uint16> ();
+	quint16 port = ops.src ().get<quint16> ();
 	if (port != 1 || ops.operandSize () != Jaf::OP_SIZE_8) {
 		return;
 	}
@@ -650,7 +650,7 @@ ExecutionUnit::execIN () {
 		return;
 	}
 
-	ops.dest ().get<uint8> () =  p->m_io_ports->charInputQueue ().front ();
+	ops.dest ().get<quint8> () =  p->m_io_ports->charInputQueue ().front ();
 	p->m_io_ports->charInputQueue ().pop ();
 }
 
@@ -659,14 +659,14 @@ ExecutionUnit::execINC () {
 	OperandList &ops = p->m_inst->operands ();
 
 	if (ops.operandSize () == Jaf::OP_SIZE_16) {
-		uint16 ret;
-		p->m_alu->opInc (ops.dest ().get<uint16> (), ret);
-		ops.dest ().get<uint16> () = ret;
+		quint16 ret;
+		p->m_alu->opInc (ops.dest ().get<quint16> (), ret);
+		ops.dest ().get<quint16> () = ret;
 	}
 	else {
-		uint8 ret;
-		p->m_alu->opInc (ops.dest ().get<uint8> (), ret);
-		ops.dest ().get<uint8> () = ret;
+		quint8 ret;
+		p->m_alu->opInc (ops.dest ().get<quint8> (), ret);
+		ops.dest ().get<quint8> () = ret;
 	}
 }
 
@@ -674,9 +674,9 @@ void
 ExecutionUnit::execINT () {
 	OperandList &ops = p->m_inst->operands ();
 
-	uint16 vect_offset = 4 * ops.src ().get<uint8> ();
-	uint16 int_off = p->m_biu->getMemoryData<uint16> (0, vect_offset);
-	uint16 int_seg = p->m_biu->getMemoryData<uint16> (0, vect_offset + 2);
+	quint16 vect_offset = 4 * ops.src ().get<quint8> ();
+	quint16 int_off = p->m_biu->getMemoryData<quint16> (0, vect_offset);
+	quint16 int_seg = p->m_biu->getMemoryData<quint16> (0, vect_offset + 2);
 
 	realPush (getRegFlags ());
 	setRegFlagsIF (false);
@@ -696,7 +696,7 @@ ExecutionUnit::execINTO () {
 		return;
 	}
 
-	ops.src ().init<uint8> (new Immediate<uint8> (4), true);
+	ops.src ().init<quint8> (new Immediate<quint8> (4), true);
 	execINT ();
 }
 
@@ -712,10 +712,10 @@ ExecutionUnit::execJMP () {
 	OperandList &ops = p->m_inst->operands ();
 
 	if (ops.operandSize () == Jaf::OP_SIZE_16) {
-		p->m_biu->getRegIP () = ops.dest ().get<uint16> ();
+		p->m_biu->getRegIP () = ops.dest ().get<quint16> ();
 	}
 	else {
-		p->m_biu->getRegIP () = ops.dest ().get<uint8> ();
+		p->m_biu->getRegIP () = ops.dest ().get<quint8> ();
 	}
 }
 
@@ -724,10 +724,10 @@ ExecutionUnit::execJMPSHORT () {
 	OperandList &ops = p->m_inst->operands ();
 
 	if (ops.operandSize () == Jaf::OP_SIZE_16) {
-		p->m_biu->getRegIP () += ops.dest ().get<int16> ();
+		p->m_biu->getRegIP () += ops.dest ().get<qint16> ();
 	}
 	else {
-		p->m_biu->getRegIP () += ops.dest ().get<int8> ();
+		p->m_biu->getRegIP () += ops.dest ().get<qint8> ();
 	}
 }
 
@@ -735,8 +735,8 @@ void
 ExecutionUnit::execJMPFAR () {
 	OperandList &ops = p->m_inst->operands ();
 
-	p->m_biu->getSegRegCS () = ops.dest ().get<uint16> ().getSegment ();
-	p->m_biu->getRegIP () = ops.dest ().get<uint16> ().getOffset ();
+	p->m_biu->getSegRegCS () = ops.dest ().get<quint16> ().getSegment ();
+	p->m_biu->getRegIP () = ops.dest ().get<quint16> ().getOffset ();
 }
 
 void
@@ -875,7 +875,7 @@ ExecutionUnit::execJS () {
 void
 ExecutionUnit::execLAHF () {
 	//FIXME - make sure this works for high byte of flags
-	uint16 f = getRegFlags ();
+	quint16 f = getRegFlags ();
 	f &= 0xFFD7;
 	f |= 0x0002;
 	setRegAH (f);
@@ -885,29 +885,29 @@ void
 ExecutionUnit::execLDS () {
 	OperandList &ops = p->m_inst->operands ();
 
-	uint16 segment = ops.src ().get<uint16> ().getSegment ();
-	uint16 offset = ops.src ().get<uint16> ().getOffset ();
+	quint16 segment = ops.src ().get<quint16> ().getSegment ();
+	quint16 offset = ops.src ().get<quint16> ().getOffset ();
 
-	ops.dest ().get<uint16> () = p->m_biu->getMemoryData<uint16> (segment, offset);
-	p->m_biu->getSegRegDS () = p->m_biu->getMemoryData<uint16> (segment, offset + 2);
+	ops.dest ().get<quint16> () = p->m_biu->getMemoryData<quint16> (segment, offset);
+	p->m_biu->getSegRegDS () = p->m_biu->getMemoryData<quint16> (segment, offset + 2);
 }
 
 void
 ExecutionUnit::execLEA () {
 	OperandList &ops = p->m_inst->operands ();
 
-	ops.dest ().get<uint16> () = ops.src ().get<uint16> ().getOffset ();
+	ops.dest ().get<quint16> () = ops.src ().get<quint16> ().getOffset ();
 }
 
 void
 ExecutionUnit::execLES () {
 	OperandList &ops = p->m_inst->operands ();
 
-	uint16 segment = ops.src ().get<uint16> ().getSegment ();
-	uint16 offset = ops.src ().get<uint16> ().getOffset ();
+	quint16 segment = ops.src ().get<quint16> ().getSegment ();
+	quint16 offset = ops.src ().get<quint16> ().getOffset ();
 
-	ops.dest ().get<uint16> () = p->m_biu->getMemoryData<uint16> (segment, offset);
-	p->m_biu->getSegRegES () = p->m_biu->getMemoryData<uint16> (segment, offset + 2);
+	ops.dest ().get<quint16> () = p->m_biu->getMemoryData<quint16> (segment, offset);
+	p->m_biu->getSegRegES () = p->m_biu->getMemoryData<quint16> (segment, offset + 2);
 }
 
 void
@@ -921,10 +921,10 @@ ExecutionUnit::execLOOP () {
 	}
 
 	if (ops.operandSize () == Jaf::OP_SIZE_16) {
-		p->m_biu->getRegIP () += ops.dest ().get<int16> ();
+		p->m_biu->getRegIP () += ops.dest ().get<qint16> ();
 	}
 	else {
-		p->m_biu->getRegIP () += ops.dest ().get<int8> ();
+		p->m_biu->getRegIP () += ops.dest ().get<qint8> ();
 	}
 }
 
@@ -951,10 +951,10 @@ ExecutionUnit::execMOV () {
 	OperandList &ops = p->m_inst->operands ();
 
 	if (ops.operandSize () == Jaf::OP_SIZE_16) {
-		ops.dest ().get<uint16> () = ops.src ().get<uint16> ();
+		ops.dest ().get<quint16> () = ops.src ().get<quint16> ();
 	}
 	else {
-		ops.dest ().get<uint8> () = ops.src ().get<uint8> ();
+		ops.dest ().get<quint8> () = ops.src ().get<quint8> ();
 	}
 }
 
@@ -963,10 +963,10 @@ ExecutionUnit::execMOVS () {
 	OperandList &ops = p->m_inst->operands ();
 
 	if (ops.operandSize () == Jaf::OP_SIZE_16) {
-		ops.dest ().get<uint16> () = ops.src ().get<uint16> ();
+		ops.dest ().get<quint16> () = ops.src ().get<quint16> ();
 	}
 	else {
-		ops.dest ().get<uint8> () = ops.src ().get<uint8> ();
+		ops.dest ().get<quint8> () = ops.src ().get<quint8> ();
 	}
 
 	if (getRegFlagsDF ()) {
@@ -984,10 +984,10 @@ ExecutionUnit::execMUL () {
 	OperandList &ops = p->m_inst->operands ();
 
 	if (ops.operandSize () == Jaf::OP_SIZE_16) {
-		p->m_alu->opMul (ops.dest ().get<uint16> ());
+		p->m_alu->opMul (ops.dest ().get<quint16> ());
 	}
 	else {
-		p->m_alu->opMul (ops.dest ().get<uint8> ());
+		p->m_alu->opMul (ops.dest ().get<quint8> ());
 	}
 }
 
@@ -996,14 +996,14 @@ ExecutionUnit::execNEG () {
 	OperandList &ops = p->m_inst->operands ();
 
 	if (ops.operandSize () == Jaf::OP_SIZE_16) {
-		uint16 ret;
-		p->m_alu->opNeg (ops.dest ().get<uint16> (), ret);
-		ops.dest ().get<uint16> () = ret;
+		quint16 ret;
+		p->m_alu->opNeg (ops.dest ().get<quint16> (), ret);
+		ops.dest ().get<quint16> () = ret;
 	}
 	else {
-		uint8 ret;
-		p->m_alu->opNeg (ops.dest ().get<uint8> (), ret);
-		ops.dest ().get<uint8> () = ret;
+		quint8 ret;
+		p->m_alu->opNeg (ops.dest ().get<quint8> (), ret);
+		ops.dest ().get<quint8> () = ret;
 	}
 }
 
@@ -1017,10 +1017,10 @@ ExecutionUnit::execNOT () {
 	OperandList &ops = p->m_inst->operands ();
 
 	if (ops.operandSize () == Jaf::OP_SIZE_16) {
-		ops.dest ().get<uint16> () = 0xFF - ops.dest ().get<uint16> ();
+		ops.dest ().get<quint16> () = 0xFF - ops.dest ().get<quint16> ();
 	}
 	else {
-		ops.dest ().get<uint8> () = 0xFFFF - ops.dest ().get<uint8> ();
+		ops.dest ().get<quint8> () = 0xFFFF - ops.dest ().get<quint8> ();
 	}
 }
 
@@ -1029,14 +1029,14 @@ ExecutionUnit::execOR () {
 	OperandList &ops = p->m_inst->operands ();
 
 	if (ops.operandSize () == Jaf::OP_SIZE_16) {
-		uint16 ret;
-		p->m_alu->opOr (ops.dest ().get<uint16> (), ops.src ().get<uint16> (), ret);
-		ops.dest ().get<uint16> () = ret;
+		quint16 ret;
+		p->m_alu->opOr (ops.dest ().get<quint16> (), ops.src ().get<quint16> (), ret);
+		ops.dest ().get<quint16> () = ret;
 	}
 	else {
-		uint8 ret;
-		p->m_alu->opOr (ops.dest ().get<uint8> (), ops.src ().get<uint8> (), ret);
-		ops.dest ().get<uint8> () = ret;
+		quint8 ret;
+		p->m_alu->opOr (ops.dest ().get<quint8> (), ops.src ().get<quint8> (), ret);
+		ops.dest ().get<quint8> () = ret;
 	}
 }
 
@@ -1045,14 +1045,14 @@ ExecutionUnit::execOUT () {
 	OperandList &ops = p->m_inst->operands ();
 
 	//FIXME - this is only for 310
-	uint16 port = ops.dest ().get<uint16> ();
+	quint16 port = ops.dest ().get<quint16> ();
 	if (port == 2) { //terminal output
 		if (ops.operandSize () == Jaf::OP_SIZE_8) {
-			p->m_io_ports->signalCharOutput ().emit (ops.src ().get<uint8> ());
+			p->m_io_ports->signalCharOutput ().emit (ops.src ().get<quint8> ());
 		}
 	}
 	else if (port == 3) { //sound output
-		uint16 cx_div_bx = getRegCX () / getRegBX ();
+		quint16 cx_div_bx = getRegCX () / getRegBX ();
 		p->m_io_ports->signalSoundOutput ().emit (getRegAX (), cx_div_bx);
 	}
 }
@@ -1061,7 +1061,7 @@ void
 ExecutionUnit::execPOP () {
 	OperandList &ops = p->m_inst->operands ();
 
-	realPop ( (!ops.src ().isNull () ? ops.src () : ops.dest ()).get<uint16> () );
+	realPop ( (!ops.src ().isNull () ? ops.src () : ops.dest ()).get<quint16> () );
 }
 
 void
@@ -1073,7 +1073,7 @@ void
 ExecutionUnit::execPUSH () {
 	OperandList &ops = p->m_inst->operands ();
 
-	realPush ( (!ops.src ().isNull () ? ops.src () : ops.dest ()).get<uint16> () );
+	realPush ( (!ops.src ().isNull () ? ops.src () : ops.dest ()).get<quint16> () );
 }
 
 void
@@ -1086,14 +1086,14 @@ ExecutionUnit::execRCL () {
 	OperandList &ops = p->m_inst->operands ();
 
 	if (ops.operandSize () == Jaf::OP_SIZE_16) {
-		uint16 ret;
-		p->m_alu->opRcl (ops.dest ().get<uint16> (), ops.src ().get<uint8> (), ret);
-		ops.dest ().get<uint16> () = ret;
+		quint16 ret;
+		p->m_alu->opRcl (ops.dest ().get<quint16> (), ops.src ().get<quint8> (), ret);
+		ops.dest ().get<quint16> () = ret;
 	}
 	else {
-		uint8 ret;
-		p->m_alu->opRcl (ops.dest ().get<uint8> (), ops.src ().get<uint8> (), ret);
-		ops.dest ().get<uint8> () = ret;
+		quint8 ret;
+		p->m_alu->opRcl (ops.dest ().get<quint8> (), ops.src ().get<quint8> (), ret);
+		ops.dest ().get<quint8> () = ret;
 	}
 }
 
@@ -1102,14 +1102,14 @@ ExecutionUnit::execRCR () {
 	OperandList &ops = p->m_inst->operands ();
 
 	if (ops.operandSize () == Jaf::OP_SIZE_16) {
-		uint16 ret;
-		p->m_alu->opRcr (ops.dest ().get<uint16> (), ops.src ().get<uint8> (), ret);
-		ops.dest ().get<uint16> () = ret;
+		quint16 ret;
+		p->m_alu->opRcr (ops.dest ().get<quint16> (), ops.src ().get<quint8> (), ret);
+		ops.dest ().get<quint16> () = ret;
 	}
 	else {
-		uint8 ret;
-		p->m_alu->opRcr (ops.dest ().get<uint8> (), ops.src ().get<uint8> (), ret);
-		ops.dest ().get<uint8> () = ret;
+		quint8 ret;
+		p->m_alu->opRcr (ops.dest ().get<quint8> (), ops.src ().get<quint8> (), ret);
+		ops.dest ().get<quint8> () = ret;
 	}
 }
 
@@ -1120,7 +1120,7 @@ ExecutionUnit::execRET () {
 	realPop (p->m_biu->getRegIP ());
 
 	if (!ops.src ().isNull ()) {
-		getRegSP () += ops.src ().get<uint16> ();
+		getRegSP () += ops.src ().get<quint16> ();
 	}
 }
 
@@ -1132,7 +1132,7 @@ ExecutionUnit::execRETFAR () {
 	realPop (p->m_biu->getSegRegCS ());
 
 	if (!ops.src ().isNull ()) {
-		getRegSP () += ops.src ().get<uint16> ();
+		getRegSP () += ops.src ().get<quint16> ();
 	}
 }
 
@@ -1141,14 +1141,14 @@ ExecutionUnit::execROL () {
 	OperandList &ops = p->m_inst->operands ();
 
 	if (ops.operandSize () == Jaf::OP_SIZE_16) {
-		uint16 ret;
-		p->m_alu->opRol (ops.dest ().get<uint16> (), ops.src ().get<uint8> (), ret);
-		ops.dest ().get<uint16> () = ret;
+		quint16 ret;
+		p->m_alu->opRol (ops.dest ().get<quint16> (), ops.src ().get<quint8> (), ret);
+		ops.dest ().get<quint16> () = ret;
 	}
 	else {
-		uint8 ret;
-		p->m_alu->opRol (ops.dest ().get<uint8> (), ops.src ().get<uint8> (), ret);
-		ops.dest ().get<uint8> () = ret;
+		quint8 ret;
+		p->m_alu->opRol (ops.dest ().get<quint8> (), ops.src ().get<quint8> (), ret);
+		ops.dest ().get<quint8> () = ret;
 	}
 }
 
@@ -1157,21 +1157,21 @@ ExecutionUnit::execROR () {
 	OperandList &ops = p->m_inst->operands ();
 
 	if (ops.operandSize () == Jaf::OP_SIZE_16) {
-		uint16 ret;
-		p->m_alu->opRor (ops.dest ().get<uint16> (), ops.src ().get<uint8> (), ret);
-		ops.dest ().get<uint16> () = ret;
+		quint16 ret;
+		p->m_alu->opRor (ops.dest ().get<quint16> (), ops.src ().get<quint8> (), ret);
+		ops.dest ().get<quint16> () = ret;
 	}
 	else {
-		uint8 ret;
-		p->m_alu->opRor (ops.dest ().get<uint8> (), ops.src ().get<uint8> (), ret);
-		ops.dest ().get<uint8> () = ret;
+		quint8 ret;
+		p->m_alu->opRor (ops.dest ().get<quint8> (), ops.src ().get<quint8> (), ret);
+		ops.dest ().get<quint8> () = ret;
 	}
 }
 
 void
 ExecutionUnit::execSAHF () {
 	//FIXME - make sure this works for high byte of flags
-	uint16 f = getRegFlags ();
+	quint16 f = getRegFlags ();
 	f &= (0xFF00 + getRegAH ());
 	f &= 0xFFD7;
 	f |= 0x0002;
@@ -1183,14 +1183,14 @@ ExecutionUnit::execSAR () {
 	OperandList &ops = p->m_inst->operands ();
 
 	if (ops.operandSize () == Jaf::OP_SIZE_16) {
-		uint16 ret;
-		p->m_alu->opSar (ops.dest ().get<uint16> (), ops.src ().get<uint8> (), ret);
-		ops.dest ().get<uint16> () = ret;
+		quint16 ret;
+		p->m_alu->opSar (ops.dest ().get<quint16> (), ops.src ().get<quint8> (), ret);
+		ops.dest ().get<quint16> () = ret;
 	}
 	else {
-		uint8 ret;
-		p->m_alu->opSar (ops.dest ().get<uint8> (), ops.src ().get<uint8> (), ret);
-		ops.dest ().get<uint8> () = ret;
+		quint8 ret;
+		p->m_alu->opSar (ops.dest ().get<quint8> (), ops.src ().get<quint8> (), ret);
+		ops.dest ().get<quint8> () = ret;
 	}
 }
 
@@ -1199,14 +1199,14 @@ ExecutionUnit::execSBB () {
 	OperandList &ops = p->m_inst->operands ();
 
 	if (ops.operandSize () == Jaf::OP_SIZE_16) {
-		uint16 ret;
-		p->m_alu->opSbb (ops.dest ().get<uint16> (), ops.src ().get<uint16> (), ret);
-		ops.dest ().get<uint16> () = ret;
+		quint16 ret;
+		p->m_alu->opSbb (ops.dest ().get<quint16> (), ops.src ().get<quint16> (), ret);
+		ops.dest ().get<quint16> () = ret;
 	}
 	else {
-		uint8 ret;
-		p->m_alu->opSbb (ops.dest ().get<uint8> (), ops.src ().get<uint8> (), ret);
-		ops.dest ().get<uint8> () = ret;
+		quint8 ret;
+		p->m_alu->opSbb (ops.dest ().get<quint8> (), ops.src ().get<quint8> (), ret);
+		ops.dest ().get<quint8> () = ret;
 	}
 }
 
@@ -1215,14 +1215,14 @@ ExecutionUnit::execSHL () {
 	OperandList &ops = p->m_inst->operands ();
 
 	if (ops.operandSize () == Jaf::OP_SIZE_16) {
-		uint16 ret;
-		p->m_alu->opShl (ops.dest ().get<uint16> (), ops.src ().get<uint8> (), ret);
-		ops.dest ().get<uint16> () = ret;
+		quint16 ret;
+		p->m_alu->opShl (ops.dest ().get<quint16> (), ops.src ().get<quint8> (), ret);
+		ops.dest ().get<quint16> () = ret;
 	}
 	else {
-		uint8 ret;
-		p->m_alu->opShl (ops.dest ().get<uint8> (), ops.src ().get<uint8> (), ret);
-		ops.dest ().get<uint8> () = ret;
+		quint8 ret;
+		p->m_alu->opShl (ops.dest ().get<quint8> (), ops.src ().get<quint8> (), ret);
+		ops.dest ().get<quint8> () = ret;
 	}
 }
 
@@ -1231,14 +1231,14 @@ ExecutionUnit::execSHR () {
 	OperandList &ops = p->m_inst->operands ();
 
 	if (ops.operandSize () == Jaf::OP_SIZE_16) {
-		uint16 ret;
-		p->m_alu->opShr (ops.dest ().get<uint16> (), ops.src ().get<uint8> (), ret);
-		ops.dest ().get<uint16> () = ret;
+		quint16 ret;
+		p->m_alu->opShr (ops.dest ().get<quint16> (), ops.src ().get<quint8> (), ret);
+		ops.dest ().get<quint16> () = ret;
 	}
 	else {
-		uint8 ret;
-		p->m_alu->opShr (ops.dest ().get<uint8> (), ops.src ().get<uint8> (), ret);
-		ops.dest ().get<uint8> () = ret;
+		quint8 ret;
+		p->m_alu->opShr (ops.dest ().get<quint8> (), ops.src ().get<quint8> (), ret);
+		ops.dest ().get<quint8> () = ret;
 	}
 }
 
@@ -1246,7 +1246,7 @@ void
 ExecutionUnit::execSEG () {
 	OperandList &ops = p->m_inst->operands ();
 
-	p->m_biu->setSegOverride (ops.dest ().get<uint16> ());
+	p->m_biu->setSegOverride (ops.dest ().get<quint16> ());
 }
 
 void
@@ -1254,14 +1254,14 @@ ExecutionUnit::execSUB () {
 	OperandList &ops = p->m_inst->operands ();
 
 	if (ops.operandSize () == Jaf::OP_SIZE_16) {
-		uint16 ret;
-		p->m_alu->opSub (ops.dest ().get<uint16> (), ops.src ().get<uint16> (), ret);
-		ops.dest ().get<uint16> () = ret;
+		quint16 ret;
+		p->m_alu->opSub (ops.dest ().get<quint16> (), ops.src ().get<quint16> (), ret);
+		ops.dest ().get<quint16> () = ret;
 	}
 	else {
-		uint8 ret;
-		p->m_alu->opSub (ops.dest ().get<uint8> (), ops.src ().get<uint8> (), ret);
-		ops.dest ().get<uint8> () = ret;
+		quint8 ret;
+		p->m_alu->opSub (ops.dest ().get<quint8> (), ops.src ().get<quint8> (), ret);
+		ops.dest ().get<quint8> () = ret;
 	}
 }
 
@@ -1285,10 +1285,10 @@ ExecutionUnit::execTEST () {
 	OperandList &ops = p->m_inst->operands ();
 
 	if (ops.operandSize () == Jaf::OP_SIZE_16) {
-		p->m_alu->opTest (ops.dest ().get<uint16> (), ops.src ().get<uint16> ());
+		p->m_alu->opTest (ops.dest ().get<quint16> (), ops.src ().get<quint16> ());
 	}
 	else {
-		p->m_alu->opTest (ops.dest ().get<uint8> (), ops.src ().get<uint8> ());
+		p->m_alu->opTest (ops.dest ().get<quint8> (), ops.src ().get<quint8> ());
 	}
 }
 
@@ -1297,20 +1297,20 @@ ExecutionUnit::execXCHG () {
 	OperandList &ops = p->m_inst->operands ();
 
 	if (ops.operandSize () == Jaf::OP_SIZE_16) {
-		uint16 tmp = ops.dest ().get<uint16> ();
-		ops.dest ().get<uint16> () = ops.src ().get<uint16> ();
-		ops.src ().get<uint16> () = tmp;
+		quint16 tmp = ops.dest ().get<quint16> ();
+		ops.dest ().get<quint16> () = ops.src ().get<quint16> ();
+		ops.src ().get<quint16> () = tmp;
 	}
 	else {
-		uint8 tmp = ops.dest ().get<uint8> ();
-		ops.dest ().get<uint8> () = ops.src ().get<uint8> ();
-		ops.src ().get<uint8> () = tmp;
+		quint8 tmp = ops.dest ().get<quint8> ();
+		ops.dest ().get<quint8> () = ops.src ().get<quint8> ();
+		ops.src ().get<quint8> () = tmp;
 	}
 }
 
 void
 ExecutionUnit::execXLAT () {
-	uint8 c = p->m_biu->getMemoryData<uint8> (p->m_biu->getSegRegDS (), getRegBX () + getRegAL ());
+	quint8 c = p->m_biu->getMemoryData<quint8> (p->m_biu->getSegRegDS (), getRegBX () + getRegAL ());
 	setRegAL (c);
 }
 
@@ -1319,40 +1319,40 @@ ExecutionUnit::execXOR () {
 	OperandList &ops = p->m_inst->operands ();
 
 	if (ops.operandSize () == Jaf::OP_SIZE_16) {
-		uint16 ret;
-		p->m_alu->opXor (ops.dest ().get<uint16> (), ops.src ().get<uint16> (), ret);
-		ops.dest ().get<uint16> () = ret;
+		quint16 ret;
+		p->m_alu->opXor (ops.dest ().get<quint16> (), ops.src ().get<quint16> (), ret);
+		ops.dest ().get<quint16> () = ret;
 	}
 	else {
-		uint8 ret;
-		p->m_alu->opXor (ops.dest ().get<uint8> (), ops.src ().get<uint8> (), ret);
-		ops.dest ().get<uint8> () = ret;
+		quint8 ret;
+		p->m_alu->opXor (ops.dest ().get<quint8> (), ops.src ().get<quint8> (), ret);
+		ops.dest ().get<quint8> () = ret;
 	}
 }
 
 void
-ExecutionUnit::realPush (uint16 num) {
-	getRegSP () -= sizeof(uint16);
+ExecutionUnit::realPush (quint16 num) {
+	getRegSP () -= sizeof(quint16);
 	NumberWrapper mem;
-	mem.init<uint16> (p->m_biu->getMemoryAddress<uint16> (p->m_biu->getSegRegSS (), getRegSP ()), true);
-	mem.get<uint16> () = num;
+	mem.init<quint16> (p->m_biu->getMemoryAddress<quint16> (p->m_biu->getSegRegSS (), getRegSP ()), true);
+	mem.get<quint16> () = num;
 
 	p->m_signal_stack_push.emit (p->m_biu->getSegRegSS (), getRegSP (), num);
 }
 
 void
 ExecutionUnit::realPop () {
-	getRegSP () += sizeof(uint16);
+	getRegSP () += sizeof(quint16);
 
 	p->m_signal_stack_pop.emit ();
 }
 
 void
-ExecutionUnit::realPop (INumberReadableWritable<uint16> &num) {
+ExecutionUnit::realPop (INumberReadableWritable<quint16> &num) {
 	NumberWrapper mem;
-	mem.init<uint16> (p->m_biu->getMemoryAddress<uint16> (p->m_biu->getSegRegSS (), getRegSP ()), true);
-	num = mem.get<uint16> ();
-	getRegSP () += sizeof(uint16);
+	mem.init<quint16> (p->m_biu->getMemoryAddress<quint16> (p->m_biu->getSegRegSS (), getRegSP ()), true);
+	num = mem.get<quint16> ();
+	getRegSP () += sizeof(quint16);
 
 	p->m_signal_stack_pop.emit ();
 }

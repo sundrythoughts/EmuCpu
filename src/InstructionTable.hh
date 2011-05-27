@@ -29,7 +29,7 @@
 #include "ExecutionUnit.hh"
 #include "InstructionDecoder.hh"
 
-#include "Types.hh"
+#include <QtGlobal>
 
 /**
 @class InstructionTableItem
@@ -44,7 +44,7 @@ public:
 	bool has_modrm;
 
 	/** @brief The InstructionGroups index of the instruction. */
-	uint32 group;
+	quint32 group;
 
 	/** @brief Function pointer to the decode function. */
 	void (InstructionDecoder::*decode_func) ();

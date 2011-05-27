@@ -59,68 +59,68 @@ BusInterfaceUnit::connectTo (CpuComponents &cpu) {
 	//FIXME - connect to signals
 }
 
-Register<uint16>&
+Register<quint16>&
 BusInterfaceUnit::getSegReg (size_t index) {
 	return m_seg_regs[index];
 }
 
 void
-BusInterfaceUnit::setSegReg (size_t index, uint16 val) {
+BusInterfaceUnit::setSegReg (size_t index, quint16 val) {
 	m_seg_regs[index] = val;
 }
 
-Register<uint16>&
+Register<quint16>&
 BusInterfaceUnit::getSegRegCS () {
 	return m_seg_regs[Jaf::SREG_CS];
 }
 
 void
-BusInterfaceUnit::setSegRegCS (uint16 val) {
+BusInterfaceUnit::setSegRegCS (quint16 val) {
 	m_seg_regs[Jaf::SREG_CS] = val;
 }
 
-Register<uint16>&
+Register<quint16>&
 BusInterfaceUnit::getSegRegDS () {
 	return m_seg_regs[Jaf::SREG_DS];
 }
 
 void
-BusInterfaceUnit::setSegRegDS (uint16 val) {
+BusInterfaceUnit::setSegRegDS (quint16 val) {
 	m_seg_regs[Jaf::SREG_DS] = val;
 }
 
-Register<uint16>&
+Register<quint16>&
 BusInterfaceUnit::getSegRegES () {
 	return m_seg_regs[Jaf::SREG_ES];
 }
 
 void
-BusInterfaceUnit::setSegRegES (uint16 val) {
+BusInterfaceUnit::setSegRegES (quint16 val) {
 	m_seg_regs[Jaf::SREG_ES] = val;
 }
 
-Register<uint16>&
+Register<quint16>&
 BusInterfaceUnit::getSegRegSS () {
 	return m_seg_regs[Jaf::SREG_SS];
 }
 
 void
-BusInterfaceUnit::setSegRegSS (uint16 val) {
+BusInterfaceUnit::setSegRegSS (quint16 val) {
 	m_seg_regs[Jaf::SREG_SS] = val;
 }
 
-Register<uint16>&
+Register<quint16>&
 BusInterfaceUnit::getRegIP () {
 	return m_reg_ip;
 }
 
 void
-BusInterfaceUnit::setRegIP (uint16 val) {
+BusInterfaceUnit::setRegIP (quint16 val) {
 	m_reg_ip = val;
 }
 
 void
-BusInterfaceUnit::setSegOverride (uint16 val) {
+BusInterfaceUnit::setSegOverride (quint16 val) {
 	m_seg_override = val;
 }
 

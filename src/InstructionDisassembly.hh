@@ -28,7 +28,7 @@
 #include <string>
 #include <vector>
 //#include <iostream>
-#include "Types.hh"
+#include <QtGlobal>
 
 class InstructionDisassemblyPrivate;
 
@@ -48,13 +48,13 @@ public:
 	const std::string& getSegmentOffset () const;
 
 	/** @brief Set the segment and offset. */
-	void setSegmentOffset (uint16 seg, uint16 off);
+	void setSegmentOffset (quint16 seg, quint16 off);
 
 	/** @brief Get the machine code. */
 	const std::string& getMachineCode () const;
 
 	/** @brief Set the machine code. */
-	void setMachineCode (const std::vector<uint8> &code);
+	void setMachineCode (const std::vector<quint8> &code);
 
 	/** @brief Get the addressing mode. */
 	const std::string& getAddressingMode () const;

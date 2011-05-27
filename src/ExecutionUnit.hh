@@ -28,7 +28,7 @@
 #include "Register.hh"
 #include <sigc++/sigc++.h>
 
-#include "Types.hh"
+#include <QtGlobal>
 
 class CpuComponents;
 class OperandList;
@@ -55,7 +55,7 @@ public:
 	void connectTo (CpuComponents &cpu);
 
 	/** @brief Sigc++ signal emitted when data is pushed on the stack. */
-	sigc::signal<void, uint16, uint16, uint16>& signalStackPush ();
+	sigc::signal<void, quint16, quint16, quint16>& signalStackPush ();
 
 	/** @brief Sigc++ signal emitted when data is popped off the stack. */
 	sigc::signal<void>& signalStackPop ();
@@ -64,121 +64,121 @@ public:
 	void reset ();
 
 	/** @brief Get an 8-bit register given its RegisterIndex8 index. */
-	Register<uint8>& getReg8 (size_t index);
+	Register<quint8>& getReg8 (size_t index);
 
 	/** @brief Set an 8-bit register given its RegisterIndex8 index. */
-	void setReg8 (size_t index, uint8 val);
+	void setReg8 (size_t index, quint8 val);
 
 	/** @brief Get a 16-bit register given its RegisterIndex16 index. */
-	Register<uint16>& getReg16 (size_t index);
+	Register<quint16>& getReg16 (size_t index);
 
 	/** @brief Set a 16-bit register given its RegisterIndex16 index. */
-	void setReg16 (size_t index, uint16 val);
+	void setReg16 (size_t index, quint16 val);
 
 	/** @brief Get register AX. */
-	Register<uint16>& getRegAX ();
+	Register<quint16>& getRegAX ();
 
 	/** @brief Set register AX. */
-	void setRegAX (uint16 val);
+	void setRegAX (quint16 val);
 
 	/** @brief Get register AH. */
-	Register<uint8>& getRegAH ();
+	Register<quint8>& getRegAH ();
 
 	/** @brief Set register AH. */
-	void setRegAH (uint8 val);
+	void setRegAH (quint8 val);
 
 	/** @brief Get register AL. */
-	Register<uint8>& getRegAL ();
+	Register<quint8>& getRegAL ();
 
 	/** @brief Set register AL. */
-	void setRegAL (uint8 val);
+	void setRegAL (quint8 val);
 
 	/** @brief Get register BX. */
-	Register<uint16>& getRegBX ();
+	Register<quint16>& getRegBX ();
 
 	/** @brief Set register BX. */
-	void setRegBX (uint16 val);
+	void setRegBX (quint16 val);
 
 	/** @brief Get register BH. */
-	Register<uint8>& getRegBH ();
+	Register<quint8>& getRegBH ();
 
 	/** @brief Set register BH. */
-	void setRegBH (uint8 val);
+	void setRegBH (quint8 val);
 
 	/** @brief Get register BL. */
-	Register<uint8>& getRegBL ();
+	Register<quint8>& getRegBL ();
 
 	/** @brief Set register BL. */
-	void setRegBL (uint8 val);
+	void setRegBL (quint8 val);
 
 	/** @brief Get register CX. */
-	Register<uint16>& getRegCX ();
+	Register<quint16>& getRegCX ();
 
 	/** @brief Set register CX. */
-	void setRegCX (uint16 val);
+	void setRegCX (quint16 val);
 
 	/** @brief Get register CH. */
-	Register<uint8>& getRegCH ();
+	Register<quint8>& getRegCH ();
 
 	/** @brief Set register CH. */
-	void setRegCH (uint8 val);
+	void setRegCH (quint8 val);
 
 	/** @brief Get register CL. */
-	Register<uint8>& getRegCL ();
+	Register<quint8>& getRegCL ();
 
 	/** @brief Set register CL. */
-	void setRegCL (uint8 val);
+	void setRegCL (quint8 val);
 
 	/** @brief Get register DX. */
-	Register<uint16>& getRegDX ();
+	Register<quint16>& getRegDX ();
 
 	/** @brief Set register DX. */
-	void setRegDX (uint16 val);
+	void setRegDX (quint16 val);
 
 	/** @brief Get register DH. */
-	Register<uint8>& getRegDH ();
+	Register<quint8>& getRegDH ();
 
 	/** @brief Set register DH. */
-	void setRegDH (uint8 val);
+	void setRegDH (quint8 val);
 
 	/** @brief Get register DL. */
-	Register<uint8>& getRegDL ();
+	Register<quint8>& getRegDL ();
 
 	/** @brief Set register DL. */
-	void setRegDL (uint8 val);
+	void setRegDL (quint8 val);
 
 	/** @brief Get register DI. */
-	Register<uint16>& getRegDI ();
+	Register<quint16>& getRegDI ();
 
 	/** @brief Set register DI. */
-	void setRegDI (uint16 val);
+	void setRegDI (quint16 val);
 
 	/** @brief Get register SI. */
-	Register<uint16>& getRegSI ();
+	Register<quint16>& getRegSI ();
 
 	/** @brief Set register SI. */
-	void setRegSI (uint16 val);
+	void setRegSI (quint16 val);
 
 	/** @brief Get register BP. */
-	Register<uint16>& getRegBP ();
+	Register<quint16>& getRegBP ();
 
 	/** @brief Set register BP. */
-	void setRegBP (uint16 val);
+	void setRegBP (quint16 val);
 
 	/** @brief Get register SP. */
-	Register<uint16>& getRegSP ();
+	Register<quint16>& getRegSP ();
 
 	/** @brief Set register SP. */
-	void setRegSP (uint16 val);
+	void setRegSP (quint16 val);
 
 	/** @brief Reset the Flags register to a particular value. */
-	void resetRegFlags (uint16 val = 2);
+	void resetRegFlags (quint16 val = 2);
 
 	/** @brief Get register FLAGS. */
-	Register<uint16>& getRegFlags ();
+	Register<quint16>& getRegFlags ();
 
 	/** @brief Set register FLAGS. */
-	void setRegFlags (uint16 val);
+	void setRegFlags (quint16 val);
 
 	/** @brief Get register FLAGS AF. */
 	bool getRegFlagsAF () const;
@@ -532,11 +532,11 @@ public:
 	void execXOR ();
 
 private:
-	void realPush (uint16 num);
+	void realPush (quint16 num);
 
 	void realPop ();
 
-	void realPop (INumberReadableWritable<uint16> &num);
+	void realPop (INumberReadableWritable<quint16> &num);
 
 }; //end class ExecutionUnit
 

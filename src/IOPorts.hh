@@ -27,7 +27,7 @@
 #include <sigc++/sigc++.h>
 #include <queue>
 
-#include "Types.hh"
+#include <QtGlobal>
 
 class CpuComponents;
 class IOPortsPrivate;
@@ -53,7 +53,7 @@ public:
 	sigc::signal<void, char>& signalCharOutput ();
 
 	/** @brief Get the signalSoundOutput signal. */
-	sigc::signal<void, uint16, uint16> signalSoundOutput ();
+	sigc::signal<void, quint16, quint16> signalSoundOutput ();
 
 	/** @brief Queue a character from the terminal. */
 	void charInput (char c);
@@ -66,7 +66,7 @@ public:
 
 private:
 	//play a sound through the ToneGenerator
-	void playSound (uint16 freq, uint16 duration);
+	void playSound (quint16 freq, quint16 duration);
 };
 
 #endif //EMUCPU__IO_PORTS_HH

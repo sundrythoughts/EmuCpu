@@ -20,13 +20,15 @@
 #include "Cpu.hh"
 #include "Paths.hh"
 
+#include <QtGlobal>
+
 class CpuPrivate {
 public:
 	CpuComponents m_cpu_comps;
 
 	QMutex m_mutex;
 	bool m_thread_run;
-	uint64 m_thread_delay;
+	quint64 m_thread_delay;
 };
 
 Cpu::Cpu (QObject *parent) : QThread (parent) {

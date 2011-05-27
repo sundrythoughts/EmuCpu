@@ -32,7 +32,7 @@
 #include <sigc++/sigc++.h>
 #include "NumberWrapper.hh"
 
-#include "Types.hh"
+#include <QtGlobal>
 
 class CpuComponents;
 class InstructionDecoderPrivate;
@@ -85,7 +85,7 @@ protected:
 	void decodeInstruction ();
 
 	/** @brief Do the actual decoding of the ModRM byte */
-	uint16 decodeRm0To7 (uint8 mrm, std::ostringstream &dis);
+	quint16 decodeRm0To7 (quint8 mrm, std::ostringstream &dis);
 
 public:
 	/** */

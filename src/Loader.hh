@@ -27,7 +27,7 @@
 
 #include <string>
 
-#include "Types.hh"
+#include <QtGlobal>
 
 class CpuComponents;
 class LoaderPrivate;
@@ -56,14 +56,14 @@ class Loader {
 	};
 
 	struct ModuleHeader {
-		uint8 segment_register;
-		uint16 module_offset;
-		uint16 module_size;
+		quint8 segment_register;
+		quint16 module_offset;
+		quint16 module_size;
 	};
 
 	LoaderPrivate *p;
 
-	uint32 physicalAddress (uint32 seg, uint32 offset);
+	quint32 physicalAddress (quint32 seg, quint32 offset);
 
 public:
 	/** */
@@ -84,10 +84,10 @@ public:
 	bool loadFile (std::string filename, bool clear = false);
 
 	/** @brief Return the checksum of the memory. */
-	int32 checksumMemory ();
+	qint32 checksumMemory ();
 
 	/** @brief Return the checksum of the registers. */
-	int32 checksumRegisters ();
+	qint32 checksumRegisters ();
 
 }; //end class Loader
 

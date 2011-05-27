@@ -26,7 +26,7 @@
 #define EMUCPU__DEFINES_HH
 
 #include <cstddef>
-#include "Types.hh"
+#include <QtGlobal>
 
 /** @namespace Jaf */
 namespace Jaf {
@@ -99,19 +99,19 @@ enum RegisterIndex16 {
 @param op_sz The OperandSize of register.
 @param reg_i The register index listed in RegisterIndex8 or RegisterIndex16.
 */
-const char8* getRegIndexName (size_t op_sz, size_t reg_i);
+const char* getRegIndexName (size_t op_sz, size_t reg_i);
 
 /**
 @brief Get a register name for an 8-bit register.
 @param reg_i The register index listed in RegisterIndex8.
 */
-const char8* getRegIndex8Name (size_t reg_i);
+const char* getRegIndex8Name (size_t reg_i);
 
 /**
 @brief Get a register name for an 16-bit register.
 @param reg_i The register index listed in RegisterIndex16.
 */
-const char8* getRegIndex16Name (size_t reg_i);
+const char* getRegIndex16Name (size_t reg_i);
 
 /** @brief Register indexes of segment registers. */
 enum SegmentRegisterIndex {
@@ -126,25 +126,25 @@ enum SegmentRegisterIndex {
 @brief Get a segment register name.
 @param reg_i The segment register index listed in SegmentRegisterIndex.
 */
-const char8* getSegRegIndexName (size_t reg_i);
+const char* getSegRegIndexName (size_t reg_i);
 
 /** @brief ModRM */
 union ModRM {
-	uint8 byte;
+	quint8 byte;
 	struct {
-		uint32 rm : 3;
-		uint32 reg : 3;
-		uint32 mod : 2;
+		uint rm : 3;
+		uint reg : 3;
+		uint mod : 2;
 	};
 };
 
 /** @brief Scale, index, and base */
 union ScaleIndexBase {
-	uint8 byte;
+	quint8 byte;
 	struct {
-		uint32 base : 3;
-		uint32 index : 3;
-		uint32 scale : 2;
+		uint base : 3;
+		uint index : 3;
+		uint scale : 2;
 	} v;
 };
 

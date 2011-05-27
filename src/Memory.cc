@@ -44,7 +44,7 @@ Memory::resize (size_t sz, bool clr) {
 }
 
 
-uint8
+quint8
 Memory::operator[] (size_t index) const {
 	return m_memory[index];
 }
@@ -56,13 +56,13 @@ Memory::size () const {
 }
 
 
-uint8*
+quint8*
 Memory::data () {
 	return m_memory.data ();
 }
 
 
-sigc::signal<void, int32, uint8>&
+sigc::signal<void, qint32, quint8>&
 Memory::signalValueChanged () {
 	return m_signal_value_changed;
 }
@@ -74,7 +74,7 @@ Memory::signalResized () {
 }
 
 
-sigc::signal<void, const uint8*, size_t>&
+sigc::signal<void, const quint8*, size_t>&
 Memory::signalReloaded () {
 	return m_signal_reloaded;
 }

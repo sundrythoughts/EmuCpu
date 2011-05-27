@@ -25,7 +25,7 @@
 #ifndef EMUCPU__ARITHMETIC_LOGIC_UNIT_HH
 #define EMUCPU__ARITHMETIC_LOGIC_UNIT_HH
 
-#include "Types.hh"
+#include <QtGlobal>
 
 class CpuComponents;
 class ArithmeticLogicUnitPrivate;
@@ -55,107 +55,107 @@ public:
 	/**
 	@brief FIXME - Update the auxilliary flag (AF) for an 8-bit addition operation.
 	*/
-	void updateFlagAddAF (uint8 result8);
+	void updateFlagAddAF (quint8 result8);
 
 	/**
 	@brief FIXME - Update the auxilliary flag (AF) for an 8-bit subtraction operation.
 	*/
-	void updateFlagSubAF (int8 result8);
+	void updateFlagSubAF (qint8 result8);
 
 	/**
 	@brief Update the carry flag (CF) for an 8-bit addition operation.
 	*/
-	void updateFlagAddCF (uint8 result8, uint16 result16);
+	void updateFlagAddCF (quint8 result8, quint16 result16);
 
 	/**
 	@brief Update the carry flag (CF) for a 16-bit addition operation.
 	*/
-	void updateFlagAddCF (uint16 result16, uint32 result32);
+	void updateFlagAddCF (quint16 result16, quint32 result32);
 
 	/**
 	@brief Update the carry flag (CF) for an 8-bit subtraction operation.
 	*/
-	void updateFlagSubCF (uint8 result8, int16 result16);
+	void updateFlagSubCF (quint8 result8, qint16 result16);
 
 	/**
 	@brief Update the carry flag (CF) for a 16-bit subtraction operation.
 	*/
-	void updateFlagSubCF (uint16 result16, int32 result32);
+	void updateFlagSubCF (quint16 result16, qint32 result32);
 
 	/**
 	@brief Update the overflow flag (OF) for an 8-bit addition operation.
 	*/
-	void updateFlagAddOF (uint8 orig_dest, uint8 src, uint8 dest);
+	void updateFlagAddOF (quint8 orig_dest, quint8 src, quint8 dest);
 
 	/**
 	@brief Update the overflow flag (OF) for an 16-bit addition operation.
 	*/
-	void updateFlagAddOF (uint16 orig_dest, uint16 src, uint16 dest);
+	void updateFlagAddOF (quint16 orig_dest, quint16 src, quint16 dest);
 
 	/**
 	@brief Update the overflow flag (OF) for an 8-bit subtraction operation.
 	*/
-	void updateFlagSubOF (uint8 orig_dest, uint8 src, uint8 dest);
+	void updateFlagSubOF (quint8 orig_dest, quint8 src, quint8 dest);
 
 	/**
 	@brief Update the overflow flag (OF) for an 16-bit subtraction operation.
 	*/
-	void updateFlagSubOF (uint16 orig_dest, uint16 src, uint16 dest);
+	void updateFlagSubOF (quint16 orig_dest, quint16 src, quint16 dest);
 
 	/**
 	@brief Update the parity flag (PF) for an 8-bit operation.
 	*/
-	void updateFlagPF (uint8 val);
+	void updateFlagPF (quint8 val);
 
 	/**
 	@brief Update the sign flag (SF) for an 8-bit operation.
 	*/
-	void updateFlagSF (uint8 val);
+	void updateFlagSF (quint8 val);
 
 	/**
 	@brief Update the sign flag (SF) for a 16-bit operation.
 	*/
-	void updateFlagSF (uint16 val);
+	void updateFlagSF (quint16 val);
 
 	/**
 	@brief Update the zero flag (ZF) for an 8-bit operation.
 	*/
-	void updateFlagZF (uint8 val);
+	void updateFlagZF (quint8 val);
 
 	/**
 	@brief Update the zero flag (ZF) for a 16-bit operation.
 	*/
-	void updateFlagZF (uint16 val);
+	void updateFlagZF (quint16 val);
 
 	/**
 	@brief Do an 8-bit add with a carry.
 	*/
-	void opAdc (uint8 dest, uint8 src, uint8 &ret);
+	void opAdc (quint8 dest, quint8 src, quint8 &ret);
 
 	/**
 	@brief Do a 16-bit add with a carry.
 	*/
-	void opAdc (uint16 dest, uint16 src, uint16 &ret);
+	void opAdc (quint16 dest, quint16 src, quint16 &ret);
 
 	/**
 	@brief Do an 8-bit add.
 	*/
-	void opAdd (uint8 dest, uint8 src, uint8 &ret);
+	void opAdd (quint8 dest, quint8 src, quint8 &ret);
 
 	/**
 	@brief Do a 16-bit add.
 	*/
-	void opAdd (uint16 dest, uint16 src, uint16 &ret);
+	void opAdd (quint16 dest, quint16 src, quint16 &ret);
 
 	/**
 	@brief Do an 8-bit and.
 	*/
-	void opAnd (uint8 dest, uint8 src, uint8 &ret);
+	void opAnd (quint8 dest, quint8 src, quint8 &ret);
 
 	/**
 	@brief Do a 16-bit and.
 	*/
-	void opAnd (uint16 dest, uint16 src, uint16 &ret);
+	void opAnd (quint16 dest, quint16 src, quint16 &ret);
 
 	/** */
 	void opCmc ();
@@ -163,212 +163,212 @@ public:
 	/**
 	@brief Do an 8-bit cmp.
 	*/
-	void opCmp (uint8 dest, uint8 src);
+	void opCmp (quint8 dest, quint8 src);
 
 	/**
 	@brief Do a 16-bit cmp.
 	*/
-	void opCmp (uint16 dest, uint16 src);
+	void opCmp (quint16 dest, quint16 src);
 
 	/**
 	@brief Do an 8-bit dec.
 	*/
-	void opDec (uint8 src, uint8 &ret);
+	void opDec (quint8 src, quint8 &ret);
 
 	/**
 	@brief Do a 16-bit dec.
 	*/
-	void opDec (uint16 src, uint16 &ret);
+	void opDec (quint16 src, quint16 &ret);
 
 	/**
 	@brief Do an 8-bit div.
 	*/
-	bool opDiv (uint8 src);
+	bool opDiv (quint8 src);
 
 	/**
 	@brief Do a 16-bit div.
 	*/
-	bool opDiv (uint16 src);
+	bool opDiv (quint16 src);
 
 	/**
 	@brief Do an 8-bit idiv.
 	*/
-	void opIdiv (uint8 src);
+	void opIdiv (quint8 src);
 
 	/**
 	@brief Do a 16-bit idiv.
 	*/
-	void opIdiv (uint16 src);
+	void opIdiv (quint16 src);
 
 	/**
 	@brief Do an 8-bit imul.
 	*/
-	void opImul (uint8 src);
+	void opImul (quint8 src);
 
 	/**
 	@brief Do a 16-bit imul.
 	*/
-	void opImul (uint16 src);
+	void opImul (quint16 src);
 
 	/**
 	@brief Do an 8-bit inc.
 	*/
-	void opInc (uint8 src, uint8 &ret);
+	void opInc (quint8 src, quint8 &ret);
 
 	/**
 	@brief Do a 16-bit inc.
 	*/
-	void opInc (uint16 src, uint16 &ret);
+	void opInc (quint16 src, quint16 &ret);
 
 	/**
 	@brief Do an 8-bit mul.
 	*/
-	void opMul (uint8 src);
+	void opMul (quint8 src);
 
 	/**
 	@brief Do a 16-bit mul.
 	*/
-	void opMul (uint16 src);
+	void opMul (quint16 src);
 
 	/**
 	@brief Do an 8-bit neg.
 	*/
-	void opNeg (uint8 dest, uint8 &ret);
+	void opNeg (quint8 dest, quint8 &ret);
 
 	/**
 	@brief Do a 16-bit neg.
 	*/
-	void opNeg (uint16 dest, uint16 &ret);
+	void opNeg (quint16 dest, quint16 &ret);
 
 	/**
 	@brief Do an 8-bit or.
 	*/
-	void opOr (uint8 dest, uint8 src, uint8 &ret);
+	void opOr (quint8 dest, quint8 src, quint8 &ret);
 
 	/**
 	@brief Do a 16-bit or.
 	*/
-	void opOr (uint16 dest, uint16 src, uint16 &ret);
+	void opOr (quint16 dest, quint16 src, quint16 &ret);
 
 	/**
 	@brief Do an 8-bit rcl.
 	*/
-	void opRcl (uint8 dest, uint32 cnt, uint8 &ret);
+	void opRcl (quint8 dest, quint32 cnt, quint8 &ret);
 
 	/**
 	@brief Do a 16-bit rcl.
 	*/
-	void opRcl (uint16 dest, uint32 cnt, uint16 &ret);
+	void opRcl (quint16 dest, quint32 cnt, quint16 &ret);
 
 	/**
 	@brief Do an 8-bit rcr.
 	*/
-	void opRcr (uint8 dest, uint32 cnt, uint8 &ret);
+	void opRcr (quint8 dest, quint32 cnt, quint8 &ret);
 
 	/**
 	@brief Do a 16-bit rcr.
 	*/
-	void opRcr (uint16 dest, uint32 cnt, uint16 &ret);
+	void opRcr (quint16 dest, quint32 cnt, quint16 &ret);
 
 	/**
 	@brief Do an 8-bit rol.
 	*/
-	void opRol (uint8 dest, uint8 cnt, uint8 &ret);
+	void opRol (quint8 dest, quint8 cnt, quint8 &ret);
 
 	/**
 	@brief Do a 16-bit rol.
 	*/
-	void opRol (uint16 dest, uint8 cnt, uint16 &ret);
+	void opRol (quint16 dest, quint8 cnt, quint16 &ret);
 
 	/**
 	@brief Do an 8-bit ror.
 	*/
-	void opRor (uint8 dest, uint8 cnt, uint8 &ret);
+	void opRor (quint8 dest, quint8 cnt, quint8 &ret);
 
 	/**
 	@brief Do a 16-bit ror.
 	*/
-	void opRor (uint16 dest, uint8 cnt, uint16 &ret);
+	void opRor (quint16 dest, quint8 cnt, quint16 &ret);
 
 	/**
 	@brief Do an 8-bit sal.
 	*/
-	void opSal (uint8 dest, uint32 cnt, uint8 &ret);
+	void opSal (quint8 dest, quint32 cnt, quint8 &ret);
 
 	/**
 	@brief Do a 16-bit sal.
 	*/
-	void opSal (uint16 dest, uint32 cnt, uint16 &ret);
+	void opSal (quint16 dest, quint32 cnt, quint16 &ret);
 
 	/**
 	@brief Do an 8-bit sar.
 	*/
-	void opSar (uint8 dest, uint32 cnt, uint8 &ret);
+	void opSar (quint8 dest, quint32 cnt, quint8 &ret);
 
 	/**
 	@brief Do a 16-bit sar.
 	*/
-	void opSar (uint16 dest, uint32 cnt, uint16 &ret);
+	void opSar (quint16 dest, quint32 cnt, quint16 &ret);
 
 	/**
 	@brief Do an 8-bit sbb.
 	*/
-	void opSbb (uint8 dest, uint8 src, uint8 &ret);
+	void opSbb (quint8 dest, quint8 src, quint8 &ret);
 
 	/**
 	@brief Do a 16-bit sbb.
 	*/
-	void opSbb (uint16 dest, uint16 src, uint16 &ret);
+	void opSbb (quint16 dest, quint16 src, quint16 &ret);
 
 	/**
 	@brief Do an 8-bit shl.
 	*/
-	void opShl (uint8 dest, uint32 cnt, uint8 &ret);
+	void opShl (quint8 dest, quint32 cnt, quint8 &ret);
 
 	/**
 	@brief Do a 16-bit shl.
 	*/
-	void opShl (uint16 dest, uint32 cnt, uint16 &ret);
+	void opShl (quint16 dest, quint32 cnt, quint16 &ret);
 
 	/**
 	@brief Do an 8-bit shr.
 	*/
-	void opShr (uint8 dest, uint32 cnt, uint8 &ret);
+	void opShr (quint8 dest, quint32 cnt, quint8 &ret);
 
 	/**
 	@brief Do a 16-bit shr.
 	*/
-	void opShr (uint16 dest, uint32 cnt, uint16 &ret);
+	void opShr (quint16 dest, quint32 cnt, quint16 &ret);
 
 	/**
 	@brief Do an 8-bit sub.
 	*/
-	void opSub (uint8 dest, uint8 src, uint8 &ret);
+	void opSub (quint8 dest, quint8 src, quint8 &ret);
 
 	/**
 	@brief Do a 16-bit sub.
 	*/
-	void opSub (uint16 dest, uint16 src, uint16 &ret);
+	void opSub (quint16 dest, quint16 src, quint16 &ret);
 
 	/**
 	@brief Do an 8-bit test.
 	*/
-	void opTest (uint8 dest, uint8 src);
+	void opTest (quint8 dest, quint8 src);
 
 	/**
 	@brief Do a 16-bit test
 	*/
-	void opTest (uint16 dest, uint16 src);
+	void opTest (quint16 dest, quint16 src);
 
 	/**
 	@brief Do an 8-bit xor.
 	*/
-	void opXor (uint8 dest, uint8 src, uint8 &ret);
+	void opXor (quint8 dest, quint8 src, quint8 &ret);
 
 	/**
 	@brief Do a 16-bit xor.
 	*/
-	void opXor (uint16 dest, uint16 src, uint16 &ret);
+	void opXor (quint16 dest, quint16 src, quint16 &ret);
 
 }; //end class ArithmeticLogicUnit
 

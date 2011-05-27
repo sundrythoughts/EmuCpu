@@ -30,7 +30,7 @@
 
 class LoaderPrivate {
 public:
-	std::vector<uint16> m_regs;
+	std::vector<quint16> m_regs;
 
 	CpuComponents *m_cpu;
 	Memory *m_memory;
@@ -72,7 +72,7 @@ Loader::loadFile (std::string filename, bool clear) {
 
 		sz = p->m_memory->size ();
 		for (i = 0; i < sz; ++i) {
-			p->m_memory->write<uint8> (i, 0);
+			p->m_memory->write<quint8> (i, 0);
 		}
 	}
 
@@ -84,22 +84,22 @@ Loader::loadFile (std::string filename, bool clear) {
 	}
 
 	//read in the initial register values
-	std::fread (&p->m_regs[0], sizeof(uint16), p->m_regs.size (), f);
+	std::fread (&p->m_regs[0], sizeof(quint16), p->m_regs.size (), f);
 
 	//get the number of modules
-	uint8 n_modules;
-	std::fread (&n_modules, sizeof(uint8), 1, f);
+	quint8 n_modules;
+	std::fread (&n_modules, sizeof(quint8), 1, f);
 
-	uint8 m_header[5];
+	quint8 m_header[5];
 	ModuleHeader m_header_mask;
 
 	while (n_modules) { //read in the modules
 		std::fread (m_header, 5, 1, f);
 		m_header_mask.segment_register = m_header[0];
-		m_header_mask.module_offset = *((uint16*)&m_header[1]);
-		m_header_mask.module_size = *((uint16*)&m_header[3]);
+		m_header_mask.module_offset = *((quint16*)&m_header[1]);
+		m_header_mask.module_size = *((quint16*)&m_header[3]);
 
-		uint16 seg_reg = 0;
+		quint16 seg_reg = 0;
 		switch (m_header_mask.segment_register) { //set the segment register values
 		case 0: //cs
 			seg_reg = p->m_regs[m_CS];
@@ -116,8 +116,8 @@ Loader::loadFile (std::string filename, bool clear) {
 		}
 
 		//do the actually reading into memory of the modules
-		uint32 addr = physicalAddress (seg_reg, m_header_mask.module_offset);
-		std::fread (&(p->m_memory->data ())[addr], sizeof(uint8), m_header_mask.module_size, f);
+		quint32 addr = physicalAddress (seg_reg, m_header_mask.module_offset);
+		std::fread (&(p->m_memory->data ())[addr], sizeof(quint8), m_header_mask.module_size, f);
 
 		--n_modules;
 	}
@@ -146,10 +146,10 @@ Loader::loadFile (std::string filename, bool clear) {
 	return ret;
 }
 
-int32
+qint32
 Loader::checksumMemory () {
-	int32 sum = 0;
-	uint32 i;
+	qint32 sum = 0;
+	quint32 i;
 
 	for (i = 0; i < p->m_memory->size (); ++i) {
 		sum += (*(p->m_memory->data () + i) ^ i);
@@ -158,21 +158,21 @@ Loader::checksumMemory () {
 	return sum;
 }
 
-int32
+qint32
 Loader::checksumRegisters () {
-	int32 sum = 0;
-	uint32 i;
-	uint8 *arr = (uint8*)p->m_regs.data ();
+	qint32 sum = 0;
+	quint32 i;
+	quint8 *arr = (quint8*)p->m_regs.data ();
 
-	for (i = 0; i < p->m_regs.size () * sizeof(uint16); ++i) {
+	for (i = 0; i < p->m_regs.size () * sizeof(quint16); ++i) {
 		sum += (arr[i] ^ i);
 	}
 
 	return sum;
 }
 
-uint32
-Loader::physicalAddress (uint32 seg, uint32 offset) {
+quint32
+Loader::physicalAddress (quint32 seg, quint32 offset) {
 	return (seg << 4) + offset;
 }
 

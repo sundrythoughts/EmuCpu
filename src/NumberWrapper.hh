@@ -32,7 +32,7 @@
 #include <iomanip>
 #include <iostream>
 
-#include "Types.hh"
+#include <QtGlobal>
 
 
 /**

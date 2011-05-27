@@ -30,7 +30,7 @@
 
 #include <iostream>
 
-#include "Types.hh"
+#include <QtGlobal>
 
 /**
 @class Register
@@ -292,12 +292,12 @@ public:
 	}
 
 private:
-	virtual uint16 getSegment () const {
+	virtual quint16 getSegment () const {
 		std::cerr << "Debug: class Immediate has no segment" << std::endl;
 		return 0;
 	}
 
-	virtual uint16 getOffset () const {
+	virtual quint16 getOffset () const {
 		std::cerr << "Debug: class Immediate has no offset" << std::endl;
 		return 0;
 	}

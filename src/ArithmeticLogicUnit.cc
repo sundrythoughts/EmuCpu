@@ -46,37 +46,37 @@ ArithmeticLogicUnit::connectTo (CpuComponents &cpu) {
 }
 
 void
-ArithmeticLogicUnit::updateFlagAddAF (uint8 result8) {
+ArithmeticLogicUnit::updateFlagAddAF (quint8 result8) {
 	p->m_eunit->setRegFlagsAF (result8 > (result8 & 0xF));
 }
 
 void
-ArithmeticLogicUnit::updateFlagSubAF (int8 result8) {
+ArithmeticLogicUnit::updateFlagSubAF (qint8 result8) {
 	p->m_eunit->setRegFlagsAF (result8 & 0x08); //FIXME
 }
 
 void
-ArithmeticLogicUnit::updateFlagAddCF (uint8 result8, uint16 result16) {
+ArithmeticLogicUnit::updateFlagAddCF (quint8 result8, quint16 result16) {
 	p->m_eunit->setRegFlagsCF (result16 > 0xFF);
 }
 
 void
-ArithmeticLogicUnit::updateFlagAddCF (uint16 result16, uint32 result32) {
+ArithmeticLogicUnit::updateFlagAddCF (quint16 result16, quint32 result32) {
 	p->m_eunit->setRegFlagsCF (result32 > 0xFFFF);
 }
 
 void
-ArithmeticLogicUnit::updateFlagSubCF (uint8 result8, int16 result16) {
+ArithmeticLogicUnit::updateFlagSubCF (quint8 result8, qint16 result16) {
 	p->m_eunit->setRegFlagsCF (result16 < 0);
 }
 
 void
-ArithmeticLogicUnit::updateFlagSubCF (uint16 result16, int32 result32) {
+ArithmeticLogicUnit::updateFlagSubCF (quint16 result16, qint32 result32) {
 	p->m_eunit->setRegFlagsCF (result32 < 0);
 }
 
 void
-ArithmeticLogicUnit::updateFlagAddOF (uint8 orig_dest, uint8 src, uint8 dest) {
+ArithmeticLogicUnit::updateFlagAddOF (quint8 orig_dest, quint8 src, quint8 dest) {
 	bool a = Utility::getMsb (orig_dest);
 	bool b = Utility::getMsb (src);
 	bool c = Utility::getMsb (dest);
@@ -84,7 +84,7 @@ ArithmeticLogicUnit::updateFlagAddOF (uint8 orig_dest, uint8 src, uint8 dest) {
 }
 
 void
-ArithmeticLogicUnit::updateFlagAddOF (uint16 orig_dest, uint16 src, uint16 dest) {
+ArithmeticLogicUnit::updateFlagAddOF (quint16 orig_dest, quint16 src, quint16 dest) {
 	bool a = Utility::getMsb (orig_dest);
 	bool b = Utility::getMsb (src);
 	bool c = Utility::getMsb (dest);
@@ -92,7 +92,7 @@ ArithmeticLogicUnit::updateFlagAddOF (uint16 orig_dest, uint16 src, uint16 dest)
 }
 
 void
-ArithmeticLogicUnit::updateFlagSubOF (uint8 orig_dest, uint8 src, uint8 dest) {
+ArithmeticLogicUnit::updateFlagSubOF (quint8 orig_dest, quint8 src, quint8 dest) {
 	bool a = Utility::getMsb (orig_dest);
 	bool b = Utility::getMsb (src);
 	bool c = Utility::getMsb (dest);
@@ -100,7 +100,7 @@ ArithmeticLogicUnit::updateFlagSubOF (uint8 orig_dest, uint8 src, uint8 dest) {
 }
 
 void
-ArithmeticLogicUnit::updateFlagSubOF (uint16 orig_dest, uint16 src, uint16 dest) {
+ArithmeticLogicUnit::updateFlagSubOF (quint16 orig_dest, quint16 src, quint16 dest) {
 	bool a = Utility::getMsb (orig_dest);
 	bool b = Utility::getMsb (src);
 	bool c = Utility::getMsb (dest);
@@ -108,8 +108,8 @@ ArithmeticLogicUnit::updateFlagSubOF (uint16 orig_dest, uint16 src, uint16 dest)
 }
 
 void
-ArithmeticLogicUnit::updateFlagPF (uint8 val) {
-	uint32 count = 0;
+ArithmeticLogicUnit::updateFlagPF (quint8 val) {
+	quint32 count = 0;
 	while (val) {
 		if (val & 1) {
 			++count;
@@ -121,36 +121,36 @@ ArithmeticLogicUnit::updateFlagPF (uint8 val) {
 }
 
 void
-ArithmeticLogicUnit::updateFlagSF (uint8 val) {
+ArithmeticLogicUnit::updateFlagSF (quint8 val) {
 	p->m_eunit->setRegFlagsSF (Utility::getMsb (val));
 }
 
 void
-ArithmeticLogicUnit::updateFlagSF (uint16 val) {
+ArithmeticLogicUnit::updateFlagSF (quint16 val) {
 	p->m_eunit->setRegFlagsSF (Utility::getMsb (val));
 }
 
 void
-ArithmeticLogicUnit::updateFlagZF (uint8 val) {
+ArithmeticLogicUnit::updateFlagZF (quint8 val) {
 	p->m_eunit->setRegFlagsZF (!val);
 }
 
 void
-ArithmeticLogicUnit::updateFlagZF (uint16 val) {
+ArithmeticLogicUnit::updateFlagZF (quint16 val) {
 	p->m_eunit->setRegFlagsZF (!val);
 }
 
 void
-ArithmeticLogicUnit::opAdc (uint8 dest, uint8 src, uint8 &ret) {
+ArithmeticLogicUnit::opAdc (quint8 dest, quint8 src, quint8 &ret) {
 	bool cf = p->m_eunit->getRegFlagsCF ();
-	uint8 orig_dest = dest;
+	quint8 orig_dest = dest;
 
-	uint16 result = dest + src;
+	quint16 result = dest + src;
 	if (cf) {
 		result += 1;
 	}
 
-	ret = (uint8)result;
+	ret = (quint8)result;
 
 	//FIXME - fix flags
 	updateFlagAddCF (ret, result);
@@ -161,16 +161,16 @@ ArithmeticLogicUnit::opAdc (uint8 dest, uint8 src, uint8 &ret) {
 }
 
 void
-ArithmeticLogicUnit::opAdc (uint16 dest, uint16 src, uint16 &ret) {
+ArithmeticLogicUnit::opAdc (quint16 dest, quint16 src, quint16 &ret) {
 	bool cf = p->m_eunit->getRegFlagsCF ();
-	uint16 orig_dest = dest;
+	quint16 orig_dest = dest;
 
-	uint32 result = dest + src;
+	quint32 result = dest + src;
 	if (cf) {
 		result += 1;
 	}
 
-	ret = (uint16)result;
+	ret = (quint16)result;
 
 	//FIXME - fix flags
 	//updateFlagAddAF (ret);
@@ -182,27 +182,11 @@ ArithmeticLogicUnit::opAdc (uint16 dest, uint16 src, uint16 &ret) {
 }
 
 void
-ArithmeticLogicUnit::opAdd (uint8 dest, uint8 src, uint8 &ret) {
-	uint8 orig_dest = dest;
-	uint16 result = dest + src;
+ArithmeticLogicUnit::opAdd (quint8 dest, quint8 src, quint8 &ret) {
+	quint8 orig_dest = dest;
+	quint16 result = dest + src;
 
-	ret = (uint8)result;
-
-	//FIXME - fix flags
-	//updateFlagAddAF (ret);
-	updateFlagAddCF (ret, result);
-	updateFlagAddOF (orig_dest, src, ret);
-	updateFlagPF (ret);
-	updateFlagSF (ret);
-	updateFlagZF (ret);
-}
-
-void
-ArithmeticLogicUnit::opAdd (uint16 dest, uint16 src, uint16 &ret) {
-	uint16 orig_dest = dest;
-	uint32 result = dest + src;
-
-	ret = (uint16)result;
+	ret = (quint8)result;
 
 	//FIXME - fix flags
 	//updateFlagAddAF (ret);
@@ -214,12 +198,28 @@ ArithmeticLogicUnit::opAdd (uint16 dest, uint16 src, uint16 &ret) {
 }
 
 void
-ArithmeticLogicUnit::opAnd (uint8 dest, uint8 src, uint8 &ret) {
-	uint16 result = dest & src;
+ArithmeticLogicUnit::opAdd (quint16 dest, quint16 src, quint16 &ret) {
+	quint16 orig_dest = dest;
+	quint32 result = dest + src;
+
+	ret = (quint16)result;
+
+	//FIXME - fix flags
+	//updateFlagAddAF (ret);
+	updateFlagAddCF (ret, result);
+	updateFlagAddOF (orig_dest, src, ret);
+	updateFlagPF (ret);
+	updateFlagSF (ret);
+	updateFlagZF (ret);
+}
+
+void
+ArithmeticLogicUnit::opAnd (quint8 dest, quint8 src, quint8 &ret) {
+	quint16 result = dest & src;
 	p->m_eunit->setRegFlagsCF (false);
 	p->m_eunit->setRegFlagsOF (false);
 
-	ret = (uint8)result;
+	ret = (quint8)result;
 
 	//FIXME - fix flags
 	updateFlagPF (ret);
@@ -228,12 +228,12 @@ ArithmeticLogicUnit::opAnd (uint8 dest, uint8 src, uint8 &ret) {
 }
 
 void
-ArithmeticLogicUnit::opAnd (uint16 dest, uint16 src, uint16 &ret) {
-	uint32 result = dest & src;
+ArithmeticLogicUnit::opAnd (quint16 dest, quint16 src, quint16 &ret) {
+	quint32 result = dest & src;
 	p->m_eunit->setRegFlagsCF (false);
 	p->m_eunit->setRegFlagsOF (false);
 
-	ret = (uint16)result;
+	ret = (quint16)result;
 
 	//FIXME - fix flags
 	updateFlagPF (ret);
@@ -249,10 +249,10 @@ ArithmeticLogicUnit::opCmc () {
 }
 
 void
-ArithmeticLogicUnit::opCmp (uint8 dest, uint8 src) {
-	uint8 orig_dest = dest;
-	int16 result = (int8)dest - (int8)src;
-	uint8 ret = dest - src;
+ArithmeticLogicUnit::opCmp (quint8 dest, quint8 src) {
+	quint8 orig_dest = dest;
+	qint16 result = (qint8)dest - (qint8)src;
+	quint8 ret = dest - src;
 
 	//FIXME - fix flags
 	//updateFlagSubAF (ret);
@@ -264,10 +264,10 @@ ArithmeticLogicUnit::opCmp (uint8 dest, uint8 src) {
 }
 
 void
-ArithmeticLogicUnit::opCmp (uint16 dest, uint16 src) {
-	uint16 orig_dest = dest;
-	int32 result = dest - src;
-	uint16 ret = dest - src;
+ArithmeticLogicUnit::opCmp (quint16 dest, quint16 src) {
+	quint16 orig_dest = dest;
+	qint32 result = dest - src;
+	quint16 ret = dest - src;
 
 	//FIXME - fix flags
 	//updateFlagSubAF (ret);
@@ -279,10 +279,10 @@ ArithmeticLogicUnit::opCmp (uint16 dest, uint16 src) {
 }
 
 void
-ArithmeticLogicUnit::opDec (uint8 dest, uint8 &ret) {
-	uint8 orig_dest = dest;
-	int16 result = --dest;
-	ret = (uint8)result;
+ArithmeticLogicUnit::opDec (quint8 dest, quint8 &ret) {
+	quint8 orig_dest = dest;
+	qint16 result = --dest;
+	ret = (quint8)result;
 
 	//FIXME - fix flags
 	//updateFlagSubAF (ret);
@@ -293,10 +293,10 @@ ArithmeticLogicUnit::opDec (uint8 dest, uint8 &ret) {
 }
 
 void
-ArithmeticLogicUnit::opDec (uint16 dest, uint16 &ret) {
-	uint16 orig_dest = dest;
-	int32 result = --dest;
-	ret = (uint16)result;
+ArithmeticLogicUnit::opDec (quint16 dest, quint16 &ret) {
+	quint16 orig_dest = dest;
+	qint32 result = --dest;
+	ret = (quint16)result;
 
 	//FIXME - fix flags
 	//updateFlagSubAF (ret);
@@ -307,18 +307,18 @@ ArithmeticLogicUnit::opDec (uint16 dest, uint16 &ret) {
 }
 
 bool
-ArithmeticLogicUnit::opDiv (uint8 src) {
-	Register<uint16> ax = p->m_eunit->getRegAX ();
-	Register<uint8> &al = p->m_eunit->getRegAL ();
-	Register<uint8> &ah = p->m_eunit->getRegAH ();
+ArithmeticLogicUnit::opDiv (quint8 src) {
+	Register<quint16> ax = p->m_eunit->getRegAX ();
+	Register<quint8> &al = p->m_eunit->getRegAL ();
+	Register<quint8> &ah = p->m_eunit->getRegAH ();
 
 	if (src == 0) {
 		//interrupt 0
 		return false;
 	}
 
-	//Register<uint8> tmp = ax / src;
-	uint16 tmp = ax / src;
+	//Register<quint8> tmp = ax / src;
+	quint16 tmp = ax / src;
 
 	if (tmp > 0xFF) {
 		//interrupt 0
@@ -333,11 +333,11 @@ ArithmeticLogicUnit::opDiv (uint8 src) {
 }
 
 bool
-ArithmeticLogicUnit::opDiv (uint16 src) {
-	Register<uint16> &ax = p->m_eunit->getRegAX ();
-	Register<uint16> &dx = p->m_eunit->getRegDX ();
+ArithmeticLogicUnit::opDiv (quint16 src) {
+	Register<quint16> &ax = p->m_eunit->getRegAX ();
+	Register<quint16> &dx = p->m_eunit->getRegDX ();
 
-	uint32 dx_ax = dx;
+	quint32 dx_ax = dx;
 	dx_ax <<= 16;
 	dx_ax += ax;
 
@@ -346,8 +346,8 @@ ArithmeticLogicUnit::opDiv (uint16 src) {
 		return false;
 	}
 
-	//Register<uint16> tmp = dx_ax / src;
-	uint32 tmp = dx_ax / src;
+	//Register<quint16> tmp = dx_ax / src;
+	quint32 tmp = dx_ax / src;
 
 	if (tmp > 0xFFFF) {
 		//interrupt 0
@@ -362,10 +362,10 @@ ArithmeticLogicUnit::opDiv (uint16 src) {
 }
 
 void
-ArithmeticLogicUnit::opIdiv (uint8 src) {
-	Register<uint16> ax = p->m_eunit->getRegAX ();
-	Register<uint8> &al = p->m_eunit->getRegAL ();
-	Register<uint8> &ah = p->m_eunit->getRegAH ();
+ArithmeticLogicUnit::opIdiv (quint8 src) {
+	Register<quint16> ax = p->m_eunit->getRegAX ();
+	Register<quint8> &al = p->m_eunit->getRegAL ();
+	Register<quint8> &ah = p->m_eunit->getRegAH ();
 
 	if (src == 0) {
 		//FIXME - interrupt 0
@@ -373,21 +373,21 @@ ArithmeticLogicUnit::opIdiv (uint8 src) {
 		return;
 	}
 
-	int8 tmp = (int16)ax / (int8)src;
+	qint8 tmp = (qint16)ax / (qint8)src;
 	//if ((tmp > 0x7F) || (tmp < 0x80)) {
 	//	//FIXME - interrupt 0
 	//}
 	//else {
 		al = tmp;
-		ah = (int16)ax % (int8)src;
+		ah = (qint16)ax % (qint8)src;
 	//}
 }
 
 void
-ArithmeticLogicUnit::opIdiv (uint16 src) {
-	Register<uint16> &ax = p->m_eunit->getRegAX ();
-	Register<uint16> &dx = p->m_eunit->getRegDX ();
-	uint32 dx_ax = dx;
+ArithmeticLogicUnit::opIdiv (quint16 src) {
+	Register<quint16> &ax = p->m_eunit->getRegAX ();
+	Register<quint16> &dx = p->m_eunit->getRegDX ();
+	quint32 dx_ax = dx;
 	dx_ax <<= 16;
 	dx_ax += ax;
 
@@ -397,24 +397,24 @@ ArithmeticLogicUnit::opIdiv (uint16 src) {
 		return;
 	}
 
-	int16 tmp = (int32)dx_ax / (int16)src;
+	qint16 tmp = (qint32)dx_ax / (qint16)src;
 	//if ((tmp > 0x7FFF) || (tmp < 0x8000)) {
 	//	//FIXME - interrupt 0
 	//}
 	//else {
 		ax = tmp;
-		dx = (int32)dx_ax % (int16)tmp;
+		dx = (qint32)dx_ax % (qint16)tmp;
 	//}
 }
 
 void
-ArithmeticLogicUnit::opImul (uint8 src) {
-	Register<uint16> &ax = p->m_eunit->getRegAX ();
-	Register<uint8> &al = p->m_eunit->getRegAL ();
-	Register<uint8> &ah = p->m_eunit->getRegAH ();
+ArithmeticLogicUnit::opImul (quint8 src) {
+	Register<quint16> &ax = p->m_eunit->getRegAX ();
+	Register<quint8> &al = p->m_eunit->getRegAL ();
+	Register<quint8> &ah = p->m_eunit->getRegAH ();
 
-	ax = (int8)src * (int8)al;
-	uint8 al_sign_ext = (Utility::getBit (al, (sizeof(uint8) << 3) - 1)) ? 0xFF : 0;
+	ax = (qint8)src * (qint8)al;
+	quint8 al_sign_ext = (Utility::getBit (al, (sizeof(quint8) << 3) - 1)) ? 0xFF : 0;
 
 	if (ah == al_sign_ext) {
 		p->m_eunit->setRegFlagsCF (false);
@@ -426,18 +426,18 @@ ArithmeticLogicUnit::opImul (uint8 src) {
 }
 
 void
-ArithmeticLogicUnit::opImul (uint16 src) {
-	Register<uint16> &ax = p->m_eunit->getRegAX ();
-	Register<uint16> &dx = p->m_eunit->getRegDX ();
-	uint32 dx_ax = dx;
+ArithmeticLogicUnit::opImul (quint16 src) {
+	Register<quint16> &ax = p->m_eunit->getRegAX ();
+	Register<quint16> &dx = p->m_eunit->getRegDX ();
+	quint32 dx_ax = dx;
 	dx_ax <<= 16;
 	dx_ax += ax;
-	uint16 *dx_ax_ptr = (uint16*)&dx_ax;
+	quint16 *dx_ax_ptr = (quint16*)&dx_ax;
 
-	dx_ax = (int16)src * (int16)ax;
+	dx_ax = (qint16)src * (qint16)ax;
 	p->m_eunit->setRegAX (dx_ax_ptr[0]);
 	p->m_eunit->setRegDX (dx_ax_ptr[1]);
-	uint16 ax_sign_ext = (Utility::getBit (ax, (sizeof(uint16) << 3) - 1)) ? 0xFFFF : 0;
+	quint16 ax_sign_ext = (Utility::getBit (ax, (sizeof(quint16) << 3) - 1)) ? 0xFFFF : 0;
 
 	if (dx == ax_sign_ext) {
 		p->m_eunit->setRegFlagsCF (false);
@@ -449,10 +449,10 @@ ArithmeticLogicUnit::opImul (uint16 src) {
 }
 
 void
-ArithmeticLogicUnit::opInc (uint8 dest, uint8 &ret) {
-	uint8 orig_dest = dest;
-	uint16 result = ++dest;
-	ret = (uint8)result;
+ArithmeticLogicUnit::opInc (quint8 dest, quint8 &ret) {
+	quint8 orig_dest = dest;
+	quint16 result = ++dest;
+	ret = (quint8)result;
 
 	//FIXME - fix flags
 	//updateFlagAddAF (ret);
@@ -463,10 +463,10 @@ ArithmeticLogicUnit::opInc (uint8 dest, uint8 &ret) {
 }
 
 void
-ArithmeticLogicUnit::opInc (uint16 dest, uint16 &ret) {
-	uint16 orig_dest = dest;
-	uint32 result = ++dest;
-	ret = (uint16)result;
+ArithmeticLogicUnit::opInc (quint16 dest, quint16 &ret) {
+	quint16 orig_dest = dest;
+	quint32 result = ++dest;
+	ret = (quint16)result;
 
 	//FIXME - fix flags
 	//updateFlagAddAF (ret);
@@ -477,10 +477,10 @@ ArithmeticLogicUnit::opInc (uint16 dest, uint16 &ret) {
 }
 
 void
-ArithmeticLogicUnit::opMul (uint8 src) {
-	Register<uint16> &ax = p->m_eunit->getRegAX ();
-	Register<uint8> &al = p->m_eunit->getRegAL ();
-	Register<uint8> &ah = p->m_eunit->getRegAH ();
+ArithmeticLogicUnit::opMul (quint8 src) {
+	Register<quint16> &ax = p->m_eunit->getRegAX ();
+	Register<quint8> &al = p->m_eunit->getRegAL ();
+	Register<quint8> &ah = p->m_eunit->getRegAH ();
 
 	ax = src * al;
 
@@ -494,13 +494,13 @@ ArithmeticLogicUnit::opMul (uint8 src) {
 }
 
 void
-ArithmeticLogicUnit::opMul (uint16 src) {
-	Register<uint16> &ax = p->m_eunit->getRegAX ();
-	Register<uint16> &dx = p->m_eunit->getRegDX ();
-	uint32 dx_ax = dx;
+ArithmeticLogicUnit::opMul (quint16 src) {
+	Register<quint16> &ax = p->m_eunit->getRegAX ();
+	Register<quint16> &dx = p->m_eunit->getRegDX ();
+	quint32 dx_ax = dx;
 	dx_ax <<= 16;
 	dx_ax += ax;
-	uint16 *dx_ax_ptr = (uint16*)&dx_ax;
+	quint16 *dx_ax_ptr = (quint16*)&dx_ax;
 
 	dx_ax = src * ax;
 	p->m_eunit->setRegAX (dx_ax_ptr[0]);
@@ -516,30 +516,30 @@ ArithmeticLogicUnit::opMul (uint16 src) {
 }
 
 void
-ArithmeticLogicUnit::opNeg (uint8 dest, uint8 &ret) {
+ArithmeticLogicUnit::opNeg (quint8 dest, quint8 &ret) {
 	dest = ~dest;
-	uint8 r;
+	quint8 r;
 	opAdd (dest, 1, r);
 
-	ret = (uint8)r;
+	ret = (quint8)r;
 }
 
 void
-ArithmeticLogicUnit::opNeg (uint16 dest, uint16 &ret) {
+ArithmeticLogicUnit::opNeg (quint16 dest, quint16 &ret) {
 	dest = ~dest;
-	uint16 r;
+	quint16 r;
 	opAdd (dest, 1, r);
 
-	ret = (uint16)r;
+	ret = (quint16)r;
 }
 
 void
-ArithmeticLogicUnit::opOr (uint8 dest, uint8 src, uint8 &ret) {
-	uint16 result = dest | src;
+ArithmeticLogicUnit::opOr (quint8 dest, quint8 src, quint8 &ret) {
+	quint16 result = dest | src;
 	p->m_eunit->setRegFlagsCF (false);
 	p->m_eunit->setRegFlagsOF (false);
 
-	ret = (uint8)result;
+	ret = (quint8)result;
 
 	//FIXME - fix flags
 	updateFlagPF (ret);
@@ -548,12 +548,12 @@ ArithmeticLogicUnit::opOr (uint8 dest, uint8 src, uint8 &ret) {
 }
 
 void
-ArithmeticLogicUnit::opOr (uint16 dest, uint16 src, uint16 &ret) {
-	uint32 result = dest | src;
+ArithmeticLogicUnit::opOr (quint16 dest, quint16 src, quint16 &ret) {
+	quint32 result = dest | src;
 	p->m_eunit->setRegFlagsCF (false);
 	p->m_eunit->setRegFlagsOF (false);
 
-	ret = (uint16)result;
+	ret = (quint16)result;
 
 	//FIXME - fix flags
 	updateFlagPF (ret);
@@ -562,8 +562,8 @@ ArithmeticLogicUnit::opOr (uint16 dest, uint16 src, uint16 &ret) {
 }
 
 void
-ArithmeticLogicUnit::opRcl (uint8 dest, uint32 cnt, uint8 &ret) {
-	uint32 tmp_cnt = cnt;
+ArithmeticLogicUnit::opRcl (quint8 dest, quint32 cnt, quint8 &ret) {
+	quint32 tmp_cnt = cnt;
 	bool tmpCF;
 	while (tmp_cnt != 0) {
 		tmpCF = p->m_eunit->getRegFlagsCF ();
@@ -578,12 +578,12 @@ ArithmeticLogicUnit::opRcl (uint8 dest, uint32 cnt, uint8 &ret) {
 		p->m_eunit->setRegFlagsOF (Utility::getMsb (dest) ^ p->m_eunit->getRegFlagsCF ());
 	}
 
-	ret = (uint8)dest;
+	ret = (quint8)dest;
 }
 
 void
-ArithmeticLogicUnit::opRcl (uint16 dest, uint32 cnt, uint16 &ret) {
-	uint32 tmp_cnt = cnt;
+ArithmeticLogicUnit::opRcl (quint16 dest, quint32 cnt, quint16 &ret) {
+	quint32 tmp_cnt = cnt;
 	bool tmpCF;
 	while (tmp_cnt != 0) {
 		tmpCF = p->m_eunit->getRegFlagsCF ();
@@ -598,12 +598,12 @@ ArithmeticLogicUnit::opRcl (uint16 dest, uint32 cnt, uint16 &ret) {
 		p->m_eunit->setRegFlagsOF (Utility::getMsb (dest) ^ p->m_eunit->getRegFlagsCF ());
 	}
 
-	ret = (uint16)dest;
+	ret = (quint16)dest;
 }
 
 void
-ArithmeticLogicUnit::opRcr (uint8 dest, uint32 cnt, uint8 &ret) {
-	uint32 tmp_cnt = cnt;
+ArithmeticLogicUnit::opRcr (quint8 dest, quint32 cnt, quint8 &ret) {
+	quint32 tmp_cnt = cnt;
 	bool tmpCF;
 	while (tmp_cnt != 0) {
 		tmpCF = p->m_eunit->getRegFlagsCF ();
@@ -618,12 +618,12 @@ ArithmeticLogicUnit::opRcr (uint8 dest, uint32 cnt, uint8 &ret) {
 		p->m_eunit->setRegFlagsOF (Utility::getLsb (dest) ^ p->m_eunit->getRegFlagsCF ());
 	}
 
-	ret = (uint8)dest;
+	ret = (quint8)dest;
 }
 
 void
-ArithmeticLogicUnit::opRcr (uint16 dest, uint32 cnt, uint16 &ret) {
-	uint32 tmp_cnt = cnt;
+ArithmeticLogicUnit::opRcr (quint16 dest, quint32 cnt, quint16 &ret) {
+	quint32 tmp_cnt = cnt;
 	bool tmpCF;
 	while (tmp_cnt != 0) {
 		tmpCF = p->m_eunit->getRegFlagsCF ();
@@ -638,12 +638,12 @@ ArithmeticLogicUnit::opRcr (uint16 dest, uint32 cnt, uint16 &ret) {
 		p->m_eunit->setRegFlagsOF (Utility::getLsb (dest) ^ p->m_eunit->getRegFlagsCF ());
 	}
 
-	ret = (uint16)dest;
+	ret = (quint16)dest;
 }
 
 void
-ArithmeticLogicUnit::opRol (uint8 dest, uint8 cnt, uint8 &ret) {
-	uint8 tmp_cnt = cnt;
+ArithmeticLogicUnit::opRol (quint8 dest, quint8 cnt, quint8 &ret) {
+	quint8 tmp_cnt = cnt;
 	while (tmp_cnt != 0) {
 		p->m_eunit->setRegFlagsCF (Utility::getMsb (dest));
 		dest <<= 1;
@@ -651,12 +651,12 @@ ArithmeticLogicUnit::opRol (uint8 dest, uint8 cnt, uint8 &ret) {
 		tmp_cnt -= 1;
 	}
 
-	ret = (uint8)dest;
+	ret = (quint8)dest;
 }
 
 void
-ArithmeticLogicUnit::opRol (uint16 dest, uint8 cnt, uint16 &ret) {
-	uint8 tmp_cnt = cnt;
+ArithmeticLogicUnit::opRol (quint16 dest, quint8 cnt, quint16 &ret) {
+	quint8 tmp_cnt = cnt;
 	while (tmp_cnt != 0) {
 		p->m_eunit->setRegFlagsCF (Utility::getMsb (dest));
 		dest <<= 1;
@@ -664,12 +664,12 @@ ArithmeticLogicUnit::opRol (uint16 dest, uint8 cnt, uint16 &ret) {
 		tmp_cnt -= 1;
 	}
 
-	ret = (uint16)dest;
+	ret = (quint16)dest;
 }
 
 void
-ArithmeticLogicUnit::opRor (uint8 dest, uint8 cnt, uint8 &ret) {
-	uint8 tmp_cnt = cnt;
+ArithmeticLogicUnit::opRor (quint8 dest, quint8 cnt, quint8 &ret) {
+	quint8 tmp_cnt = cnt;
 	while (tmp_cnt != 0) {
 		p->m_eunit->setRegFlagsCF (Utility::getLsb (dest));
 		dest >>= 1;
@@ -677,12 +677,12 @@ ArithmeticLogicUnit::opRor (uint8 dest, uint8 cnt, uint8 &ret) {
 		tmp_cnt -= 1;
 	}
 
-	ret = (uint8)dest;
+	ret = (quint8)dest;
 }
 
 void
-ArithmeticLogicUnit::opRor (uint16 dest, uint8 cnt, uint16 &ret) {
-	uint8 tmp_cnt = cnt;
+ArithmeticLogicUnit::opRor (quint16 dest, quint8 cnt, quint16 &ret) {
+	quint8 tmp_cnt = cnt;
 	while (tmp_cnt != 0) {
 		p->m_eunit->setRegFlagsCF (Utility::getLsb (dest));
 		dest >>= 1;
@@ -690,19 +690,19 @@ ArithmeticLogicUnit::opRor (uint16 dest, uint8 cnt, uint16 &ret) {
 		tmp_cnt -= 1;
 	}
 
-	ret = (uint16)dest;
+	ret = (quint16)dest;
 }
 
 void
-ArithmeticLogicUnit::opSal (uint8 dest, uint32 cnt, uint8 &ret) {
-	uint32 tmp_cnt = cnt;
+ArithmeticLogicUnit::opSal (quint8 dest, quint32 cnt, quint8 &ret) {
+	quint32 tmp_cnt = cnt;
 	while (tmp_cnt != 0) {
 		p->m_eunit->setRegFlagsCF (Utility::getMsb (dest));
 		dest <<= 1;
 		tmp_cnt -= 1;
 	}
 
-	ret = (uint8)dest;
+	ret = (quint8)dest;
 
 	//FIXME - fix flags
 	updateFlagPF (ret);
@@ -711,15 +711,15 @@ ArithmeticLogicUnit::opSal (uint8 dest, uint32 cnt, uint8 &ret) {
 }
 
 void
-ArithmeticLogicUnit::opSal (uint16 dest, uint32 cnt, uint16 &ret) {
-	uint32 tmp_cnt = cnt;
+ArithmeticLogicUnit::opSal (quint16 dest, quint32 cnt, quint16 &ret) {
+	quint32 tmp_cnt = cnt;
 	while (tmp_cnt != 0) {
 		p->m_eunit->setRegFlagsCF (Utility::getMsb (dest));
 		dest <<= 1;
 		tmp_cnt -= 1;
 	}
 
-	ret = (uint16)dest;
+	ret = (quint16)dest;
 
 	//FIXME - fix flags
 	updateFlagPF (ret);
@@ -728,8 +728,8 @@ ArithmeticLogicUnit::opSal (uint16 dest, uint32 cnt, uint16 &ret) {
 }
 
 void
-ArithmeticLogicUnit::opSar (uint8 dest, uint32 cnt, uint8 &ret) {
-	uint32 tmp_cnt = cnt;
+ArithmeticLogicUnit::opSar (quint8 dest, quint32 cnt, quint8 &ret) {
+	quint32 tmp_cnt = cnt;
 	bool tmp_msb = Utility::getMsb (dest);
 	while (tmp_cnt != 0) {
 		p->m_eunit->setRegFlagsCF (Utility::getLsb (dest));
@@ -738,7 +738,7 @@ ArithmeticLogicUnit::opSar (uint8 dest, uint32 cnt, uint8 &ret) {
 		tmp_cnt -= 1;
 	}
 
-	ret = (uint8)dest;
+	ret = (quint8)dest;
 
 	//FIXME - fix flags
 	updateFlagPF (ret);
@@ -747,8 +747,8 @@ ArithmeticLogicUnit::opSar (uint8 dest, uint32 cnt, uint8 &ret) {
 }
 
 void
-ArithmeticLogicUnit::opSar (uint16 dest, uint32 cnt, uint16 &ret) {
-	uint32 tmp_cnt = cnt;
+ArithmeticLogicUnit::opSar (quint16 dest, quint32 cnt, quint16 &ret) {
+	quint32 tmp_cnt = cnt;
 	bool tmp_msb = Utility::getMsb (dest);
 	while (tmp_cnt != 0) {
 		p->m_eunit->setRegFlagsCF (Utility::getLsb (dest));
@@ -757,7 +757,7 @@ ArithmeticLogicUnit::opSar (uint16 dest, uint32 cnt, uint16 &ret) {
 		tmp_cnt -= 1;
 	}
 
-	ret = (uint16)dest;
+	ret = (quint16)dest;
 
 	//FIXME - fix flags
 	updateFlagPF (ret);
@@ -766,13 +766,13 @@ ArithmeticLogicUnit::opSar (uint16 dest, uint32 cnt, uint16 &ret) {
 }
 
 void
-ArithmeticLogicUnit::opSbb (uint8 dest, uint8 src, uint8 &ret) {
-	uint8 orig_dest = dest;
+ArithmeticLogicUnit::opSbb (quint8 dest, quint8 src, quint8 &ret) {
+	quint8 orig_dest = dest;
 	bool cf = p->m_eunit->getRegFlagsCF ();
 
-	int16 result = dest - src - cf;
+	qint16 result = dest - src - cf;
 
-	ret = (uint8)result;
+	ret = (quint8)result;
 
 	//FIXME - fix flags
 	//updateFlagSubAF (ret);
@@ -784,13 +784,13 @@ ArithmeticLogicUnit::opSbb (uint8 dest, uint8 src, uint8 &ret) {
 }
 
 void
-ArithmeticLogicUnit::opSbb (uint16 dest, uint16 src, uint16 &ret) {
-	uint16 orig_dest = dest;
+ArithmeticLogicUnit::opSbb (quint16 dest, quint16 src, quint16 &ret) {
+	quint16 orig_dest = dest;
 	bool cf = p->m_eunit->getRegFlagsCF ();
 
-	int32 result = dest - src - cf;
+	qint32 result = dest - src - cf;
 
-	ret = (uint16)result;
+	ret = (quint16)result;
 
 	//FIXME - fix flags
 	//updateFlagSubAF (ret);
@@ -802,15 +802,15 @@ ArithmeticLogicUnit::opSbb (uint16 dest, uint16 src, uint16 &ret) {
 }
 
 void
-ArithmeticLogicUnit::opShl (uint8 dest, uint32 cnt, uint8 &ret) {
-	uint32 tmp_cnt = cnt;
+ArithmeticLogicUnit::opShl (quint8 dest, quint32 cnt, quint8 &ret) {
+	quint32 tmp_cnt = cnt;
 	while (tmp_cnt != 0) {
 		p->m_eunit->setRegFlagsCF (Utility::getMsb (dest));
 		dest <<= 1;
 		tmp_cnt -= 1;
 	}
 
-	ret = (uint8)dest;
+	ret = (quint8)dest;
 
 	//FIXME - fix flags
 	updateFlagPF (ret);
@@ -819,15 +819,15 @@ ArithmeticLogicUnit::opShl (uint8 dest, uint32 cnt, uint8 &ret) {
 }
 
 void
-ArithmeticLogicUnit::opShl (uint16 dest, uint32 cnt, uint16 &ret) {
-	uint32 tmp_cnt = cnt;
+ArithmeticLogicUnit::opShl (quint16 dest, quint32 cnt, quint16 &ret) {
+	quint32 tmp_cnt = cnt;
 	while (tmp_cnt != 0) {
 		p->m_eunit->setRegFlagsCF (Utility::getMsb (dest));
 		dest <<= 1;
 		tmp_cnt -= 1;
 	}
 
-	ret = (uint16)dest;
+	ret = (quint16)dest;
 
 	//FIXME - fix flags
 	updateFlagPF (ret);
@@ -836,15 +836,15 @@ ArithmeticLogicUnit::opShl (uint16 dest, uint32 cnt, uint16 &ret) {
 }
 
 void
-ArithmeticLogicUnit::opShr (uint8 dest, uint32 cnt, uint8 &ret) {
-	uint32 tmp_cnt = cnt;
+ArithmeticLogicUnit::opShr (quint8 dest, quint32 cnt, quint8 &ret) {
+	quint32 tmp_cnt = cnt;
 	while (tmp_cnt != 0) {
 		p->m_eunit->setRegFlagsCF (Utility::getLsb (dest));
 		dest >>= 1;
 		tmp_cnt -= 1;
 	}
 
-	ret = (uint8)dest;
+	ret = (quint8)dest;
 
 	//FIXME - fix flags
 	updateFlagPF (ret);
@@ -853,15 +853,15 @@ ArithmeticLogicUnit::opShr (uint8 dest, uint32 cnt, uint8 &ret) {
 }
 
 void
-ArithmeticLogicUnit::opShr (uint16 dest, uint32 cnt, uint16 &ret) {
-	uint32 tmp_cnt = cnt;
+ArithmeticLogicUnit::opShr (quint16 dest, quint32 cnt, quint16 &ret) {
+	quint32 tmp_cnt = cnt;
 	while (tmp_cnt != 0) {
 		p->m_eunit->setRegFlagsCF (Utility::getLsb (dest));
 		dest >>= 1;
 		tmp_cnt -= 1;
 	}
 
-	ret = (uint16)dest;
+	ret = (quint16)dest;
 
 	//FIXME - fix flags
 	updateFlagPF (ret);
@@ -870,10 +870,10 @@ ArithmeticLogicUnit::opShr (uint16 dest, uint32 cnt, uint16 &ret) {
 }
 
 void
-ArithmeticLogicUnit::opSub (uint8 dest, uint8 src, uint8 &ret) {
-	uint8 orig_dest = dest;
-	int16 result = dest - src;
-	ret = (uint8)result;
+ArithmeticLogicUnit::opSub (quint8 dest, quint8 src, quint8 &ret) {
+	quint8 orig_dest = dest;
+	qint16 result = dest - src;
+	ret = (quint8)result;
 
 	//FIXME - fix flags
 	//updateFlagSubAF (ret);
@@ -885,10 +885,10 @@ ArithmeticLogicUnit::opSub (uint8 dest, uint8 src, uint8 &ret) {
 }
 
 void
-ArithmeticLogicUnit::opSub (uint16 dest, uint16 src, uint16 &ret) {
-	uint16 orig_dest = dest;
-	int32 result = dest - src;
-	ret = (uint16)result;
+ArithmeticLogicUnit::opSub (quint16 dest, quint16 src, quint16 &ret) {
+	quint16 orig_dest = dest;
+	qint32 result = dest - src;
+	ret = (quint16)result;
 
 	//FIXME - fix flags
 	//updateFlagSubAF (ret);
@@ -900,9 +900,9 @@ ArithmeticLogicUnit::opSub (uint16 dest, uint16 src, uint16 &ret) {
 }
 
 void
-ArithmeticLogicUnit::opTest (uint8 dest, uint8 src) {
-	uint16 result = dest & src;
-	uint8 ret = (uint8)result;
+ArithmeticLogicUnit::opTest (quint8 dest, quint8 src) {
+	quint16 result = dest & src;
+	quint8 ret = (quint8)result;
 
 	p->m_eunit->setRegFlagsCF (false);
 	p->m_eunit->setRegFlagsOF (false);
@@ -914,9 +914,9 @@ ArithmeticLogicUnit::opTest (uint8 dest, uint8 src) {
 }
 
 void
-ArithmeticLogicUnit::opTest (uint16 dest, uint16 src) {
-	uint32 result = dest & src;
-	uint16 ret = (uint16)result;
+ArithmeticLogicUnit::opTest (quint16 dest, quint16 src) {
+	quint32 result = dest & src;
+	quint16 ret = (quint16)result;
 
 	p->m_eunit->setRegFlagsCF (false);
 	p->m_eunit->setRegFlagsOF (false);
@@ -928,12 +928,12 @@ ArithmeticLogicUnit::opTest (uint16 dest, uint16 src) {
 }
 
 void
-ArithmeticLogicUnit::opXor (uint8 dest, uint8 src, uint8 &ret) {
-	uint16 result = dest ^ src;
+ArithmeticLogicUnit::opXor (quint8 dest, quint8 src, quint8 &ret) {
+	quint16 result = dest ^ src;
 	p->m_eunit->setRegFlagsCF (false);
 	p->m_eunit->setRegFlagsOF (false);
 
-	ret = (uint8)result;
+	ret = (quint8)result;
 
 	//FIXME - fix flags
 	updateFlagPF (ret);
@@ -942,12 +942,12 @@ ArithmeticLogicUnit::opXor (uint8 dest, uint8 src, uint8 &ret) {
 }
 
 void
-ArithmeticLogicUnit::opXor (uint16 dest, uint16 src, uint16 &ret) {
-	uint32 result = dest ^ src;
+ArithmeticLogicUnit::opXor (quint16 dest, quint16 src, quint16 &ret) {
+	quint32 result = dest ^ src;
 	p->m_eunit->setRegFlagsCF (false);
 	p->m_eunit->setRegFlagsOF (false);
 
-	ret = (uint16)result;
+	ret = (quint16)result;
 
 	//FIXME - fix flags
 	updateFlagPF (ret);

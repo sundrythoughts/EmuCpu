@@ -28,7 +28,7 @@
 #include "InstructionTable.hh"
 #include <vector>
 
-#include "Types.hh"
+#include <QtGlobal>
 
 class CpuComponents;
 class InstructionPrivate;
@@ -81,30 +81,30 @@ public:
 	bool isNull () const;
 
 	/** @brief Get the raw bytes for the Instruction. */
-	const std::vector<uint8>& getBytes () const;
+	const std::vector<quint8>& getBytes () const;
 
 	/** @brief Get the raw bytes for the Instruction. */
-	std::vector<uint8>& getBytes ();
+	std::vector<quint8>& getBytes ();
 
 	/** @brief Get raw byte of Instruction at index. */
-	uint8 getByte (size_t i) const;
+	quint8 getByte (size_t i) const;
 
 	/** @brief Add bytes to the raw bytes of the Instruction. */
 	template<typename T>
 	void addBytes (const T &val);
 
 	/** @brief Set the addressing mode. */
-	int32 setAddrMode (int32 am);
+	qint32 setAddrMode (qint32 am);
 
 	/** @brief Get the addressing mode. */
-	int32 getAddrMode () const;
+	qint32 getAddrMode () const;
 
 }; //end class Instruction
 
 template<typename T>
 void
 Instruction::addBytes (const T &val) {
-	uint8 *b = (uint8*)&val;
+	quint8 *b = (quint8*)&val;
 	for (size_t i = 0; i < sizeof(T); ++i) {
 		getBytes ().push_back (*b);
 		++b;

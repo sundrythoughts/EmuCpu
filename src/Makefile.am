@@ -76,7 +76,6 @@ emucpu_SOURCES =  EmuCpu.cc \
                   TerminalWidget.cc \
                   ToneGenerator.hh \
                   ToneGenerator.cc \
-                  Types.hh \
                   Utility.hh \
                   Utility.cc
 
